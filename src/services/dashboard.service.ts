@@ -62,7 +62,7 @@ class DashboardService {
    * Get all dashboard details
    */
   async getAllDashboardDetails(caseType: string, retailType: number) {
-    return apiService.get<DashboardData>('/dashboard', {
+    return apiService.get<DashboardData>('/dashboard/getAllDashboardDetails', {
       type: caseType,
       retail: retailType,
     });
@@ -72,14 +72,14 @@ class DashboardService {
    * Get dashboard details with filters
    */
   async getDashboardWithFilters(filters: DashboardFilters) {
-    return apiService.post<DashboardData>('/dashboard/filter', filters);
+    return apiService.post<DashboardData>('/dashboard/getAllDashboardDetailsWithFilter', filters);
   }
 
   /**
    * Get all dashboard (without filters)
    */
   async getAllDashboard() {
-    return apiService.get<DashboardData>('/dashboard/all');
+    return apiService.get<DashboardData>('/dashboard/getAllDashboard');
   }
 
   /**
@@ -98,49 +98,49 @@ class DashboardService {
    * Get zones for filter
    */
   async getZones() {
-    return apiService.get<Zone[]>('/zones');
+    return apiService.get<Zone[]>('/zone/getAllZones');
   }
 
   /**
    * Get user zones (role-based)
    */
   async getUserZones() {
-    return apiService.get<Zone[]>('/zones/user');
+    return apiService.get<Zone[]>('/dashboard/getUserZone');
   }
 
   /**
    * Get states by zones
    */
   async getStatesByZones(zoneCodes: string[]) {
-    return apiService.post<State[]>('/states/by-zones', { zoneCodes });
+    return apiService.post<State[]>('/state/getStatesByZones', { zoneCodes });
   }
 
   /**
    * Get user states by zones (role-based)
    */
   async getUserStatesByZones(zoneCodes: string[]) {
-    return apiService.post<State[]>('/states/user/by-zones', { zoneCodes });
+    return apiService.post<State[]>('/dashboard/getUserState', { zoneCodes });
   }
 
   /**
    * Get all states
    */
   async getStates() {
-    return apiService.get<State[]>('/states');
+    return apiService.get<State[]>('/state/getAllState');
   }
 
   /**
    * Get cities by states
    */
   async getCitiesByStates(stateCodes: string[]) {
-    return apiService.post<City[]>('/cities/by-states', { stateCodes });
+    return apiService.post<City[]>('/city/getCitiesByStates', { stateCodes });
   }
 
   /**
    * Get user cities by states (role-based)
    */
   async getUserCitiesByStates(stateCodes: string[]) {
-    return apiService.post<City[]>('/cities/user/by-states', { stateCodes });
+    return apiService.post<City[]>('dashboard/getUserCity', { stateCodes });
   }
 
   /**
@@ -148,7 +148,7 @@ class DashboardService {
    */
   async getPinsByCities(cityCodes: string[]) {
     return apiService.post<Array<{ pinCode: string; pinCodeNo: string }>>(
-      '/pins/by-cities',
+      '/pincode/getPincodesByCities',
       { cityCodes }
     );
   }
@@ -157,21 +157,21 @@ class DashboardService {
    * Get all agencies
    */
   async getAllAgencies() {
-    return apiService.get<Agency[]>('/agencies');
+    return apiService.get<Agency[]>('/agency/agencies');
   }
 
   /**
    * Get regional users
    */
   async getRegionalUsers() {
-    return apiService.get<TeamMember[]>('/users/regional');
+    return apiService.get<TeamMember[]>('/user/getAllRegionalUsers');
   }
 
   /**
    * Get field officers
    */
   async getFieldOfficers() {
-    return apiService.get<TeamMember[]>('/users/field-officers');
+    return apiService.get<TeamMember[]>('/user/getFieldOfficers');
   }
 
   async policySearch(payload: any) {
