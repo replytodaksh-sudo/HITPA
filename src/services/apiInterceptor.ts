@@ -1,5 +1,5 @@
-import axios, { AxiosError } from 'axios';
-import type { AxiosInstance, AxiosResponse } from 'axios';
+import axios from 'axios';
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
 // Types
 interface ApiResponse<T = any> {
@@ -22,15 +22,18 @@ const apiClient: AxiosInstance = axios.create({
   timeout: 30000, // 30 seconds
   headers: {
     'Content-Type': 'application/json',
+    'Accept': 'application/json',
   },
+  withCredentials: false, // Set to true if you need to send cookies
 });
 
 // Request Interceptor
 apiClient.interceptors.request.use(
   (config) => {
     // Get token from sessionStorage
-    const token = sessionStorage.getItem('token');
-    
+    // const token = sessionStorage.getItem('token');
+    const token = "eyJhbGciOiJIUzI1NiJ9.eyJwaW5jb2RlIjoiNDAwMDc4Iiwic3ViIjoiMTIzNDU2IiwiY2l0eSI6Ik11bWJhaSIsInJvbGVzIjpbIkZpZWxkIE9mZmljZXIiXSwibmFtZSI6Ik5pbGVzaCAgUGF3YXIiLCJzdGF0ZSI6Ik1haGFyYXNodHJhIiwiaXNGbGFnU3RhdHVzIjoxLCJzZXNzaW9uSWQiOjE3NjM0NDU4MTU1MzYsImV4cCI6MTc2MzQ1MTgxNSwiaWF0IjoxNzYzNDQ1ODE1LCJ1c2VyQ29kZSI6IkFVNDIwNCJ9.O9DbEyR-jqOAjUmvASPO_CNHbPHqm1Q7Wihnf0YETAc";
+
     // If token exists, add it to headers
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -75,7 +78,7 @@ apiClient.interceptors.response.use(
       // Handle application-level errors (statusCode !== 0)
       if (response.data.statusCode !== 0) {
         console.warn('⚠️ Application Error:', response.data);
-        
+
         // You can handle specific error codes here
         if (response.data.statusCode === 401) {
           handleUnauthorized();
@@ -96,7 +99,7 @@ apiClient.interceptors.response.use(
         data: error.response?.data,
       });
     }
-
+    console.log('Error Interceptor Triggered:', error);
     // Handle different error scenarios
     if (error.response) {
       // Server responded with error status
@@ -108,27 +111,27 @@ apiClient.interceptors.response.use(
           // Unauthorized - redirect to login
           handleUnauthorized();
           break;
-        
+
         case 403:
           // Forbidden - show error message
           showNotification('You do not have permission to perform this action', 'error');
           break;
-        
+
         case 404:
           // Not found
           showNotification('The requested resource was not found', 'error');
           break;
-        
+
         case 500:
           // Server error
           showNotification('Server error. Please try again later', 'error');
           break;
-        
+
         case 503:
           // Service unavailable
           showNotification('Service temporarily unavailable. Please try again later', 'error');
           break;
-        
+
         default:
           // Other errors
           showNotification(
@@ -155,10 +158,10 @@ function handleUnauthorized() {
   // Clear stored data
   sessionStorage.clear();
   localStorage.clear();
-  
+
   // Show notification
   showNotification('Session expired. Please login again', 'warning');
-  
+
   // Redirect to login page after a short delay
   setTimeout(() => {
     window.location.href = '/login';
@@ -172,7 +175,7 @@ function showNotification(message: string, type: 'success' | 'error' | 'warning'
   window.dispatchEvent(new CustomEvent('showNotification', {
     detail: { message, type }
   }));
-  
+
   // Fallback to console in development
   if (import.meta.env.DEV) {
     console.log(`[${type.toUpperCase()}]:`, message);

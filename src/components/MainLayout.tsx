@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Drawer, useTheme, useMediaQuery } from '@mui/material';
+import { Box, useTheme, useMediaQuery } from '@mui/material';
 import ModernHeader from './header';
+import { Outlet } from 'react-router-dom';
 
-interface MainLayoutProps {
-  children: React.ReactNode;
-}
-
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+const MainLayout: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -25,12 +22,12 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         component="main"
         sx={{
           flexGrow: 1,
-          pt: { xs: 7, sm: 8 }, // Offset for AppBar height
+          pt: { xs: 7, sm: 8 },
           minHeight: '100vh',
           bgcolor: 'background.default',
         }}
       >
-        {children}
+        <Outlet />   {/* ⬅ This is where your pages will render */}
       </Box>
     </Box>
   );

@@ -9,6 +9,7 @@ import GlobalNotification from './components/GlobalNotification';
 import { authService } from './services/auth.service';
 import Dashboard from './pages/dashboard/dashboard';
 import { theme } from './theme';
+import AssignedFo from './pages/AssignedFo/AssignedFo';
 
 // Protected Route Component
 interface ProtectedRouteProps {
@@ -17,39 +18,53 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const isAuthenticated = authService.isAuthenticated();
-  
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-  
+
   return <>{children}</>;
 };
 
 function App() {
   return (
+    // <ThemeProvider theme={theme}>
+    //   <CssBaseline />
+    //   <GlobalNotification />
+    //   <Router>
+    //     <Routes>
+    //       {/* Public Routes */}
+    //       {/* <Route path="/login" element={<Login />} /> */}
+
+    //       {/* Protected Routes */}
+    //       <Route
+    //         path="/*"
+    //         element={
+    //           // <ProtectedRoute>
+    //             <MainLayout>
+    //               <Routes>
+    //                 <Route path="/dashboard" element={<Dashboard />} />
+    //                 <Route path="/" element={<Navigate to="/dashboard" replace />} />
+    //                 {/* Add more routes here */}
+    //               </Routes>
+    //             </ >
+    //           // </ProtectedRoute>
+    //         }
+    //       />
+    //     </Routes>
+    //   </Router>
+    // </ThemeProvider>
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <GlobalNotification />
       <Router>
         <Routes>
-          {/* Public Routes */}
-          {/* <Route path="/login" element={<Login />} /> */}
-          
-          {/* Protected Routes */}
-          <Route
-            path="/*"
-            element={
-              // <ProtectedRoute>
-                <MainLayout>
-                  <Routes>
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                    {/* Add more routes here */}
-                  </Routes>
-                </MainLayout>
-              // </ProtectedRoute>
-            }
-          />
+          {/* Protected routes */}
+          <Route element={<MainLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/admin/foAssignedToFO" element={<AssignedFo />} />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          </Route>
         </Routes>
       </Router>
     </ThemeProvider>

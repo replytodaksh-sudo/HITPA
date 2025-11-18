@@ -120,8 +120,8 @@ class AuthService {
   async getUserMenu() {
     return apiService.get<{
       roleName: string;
-      menus: Menu[];
-    }>('/auth/menu');
+      accessedItem: Menu[];
+    }>('/accessRight/accessRightsMenu');
   }
 
   /**

@@ -78,10 +78,11 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
   // State
   const [userName, setUserName] = useState('');
   const [roleName, setRoleName] = useState('');
-  const [menus, setMenus] = useState<MenuItem[]>([]);
+  const [menus, setMenus] = useState<any>([]);
   const [profileAnchor, setProfileAnchor] = useState<null | HTMLElement>(null);
   const [notificationAnchor, setNotificationAnchor] = useState<null | HTMLElement>(null);
   const [menuAnchors, setMenuAnchors] = useState<{ [key: string]: HTMLElement | null }>({});
+  const [submenuAnchors, setSubmenuAnchors] = useState<{ [key: string]: HTMLElement | null }>({});
   
   // Dialogs
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
@@ -112,8 +113,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
     try {
       const response = await authService.getUserMenu();
       if (response.statusCode === 0) {
-        // Cast the incoming menus to our MenuItem[] type (or map/transform here if shapes differ)
-        setMenus((response.payload.menus || []) as unknown as MenuItem[]);
+        setMenus(response.payload.accessedItem || []);
       }
     } catch (error) {
       console.error('Failed to fetch menus:', error);
@@ -188,6 +188,29 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
       ...prev,
       [menuName]: null,
     }));
+    // Close all submenus when parent menu closes
+    setSubmenuAnchors({});
+  };
+
+  const handleSubmenuOpen = (key: string, event: React.MouseEvent<HTMLElement>) => {
+    setSubmenuAnchors(prev => ({
+      ...prev,
+      [key]: event.currentTarget,
+    }));
+  };
+
+  const handleSubmenuClose = (key: string) => {
+    setSubmenuAnchors(prev => ({
+      ...prev,
+      [key]: null,
+    }));
+  };
+
+  const handleSubmenuItemClick = (url: string, menuName: string) => {
+    // Remove hash and navigate
+    const cleanUrl = url.replace('/healthinv/#', '');
+    navigate(cleanUrl);
+    handleMenuClose(menuName);
   };
 
   const userInitials = userName.split(' ').map(n => n[0]).join('').toUpperCase();
@@ -200,7 +223,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
           background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
           boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
           zIndex: theme.zIndex.drawer + 1,
-          borderRadius: 0,
+          borderRadius: '0',
         }}
       >
         <Toolbar sx={{ px: { xs: 2, sm: 3 } }}>
@@ -216,8 +239,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
           {/* Logo */}
           <Box sx={{ display: 'flex', alignItems: 'center', mr: 4 }}>
-            <img src="/logo.png" alt="Logo" style={{ height: 40 }} />
-            {/* <Avatar
+            <Avatar
               sx={{
                 width: 40,
                 height: 40,
@@ -237,7 +259,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
               }}
             >
               InsureClaim
-            </Typography> */}
+            </Typography>
           </Box>
 
           {/* Navigation Menu */}
@@ -261,7 +283,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
             </Button>
 
             {/* Dynamic Menus */}
-            {menus.map((menu) => (
+            {menus.map((menu:any) => (
               <Box key={menu.menuName} sx={{ position: 'relative' }}>
                 <Button
                   color="inherit"
@@ -293,35 +315,82 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
                     },
                   }}
                 >
-                  {menu.childMenu.map((child) => (
-                    <Box key={child.childMenuName}>
-                      {child.subMenu.length > 0 ? (
-                        <MenuItem
-                          sx={{
-                            '&:hover': {
-                              bgcolor: alpha(theme.palette.primary.main, 0.1),
-                            },
-                          }}
-                        >
-                          <ListItemText primary={child.childMenuName} />
-                          <ArrowRightIcon fontSize="small" />
-                        </MenuItem>
-                      ) : (
-                        <MenuItem
-                          onClick={() => {
-                            handleMenuClose(menu.menuName);
-                          }}
-                          sx={{
-                            '&:hover': {
-                              bgcolor: alpha(theme.palette.primary.main, 0.1),
-                            },
-                          }}
-                        >
-                          {child.childMenuName}
-                        </MenuItem>
-                      )}
-                    </Box>
-                  ))}
+                  {menu.childMenu.map((child: any, childIndex: number) => {
+                    const submenuKey = `${menu.menuName}-${childIndex}`;
+                    
+                    return (
+                      <Box key={child.childMenuName}>
+                        {child.subMenu && child.subMenu.length > 0 ? (
+                          <>
+                            <MenuItem
+                              onMouseEnter={(e) => handleSubmenuOpen(submenuKey, e)}
+                              sx={{
+                                '&:hover': {
+                                  bgcolor: alpha(theme.palette.primary.main, 0.1),
+                                },
+                                justifyContent: 'space-between',
+                              }}
+                            >
+                              <ListItemText primary={child.childMenuName} />
+                              <ArrowRightIcon fontSize="small" />
+                            </MenuItem>
+
+                            {/* Submenu */}
+                            <Menu
+                              anchorEl={submenuAnchors[submenuKey]}
+                              open={Boolean(submenuAnchors[submenuKey])}
+                              onClose={() => handleSubmenuClose(submenuKey)}
+                              anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                              }}
+                              transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                              }}
+                              PaperProps={{
+                                sx: {
+                                  ml: 0.5,
+                                  minWidth: 180,
+                                  borderRadius: 2,
+                                  boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                                },
+                                onMouseLeave: () => handleSubmenuClose(submenuKey),
+                              }}
+                            >
+                              {child.subMenu.map((sub: any) => (
+                                <MenuItem
+                                  key={sub.submenuName}
+                                  onClick={() => handleSubmenuItemClick(sub.submenuUrl, menu.menuName)}
+                                  sx={{
+                                    fontSize: '0.875rem',
+                                    '&:hover': {
+                                      bgcolor: alpha(theme.palette.primary.main, 0.1),
+                                    },
+                                  }}
+                                >
+                                  {sub.submenuName}
+                                </MenuItem>
+                              ))}
+                            </Menu>
+                          </>
+                        ) : (
+                          <MenuItem
+                            onClick={() => {
+                              handleMenuClose(menu.menuName);
+                            }}
+                            sx={{
+                              '&:hover': {
+                                bgcolor: alpha(theme.palette.primary.main, 0.1),
+                              },
+                            }}
+                          >
+                            {child.childMenuName}
+                          </MenuItem>
+                        )}
+                      </Box>
+                    );
+                  })}
                 </Menu>
               </Box>
             ))}
