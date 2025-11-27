@@ -103,7 +103,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
   }, []);
 
   const fetchUserInfo = () => {
-    const name = sessionStorage.getItem('userName') || 'User';
+    const name = sessionStorage.getItem('name') || 'User';
     const role = sessionStorage.getItem('roleName') || 'Role';
     setUserName(name);
     setRoleName(role);
@@ -239,27 +239,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
           {/* Logo */}
           <Box sx={{ display: 'flex', alignItems: 'center', mr: 4 }}>
-            <Avatar
-              sx={{
-                width: 40,
-                height: 40,
-                bgcolor: 'rgba(255,255,255,0.2)',
-                backdropFilter: 'blur(10px)',
-                mr: 1.5,
-              }}
-            >
-              <HomeIcon />
-            </Avatar>
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 800,
-                display: { xs: 'none', md: 'block' },
-                color: 'white',
-              }}
-            >
-              InsureClaim
-            </Typography>
+            <img src="/logo.png" alt="logo" style={{height:"40px"}}/>
           </Box>
 
           {/* Navigation Menu */}

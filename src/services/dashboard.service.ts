@@ -174,17 +174,17 @@ class DashboardService {
     return apiService.get<TeamMember[]>('/user/getFieldOfficers');
   }
 
-  // async policySearch(payload: any) {
-  //   return apiService.get<TeamMember[]>("/claims/getPolicySearch?clientCode=" + payload.clientCode + "&insuredName=" + payload.clientName + "&dob=" + payload.dob + "&aadharNo=" + payload.uid + "&policyGstNo=" + payload.gstno + "&policyMobileNo=" + payload.mobileno + "&policyPincode=" + payload.pincode + "&policyEmailId=" + payload.emailid + "&policyAccountNo=" + payload.accountno + "&diagonosticCenterName=" + payload.chemistname + "&gender=" + payload.gender + "&policyNo=" + payload.policyNo);
-  // }
+  async policySearch(payload: any) {
+    return apiService.get<TeamMember[]>("/claims/getPolicySearch?clientCode=" + payload.clientCode + "&insuredName=" + payload.clientName + "&dob=" + payload.dob + "&aadharNo=" + payload.uid + "&policyGstNo=" + payload.gstno + "&policyMobileNo=" + payload.mobileno + "&policyPincode=" + payload.pincode + "&policyEmailId=" + payload.emailid + "&policyAccountNo=" + payload.accountno + "&diagonosticCenterName=" + payload.chemistname + "&gender=" + payload.gender + "&policyNo=" + payload.policyNo);
+  }
   
-  // async providerSearch(payload: any) {
-  //   return apiService.get<TeamMember[]>("/claims/getProviderSearch?providerGstNo=" + payload.gstno + "&rohiniCode=" + payload.rohinicode + "&providerMobileNo=" + payload.mobileno + "&providerPincode=" + payload.pincode + "&providerEmailId=" + payload.emailid + "&providerAccountNo=" + payload.accountno + "&doctorName=" + payload.doctorname + "&hospitalName=" + payload.hospitalname + "&hospitalRegNo=" + payload.hospitalregno + "&diagonosticCenterName=" + payload.chemistname + "&doctorRegNo=" + payload.regno + "&stateNames=" + payload.state + "&cityNames" + payload.city);
-  // }
+  async providerSearch(payload: any) {
+    return apiService.get<TeamMember[]>("/claims/getProviderSearch?providerGstNo=" + payload.gstno + "&rohiniCode=" + payload.rohinicode + "&providerMobileNo=" + payload.mobileno + "&providerPincode=" + payload.pincode + "&providerEmailId=" + payload.emailid + "&providerAccountNo=" + payload.accountno + "&doctorName=" + payload.doctorname + "&hospitalName=" + payload.hospitalname + "&hospitalRegNo=" + payload.hospitalregno + "&diagonosticCenterName=" + payload.chemistname + "&doctorRegNo=" + payload.regno + "&stateNames=" + payload.state + "&cityNames" + payload.city);
+  }
   
-  // async corporateSearch(payload: any) {
-  //   return apiService.get<TeamMember[]>("/claims/getCorporateSearch?gstNo=" + payload.gstno + "&panNo=" + payload.panno + "&mobileNo=" + payload.mobileno + "&pincode=" + payload.pincode + "&emailId=" + payload.emailid + "&accountNo=" + payload.accountno + "&corporateName=" + payload.corporatename);
-  // }
+  async corporateSearch(payload: any) {
+    return apiService.get<TeamMember[]>("/claims/getCorporateSearch?gstNo=" + payload.gstno + "&panNo=" + payload.panno + "&mobileNo=" + payload.mobileno + "&pincode=" + payload.pincode + "&emailId=" + payload.emailid + "&accountNo=" + payload.accountno + "&corporateName=" + payload.corporatename);
+  }
 
 
 

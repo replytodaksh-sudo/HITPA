@@ -1,3 +1,4 @@
+import { sessionService } from '../utils/session.service';
 import { apiService } from './api.service';
 
 // Types
@@ -7,7 +8,7 @@ export interface LoginCredentials {
 }
 
 export interface LoginResponse {
-  token: string;
+  accessToken: string;
   refreshToken?: string;
   user: User;
   isFlagStatus?: number;
@@ -50,12 +51,12 @@ class AuthService {
    */
   async login(credentials: LoginCredentials) {
     const response = await apiService.post<LoginResponse>('/auth/login', credentials);
-    
+
     // Store token and user data on successful login
-    if (response.statusCode === 0 && response.payload.token) {
+    if (response.statusCode === 0 && response.payload.accessToken) {
       this.setSession(response.payload);
     }
-    
+
     return response;
   }
 
@@ -63,12 +64,8 @@ class AuthService {
    * Logout user
    */
   async logout() {
-    try {
-      await apiService.post('/auth/logout');
-    } finally {
-      // Clear session regardless of API call success
-      this.clearSession();
-    }
+    sessionService.clearSession();
+    window.location.href = '/login';
   }
 
   /**
@@ -99,11 +96,11 @@ class AuthService {
     const response = await apiService.post<LoginResponse>('/auth/refresh', {
       refreshToken,
     });
-    
-    if (response.statusCode === 0 && response.payload.token) {
+
+    if (response.statusCode === 0 && response.payload.accessToken) {
       this.setSession(response.payload);
     }
-    
+
     return response;
   }
 
@@ -135,15 +132,22 @@ class AuthService {
    * Check if user is authenticated
    */
   isAuthenticated(): boolean {
-    const token = sessionStorage.getItem('token');
-    return !!token;
+    const token = this.getToken();
+    if (!token) return false;
+
+    const decoded = sessionService.decodeToken(token);
+    if (!decoded) return false;
+
+    // Check if token is expired
+    const currentTime = Date.now() / 1000;
+    return decoded.exp > currentTime;
   }
 
   /**
    * Get stored token
    */
   getToken(): string | null {
-    return sessionStorage.getItem('token');
+    return sessionStorage.getItem('accessToken');
   }
 
   /**
@@ -165,14 +169,14 @@ class AuthService {
    * Set session data
    */
   private setSession(data: LoginResponse) {
-    if (data.token) {
-      sessionStorage.setItem('token', data.token);
+    if (data.accessToken) {
+      sessionStorage.setItem('accessToken', data.accessToken);
     }
-    
+
     if (data.refreshToken) {
       sessionStorage.setItem('refreshToken', data.refreshToken);
     }
-    
+
     if (data.user) {
       sessionStorage.setItem('user', JSON.stringify(data.user));
       sessionStorage.setItem('roleName', data.user.roleName);
@@ -203,6 +207,7 @@ class AuthService {
     const userRole = this.getUserRole();
     return userRole === role;
   }
+
 }
 
 // Export singleton instance

@@ -101,7 +101,7 @@ const Dashboard: React.FC = () => {
     const [loading, setLoading] = useState(false);
 
     // Filter states
-    const [zones, setZones] = useState<Zone[]>([]);
+    const [zones, setZones] = useState<any>([]);
     const [states, setStates] = useState<State[]>([]);
     const [cities, setCities] = useState<City[]>([]);
     const [agencies, setAgencies] = useState<Agency[]>([]);
@@ -228,9 +228,9 @@ const Dashboard: React.FC = () => {
     const fetchZones = async () => {
         try {
             const response = await dashboardService.getUserZones();
-            if (response.statusCode === 0) {
-                setZones(response.payload);
-            }
+            // if (response.statusCode === 0) {
+                setZones(response);
+            // }
         } catch (error) {
             console.error('Failed to fetch zones:', error);
         }
@@ -688,13 +688,13 @@ const Dashboard: React.FC = () => {
                                             renderValue={(selected) => (
                                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                                     {selected.map((value) => {
-                                                        const zone = zones.find(z => z.zoneCode === value);
+                                                        const zone = zones.find((z:any) => z.zoneCode === value);
                                                         return <Chip key={value} label={zone?.zoneName} size="small" />;
                                                     })}
                                                 </Box>
                                             )}
                                         >
-                                            {zones.map((zone) => (
+                                            {zones.map((zone:any) => (
                                                 <MenuItem key={zone.zoneCode} value={zone.zoneCode}>
                                                     {zone.zoneName}
                                                 </MenuItem>

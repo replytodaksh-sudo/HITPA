@@ -31,8 +31,8 @@ const apiClient: AxiosInstance = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     // Get token from sessionStorage
-    // const token = sessionStorage.getItem('token');
-    const token = "eyJhbGciOiJIUzI1NiJ9.eyJwaW5jb2RlIjoiNDAwMDc4Iiwic3ViIjoiMTIzNDU2IiwiY2l0eSI6Ik11bWJhaSIsInJvbGVzIjpbIkZpZWxkIE9mZmljZXIiXSwibmFtZSI6Ik5pbGVzaCAgUGF3YXIiLCJzdGF0ZSI6Ik1haGFyYXNodHJhIiwiaXNGbGFnU3RhdHVzIjoxLCJzZXNzaW9uSWQiOjE3NjM0NDU4MTU1MzYsImV4cCI6MTc2MzQ1MTgxNSwiaWF0IjoxNzYzNDQ1ODE1LCJ1c2VyQ29kZSI6IkFVNDIwNCJ9.O9DbEyR-jqOAjUmvASPO_CNHbPHqm1Q7Wihnf0YETAc";
+    const token = sessionStorage.getItem('accessToken');
+    // const token = "eyJhbGciOiJIUzI1NiJ9.eyJwaW5jb2RlIjoiNDAwMDc4Iiwic3ViIjoiMTIzNDU2IiwiY2l0eSI6Ik11bWJhaSIsInJvbGVzIjpbIkZpZWxkIE9mZmljZXIiXSwibmFtZSI6Ik5pbGVzaCAgUGF3YXIiLCJzdGF0ZSI6Ik1haGFyYXNodHJhIiwiaXNGbGFnU3RhdHVzIjoxLCJzZXNzaW9uSWQiOjE3NjM0NDU4MTU1MzYsImV4cCI6MTc2MzQ1MTgxNSwiaWF0IjoxNzYzNDQ1ODE1LCJ1c2VyQ29kZSI6IkFVNDIwNCJ9.O9DbEyR-jqOAjUmvASPO_CNHbPHqm1Q7Wihnf0YETAc";
 
     // If token exists, add it to headers
     if (token) {
