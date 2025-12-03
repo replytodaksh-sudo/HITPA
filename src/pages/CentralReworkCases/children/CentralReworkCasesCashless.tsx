@@ -58,7 +58,7 @@ const CentralReworkCasesCashless: React.FC = () => {
   const fetchClaims = async () => {
     setLoading(true);
     try {
-      const response = await claimsService.getAllAssignedToFO();
+      const response = await claimsService.fetchAllCentralReworkCases();
       if (response.statusCode === 0) {
         setClaims(response.payload);
       }
@@ -70,14 +70,7 @@ const CentralReworkCasesCashless: React.FC = () => {
   };
 
   const handleViewClick = (investigationID: string, claim: Claim) => {
-    navigate(`/admin/assigned-self-form/${investigationID}`, {
-      state: {
-        redirectTo: location.pathname,
-        claimsType: 'cashless',
-        claimNo: claim.tpaClaimNo,
-        sbigclaimno: claim.sbigClaimNo,
-      },
-    });
+    navigate(`/admin/assigned-self-form/${investigationID}?redirectTo=${location.pathname}&claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`)
   };
 
   const getTatColor = (tat: number): string => {
@@ -111,7 +104,7 @@ const CentralReworkCasesCashless: React.FC = () => {
     },
     {
       field: 'sbigClaimNo',
-      headerName: 'SBIG Claim No',
+      headerName: 'Claim No',
       width: 150,
     },
     {

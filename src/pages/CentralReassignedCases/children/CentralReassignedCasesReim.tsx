@@ -46,7 +46,7 @@ interface Claim {
 const CentralReassignedCasesReim: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  
+
   const [claims, setClaims] = useState<Claim[]>([]);
   const [loading, setLoading] = useState(true);
   const [paginationModel, setPaginationModel] = useState({ pageSize: 50, page: 0 });
@@ -58,7 +58,7 @@ const CentralReassignedCasesReim: React.FC = () => {
   const fetchClaims = async () => {
     setLoading(true);
     try {
-      const response = await claimsService.getAllAssignedToReim();
+      const response = await claimsService.fetchAllCentralReassignedCases();
       if (response.statusCode === 0) {
         setClaims(response.payload);
       }
@@ -70,15 +70,7 @@ const CentralReassignedCasesReim: React.FC = () => {
   };
 
   const handleViewClick = (investigationID: string, claim: Claim) => {
-    navigate(`/admin/assigned-self-form/${investigationID}`, {
-      state: {
-        redirectTo: location.pathname,
-        claimsType: 'reim',
-        claimNo: claim.tpaClaimNo,
-        sbigclaimno: claim.sbigClaimNo,
-        acceptAssignId: claim.acceptAssignId,
-      },
-    });
+    navigate(`/admin/assigned-self-form/${investigationID}?redirectTo=${location.pathname}&claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`)
   };
 
   const getTatColor = (tat: number): string => {
@@ -112,7 +104,7 @@ const CentralReassignedCasesReim: React.FC = () => {
     },
     {
       field: 'sbigClaimNo',
-      headerName: 'SBIG Claim No',
+      headerName: 'Claim No',
       width: 150,
     },
     {
@@ -336,7 +328,7 @@ const CentralReassignedCasesReim: React.FC = () => {
           onPaginationModelChange={setPaginationModel}
           pageSizeOptions={[25, 50, 100]}
           checkboxSelection
-        //   disableSelectionOnClick
+          //   disableSelectionOnClick
           getRowId={(row) => row.investigationID}
           slots={{
             toolbar: GridToolbar,

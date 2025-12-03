@@ -11,6 +11,8 @@ import {
 } from '@mui/material';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { QCUpdateService } from '../../../services/qcupdate.service';
+import ClaimTeamQcUpdateField from './ClaimTeamQcUpdateField';
+import ClaimTeamQcObservation from './ClaimTeamQcObservation';
 
 // Import child components
 // import ClaimTeamQcUpdateField from './ClaimTeamQcUpdateField';
@@ -194,14 +196,13 @@ const ClaimTeamQcUpdate: React.FC<ClaimTeamQcUpdateProps> = ({
               sx={{ display: activeTab === 0 ? 'block' : 'none' }}
             >
               {activeTab === 0 && (
-                "abc"
-                // <ClaimTeamQcUpdateField
-                //   previewValues={currentPreviewValues}
-                //   buttonEnable={buttonEnable}
-                //   dataRole={dataRole}
-                //   claimType={claimType}
-                //   onRefresh={fetchQCPreviewDetails}
-                // />
+                <ClaimTeamQcUpdateField
+                  previewValues={currentPreviewValues}
+                  buttonEnable={buttonEnable}
+                  dataRole={dataRole}
+                  claimType={claimType}
+                  onRefresh={fetchQCPreviewDetails}
+                />
               )}
             </Box>
 
@@ -212,14 +213,13 @@ const ClaimTeamQcUpdate: React.FC<ClaimTeamQcUpdateProps> = ({
               sx={{ display: activeTab === 1 ? 'block' : 'none' }}
             >
               {activeTab === 1 && (
-                "xyz"
-                // <ClaimTeamQcObservation
-                //   previewValues={currentPreviewValues}
-                //   buttonEnable={buttonEnable}
-                //   dataRole={dataRole}
-                //   claimType={claimType}
-                //   onRefresh={fetchQCPreviewDetails}
-                // />
+                <ClaimTeamQcObservation
+                  previewValues={currentPreviewValues}
+                  buttonEnable={buttonEnable}
+                  dataRole={dataRole}
+                  claimType={claimType}
+                  onRefresh={fetchQCPreviewDetails}
+                />
               )}
             </Box>
           </Box>

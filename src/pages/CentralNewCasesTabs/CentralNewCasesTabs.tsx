@@ -186,7 +186,7 @@ const CentralNewCasesTabs: React.FC = () => {
               </Grid>
               <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: { xs: 'left', md: 'center' } }}>
                 <Typography variant="body2" sx={{ mb: 0.5, opacity: 0.9 }}>
-                  SBIG Claim No
+                  Claim No
                 </Typography>
                 <Typography variant="h6" fontWeight={700}>
                   {sbigClaimNo}

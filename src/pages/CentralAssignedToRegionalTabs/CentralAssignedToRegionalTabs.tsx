@@ -128,10 +128,10 @@ const CentralAssignedToRegionalTabs: React.FC = () => {
                             />
                         </Box>
 
-                        {/* SBIG Claim No */}
+                        {/* Claim No */}
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                             <Typography variant="body1" sx={{ color: 'white', fontWeight: 600 }}>
-                                SBIG Claim No:
+                                Claim No:
                             </Typography>
                             <Typography variant="body1" sx={{ color: 'white' }}>
                                 {sbiclaimNo}

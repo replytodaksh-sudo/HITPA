@@ -54,7 +54,7 @@ const PreAuth: React.FC<Props> = ({ claimDetails }) => {
   // Table headers
   const pastClaimTableHeader = [
     'Claim Id',
-    'SBIG Claim no.',
+    'Claim no.',
     'TPA Claim No',
     'Payable Amount',
     'Date of Admission',
@@ -310,7 +310,7 @@ const PreAuth: React.FC<Props> = ({ claimDetails }) => {
             <Grid size={{ xs: 12, md: 6 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Typography variant="body2" sx={{ fontSize: 12, fontWeight: 600 }}>
-                  SBIG Member ID
+                  Member ID
                 </Typography>
                 <Typography variant="body2" sx={{ textAlign: 'right' }}>
                   {claimDetails?.sbigMemberID || ''}

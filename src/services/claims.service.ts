@@ -45,6 +45,24 @@ class ClaimsService {
   async getAllAssignedReimToForAction() {
     return apiService.get<any>('/reclaims/getALLCentralNewCasesForAction');
   }
+  async fetchAllCentralReworkCases() {
+    return apiService.get<any>('/claims/getAllCentralReworkCases');
+  }
+  async fetchAllCentralReworkCasesReim() {
+    return apiService.get<any>('/reclaims/getAllCentralReworkCases');
+  }
+  async fetchAllCentralReassignedCases() {
+    return apiService.get<any>('/claims/getAllCentralReassignedCases');
+  }
+  async fetchAllCentralReassignedCasesReim() {
+    return apiService.get<any>('/reclaims/getAllCentralReassignedCases');
+  }
+  async getNotCompletedCasesRegional() {
+    return apiService.get<any>('/claims/getAllCompleteCaseNotInvestigated');
+  }
+  async getNotCompletedCasesRegionalReim() {
+    return apiService.get<any>('/reclaims/getAllCompleteCaseNotInvestigated');
+  }
 
   // _________________________
   async claimDetails(investigationId: string) {
@@ -97,110 +115,232 @@ class ClaimsService {
     apiService.get(`/reclaims/getAssignedToSelfCases?tatFilter=${tatRange}`)
   }
 
-
   async fetchAllDeniedByRegional() {
     return apiService.get<any>('/claims/getAllDeniedByRegional');
   }
-  
+
   async fetchAllDeniedByRegionalReim() {
     return apiService.get<any>('/reclaims/getAllDeniedByRegional');
   }
-  
+
   async fetchAllCentralAssignedToRegional() {
     return apiService.get<any>('/claims/getAllCentralAssignedToRegional');
   }
-  
+
   async fetchAllCentralAssignedToRegionalReims() {
     return apiService.get<any>('/reclaims/getAllCentralAssignedToRegional');
   }
-  
+
   async fetchAllCentralAssignedToAgency() {
     return apiService.get<any>('/claims/getAllCentralAssignedToAgency');
   }
-  
+
   async fetchAllCentralAssignedToAgencyReims() {
     return apiService.get<any>('/reclaims/getAllCentralAssignedToAgency');
   }
+
+  async fetchAllCentralCaseNotInvestigated() {
+    return apiService.get<any>('/claims/getAllCentralCaseNotInvestigated');
+  }
+
+  async fetchAllCentralCaseNotInvestigatedReim() {
+    return apiService.get<any>('/reclaims/getAllCentralCaseNotInvestigated');
+  }
+
+  async getAllCentralInvestigationCompletedByPage(pageNo: number, pageSize: number) {
+    return apiService.get<any>(`/claims/getAllCentralInvestigationCompletedByPage?pageNo=${pageNo}&pageSize=${pageSize}`);
+  }
+
+  async getAllCentralInvestigationTotalCompleted() {
+    return apiService.get<any>('/claims/getAllCentralInvestigationTotalCompleted');
+  }
+
+  async getAllCentralInvestigationCompletedBySearch(claimNo: string) {
+    return apiService.get<any>(`/claims/getAllCentralInvestigationCompletedBySearch??sbigClaimNo=${claimNo}`);
+  }
+  async getAllCentralInvestigationCompletedByPageReim(pageNo: number, pageSize: number) {
+    return apiService.get<any>(`/claims/getAllCentralInvestigationCompletedByPage?pageNo=${pageNo}&pageSize=${pageSize}`);
+  }
+
+  async getAllCentralInvestigationTotalCompletedReim() {
+    return apiService.get<any>('/claims/getAllCentralInvestigationTotalCompleted');
+  }
+
+  async getAllCentralInvestigationCompletedBySearchReim(claimNo: string) {
+    return apiService.get<any>(`/claims/getAllCentralInvestigationCompletedBySearch??sbigClaimNo=${claimNo}`);
+  }
   
+  async getAllPEDEvidences() {
+    return apiService.get<any>(`/claimsQC/getPEDClaimEvidence`);
+  }
+  
+  async getCompletedRegional() {
+    return apiService.get<any>(`/claims/getAllCompleteInvestigationCases`);
+  }
+  
+  async getCompletedRegionalReim() {
+    return apiService.get<any>(`/reclaims/getAllCompleteInvestigationCases`);
+  }
+  
+  async getReAssignClaimsReg() {
+    return apiService.get<any>(`/claims/getReAssignClaims`);
+  }
+  
+  async getReAssignClaims() {
+    return apiService.get<any>(`/claims/getAllAgencyReassignedCases`);
+  }
 
-        /**
-         * Get all claims assigned to self
-         */
-        // async getAllAssignedToSelf() {
-        //   return apiService.get<Claim[]>('/claims/assigned-to-self');
-        // }
+  async getReAssignClaimsRegByTat(tatRange: string) {
+    apiService.get(`/claims/getReAssignClaims?tatFilter=${tatRange}`)
+  }
 
-        // /**
-        //  * Get claim by investigation ID
-        //  */
-        // async getClaimByInvestigationId(investigationId: string) {
-        //   return apiService.get<Claim>(`/claims/${investigationId}`);
-        // }
+  async getReAssignClaimsByTat(tatRange: string) {
+    apiService.get(`/claims/getAllAgencyReassignedCases?tatFilter=${tatRange}`)
+  }
+  
+  async getReAssignClaimsRegReim() {
+    return apiService.get<any>(`/reclaims/getReAssignClaims`);
+  }
+  
+  async getReAssignClaimsReim() {
+    return apiService.get<any>(`/reclaims/getAllAgencyReassignedCases`);
+  }
 
-        // /**
-        //  * Get fresh cases
-        //  */
-        // async getFreshCases(caseType: string) {
-        //   return apiService.get<Claim[]>('/claims/fresh', { caseType });
-        // }
+  async getReAssignClaimsRegByTatReim(tatRange: string) {
+    apiService.get(`/reclaims/getReAssignClaims?tatFilter=${tatRange}`)
+  }
 
-        // /**
-        //  * Get on field cases
-        //  */
-        // async getOnFieldCases(caseType: string) {
-        //   return apiService.get<Claim[]>('/claims/on-field', { caseType });
-        // }
+  async getReAssignClaimsByTatReim(tatRange: string) {
+    apiService.get(`/reclaims/getAllAgencyReassignedCases?tatFilter=${tatRange}`)
+  }
+  
+  async getReworkClaimsReg() {
+    return apiService.get<any>(`/claims/getReworkClaims`);
+  }
+  
+  async getReworkClaims() {
+    return apiService.get<any>(`/claims/getAllAgencyReworkCases`);
+  }
 
-        // /**
-        //  * Get completed cases
-        //  */
-        // async getCompletedCases(caseType: string) {
-        //   return apiService.get<Claim[]>('/claims/completed', { caseType });
-        // }
+  async getReworkClaimsRegByTat(tatRange: string) {
+    apiService.get(`/claims/getReworkClaims?tatFilter=${tatRange}`)
+  }
 
-        // /**
-        //  * Get QC cases
-        //  */
-        // async getQCCases(caseType: string) {
-        //   return apiService.get<Claim[]>('/claims/qc', { caseType });
-        // }
+  async getReworkClaimsByTat(tatRange: string) {
+    apiService.get(`/claims/getAllAgencyReworkCases?tatFilter=${tatRange}`)
+  }
+  
+  async getClaimsAssignedToAgencyCases() {
+    return apiService.get<any>(`/claims/getAssignedToAgencyCases`);
+  }
+  
+  async getClaimsAssignedToFOCases() {
+    return apiService.get<any>(`/claims/getAllAgencyAssignedToFO`);
+  }
 
-        // /**
-        //  * Update claim
-        //  */
-        // async updateClaim(investigationId: string, data: any) {
-        //   return apiService.put(`/claims/${investigationId}`, data);
-        // }
+  async getClaimsAssignedToAgencyCasesByTat(tatRange: string) {
+    apiService.get(`/claims/getAssignedToAgencyCases?tatFilter=${tatRange}`)
+  }
 
-        // /**
-        //  * Assign claim
-        //  */
-        // async assignClaim(investigationId: string, assignTo: string) {
-        //   return apiService.post(`/claims/${investigationId}/assign`, { assignTo });
-        // }
+  async getClaimsAssignedToFOCasesByTat(tatRange: string) {
+    apiService.get(`/claims/getAllAgencyAssignedToFO?tatFilter=${tatRange}`)
+  }
+  
+  async getClaimsAssignedToAgencyCasesReim() {
+    return apiService.get<any>(`/reclaims/getAssignedToAgencyCases`);
+  }
+  
+  async getClaimsAssignedToFOCasesReim() {
+    return apiService.get<any>(`/reclaims/getAllAgencyAssignedToFO`);
+  }
 
-        // /**
-        //  * Get claim statistics
-        //  */
-        // async getClaimStatistics() {
-        //   return apiService.get<{
-        //     totalClaims: number;
-        //     totalAmount: number;
-        //     avgTAT: number;
-        //     byStatus: Record<string, number>;
-        //   }>('/claims/statistics');
-        // }
+  async getClaimsAssignedToAgencyCasesByTatReim(tatRange: string) {
+    apiService.get(`/reclaims/getAssignedToAgencyCases?tatFilter=${tatRange}`)
+  }
 
-        // /**
-        //  * Export claims to Excel
-        //  */
-        // async exportClaims(filters: any) {
-        //   return apiService.downloadFile('/claims/export', 'claims-export.xlsx', filters);
-        // }
-      }
+  async getClaimsAssignedToFOCasesByTatReim(tatRange: string) {
+    apiService.get(`/reclaims/getAllAgencyAssignedToFO?tatFilter=${tatRange}`)
+  }
 
-      // Export singleton instance
-      export const claimsService = new ClaimsService();
 
-      // Export class
-      export default ClaimsService;
+  /**
+   * Get all claims assigned to self
+   */
+  // async getAllAssignedToSelf() {
+  //   return apiService.get<Claim[]>('/claims/assigned-to-self');
+  // }
+
+  // /**
+  //  * Get claim by investigation ID
+  //  */
+  // async getClaimByInvestigationId(investigationId: string) {
+  //   return apiService.get<Claim>(`/claims/${investigationId}`);
+  // }
+
+  // /**
+  //  * Get fresh cases
+  //  */
+  // async getFreshCases(caseType: string) {
+  //   return apiService.get<Claim[]>('/claims/fresh', { caseType });
+  // }
+
+  // /**
+  //  * Get on field cases
+  //  */
+  // async getOnFieldCases(caseType: string) {
+  //   return apiService.get<Claim[]>('/claims/on-field', { caseType });
+  // }
+
+  // /**
+  //  * Get completed cases
+  //  */
+  // async getCompletedCases(caseType: string) {
+  //   return apiService.get<Claim[]>('/claims/completed', { caseType });
+  // }
+
+  // /**
+  //  * Get QC cases
+  //  */
+  // async getQCCases(caseType: string) {
+  //   return apiService.get<Claim[]>('/claims/qc', { caseType });
+  // }
+
+  // /**
+  //  * Update claim
+  //  */
+  // async updateClaim(investigationId: string, data: any) {
+  //   return apiService.put(`/claims/${investigationId}`, data);
+  // }
+
+  // /**
+  //  * Assign claim
+  //  */
+  // async assignClaim(investigationId: string, assignTo: string) {
+  //   return apiService.post(`/claims/${investigationId}/assign`, { assignTo });
+  // }
+
+  // /**
+  //  * Get claim statistics
+  //  */
+  // async getClaimStatistics() {
+  //   return apiService.get<{
+  //     totalClaims: number;
+  //     totalAmount: number;
+  //     avgTAT: number;
+  //     byStatus: Record<string, number>;
+  //   }>('/claims/statistics');
+  // }
+
+  // /**
+  //  * Export claims to Excel
+  //  */
+  // async exportClaims(filters: any) {
+  //   return apiService.downloadFile('/claims/export', 'claims-export.xlsx', filters);
+  // }
+}
+
+// Export singleton instance
+export const claimsService = new ClaimsService();
+
+// Export class
+export default ClaimsService;

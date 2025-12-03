@@ -104,7 +104,7 @@ const DeniedByRegionalReim: React.FC = () => {
     },
     {
       field: 'sbigClaimNo',
-      headerName: 'SBIG Claim No',
+      headerName: 'Claim No',
       width: 150,
     },
     {

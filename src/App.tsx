@@ -31,6 +31,18 @@ import AgencyDeniedFormTabs from './pages/AgencyDeniedFormTabs/AgencyDeniedFormT
 import AssignedToSelf from './pages/AssignedToSelfComponent/assigned-to-self.component';
 import CentralAssignedToRegionalTabs from './pages/CentralAssignedToRegionalTabs/CentralAssignedToRegionalTabs';
 import CentralAssignedAgencyTabs from './pages/CentralAssignedToAgencyTabs/CentralAssignedToAgencyTabs';
+import AssignedSelfForms from './pages/AssignedSelfForms/AssignedSelfForms';
+import RegionalCompletedForms from './pages/RegionalCompletedCase/RegionalCompletedCase';
+import CentralCompletedForm from './pages/CentralCompletedForm/CentralCompletedForm';
+import CompletedCaseNotInvestigated from './pages/CompletedCaseNotInvestigated/CompletedCaseNotInvestigated';
+import CompletedInvestigationCompleted from './pages/CentralInvestigationCompleted/CentralInvestigationCompleted';
+import RegionalCompletedForm from './pages/RegionalCompletedForm/RegionalCompletedForm';
+import FieldReassignedCases from './pages/FieldReassignedCases/fieldReassignedCases';
+import RegionalReassignForm from './pages/FieldReassignedForm/FieldReassignedForm';
+import FieldReworkCases from './pages/FieldReworkCases/FieldReworkCases';
+import RegionalReworkTabs from './pages/RegionalReworkTabs/RegionalReworkTabs';
+import FieldAssignedToAgency from './pages/FieldAssignedToAgency/FieldAssignedToAgency';
+import AssignToAgencyDetailsTabs from './pages/AssignToAgencyDetailsTabs/AssignToAgencyDetailsTabs';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -83,6 +95,11 @@ function App() {
             <Route path="admin/freshNewCases" element={<FreshInvestigation />} />
             <Route path="admin/freshAgencyDeniedCases" element={<AgencyDeniedCases />} />
             <Route path="admin/fieldAssignedToSelf" element={<AssignedToSelf />} />
+            <Route path="admin/completedCaseNotInvestigated" element={<CompletedCaseNotInvestigated />} />
+            <Route path="admin/completedInvestigationCompleted" element={<CompletedInvestigationCompleted />} />
+            <Route path="admin/fieldReassignedCases" element={<FieldReassignedCases />} />
+            <Route path="admin/fieldReworkCases" element={<FieldReworkCases />} />
+            <Route path="admin/fieldAssignedToAgency" element={<FieldAssignedToAgency />} />
             <Route
               path="admin/central-new-cases/:investigationId"
               element={<CentralNewCasesTabs />}
@@ -102,6 +119,34 @@ function App() {
             <Route
               path="admin/central-assign-agency/:investigationId"
               element={<CentralAssignedAgencyTabs />}
+            />
+            <Route
+              path="admin/assigned-self-form/:investigationId"
+              element={<AssignedSelfForms />}
+            />
+            <Route
+              path="admin/regional-case-not-inv-form/:investigationId"
+              element={<RegionalCompletedForms />}
+            />
+            <Route
+              path="admin/central-completed-form/:investigationId"
+              element={<CentralCompletedForm />}
+            />
+            <Route
+              path="admin/regional-completed-form/:investigationId"
+              element={<RegionalCompletedForm />}
+            />
+            <Route
+              path="admin/regional-reassign-form/:investigationId"
+              element={<RegionalReassignForm />}
+            />
+            <Route
+              path="admin/regional-rework-form/:investigationId"
+              element={<RegionalReworkTabs />}
+            />
+            <Route
+              path="admin/assignedAgencyCashlessDetails/:investigationId"
+              element={<AssignToAgencyDetailsTabs />}
             />
             <Route path="" element={<Navigate to="/dashboard" replace />} />
           </Route>

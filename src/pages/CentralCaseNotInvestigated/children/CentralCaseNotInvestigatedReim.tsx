@@ -58,7 +58,7 @@ const CentralCaseNotInvestigatedReim: React.FC = () => {
   const fetchClaims = async () => {
     setLoading(true);
     try {
-      const response = await claimsService.getAllAssignedToReim();
+      const response = await claimsService.fetchAllCentralCaseNotInvestigatedReim();
       if (response.statusCode === 0) {
         setClaims(response.payload);
       }
@@ -70,15 +70,7 @@ const CentralCaseNotInvestigatedReim: React.FC = () => {
   };
 
   const handleViewClick = (investigationID: string, claim: Claim) => {
-    navigate(`/admin/assigned-self-form/${investigationID}`, {
-      state: {
-        redirectTo: location.pathname,
-        claimsType: 'reim',
-        claimNo: claim.tpaClaimNo,
-        sbigclaimno: claim.sbigClaimNo,
-        acceptAssignId: claim.acceptAssignId,
-      },
-    });
+    navigate(`/admin/regional-case-not-inv-form/${investigationID}?redirectTo=${location.pathname}&claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`)
   };
 
   const getTatColor = (tat: number): string => {
@@ -112,7 +104,7 @@ const CentralCaseNotInvestigatedReim: React.FC = () => {
     },
     {
       field: 'sbigClaimNo',
-      headerName: 'SBIG Claim No',
+      headerName: 'Claim No',
       width: 150,
     },
     {

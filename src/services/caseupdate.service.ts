@@ -17,6 +17,15 @@ export const caseUpdateService = {
      */
     addCaseUpdateFinal: (caseUpdateId: string | null, investigationId: string) =>
         apiService.post(`/activecase/caseUpdateFinal?investigationId=${investigationId}&activeCaseID=${caseUpdateId}`),
+    
+    addCaseUpdateHospital: (payload:any, invId:string) =>
+        apiService.post(`/activecase/addCaseUpdateAnyOtherObservation?investigationId=${invId}`, payload),
+    
+    addCaseUpdate: (payload:any, invId:string) =>
+        apiService.post(`/activecase/addCaseUpdate?investigationId=${invId}`, payload),
+    
+    addCaseUpdateFindings: (payload:any, invId:string) =>
+        apiService.post(`/activecase/addCaseUpdateAnyOtherObservation?investigationId=${invId}`, payload),
 
     /**
      * Get case update by ID

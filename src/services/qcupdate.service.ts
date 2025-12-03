@@ -1,5 +1,91 @@
 import { apiService } from './api.service';
 
+
+export interface QCUpdateField {
+  fieldName: string;
+  oldValue: string;
+  newValue: string;
+  reason: string;
+}
+
+export interface QCObservation {
+  observationType: string;
+  findings: string;
+  recommendations: string;
+}
+
+export interface QCChecklist {
+  checklistItemId: string;
+  status: 'compliant' | 'non-compliant' | 'na';
+  remarks: string;
+}
+
+export interface GroundOfRejection {
+  code: string;
+  description: string;
+  category: string;
+}
+
+export interface RecommendationToCentralQC {
+  policyCancellation: boolean | null;
+  hospitalBlacklisted: boolean | null;
+  hospitalDepanelled: boolean | null;
+  hospitalCautionTagged: boolean | null;
+  insuredBlacklisted: boolean | null;
+  insuredCautionTagged: boolean | null;
+  policyFraud: boolean | null;
+  treatingDoctorFraud: boolean | null;
+  pathologistFraud: boolean | null;
+  chemistFraud: boolean | null;
+  pathologyLabFraud: boolean | null;
+  corporateFraud: boolean | null;
+  legalAction: boolean | null;
+}
+
+export interface QCSubmitData {
+  // Main QC Observations
+  qcObservations: string;
+  finalDecision?: string;
+
+  // Queries and Remarks
+  queryRM?: string;
+  queryCM?: string;
+  centralQuery?: string;
+  payableRemarks?: string;
+  lowminiremarks?: string;
+  queryRemark?: string;
+  queryTxt?: string;
+  repadiateRemarks?: string;
+  suspectedCaseFindings?: string;
+
+  // Ground of Rejection
+  groundOfRejection?: string[];
+  groundOfRejectionFraud?: string[];
+  groundOfRejectionExclusion?: string[];
+  groundOfRejectionMisrepresentation?: string[];
+
+  // Recommendation to Central QC
+  recommendationToCentralQC?: RecommendationToCentralQC;
+
+  // Reassignment
+  agencyCode?: string;
+  userCodeForRegionalManager?: string;
+  prevInvestigatorReport?: boolean;
+  acceptInstruction?: string;
+  documentsCodes?: string[];
+
+  // Questions
+  selectedForInseredQues?: string[];
+  customForInsuredQuestionList?: any[];
+  selectedTreatingdctrInseredQues?: string[];
+  customForTreatingDoctorQuestionList?: any[];
+
+  // Metadata
+  qcUpdateID?: string;
+  investigationId: string;
+  claimType?: string;
+}
+
 /**
  * QC Update Service
  * Handles Quality Check (QC) update operations for investigations
@@ -218,6 +304,12 @@ export const QCUpdateService = {
   lockQcUpdate: (investigationId: string, qcUpdateId: string) =>
     apiService.post(`/qc-update/lock/${investigationId}/${qcUpdateId}`),
 
+  qcUpdateFinalReim: (invId: string, qcupdateId: string, acceptAssignId: string) =>
+    apiService.post(`/qcupdate/reqcUpdateFinal?investigationId=${invId.split('-')[0]}&qcUpdateID=${qcupdateId}&acceptAssignId=${acceptAssignId}`),
+  
+  qcUpdateFinal: (invId: string, qcupdateId: string) =>
+    apiService.post(`/qcupdate/qcUpdateFinal?investigationId=${invId.split('-')[0]}&qcUpdateID=${qcupdateId}`),
+
   /**
    * Unlock QC update
    * @param investigationId - Investigation ID
@@ -243,6 +335,171 @@ export const QCUpdateService = {
    */
   submitBulkQcUpdates: (updates: Array<{ investigationId: string; data: any }>) =>
     apiService.post('/qc-update/bulk-submit', { updates }),
+
+
+  /**
+   * Get Ground of Rejection - Main
+   */
+  getGroundOfRejection: async () => {
+    const response = await apiService.get('/dropdowns/ground-of-rejection');
+    return response;
+  },
+
+  /**
+   * Get Ground of Rejection - Fraud
+   */
+  getGroundOfRejectionFraud: async () => {
+    const response = await apiService.get('/dropdowns/ground-of-rejection-fraud');
+    return response;
+  },
+
+  /**
+   * Get Ground of Rejection - Exclusion
+   */
+  getGroundOfRejectionExclusion: async () => {
+    const response = await apiService.get('/dropdowns/ground-of-rejection-exclusion');
+    return response;
+  },
+
+  /**
+   * Get Ground of Rejection - Misrepresentation
+   */
+  getGroundOfRejectionMisrepresentation: async () => {
+    const response = await apiService.get('/dropdowns/ground-of-rejection-misrepresentation');
+    return response;
+  },
+
+  /**
+   * Get Pending QC Updates
+   */
+  getPendingQcUpdates: async (page: number = 1, limit: number = 10) => {
+    const response = await apiService.get(
+      `/qc-update/pending?page=${page}&limit=${limit}`
+    );
+    return response;
+  },
+
+  /**
+   * Get Completed QC Updates
+   */
+  getCompletedQcUpdates: async (page: number = 1, limit: number = 10) => {
+    const response = await apiService.get(
+      `/qc-update/completed?page=${page}&limit=${limit}`
+    );
+    return response;
+  },
+
+  /**
+   * Search QC Updates
+   */
+  searchQcUpdates: async (searchTerm: string) => {
+    const response = await apiService.get(
+      `/qc-update/search?q=${encodeURIComponent(searchTerm)}`
+    );
+    return response;
+  },
+
+  /**
+   * Reassign from QC
+   */
+  reassignFromQC: async (data: {
+    investigationId: string;
+    agencyCode?: string;
+    userCode?: string;
+    prevInvestigatorReport?: boolean;
+    instructions?: string;
+    documentsCodes?: string[];
+    selectedForInseredQues?: string[];
+    customForInsuredQuestionList?: any[];
+    selectedTreatingdctrInseredQues?: string[];
+    customForTreatingDoctorQuestionList?: any[];
+  }) => {
+    const response = await apiService.post('/qc-update/reassign', data);
+    return response;
+  },
+
+  /**
+   * Submit Recommendation to Central QC
+   */
+  submitRecommendationToCentralQC: async (
+    investigationId: string,
+    recommendations: RecommendationToCentralQC
+  ) => {
+    const response = await apiService.post(
+      `/qc-update/${investigationId}/recommendations`,
+      recommendations
+    );
+    return response;
+  },
+
+  /**
+   * Get Recommendation to Central QC
+   */
+  getRecommendationToCentralQC: async (investigationId: string) => {
+    const response = await apiService.get(
+      `/qc-update/${investigationId}/recommendations`
+    );
+    return response;
+  },
+
+  /**
+   * Export QC Report
+   */
+  exportQcReport: async (investigationId: string, format: 'pdf' | 'excel') => {
+    const response = await apiService.get(
+      `/qc-update/${investigationId}/export?format=${format}`,
+      { responseType: 'blob' }
+    );
+    return response;
+  },
+
+  /**
+   * Bulk QC Update
+   */
+  bulkQcUpdate: async (updates: Array<{ investigationId: string; data: any }>) => {
+    const response = await apiService.post('/qc-update/bulk', { updates });
+    return response;
+  },
+
+  /**
+   * Get QC Performance Metrics
+  */
+  getQcPerformanceMetrics: async (userId: string, startDate: string, endDate: string) => {
+    const response = await apiService.get(
+      `/qc-update/performance/${userId}?startDate=${startDate}&endDate=${endDate}`
+    );
+    return response;
+  },
+
+  addQCObservations: async (payload: any, invId: string, docsUpload: any) => {
+    const response = await apiService.post(`qcupdate/addQCUpdateObservation?investigationId=${invId.split('-')[0]}&documentIds=${docsUpload}`, payload);
+    return response;
+  },
+
+  getGroundDetails: async () => {
+    const response = await apiService.get(
+      `qcupdate/getGroundDetails`
+    );
+    return response;
+  },
+  getGroundFraudDetails: async () => {
+    const response = await apiService.get(
+      `qcupdate/getGroundFraudDetails`
+    );
+    return response;
+  },
+  getGroundExclusionDetails: async () => {
+    const response = await apiService.get(
+      `qcupdate/getGroundExclusionDetails`
+    );
+    return response;
+  },
+  getMisrepresentationFraudDetails: async () => {
+    const response = await apiService.get(
+      `qcupdate/getMisrepresentationFraudDetails`
+    );
+    return response;
+  },
 };
 
 export default QCUpdateService;

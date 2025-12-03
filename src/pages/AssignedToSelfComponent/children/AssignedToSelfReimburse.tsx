@@ -47,7 +47,7 @@ const AssignedToSelfReimburse: React.FC = () => {
     const location = useLocation();
 
     // Get TAT dropdown items for reimbursement
-    const tatDropdownItems = fetchMenuService.getReimbursementDropDownItems();
+    const tatDropdownItems = fetchMenuService.getReimDropDownItems();
 
     useEffect(() => {
         fetchAssignedReimCases();
@@ -106,7 +106,7 @@ const AssignedToSelfReimburse: React.FC = () => {
     };
 
     const getTatColor = (tat: number): string => {
-        return fetchMenuService.getTatColorHex(tat, 'reimbursement');
+        return fetchMenuService.getReimHexColor(tat);
     };
 
     const formatCurrency = (amount: number): string => {
@@ -147,7 +147,7 @@ const AssignedToSelfReimburse: React.FC = () => {
                 </Typography>
             ),
         },
-        { field: 'sbigClaimNo', headerName: 'SBIG Claim No', width: 140 },
+        { field: 'sbigClaimNo', headerName: 'Claim No', width: 140 },
         { field: 'tpaClaimNo', headerName: 'TPA Claim No', width: 140 },
         { field: 'tpaName', headerName: 'TPA Name', width: 150 },
         { field: 'proposerName', headerName: 'Proposer Name', width: 150 },

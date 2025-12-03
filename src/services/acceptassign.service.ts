@@ -99,14 +99,14 @@ export const AcceptAssignService = {
 
     getAssignUsers: () =>
         apiService.get(`/user/getUsersByRegionByUserCode`),
-    
+
     getRegionalUsers: () =>
         apiService.get(`/user/getAllRegionalUsers`),
 
-    reimAssign: (acceptAssignDetails:any, docsId:string[]) =>
+    reimAssign: (acceptAssignDetails: any, docsId: string[]) =>
         apiService.post('/accept-assign/acceptReimbursementAssign"?documentIds=' + docsId, acceptAssignDetails),
 
-    reimAgencyAssign: (acceptAssignDetails:any, docsId:string[]) =>
+    reimAgencyAssign: (acceptAssignDetails: any, docsId: string[]) =>
         apiService.post('/accept-assign/acceptReimbursementAgencyAssign"?documentIds=' + docsId, acceptAssignDetails),
     /**
      * Get accept assignment details
@@ -215,6 +215,68 @@ export const AcceptAssignService = {
         status?: string;
     }) =>
         apiService.get('/accept-assign/completed', { params: filters }),
+
+    /**
+* Get users that can be assigned to
+* @returns Promise with assign users list
+*/
+    // getAssignUsers: () =>
+    //     apiService.get('/accept-assign/users'),
+
+    /**
+     * Get regional team members
+     * @returns Promise with regional users list
+     */
+    // getRegionalUsers: () =>
+    //     apiService.get('/accept-assign/regional-users'),
+
+    /**
+     * Assign case (cashless)
+     * @param acceptRequest - Accept request data
+     * @param documentCodes - Array of document IDs
+     * @returns Promise with assign result
+     */
+    // assign: (acceptRequest: any, documentCodes: string[]) =>
+    //     apiService.post('/accept-assign/assign', {
+    //         ...acceptRequest,
+    //         documentCodes,
+    //     }),
+
+    /**
+     * Assign to Field Officer (Agency Spoc - cashless)
+     * @param acceptRequest - Accept request data
+     * @param documentCodes - Array of document IDs
+     * @returns Promise with assign result
+     */
+    // assignFO: (acceptRequest: any, documentCodes: string[]) =>
+    //     apiService.post('/accept-assign/assign-fo', {
+    //         ...acceptRequest,
+    //         documentCodes,
+    //     }),
+
+    /**
+     * Assign reimbursement case
+     * @param acceptRequest - Accept request data
+     * @param documentCodes - Array of document IDs
+     * @returns Promise with assign result
+     */
+    // reimAssign: (acceptRequest: any, documentCodes: string[]) =>
+    //     apiService.post('/accept-assign/reim-assign', {
+    //         ...acceptRequest,
+    //         documentCodes,
+    //     }),
+
+    /**
+     * Assign reimbursement case (Agency)
+     * @param acceptRequest - Accept request data
+     * @param documentCodes - Array of document IDs
+     * @returns Promise with assign result
+     */
+    // reimAgencyAssign: (acceptRequest: any, documentCodes: string[]) =>
+    //     apiService.post('/accept-assign/reim-agency-assign', {
+    //         ...acceptRequest,
+    //         documentCodes,
+    //     }),
 };
 
 export default AcceptAssignService;

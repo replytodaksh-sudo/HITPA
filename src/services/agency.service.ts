@@ -50,6 +50,31 @@ export const agencyService = {
 
     fetchAllFieldOfficer: () =>
         apiService.get('/field-officers'),
+
+    // fetchAllAgency: () =>
+    //     apiService.get('/agencies'),
+
+    /**
+     * Get system suggested agencies based on rules
+     * @returns Promise with suggested agencies
+     */
+    // getSystemSuggestedAgency: () =>
+    //     apiService.get('/agencies/system-suggested'),
+
+    /**
+     * Get all field officers
+     * @returns Promise with field officers list
+     */
+    // fetchAllFieldOfficer: () =>
+    //     apiService.get('/agencies/field-officers'),
+
+    /**
+     * Get performance index for agency/user
+     * @param agencyCode - Agency code or user code
+     * @returns Promise with performance metrics
+     */
+    // getPerformanceIndex: (agencyCode: string) =>
+    //     apiService.get(`/agencies/performance-index/${agencyCode}`),
 };
 
 // src/services/dropdown.service.ts
@@ -91,6 +116,18 @@ export const dropdownService = {
 
     getDenyReasons: (investigationId: string) =>
         apiService.get(`/claims/getClaimsDataByInvClaimIdDenied/${investigationId}`),
+
+    getRecomendation: () =>
+        apiService.get('codeMaster/getCode/recommendation', { responseType: "json" }),
+
+    getRepudiationGrounds: () =>
+        apiService.get('codeMaster/getCode/repudiationGrounds', { responseType: "json" }),
+
+    getFraudClaimReason: () =>
+        apiService.get('claims/getFraudClaimReasons', { responseType: "json" }),
+
+    getFraudClaimEvedance: () =>
+        apiService.get('claims/getFraudEvidences', { responseType: "json" }),
 
 };
 

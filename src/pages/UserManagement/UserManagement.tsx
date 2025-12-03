@@ -602,7 +602,7 @@ const UserManagement: React.FC = () => {
             <Grid size={{ xs: 12, md: 6 }}>
               <TextField
                 fullWidth
-                label={displaySec === 'agencySec' ? 'Agency EMP ID' : 'SBIG EMP ID'}
+                label={displaySec === 'agencySec' ? 'Agency EMP ID' : 'EMP ID'}
                 required
                 value={formData.sbigEmpId}
                 onChange={(e) => setFormData({ ...formData, sbigEmpId: e.target.value })}

@@ -14,6 +14,8 @@ import { ReimService } from '../../../services/reim.service';
 // import HospitalVerifications from './HospitalVerifications';
 // import InsuredVerification from './InsuredVerification';
 import EmployerVerification from './EmployerVerification';
+import HospitalVerifications from './HospitalVerification';
+import InsuredVerification from './InsuredVerification';
 
 interface ReimburseCaseUpdateProps {
     buttonEnable?: boolean;
@@ -124,14 +126,10 @@ const ReimburseCaseUpdate: React.FC<ReimburseCaseUpdateProps> = ({
             tabs.push({
                 label: 'Hospital Verification',
                 component: (
-                    <EmployerVerification
+                    <HospitalVerifications
                         buttonEnable={buttonEnable}
                         previousData={previousData}
                     />
-                    // <HospitalVerifications
-                    //     buttonEnable={buttonEnable}
-                    //     previousData={previousData}
-                    // />
                 ),
             });
         }
@@ -140,15 +138,11 @@ const ReimburseCaseUpdate: React.FC<ReimburseCaseUpdateProps> = ({
             tabs.push({
                 label: 'Insured Verification',
                 component: (
-                    <EmployerVerification
+                      <InsuredVerification
                         buttonEnable={buttonEnable}
                         previousData={previousData}
-                    />
-                    //   <InsuredVerification
-                    //     buttonEnable={buttonEnable}
-                    //     previousData={previousData}
-                    //     onChangeTab={handleChangeTab}
-                    //   />
+                        onChangeTab={handleChangeTab}
+                      />
                 ),
             });
         }

@@ -13,8 +13,8 @@ import {
   Payment as PaymentIcon,
   Receipt as ReceiptIcon,
 } from '@mui/icons-material';
-import CentralInvestigationCompletedReim from './children/CentralInvestigationCompletedReim';
-import CentralInvestigationCompletedCashless from './children/CentralInvestigationCompletedCashless';
+import CompletedInvestigationCompletedReim from './children/CentralInvestigationCompletedReim';
+import CompletedInvestigationCompletedCashless from './children/CentralInvestigationCompletedCashless';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -35,7 +35,7 @@ const TabPanel: React.FC<TabPanelProps> = ({ children, value, index }) => {
   );
 };
 
-const CentralInvestigationCompleted: React.FC = () => {
+const CompletedInvestigationCompleted: React.FC = () => {
   const theme = useTheme();
   const [activeTab, setActiveTab] = useState(0);
 
@@ -121,10 +121,10 @@ const CentralInvestigationCompleted: React.FC = () => {
           {/* Tab Content */}
           <Box sx={{ px: 3, pb: 3 }}>
             <TabPanel value={activeTab} index={0}>
-              <CentralInvestigationCompletedCashless />
+              <CompletedInvestigationCompletedCashless />
             </TabPanel>
             <TabPanel value={activeTab} index={1}>
-              <CentralInvestigationCompletedReim />
+              <CompletedInvestigationCompletedReim />
             </TabPanel>
           </Box>
         </CardContent>
@@ -133,4 +133,4 @@ const CentralInvestigationCompleted: React.FC = () => {
   );
 };
 
-export default CentralInvestigationCompleted;
+export default CompletedInvestigationCompleted;

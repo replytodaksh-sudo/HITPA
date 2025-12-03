@@ -76,8 +76,8 @@ const AgencyDeniedAcceptDeny: React.FC<AgencyDeniedAcceptDenyProps> = ({
   const fetchClaimDetails = async () => {
     try {
       const response:any = await claimsService.claimDetails(investigationId);
-      if (response.data.statusCode === 0) {
-        setInvestigationType(response.data.payload.investigationType);
+      if (response.statusCode === 0) {
+        setInvestigationType(response.payload.investigationType);
       }
     } catch (err) {
       console.error('Failed to fetch claim details:', err);

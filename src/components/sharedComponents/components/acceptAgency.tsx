@@ -404,9 +404,9 @@ import DocumentUpload from './DocumentUpload';
 import QuestionnaireSection from './QuestionnaireSection';
 
 interface AcceptAgenciesProps {
-  investigationType: string;
-  investigationSubType: string;
-  accid: string;
+  investigationType?: string;
+  investigationSubType?: string;
+  accid?: string;
 }
 
 const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({

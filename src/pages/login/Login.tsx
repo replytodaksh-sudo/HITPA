@@ -491,7 +491,7 @@ const Login: React.FC = () => {
             textShadow: '0 2px 4px rgba(0,0,0,0.2)',
           }}
         >
-          © 2021 SBI General Insurance Company Limited | All Rights Reserved.
+          © 2021 General Insurance Company Limited | All Rights Reserved.
         </Typography>
       </Container>
 

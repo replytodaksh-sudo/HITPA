@@ -16,10 +16,10 @@ import AcceptInternalTeam from './AcceptInternalTeam';
 
 interface AcceptDenyProps {
   claimType: string;
-  accid: string;
-  invsid: string;
-  invesType: string;
-  invesSubType: string;
+  accid?: string;
+  invsid?: string;
+  invesType?: string;
+  invesSubType?: string;
 }
 
 const AcceptDeny: React.FC<AcceptDenyProps> = ({
@@ -70,15 +70,6 @@ console.log("roleName", roleName, claimType)
                 value="1"
                 control={<Radio />}
                 label="Accept & Assign to Agency for investigation"
-                sx={{ mb: 2 }}
-              />
-            )}
-            
-            {shouldShowOption(['Regional Manager'], ['cashless']) && (
-              <FormControlLabel
-                value="2"
-                control={<Radio />}
-                label="Accept & Assign to interal team for investigation"
                 sx={{ mb: 2 }}
               />
             )}

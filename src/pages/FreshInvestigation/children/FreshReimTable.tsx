@@ -122,7 +122,7 @@ const FreshReimTable: React.FC = () => {
         </Box>
       ),
     },
-    { field: 'sbigClaimNo', headerName: 'SBIG Claim No', width: 140 },
+    { field: 'sbigClaimNo', headerName: 'Claim No', width: 140 },
     { field: 'tpaClaimNo', headerName: 'TPA Claim No', width: 140 },
     { field: 'tpaName', headerName: 'TPA Name', width: 150 },
     {

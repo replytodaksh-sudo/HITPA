@@ -146,7 +146,7 @@ const CentralAssignedAgencyTabs: React.FC = () => {
                         </Grid>
                         <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: { xs: 'left', md: 'center' } }}>
                             <Typography variant="body1">
-                                <strong>SBIG Claim No:</strong> {sbiClaimNo}
+                                <strong>Claim No:</strong> {sbiClaimNo}
                             </Typography>
                         </Grid>
                         <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: { xs: 'left', md: 'right' } }}>

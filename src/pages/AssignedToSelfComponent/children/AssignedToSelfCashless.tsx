@@ -105,7 +105,7 @@ const AssignedToSelfCashless: React.FC = () => {
     };
 
     const getTatColor = (tat: number): string => {
-        return fetchMenuService.getTatColorHex(tat, 'cashless');
+        return fetchMenuService.getCashlessHexColor(tat);
     };
 
     const formatCurrency = (amount: number): string => {
@@ -142,7 +142,7 @@ const AssignedToSelfCashless: React.FC = () => {
                 </Typography>
             ),
         },
-        { field: 'sbigClaimNo', headerName: 'SBIG Claim No', width: 140 },
+        { field: 'sbigClaimNo', headerName: 'Claim No', width: 140 },
         { field: 'tpaClaimNo', headerName: 'TPA Claim No', width: 140 },
         { field: 'tpaName', headerName: 'TPA Name', width: 150 },
         { field: 'proposerName', headerName: 'Proposer Name', width: 150 },
