@@ -128,6 +128,15 @@ export const dropdownService = {
 
     getFraudClaimEvedance: () =>
         apiService.get('claims/getFraudEvidences', { responseType: "json" }),
+    
+    getAllEvidenceSupporting: () =>
+        apiService.get('claims/getFraudEvidences', { responseType: "json" }),
+    
+    getAllPrimaryDiscrepancy: () =>
+        apiService.get('claims/getFraudEvidences', { responseType: "json" }),
+    
+    getSecondaryDiscrepancy: (primaryId: string) =>
+        apiService.get(`claims/getFraudEvidences/${primaryId}`, { responseType: "json" }),
 
 };
 

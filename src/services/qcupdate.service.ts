@@ -245,6 +245,18 @@ export const QCUpdateService = {
       isInternal,
     }),
 
+  getRegQCUpdateData: (
+    invId: string,
+    role: any,
+  ) =>
+    apiService.post(`/qcupdate/addQCUpdate?investigationId=${invId}&role=${role}`),
+
+  addQCUpdate: (
+    qcUpdateModel: any,
+    invId: string,
+  ) =>
+    apiService.post(`/qcupdate/addQCUpdate?investigationId=${invId}`, qcUpdateModel),
+
   /**
    * Get QC comments
    * @param investigationId - Investigation ID
@@ -306,7 +318,7 @@ export const QCUpdateService = {
 
   qcUpdateFinalReim: (invId: string, qcupdateId: string, acceptAssignId: string) =>
     apiService.post(`/qcupdate/reqcUpdateFinal?investigationId=${invId.split('-')[0]}&qcUpdateID=${qcupdateId}&acceptAssignId=${acceptAssignId}`),
-  
+
   qcUpdateFinal: (invId: string, qcupdateId: string) =>
     apiService.post(`/qcupdate/qcUpdateFinal?investigationId=${invId.split('-')[0]}&qcUpdateID=${qcupdateId}`),
 

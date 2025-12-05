@@ -58,7 +58,7 @@ const AgencyDeniedCasesReim: React.FC = () => {
   const fetchClaims = async () => {
     setLoading(true);
     try {
-      const response = await claimsService.getAllAssignedToReim();
+      const response = await claimsService.fetchAgencyDeniedCasesReim();
       if (response.statusCode === 0) {
         setClaims(response.payload);
       }

@@ -261,6 +261,118 @@ class ClaimsService {
   async getClaimsAssignedToFOCasesByTatReim(tatRange: string) {
     apiService.get(`/reclaims/getAllAgencyAssignedToFO?tatFilter=${tatRange}`)
   }
+  
+  async getClaimsRegionalSelfDeniedCasesReim() {
+    return apiService.get<any>(`/reclaims/getAllRegionalDeniedCases`);
+  }
+  
+  async getClaimsAgencySelfDeniedCasesReim() {
+    return apiService.get<any>(`/reclaims/getAllAgencySelfDeniedCases`);
+  }
+
+  async getClaimsRegionalSelfDeniedCasesByTatReim(tatRange: string) {
+    apiService.get(`/reclaims/getAllRegionalDeniedCases?tatFilter=${tatRange}`)
+  }
+
+  async getClaimsAgencySelfDeniedCasesByTatReim(tatRange: string) {
+    apiService.get(`/reclaims/getAllAgencySelfDeniedCases?tatFilter=${tatRange}`)
+  }
+  
+  async getClaimsRegionalSelfDeniedCases() {
+    return apiService.get<any>(`/claims/getAllRegionalDeniedCases`);
+  }
+  
+  async getClaimsAgencySelfDeniedCases() {
+    return apiService.get<any>(`/claims/getAllAgencySelfDeniedCases`);
+  }
+
+  async getClaimsRegionalSelfDeniedCasesByTat(tatRange: string) {
+    apiService.get(`/claims/getAllRegionalDeniedCases?tatFilter=${tatRange}`)
+  }
+  
+  async getClaimsAgencySelfDeniedCasesByTat(tatRange: string) {
+    apiService.get(`/claims/getAllAgencySelfDeniedCases?tatFilter=${tatRange}`)
+  }
+  
+  async fetchCentralMandatedCases() {
+    return apiService.get<any>(`/claims/getAllCentralMandatedCases`);
+  }
+
+  async fetchCentralMandatedCasesByTat(tatRange: string) {
+    apiService.get(`/claims/getAllCentralMandatedCases?tatFilter=${tatRange}`)
+  }
+  
+  async fetchCentralMandatedCasesReim() {
+    return apiService.get<any>(`/reclaims/getAllCentralMandatedCases`);
+  }
+
+  async fetchCentralMandatedCasesByTatReim(tatRange: string) {
+    apiService.get(`/reclaims/getAllCentralMandatedCases?tatFilter=${tatRange}`)
+  }
+  
+  async fetchAgencyDeniedCases() {
+    return apiService.get<any>(`/claims/getAllAgencyDeniedCases`);
+  }
+
+  async fetchAgencyDeniedCasesByTat(tatRange: string) {
+    apiService.get(`/claims/getAllAgencyDeniedCases?tatFilter=${tatRange}`)
+  }
+  
+  async fetchAgencyDeniedCasesReim() {
+    return apiService.get<any>(`/reclaims/getAllAgencyDeniedCases`);
+  }
+
+  async fetchAgencyDeniedCasesByTatReim(tatRange: string) {
+    apiService.get(`/reclaims/getAllAgencyDeniedCases?tatFilter=${tatRange}`)
+  }
+  
+  async fetchPendingFromCentralCashless() {
+    return apiService.get<any>(`/claims/getAllQCPendingFromCentralCases`);
+  }
+
+  async fetchPendingFromCentralCashlessByTat(tatRange: string) {
+    apiService.get(`/claims/getAllQCPendingFromCentralCases?tatFilter=${tatRange}`)
+  }
+  
+  async fetchPendingFromCentralReim() {
+    return apiService.get<any>(`/reclaims/getAllQCPendingFromCentralCases`);
+  }
+
+  async fetchPendingFromCentralByTatReim(tatRange: string) {
+    apiService.get(`/reclaims/getAllQCPendingFromCentralCases?tatFilter=${tatRange}`)
+  }
+  
+  async fetchCentralQueryCashless() {
+    return apiService.get<any>(`/claims/getAllQCCentralQueryCases`);
+  }
+
+  async fetchCentralQueryCashlessByTat(tatRange: string) {
+    apiService.get(`/claims/getAllQCCentralQueryCases?tatFilter=${tatRange}`)
+  }
+  
+  async fetchCentralQueryReim() {
+    return apiService.get<any>(`/reclaims/getAllQCCentralQueryCases`);
+  }
+
+  async fetchCentralQueryReimByTat(tatRange: string) {
+    apiService.get(`/reclaims/getAllQCCentralQueryCases?tatFilter=${tatRange}`)
+  }
+  
+  async fetchQCPendingClaimsCashless() {
+    return apiService.get<any>(`/claims/getAllQCPendingCases`);
+  }
+
+  async fetchQCPendingClaimsCashlessByTat(tatRange: string) {
+    apiService.get(`/claims/getAllQCPendingCases?tatFilter=${tatRange}`)
+  }
+  
+  async fetchQCPendingClaimsReim() {
+    return apiService.get<any>(`/reclaims/getAllQCPendingCases`);
+  }
+
+  async fetchQCPendingClaimsReimByTat(tatRange: string) {
+    apiService.get(`/reclaims/getAllQCPendingCases?tatFilter=${tatRange}`)
+  }
 
 
   /**

@@ -288,21 +288,21 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
               <InfoCard>
                 <InfoRow
                   label="Hospital Visit Done"
-                  value={payloadData.hospitalVisitDone ? 'Yes' : 'No'}
+                  value={payloadData?.hospitalVisitDone ? 'Yes' : 'No'}
                 />
                 <InfoRow
                   label="Hospital Visit (Expected DOA)"
-                  value={payloadData.expectedDateOfAdmission}
+                  value={payloadData?.expectedDateOfAdmission}
                 />
-                <InfoRow label="Treatment Planned" value={payloadData.treatmentPlanned} />
-                <InfoRow label="Estimated Bill" value={payloadData.estimatedBill} />
+                <InfoRow label="Treatment Planned" value={payloadData?.treatmentPlanned} />
+                <InfoRow label="Estimated Bill" value={payloadData?.estimatedBill} />
                 <InfoRow
                   label="Hospital Visit Reason"
-                  value={payloadData.hospitalVisitDoneReason}
+                  value={payloadData?.hospitalVisitDoneReason}
                 />
                 <InfoRow
                   label="Treating Doctor Visit"
-                  value={payloadData.treatingDoctorVisit}
+                  value={payloadData?.treatingDoctorVisit}
                 />
               </InfoCard>
             </Grid>
@@ -310,45 +310,45 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
               <InfoCard>
                 <InfoRow
                   label="Insured Visit Done"
-                  value={payloadData.insuredVisitDone ? 'Yes' : 'No'}
+                  value={payloadData?.insuredVisitDone ? 'Yes' : 'No'}
                 />
                 <InfoRow
                   label="Insured Visit (Expected DOA)"
-                  value={payloadData.insuredVisitDoneExpectedDateOfAdmission}
+                  value={payloadData?.insuredVisitDoneExpectedDateOfAdmission}
                 />
                 <InfoRow
                   label="Is Patient willingly admitted"
-                  value={payloadData.insuredVisitDoneIsPatientAdmitted}
+                  value={payloadData?.insuredVisitDoneIsPatientAdmitted}
                 />
                 <InfoRow
                   label="Treatment Planned Insured Visit"
-                  value={payloadData.insuredVisitDoneTreatmentPlanned}
+                  value={payloadData?.insuredVisitDoneTreatmentPlanned}
                 />
-                <InfoRow label="Ailment" value={payloadData.insuredVisitDoneAilment} />
+                <InfoRow label="Ailment" value={payloadData?.insuredVisitDoneAilment} />
                 <InfoRow
                   label="Presenting C/O duration"
-                  value={payloadData.insuredVisitDonePresentingDuration}
+                  value={payloadData?.insuredVisitDonePresentingDuration}
                 />
                 <InfoRow
                   label="Estimated Bill"
-                  value={payloadData.insuredVisitDoneEstimatedBill}
+                  value={payloadData?.insuredVisitDoneEstimatedBill}
                 />
                 <InfoRow
                   label="H/O any previous hospitalization"
-                  value={payloadData.insuredVisitDoneHOAnyPreviousHospitalization}
+                  value={payloadData?.insuredVisitDoneHOAnyPreviousHospitalization}
                 />
                 <InfoRow
                   label="Kyc Documents Collected"
-                  value={payloadData.kcyDocument ? 'Yes' : 'No'}
+                  value={payloadData?.kcyDocument ? 'Yes' : 'No'}
                 />
-                <InfoRow label="Reason" value={payloadData.kcyDocumentsReason} />
+                <InfoRow label="Reason" value={payloadData?.kcyDocumentsReason} />
                 <InfoRow
                   label="Withdrawal /Confirmation collected?"
-                  value={payloadData.insuredVisitDoneWithdrawalCollected}
+                  value={payloadData?.insuredVisitDoneWithdrawalCollected}
                 />
                 <InfoRow
                   label="Observations"
-                  value={payloadData.insuredVisitDoneObservations}
+                  value={payloadData?.insuredVisitDoneObservations}
                 />
               </InfoCard>
             </Grid>
@@ -361,7 +361,7 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
         <>
           <Card sx={{ mb: 3 }}>
             <CardContent>
-              <InfoRow label="Room Category" value={payloadData.roomCategory} />
+              <InfoRow label="Room Category" value={payloadData?.roomCategory} />
               <Grid container spacing={2} sx={{ py: 1 }}>
                 <Grid size={{ xs: 12, md: 3 }}>
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
@@ -369,7 +369,7 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
                   </Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 3 }}>
-                  <Typography variant="body2">INR. {payloadData.roomRent} /-</Typography>
+                  <Typography variant="body2">INR. {payloadData?.roomRent} /-</Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 2 }}>
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
@@ -378,8 +378,8 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
                 </Grid>
                 <Grid size={{ xs: 12, md: 4 }}>
                   <Typography variant="body2">
-                    {payloadData.doa
-                      ? new Date(payloadData.doa).toLocaleDateString('en-IN', {
+                    {payloadData?.doa
+                      ? new Date(payloadData?.doa).toLocaleDateString('en-IN', {
                         day: 'numeric',
                         month: 'long',
                         year: 'numeric',
@@ -391,8 +391,8 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
               <InfoRow
                 label="Expected Date of Discharge"
                 value={
-                  payloadData.expectedDateOfDischarge
-                    ? new Date(payloadData.expectedDateOfDischarge).toLocaleDateString(
+                  payloadData?.expectedDateOfDischarge
+                    ? new Date(payloadData?.expectedDateOfDischarge).toLocaleDateString(
                       'en-IN',
                       {
                         day: 'numeric',
@@ -410,7 +410,7 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
           {reasonVal !== 'notfoundhosp' && (
             <Card sx={{ mb: 3 }}>
               <CardContent>
-                <InfoRow label="Diagnosis" value={payloadData.diagnosis} fullWidth />
+                <InfoRow label="Diagnosis" value={payloadData?.diagnosis} fullWidth />
               </CardContent>
             </Card>
           )}
