@@ -81,9 +81,11 @@ const FieldReworkCasesReim: React.FC = () => {
       let response: any;
 
       if (currentRole === 'Regional Manager') {
-        response = await claimsService.getReworkClaimsRegReim();
+        // response = await claimsService.getReworkClaimsRegReim();
+        response = await claimsService.fetchAgencyDeniedCases();
       } else if (currentRole === 'Agency Spoc') {
-        response = await claimsService.getReworkClaimsReim();
+        // response = await claimsService.getReworkClaimsReim();
+        response = await claimsService.fetchAgencyDeniedCases();
       }
 
       if (response?.statusCode === 0) {
@@ -108,9 +110,11 @@ const FieldReworkCasesReim: React.FC = () => {
       let response: any;
 
       if (currentRole === 'Regional Manager') {
-        response = await claimsService.getReworkClaimsRegByTatReim(selectedTatRange);
+        // response = await claimsService.getReworkClaimsRegByTatReim(selectedTatRange);
+        response = await claimsService.fetchAgencyDeniedCasesByTat(selectedTatRange);
       } else if (currentRole === 'Agency Spoc') {
-        response = await claimsService.getReworkClaimsByTatReim(selectedTatRange);
+        response = await claimsService.fetchAgencyDeniedCasesByTat(selectedTatRange);
+        // response = await claimsService.getReworkClaimsByTatReim(selectedTatRange);
       }
 
       if (response?.statusCode === 0) {

@@ -144,17 +144,26 @@ import keycloak from '../keycloak.config';
 
 const API_BASE_URL = import.meta.env.REACT_APP_API_BASE_URL;
 
+/**
+ * Standard API Response Interface
+ */
 export interface ApiResponse<T = any> {
   statusCode: number;
   payload: T;
   message?: string;
+  error?: string;
 }
 
-export class apiService {
+/**
+ * Generic API Service
+ * All API calls should go through this service
+ * Automatically handles Keycloak token management
+ */
+class ApiServiceClass {
   /**
    * Get Authorization header with Keycloak token
    */
-  private static getAuthHeaders(): HeadersInit {
+  private getAuthHeaders(): HeadersInit {
     const token = keycloak.token;
     return {
       'Content-Type': 'application/json',
@@ -165,12 +174,12 @@ export class apiService {
   /**
    * Handle token refresh if needed
    */
-  private static async ensureValidToken(): Promise<void> {
+  private async ensureValidToken(): Promise<void> {
     try {
       // Refresh token if it expires in less than 30 seconds
       await keycloak.updateToken(30);
-      
-      // Update token in sessionStorage
+
+      // Update token in sessionStorage for backward compatibility
       if (keycloak.token) {
         sessionStorage.setItem('token', keycloak.token);
       }
@@ -182,112 +191,398 @@ export class apiService {
   }
 
   /**
-   * Generic GET request
+   * Build full URL with query parameters
    */
-  static async get<T = any>(endpoint: string): Promise<ApiResponse<T>> {
+  private buildUrl(endpoint: string, params?: Record<string, any>): string {
+    const url = new URL(`${API_BASE_URL}${endpoint}`);
+
+    if (params) {
+      Object.keys(params).forEach(key => {
+        if (params[key] !== undefined && params[key] !== null) {
+          url.searchParams.append(key, params[key]);
+        }
+      });
+    }
+
+    return url.toString();
+  }
+
+  /**
+   * Handle API errors
+   */
+  private handleError(error: any): never {
+    if (error.status === 401) {
+      // Unauthorized - redirect to login
+      keycloak.login();
+    }
+    throw error;
+  }
+
+  /**
+   * GET request
+   */
+  async get<T = any>(
+    endpoint: string,
+    params?: Record<string, any>
+  ): Promise<ApiResponse<T>> {
     await this.ensureValidToken();
-    
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+
+    try {
+      const url = this.buildUrl(endpoint, params);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: this.getAuthHeaders(),
+      });
+
+      if (!response.ok) {
+        this.handleError({ status: response.status, message: response.statusText });
+      }
+
+      return response.json();
+    } catch (error) {
+      return this.handleError(error);
+    }
+  }
+
+  /**
+   * POST request
+   */
+  async post<T = any>(
+    endpoint: string,
+    data?: any,
+    params?: Record<string, any>
+  ): Promise<ApiResponse<T>> {
+    await this.ensureValidToken();
+
+    try {
+      const url = this.buildUrl(endpoint, params);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        this.handleError({ status: response.status, message: response.statusText });
+      }
+
+      return response.json();
+    } catch (error) {
+      return this.handleError(error);
+    }
+  }
+
+  /**
+   * PUT request
+   */
+  async put<T = any>(
+    endpoint: string,
+    data?: any,
+    params?: Record<string, any>
+  ): Promise<ApiResponse<T>> {
+    await this.ensureValidToken();
+
+    try {
+      const url = this.buildUrl(endpoint, params);
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        this.handleError({ status: response.status, message: response.statusText });
+      }
+
+      return response.json();
+    } catch (error) {
+      return this.handleError(error);
+    }
+  }
+
+  /**
+   * PATCH request
+   */
+  async patch<T = any>(
+    endpoint: string,
+    data?: any,
+    params?: Record<string, any>
+  ): Promise<ApiResponse<T>> {
+    await this.ensureValidToken();
+
+    try {
+      const url = this.buildUrl(endpoint, params);
+      const response = await fetch(url, {
+        method: 'PATCH',
+        headers: this.getAuthHeaders(),
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        this.handleError({ status: response.status, message: response.statusText });
+      }
+
+      return response.json();
+    } catch (error) {
+      return this.handleError(error);
+    }
+  }
+
+  /**
+   * DELETE request
+   */
+  async delete<T = any>(
+    endpoint: string,
+    params?: Record<string, any>
+  ): Promise<ApiResponse<T>> {
+    await this.ensureValidToken();
+
+    try {
+      const url = this.buildUrl(endpoint, params);
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: this.getAuthHeaders(),
+      });
+
+      if (!response.ok) {
+        this.handleError({ status: response.status, message: response.statusText });
+      }
+
+      return response.json();
+    } catch (error) {
+      return this.handleError(error);
+    }
+  }
+
+  /**
+   * Upload file (multipart/form-data)
+   */
+  async uploadFile<T = any>(
+    endpoint: string,
+    file: File,
+    additionalData?: Record<string, any>,
+    onUploadProgress?: (progressEvent: ProgressEvent) => void
+  ): Promise<ApiResponse<T>> {
+    await this.ensureValidToken();
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      // Append additional data if provided
+      if (additionalData) {
+        Object.keys(additionalData).forEach((key) => {
+          formData.append(key, additionalData[key]);
+        });
+      }
+
+      const token = keycloak.token;
+      const headers: HeadersInit = {};
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+      // Don't set Content-Type for FormData - browser will set it with boundary
+
+      const xhr = new XMLHttpRequest();
+
+      return new Promise((resolve, reject) => {
+        xhr.upload.addEventListener('progress', (e) => {
+          if (onUploadProgress) {
+            onUploadProgress(e);
+          }
+        });
+
+        xhr.addEventListener('load', () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(JSON.parse(xhr.responseText));
+          } else {
+            reject({ status: xhr.status, message: xhr.statusText });
+          }
+        });
+
+        xhr.addEventListener('error', () => {
+          reject({ status: xhr.status, message: 'Upload failed' });
+        });
+
+        xhr.open('POST', `${API_BASE_URL}${endpoint}`);
+
+        // Set headers
+        Object.keys(headers).forEach(key => {
+          xhr.setRequestHeader(key, headers[key] as string);
+        });
+
+        xhr.send(formData);
+      });
+    } catch (error) {
+      return this.handleError(error);
+    }
+  }
+
+  /**
+   * Upload multiple files
+   */
+  async uploadFiles<T = any>(
+    endpoint: string,
+    files: File[],
+    additionalData?: Record<string, any>,
+    onUploadProgress?: (progressEvent: ProgressEvent) => void
+  ): Promise<ApiResponse<T>> {
+    await this.ensureValidToken();
+
+    try {
+      const formData = new FormData();
+
+      // Append all files
+      files.forEach((file, index) => {
+        formData.append(`file${index}`, file);
+      });
+
+      // Append additional data if provided
+      if (additionalData) {
+        Object.keys(additionalData).forEach((key) => {
+          formData.append(key, additionalData[key]);
+        });
+      }
+
+      const token = keycloak.token;
+      const headers: HeadersInit = {};
+      if (token) {
+        headers.Authorization = `Bearer ${token}`;
+      }
+
+      const xhr = new XMLHttpRequest();
+
+      return new Promise((resolve, reject) => {
+        xhr.upload.addEventListener('progress', (e) => {
+          if (onUploadProgress) {
+            onUploadProgress(e);
+          }
+        });
+
+        xhr.addEventListener('load', () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(JSON.parse(xhr.responseText));
+          } else {
+            reject({ status: xhr.status, message: xhr.statusText });
+          }
+        });
+
+        xhr.addEventListener('error', () => {
+          reject({ status: xhr.status, message: 'Upload failed' });
+        });
+
+        xhr.open('POST', `${API_BASE_URL}${endpoint}`);
+
+        // Set headers
+        Object.keys(headers).forEach(key => {
+          xhr.setRequestHeader(key, headers[key] as string);
+        });
+
+        xhr.send(formData);
+      });
+    } catch (error) {
+      return this.handleError(error);
+    }
+  }
+
+  /**
+   * Download file
+   */
+  async downloadFile(
+    endpoint: string,
+    filename: string,
+    params?: Record<string, any>
+  ): Promise<void> {
+    await this.ensureValidToken();
+
+    try {
+      const url = this.buildUrl(endpoint, params);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: this.getAuthHeaders(),
+      });
+
+      if (!response.ok) {
+        this.handleError({ status: response.status, message: response.statusText });
+      }
+
+      const blob = await response.blob();
+
+      // Create blob link to download
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  /**
+   * Batch requests (execute multiple requests in parallel)
+   */
+  async batch<T = any>(
+    requests: Array<() => Promise<ApiResponse<any>>>
+  ): Promise<ApiResponse<T>[]> {
+    return Promise.all(requests.map((request) => request()));
+  }
+
+  /**
+   * GET request with raw response (useful for non-JSON responses)
+   */
+  async getRaw(
+    endpoint: string,
+    params?: Record<string, any>
+  ): Promise<Response> {
+    await this.ensureValidToken();
+
+    const url = this.buildUrl(endpoint, params);
+    const response = await fetch(url, {
       method: 'GET',
       headers: this.getAuthHeaders(),
     });
 
-    if (response.status === 401) {
-      // Unauthorized - token might be invalid
-      keycloak.login();
-      throw new Error('Unauthorized');
+    if (!response.ok) {
+      this.handleError({ status: response.status, message: response.statusText });
     }
 
-    return response.json();
+    return response;
   }
 
   /**
-   * Generic POST request
+   * POST request with raw response
    */
-  static async post<T = any>(endpoint: string, data?: any): Promise<ApiResponse<T>> {
-    await this.ensureValidToken();
-    
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      method: 'POST',
-      headers: this.getAuthHeaders(),
-      body: JSON.stringify(data),
-    });
-
-    if (response.status === 401) {
-      keycloak.login();
-      throw new Error('Unauthorized');
-    }
-
-    return response.json();
-  }
-
-  /**
-   * Generic PUT request
-   */
-  static async put<T = any>(endpoint: string, data?: any): Promise<ApiResponse<T>> {
-    await this.ensureValidToken();
-    
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      method: 'PUT',
-      headers: this.getAuthHeaders(),
-      body: JSON.stringify(data),
-    });
-
-    if (response.status === 401) {
-      keycloak.login();
-      throw new Error('Unauthorized');
-    }
-
-    return response.json();
-  }
-
-  /**
-   * Generic DELETE request
-   */
-  static async delete<T = any>(endpoint: string): Promise<ApiResponse<T>> {
-    await this.ensureValidToken();
-    
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      method: 'DELETE',
-      headers: this.getAuthHeaders(),
-    });
-
-    if (response.status === 401) {
-      keycloak.login();
-      throw new Error('Unauthorized');
-    }
-
-    return response.json();
-  }
-
-  /**
-   * File upload with multipart/form-data
-   */
-  static async uploadFile<T = any>(
+  async postRaw(
     endpoint: string,
-    formData: FormData
-  ): Promise<ApiResponse<T>> {
+    data?: any,
+    params?: Record<string, any>
+  ): Promise<Response> {
     await this.ensureValidToken();
-    
-    const token = keycloak.token;
-    const headers: HeadersInit = {};
-    if (token) {
-      headers.Authorization = `Bearer ${token}`;
-    }
 
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    const url = this.buildUrl(endpoint, params);
+    const response = await fetch(url, {
       method: 'POST',
-      headers,
-      body: formData,
+      headers: this.getAuthHeaders(),
+      body: JSON.stringify(data),
     });
 
-    if (response.status === 401) {
-      keycloak.login();
-      throw new Error('Unauthorized');
+    if (!response.ok) {
+      this.handleError({ status: response.status, message: response.statusText });
     }
 
-    return response.json();
+    return response;
   }
 }
 
+// Export singleton instance (lowercase for backward compatibility)
+export const apiService = new ApiServiceClass();
+
+// Export class (uppercase for new code)
+export const ApiService = new ApiServiceClass();
+
+// Default export
 export default apiService;

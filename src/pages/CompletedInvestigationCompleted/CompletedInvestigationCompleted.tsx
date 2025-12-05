@@ -13,8 +13,8 @@ import {
   Payment as PaymentIcon,
   Receipt as ReceiptIcon,
 } from '@mui/icons-material';
-import CompletedCaseNotInvestigatedReim from './children/CompletedCaseNotInvestigatedReim';
-import CompletedCaseNotInvestigatedCashless from './children/CompletedCaseNotInvestigatedCashless';
+// import CompletedCaseNotInvestigatedReim from './children/CompletedCaseNotInvestigatedReim';
+// import CompletedCaseNotInvestigatedCashless from './children/CompletedCaseNotInvestigatedCashless';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -121,10 +121,10 @@ const CompletedCaseNotInvestigated: React.FC = () => {
           {/* Tab Content */}
           <Box sx={{ px: 3, pb: 3 }}>
             <TabPanel value={activeTab} index={0}>
-              <CompletedCaseNotInvestigatedCashless />
+              {/* <CompletedCaseNotInvestigatedCashless /> */}
             </TabPanel>
             <TabPanel value={activeTab} index={1}>
-              <CompletedCaseNotInvestigatedReim />
+              {/* <CompletedCaseNotInvestigatedReim /> */}
             </TabPanel>
           </Box>
         </CardContent>

@@ -111,7 +111,7 @@ const EmployerVerification: React.FC<EmployerVerificationProps> = ({
       if (response.statusCode === 0) {
         notificationService.showAlertSuccess(message.employeerVerifyAddSuccess);
       } else {
-        notificationService.showAlertSuccess(response.message);
+        notificationService.showAlertSuccess(response.message || 'Operation completed');
       }
     } catch (error) {
       console.error('Error saving employer verification:', error);

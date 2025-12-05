@@ -195,7 +195,7 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
           navigate('/admin/dashboard');
         }
       } else {
-        notificationService.showAlertError(response.message);
+        notificationService.showAlertError(response.message ?? 'Failed to submit case update');
       }
     } catch (error) {
       console.error('Error submitting case update:', error);

@@ -52,7 +52,7 @@ const FreshReimTable: React.FC = () => {
 
   useEffect(() => {
     fetchReimClaims();
-    setTatDropdownItems(fetchMenuService.getReimbursementDropDownItems());
+    setTatDropdownItems(fetchMenuService.getReimDropDownItems());
   }, []);
 
   const fetchReimClaims = async () => {
@@ -93,7 +93,15 @@ const FreshReimTable: React.FC = () => {
   };
 
   const getTatColor = (tat: number): string => {
-    return fetchMenuService.getReimbursementCssClass(tat);
+    if (tat <= 2) {
+      return 'tat-light-green';
+    } else if (tat <= 5) {
+      return 'tat-dark-green';
+    } else if (tat <= 7) {
+      return 'tat-amber';
+    } else {
+      return 'tat-red';
+    }
   };
 
   const handleRowClick = (claim: ReimClaim) => {
