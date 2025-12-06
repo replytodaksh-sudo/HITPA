@@ -223,7 +223,7 @@ const FreshSelfDeniedCasesCashless: React.FC = () => {
     },
     {
       field: 'sbigClaimNo',
-      headerName: 'SBIG Claim No',
+      headerName: 'Claim No',
       width: 140,
     },
     {

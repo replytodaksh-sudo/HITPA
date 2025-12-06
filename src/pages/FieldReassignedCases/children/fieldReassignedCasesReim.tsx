@@ -203,7 +203,7 @@
 //                   Investigation No
 //                 </TableCell>
 //                 <TableCell sx={{ fontWeight: 'bold', bgcolor: '#f5f5f5' }}>
-//                   SBIG Claim No
+//                   Claim No
 //                 </TableCell>
 //                 <TableCell sx={{ fontWeight: 'bold', bgcolor: '#f5f5f5' }}>
 //                   TPA Claim No
@@ -503,7 +503,7 @@ const FieldReassignedCasesReim: React.FC = () => {
         },
         {
             field: 'sbigClaimNo',
-            headerName: 'SBIG Claim No',
+            headerName: 'Claim No',
             width: 150,
         },
         {

@@ -267,7 +267,7 @@ const RegionalReworkTabs: React.FC = () => {
                         </Grid>
                         <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: { md: 'center' } }}>
                             <Typography variant="body2">
-                                <strong>SBIG Claim No : </strong>
+                                <strong>Claim No : </strong>
                                 {sbiClaimNo}
                             </Typography>
                         </Grid>

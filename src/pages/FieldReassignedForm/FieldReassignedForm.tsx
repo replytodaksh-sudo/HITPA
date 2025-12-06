@@ -180,7 +180,7 @@ const RegionalReassignForm: React.FC<RegionalReassignFormProps> = () => {
                             />
                         </Box>
                         <Typography variant="body1">
-                            <strong>SBIG Claim No:</strong> {sbigClaimNo}
+                            <strong>Claim No:</strong> {sbigClaimNo}
                         </Typography>
                         <Typography variant="body1">
                             <strong>TPA Claim No:</strong> {claimNo}

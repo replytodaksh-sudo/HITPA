@@ -119,7 +119,7 @@ const CentralMandatedTabs: React.FC = () => {
             </Grid>
             <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: { xs: 'left', md: 'center' } }}>
               <Typography variant="body1">
-                <strong>SBIG Claim No:</strong> {sbiclaimNo}
+                <strong>Claim No:</strong> {sbiclaimNo}
               </Typography>
             </Grid>
             <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: { xs: 'left', md: 'right' } }}>

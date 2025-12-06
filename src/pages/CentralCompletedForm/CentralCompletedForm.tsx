@@ -142,7 +142,7 @@ const CentralCompletedForm: React.FC = () => {
             </Grid>
             <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: 'center' }}>
               <Typography variant="body1">
-                <strong>SBIG Claim No: </strong>
+                <strong>Claim No: </strong>
                 {sbiclaimNo}
               </Typography>
             </Grid>

@@ -343,7 +343,7 @@ const AssignToAgencyDetailsTabs: React.FC = () => {
               <Grid size={{ xs: 12, md: 4 }}>
                 <Box sx={{ textAlign: { xs: 'left', md: 'center' } }}>
                   <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                    SBIG Claim No:
+                    Claim No:
                   </Typography>
                   <Typography variant="body2" sx={{ fontWeight: 400 }}>
                     {sbiclaimNo || '-'}
