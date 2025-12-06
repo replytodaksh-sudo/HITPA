@@ -193,7 +193,7 @@ import AppRoutes from './routes';
 import './App.css';
 
 function App() {
-  console.log(import.meta.env.REACT_APP_KEYCLOAK_CLIENT_ID);
+  
   return (
     <KeycloakProvider>
       <ThemeProvider theme={theme}>

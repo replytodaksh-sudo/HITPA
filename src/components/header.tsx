@@ -51,6 +51,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/auth.service';
 import { dashboardService } from '../services/dashboard.service';
+import { useAuth } from '../hooks/useAuth';
+import keycloak from '../keycloak.config';
 
 interface SubMenu {
   submenuName: string;
@@ -74,6 +76,7 @@ interface HeaderProps {
 const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { userProfile, logout } = useAuth();
 
   // State
   const [userName, setUserName] = useState('');
@@ -83,20 +86,20 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const [notificationAnchor, setNotificationAnchor] = useState<null | HTMLElement>(null);
   const [menuAnchors, setMenuAnchors] = useState<{ [key: string]: HTMLElement | null }>({});
   const [submenuAnchors, setSubmenuAnchors] = useState<{ [key: string]: HTMLElement | null }>({});
-  
+
   // Dialogs
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
   const [searchDialogOpen, setSearchDialogOpen] = useState(false);
-  
+
   // Password change
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  
+
   // Search
   const [searchType, setSearchType] = useState('');
   const [searchResults, setSearchResults] = useState<any>(null);
   const [showResults, setShowResults] = useState(false);
-
+  
   useEffect(() => {
     fetchUserInfo();
     fetchMenus();
@@ -108,16 +111,16 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
     setUserName(name);
     setRoleName(role);
   };
-
   const fetchMenus = async () => {
-    try {
-      const response = await authService.getUserMenu();
-      if (response.statusCode === 0) {
-        setMenus(response.payload.accessedItem || []);
-      }
-    } catch (error) {
-      console.error('Failed to fetch menus:', error);
+    // try {
+    const response = await authService.getUserMenu();
+    console.log("calleddddd", response)
+    if (response.statusCode === 0) {
+      setMenus(response.payload.accessedItem || []);
     }
+    // } catch (error) {
+    //   console.error('Failed to fetch menus:', error);
+    // }
   };
 
   const handleLogout = async () => {
@@ -125,7 +128,8 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
     if (confirmed) {
       try {
         await authService.logout();
-        navigate('/login');
+        logout();
+        // navigate('/login');
       } catch (error) {
         console.error('Logout failed:', error);
       }
@@ -158,7 +162,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const handleSearch = async (formData: any) => {
     try {
       let response;
-      
+
       if (searchType === 'corporate') {
         response = await dashboardService.corporateSearch(formData);
       } else if (searchType === 'provider') {
@@ -239,7 +243,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
           {/* Logo */}
           <Box sx={{ display: 'flex', alignItems: 'center', mr: 4 }}>
-            <img src="/logo.png" alt="logo" style={{height:"40px"}}/>
+            <img src="/logo.png" alt="logo" style={{ height: "40px" }} />
           </Box>
 
           {/* Navigation Menu */}
@@ -263,7 +267,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
             </Button>
 
             {/* Dynamic Menus */}
-            {menus.map((menu:any) => (
+            {menus.map((menu: any) => (
               <Box key={menu.menuName} sx={{ position: 'relative' }}>
                 <Button
                   color="inherit"
@@ -297,7 +301,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
                 >
                   {menu.childMenu.map((child: any, childIndex: number) => {
                     const submenuKey = `${menu.menuName}-${childIndex}`;
-                    
+
                     return (
                       <Box key={child.childMenuName}>
                         {child.subMenu && child.subMenu.length > 0 ? (
@@ -627,12 +631,12 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
               {(roleName === 'Super Admin' ||
                 roleName === 'Central Manager' ||
                 roleName === 'Regional Manager') && (
-                <FormControlLabel
-                  value="policyholder"
-                  control={<Radio />}
-                  label="Policyholder Search"
-                />
-              )}
+                  <FormControlLabel
+                    value="policyholder"
+                    control={<Radio />}
+                    label="Policyholder Search"
+                  />
+                )}
               <FormControlLabel value="provider" control={<Radio />} label="Provider Search" />
               <FormControlLabel value="corporate" control={<Radio />} label="Corporate Search" />
               <FormControlLabel value="global" control={<Radio />} label="Claim Search" />

@@ -115,6 +115,7 @@ class AuthService {
    * Get user menu/permissions
    */
   async getUserMenu() {
+    console.log("getUserMenu called")
     return apiService.get<{
       roleName: string;
       accessedItem: Menu[];
