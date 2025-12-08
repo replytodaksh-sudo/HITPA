@@ -38,10 +38,8 @@ const KeycloakProvider: React.FC<KeycloakProviderProps> = ({ children }) => {
 
     // Event handlers
     const handleOnEvent = (event: string, error: any) => {
-        console.log('Keycloak event:', event, error);
 
         if (event === 'onAuthSuccess') {
-            console.log('Authentication successful');
             // Store token in sessionStorage
             if (keycloak.token) {
                 sessionStorage.setItem('token', keycloak.token);
@@ -54,16 +52,13 @@ const KeycloakProvider: React.FC<KeycloakProviderProps> = ({ children }) => {
         }
 
         if (event === 'onTokenExpired') {
-            console.log('Token expired, refreshing...');
             keycloak.updateToken(30).catch(() => {
-                console.error('Failed to refresh token');
                 keycloak.login();
             });
         }
     };
 
     const handleOnTokens = (tokens: any) => {
-        console.log('Tokens received:', tokens);
         // Update tokens in sessionStorage
         if (tokens.token) {
             sessionStorage.setItem('token', tokens.token);
@@ -71,7 +66,6 @@ const KeycloakProvider: React.FC<KeycloakProviderProps> = ({ children }) => {
         }
 
         const decodedValue: any = sessionService.decodeToken(tokens.token);
-        console.log("decodedValue", decodedValue)
         if (decodedValue) {
             sessionService.storeOther('userCode', decodedValue.userCode);
             sessionService.storeOther('name', decodedValue.name);

@@ -199,27 +199,27 @@ const Dashboard: React.FC = () => {
 
     const fetchRoleName = async () => {
         // try {
-            const response = await authService.getUserMenu();
-            console.log("calleddddd", response)
-            if (response.statusCode === 0) {
-                sessionStorage.setItem("roleName", response.payload.roleName);
-                setRoleName(response.payload.roleName);
+        const response = await authService.getUserMenu();
+        console.log("calleddddd", response)
+        if (response.statusCode === 0) {
+            sessionStorage.setItem("roleName", response.payload.roleName);
+            setRoleName(response.payload.roleName);
 
-                const role = response.payload.roleName;
+            const role = response.payload.roleName;
 
-                if (role === 'Central Manager' || role === 'Agency Spoc') {
-                    await fetchRegionalManagers();
-                }
-                if (role === 'Agency Spoc') {
-                    await fetchFieldOfficers();
-                }
-                if (role === 'Regional Manager') {
-                    await fetchAgencies();
-                }
-                if (role === 'Field Officer') {
-                    await fetchStates();
-                }
+            if (role === 'Central Manager' || role === 'Agency Spoc') {
+                await fetchRegionalManagers();
             }
+            if (role === 'Agency Spoc') {
+                await fetchFieldOfficers();
+            }
+            if (role === 'Regional Manager') {
+                await fetchAgencies();
+            }
+            if (role === 'Field Officer') {
+                await fetchStates();
+            }
+        }
         // } catch (error) {
         //     console.error('Failed to fetch role:', error);
         //     setRoleName(sessionStorage.getItem('roleName') || 'Central Manager');
@@ -229,9 +229,10 @@ const Dashboard: React.FC = () => {
     const fetchZones = async () => {
         try {
             const response = await dashboardService.getUserZones();
-            // if (response.statusCode === 0) {
+            if (response.statusCode === 0) {
+                console.log("zones response", response);
                 setZones(response);
-            // }
+            }
         } catch (error) {
             console.error('Failed to fetch zones:', error);
         }
@@ -689,13 +690,13 @@ const Dashboard: React.FC = () => {
                                             renderValue={(selected) => (
                                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                                     {selected.map((value) => {
-                                                        const zone = zones.find((z:any) => z.zoneCode === value);
+                                                        const zone = zones.find((z: any) => z.zoneCode === value);
                                                         return <Chip key={value} label={zone?.zoneName} size="small" />;
                                                     })}
                                                 </Box>
                                             )}
                                         >
-                                            {zones.map((zone:any) => (
+                                            {zones && zones.map((zone: any) => (
                                                 <MenuItem key={zone.zoneCode} value={zone.zoneCode}>
                                                     {zone.zoneName}
                                                 </MenuItem>
