@@ -14,8 +14,8 @@ import {
 } from '@mui/material';
 import { CheckCircle as CheckCircleIcon } from '@mui/icons-material';
 import { AssignService } from '../../../services/assign.service';
-import { dropdownService } from '../../../services/agency.service';
 import { claimsService } from '../../../services/claims.service';
+import DropdownService from '../../../services/dropdown.service';
 
 interface AcceptDenyProps {
   claimType: string;
@@ -41,7 +41,7 @@ const DenyForm: React.FC<AcceptDenyProps> = ({
 
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [denyReasonList, setDenyReasonList] = useState<DenyReason[]>([]);
+  const [denyReasonList, setDenyReasonList] = useState<any[]>([]);
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const [denialReasonDetails, setDenialReasonDetails] = useState('');
   const [secondaryStatus, setSecondaryStatus] = useState('');
@@ -66,9 +66,9 @@ const DenyForm: React.FC<AcceptDenyProps> = ({
   const fetchDenyReasons = async () => {
     setLoading(true);
     try {
-      const response = await dropdownService.getAllDenyReasons();
+      const response = await DropdownService.getAllDenyReasons();
       if (response.statusCode === 0) {
-        setDenyReasonList(response.payload);
+        setDenyReasonList(response.payload || []);
       }
     } catch (error) {
       console.error('Error fetching deny reasons:', error);

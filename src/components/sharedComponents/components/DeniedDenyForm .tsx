@@ -10,7 +10,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { dropdownService } from '../../../services/agency.service';
+import DropdownService from '../../../services/dropdown.service';
 
 /**
  * DeniedDenyForm Component
@@ -46,7 +46,7 @@ const DeniedDenyForm: React.FC = () => {
   const fetchDenyReasons = async () => {
     setLoading(true);
     try {
-      const response:any = await dropdownService.getDenyReasons(investigationId);
+      const response:any = await DropdownService.getDenyReasons(investigationId);
       
       if (response.data.statusCode === 0) {
         const payload = response.data.payload;

@@ -24,7 +24,9 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
-import { agencyService, caseAssignmentService, dropdownService } from '../../services/agency.service';
+import { agencyService } from '../../services/agency.service';
+import DropdownService from '../../services/dropdown.service';
+import caseAssignmentService from '../../services/caseAssignmentService';
 
 interface Zone {
   zoneCode: string;
@@ -100,9 +102,9 @@ const CaseAssignmentRule: React.FC = () => {
 
   const fetchZones = async () => {
     try {
-      const response = await dropdownService.getZones();
+      const response = await DropdownService.getZones();
       if (response.statusCode === 0) {
-        setZones(response.payload);
+        setZones(response.payload || []);
       }
     } catch (error) {
       console.error('Error fetching zones:', error);
@@ -125,9 +127,9 @@ const CaseAssignmentRule: React.FC = () => {
 
   const getStatesByZone = async (zoneCodes: string[]) => {
     try {
-      const response = await dropdownService.getStatesByZones({ zoneCodes });
+      const response = await DropdownService.getStatesByZones(zoneCodes );
       if (response.statusCode === 0) {
-        setMultiStates(response.payload);
+        setMultiStates(response.payload || []);
       }
     } catch (error) {
       console.error('Error fetching states:', error);
@@ -136,9 +138,9 @@ const CaseAssignmentRule: React.FC = () => {
 
   const getCitiesByStates = async (stateCodes: string[]) => {
     try {
-      const response = await dropdownService.getCitiesByStates({ stateCodes });
+      const response = await DropdownService.getCitiesByStates(stateCodes);
       if (response.statusCode === 0) {
-        setMultiCities(response.payload);
+        setMultiCities(response.payload || []);
       }
     } catch (error) {
       console.error('Error fetching cities:', error);
@@ -147,9 +149,10 @@ const CaseAssignmentRule: React.FC = () => {
 
   const getPinsByCities = async (cityCodes: string[]) => {
     try {
-      const response = await dropdownService.getPinsByCities({ cityCodes });
+      const response = await DropdownService.getPinsByCities(cityCodes );
       if (response.statusCode === 0) {
-        setMultiPins(response.payload);
+        const pins = response.payload?.map((p: any) => ({ pinCodeNo: p.pinCodeNo })) || [];
+        setMultiPins(pins);
       }
     } catch (error) {
       console.error('Error fetching pins:', error);

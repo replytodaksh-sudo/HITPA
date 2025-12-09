@@ -1,11 +1,11 @@
 import { apiService } from './api.service';
-import { apiurls } from '../constants/apiConstants';
+import { apiUrls } from '../constants/apiConstants';
 import type { LoginRequest, LoginResponse } from '../types/auth.types';
 
 class LoginService {
   async login(loginRequest: LoginRequest): Promise<LoginResponse> {
     const response = await apiService.post<LoginResponse>(
-      apiurls.login,
+      apiUrls.login,
       loginRequest,
     //   { headers: { skip: 'true' } }
     );
@@ -14,7 +14,7 @@ class LoginService {
   }
 
   async changePassword(newPassword: string, confirmPassword: string): Promise<any> {
-    const response = await apiService.post(apiurls.changePassword, {
+    const response = await apiService.post(apiUrls.changePassword, {
       password: newPassword,
       confirmPassword: confirmPassword,
     });
@@ -22,13 +22,13 @@ class LoginService {
   }
 
   async logout(): Promise<any> {
-    const response = await apiService.post(apiurls.logout);
+    const response = await apiService.post(apiUrls.logout);
     return (response as any).data;
   }
 
   async sessionOut(userName: string): Promise<any> {
     const response = await apiService.post(
-      `${apiurls.sessionOut}?username=${userName}`,
+      `${apiUrls.sessionOut}?username=${userName}`,
       { headers: { skip: 'true' } }
     );
     return (response as any).data;

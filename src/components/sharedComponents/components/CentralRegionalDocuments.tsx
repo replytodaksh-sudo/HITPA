@@ -17,7 +17,7 @@ import {
     Visibility as ViewIcon,
 } from '@mui/icons-material';
 import { useParams } from 'react-router-dom';
-import { DocumentService } from '../../../services/document.service';
+import { DocumentsService } from '../../../services/document.service';
 import { caseUpdateService } from '../../../services/caseupdate.service';
 
 interface CentralRegionalDocumentsProps {
@@ -82,7 +82,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                 roleName === 'Field Officer'
             ) {
                 // Fetch Central documents
-                const centralResponse:any = await DocumentService.viewInvestigationDocsView(
+                const centralResponse:any = await DocumentsService.viewInvestigationDocsView(
                     'caseAssignmentCentral',
                     investigationId
                 );
@@ -91,7 +91,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                 }
 
                 // Fetch Regional documents
-                const regionalResponse:any = await DocumentService.viewInvestigationDocsView(
+                const regionalResponse:any = await DocumentsService.viewInvestigationDocsView(
                     'caseAssignmentRegional',
                     investigationId
                 );
@@ -100,7 +100,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                 }
 
                 // Fetch Agency documents
-                const agencyResponse:any = await DocumentService.viewInvestigationDocsView(
+                const agencyResponse:any = await DocumentsService.viewInvestigationDocsView(
                     'caseAssignmentAgency',
                     investigationId
                 );
@@ -112,7 +112,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
             setDocumentArray(allDocs);
 
             // Fetch investigation documents
-            const invDocsResponse:any = await DocumentService.viewInvestigationDocsView(
+            const invDocsResponse:any = await DocumentsService.viewInvestigationDocsView(
                 'investigation',
                 investigationId
             );
@@ -220,7 +220,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
         setSuccess('');
 
         try {
-            const response:any = await DocumentService.uploadInvestigationDocs(
+            const response:any = await DocumentsService.uploadInvestigationDocs(
                 'investigation',
                 investigationId,
                 selectedFile,
@@ -257,7 +257,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
         }
 
         try {
-            const response:any = await DocumentService.deleteDocument(documentId);
+            const response:any = await DocumentsService.deleteDocument(documentId);
             if (response.data.statusCode === 0) {
                 setSuccess('Document deleted successfully');
                 await getInvestigationDocs();

@@ -132,7 +132,7 @@ const getSectionTitle = (key: keyof FormState): string => {
 
 // ==================== DEFAULT SERVICE ====================
 const defaultCaseUpdateStore: Record<string, any> = {};
-const defaultCaseUpdateService = {
+const defaultcaseUpdateService = {
   setCaseUpdateVal: (key: string, value: any) => {
     defaultCaseUpdateStore[key] = value;
   },
@@ -145,7 +145,7 @@ const defaultCaseUpdateService = {
 const XrayDetails: React.FC<XrayDetailsProps> = ({
   isFormEditable = true,
   previousData = {},
-  caseUpdateService = defaultCaseUpdateService,
+  caseUpdateService = defaultcaseUpdateService,
 }) => {
   // ===== STATE =====
   const [formState, setFormState] = useState<FormState>({
@@ -257,12 +257,12 @@ const XrayDetails: React.FC<XrayDetailsProps> = ({
       setFormState(newFormState);
       setVisibility(newVisibility);
       setChecked(newChecked);
-      saveAllToCaseUpdateService(newFormState);
+      saveAllTocaseUpdateService(newFormState);
     }
   }, [previousData]);
 
   // ===== SAVE TO SERVICE =====
-  const saveAllToCaseUpdateService = (state: FormState) => {
+  const saveAllTocaseUpdateService = (state: FormState) => {
     Object.keys(state).forEach((key) => {
       if (key !== 'pathItem') {
         const sectionKey = key as keyof Omit<FormState, 'pathItem'>;

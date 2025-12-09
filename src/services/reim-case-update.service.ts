@@ -1,15 +1,15 @@
 // File: src/services/reim-case-update.service.ts
 
 import { apiService } from './api.service';
-import { apiurls } from '../constants/apiConstants';
+import { apiUrls } from '../constants/apiConstants';
 
-class ReimCaseUpdateService {
+class ReimcaseUpdateService {
   /**
    * Add employer verification
    */
   async addEmployeerVerify(payload: any, investigationId: string) {
     const response = await apiService.post(
-      `${apiurls.employerVerification}${investigationId}`,
+      `${apiUrls.employerVerification}${investigationId}`,
       payload
     );
     return response;
@@ -20,7 +20,7 @@ class ReimCaseUpdateService {
    */
   async getEmployerVerification(investigationId: string) {
     const response = await apiService.get(
-      `${apiurls.employerVerification}${investigationId}`
+      `${apiUrls.employerVerification}${investigationId}`
     );
     return response;
   }
@@ -30,7 +30,7 @@ class ReimCaseUpdateService {
    */
   async addHospitalVerify(payload: any, investigationId: string) {
     const response = await apiService.post(
-      `${apiurls.hospitalVerification}${investigationId}`,
+      `${apiUrls.hospitalVerification}${investigationId}`,
       payload
     );
     return response;
@@ -41,7 +41,7 @@ class ReimCaseUpdateService {
    */
   async getHospitalVerification(investigationId: string) {
     const response = await apiService.get(
-      `${apiurls.hospitalVerification}${investigationId}`
+      `${apiUrls.hospitalVerification}${investigationId}`
     );
     return response;
   }
@@ -51,7 +51,7 @@ class ReimCaseUpdateService {
    */
   async addInsuredVerify(payload: any, investigationId: string) {
     const response = await apiService.post(
-      `${apiurls.insuredVerification}${investigationId}`,
+      `${apiUrls.insuredVerification}${investigationId}`,
       payload
     );
     return response;
@@ -62,7 +62,7 @@ class ReimCaseUpdateService {
    */
   async getInsuredVerification(investigationId: string) {
     const response = await apiService.get(
-      `${apiurls.insuredVerification}${investigationId}`
+      `${apiUrls.insuredVerification}${investigationId}`
     );
     return response;
   }
@@ -72,7 +72,7 @@ class ReimCaseUpdateService {
    */
   async submitFinalReimUpdate(payload: any, investigationId: string) {
     const response = await apiService.post(
-      `${apiurls.reimFinalSubmit}${investigationId}`,
+      `${apiUrls.reimFinalSubmit}${investigationId}`,
       payload
     );
     return response;
@@ -83,11 +83,11 @@ class ReimCaseUpdateService {
    */
   async saveDraftReimUpdate(payload: any, investigationId: string) {
     const response = await apiService.post(
-      `${apiurls.reimDraftSave}${investigationId}`,
+      `${apiUrls.reimDraftSave}${investigationId}`,
       payload
     );
     return response;
   }
 }
 
-export const reimCaseUpdateService = new ReimCaseUpdateService();
+export const reimcaseUpdateService = new ReimcaseUpdateService();

@@ -75,7 +75,7 @@ interface TabCheck {
 }
 
 // ========== SERVICES ==========
-const reimCaseUpdateService = {
+const reimcaseUpdateService = {
   addInsuredVerify: async (formData: any, investigationId: string) => {
     const response = await fetch(
       `${import.meta.env.VITE_API_BASE_URL}/api/reim-case-update/insured-verify/${investigationId}`,
@@ -317,7 +317,7 @@ const InsuredVerification: React.FC<InsuredVerificationProps> = ({
       btnAction: 'saveasdraft',
     };
     try {
-      const data = await reimCaseUpdateService.addInsuredVerify(submitData, cleanId);
+      const data = await reimcaseUpdateService.addInsuredVerify(submitData, cleanId);
       if (data.statusCode === 0) {
         notificationService.showAlertSuccess(messages.insuredSavedDraft);
         if (onChangeTab) onChangeTab(true);
@@ -353,7 +353,7 @@ const InsuredVerification: React.FC<InsuredVerificationProps> = ({
       btnAction: 'submittoqc',
     };
     try {
-      const data = await reimCaseUpdateService.addInsuredVerify(submitData, cleanId);
+      const data = await reimcaseUpdateService.addInsuredVerify(submitData, cleanId);
       if (data.statusCode === 0) {
         notificationService.showAlertSuccess(messages.insuredSavedDraft);
         navigate(redirectTo || '/admin/dashboard');

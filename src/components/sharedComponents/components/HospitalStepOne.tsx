@@ -19,7 +19,7 @@ import {
     Typography,
 } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material';
-import { reimCaseUpdateService } from '../../../services/reim-case-update.service';
+import { reimcaseUpdateService } from '../../../services/reim-case-update.service';
 
 interface HospitalStepOneProps {
     buttonEnable: boolean;
@@ -527,7 +527,7 @@ const HospitalStepOne: React.FC<HospitalStepOneProps> = ({
 
             // Make API call
             const cleanInvestigationId = investigationId?.split(' ')[0];
-            const response = await reimCaseUpdateService.addHospitalVerify(reimCaseUpdate, cleanInvestigationId || '');
+            const response = await reimcaseUpdateService.addHospitalVerify(reimCaseUpdate, cleanInvestigationId || '');
 
             if (response.statusCode === 0) {
                 // Update localStorage with new activeReCaseID

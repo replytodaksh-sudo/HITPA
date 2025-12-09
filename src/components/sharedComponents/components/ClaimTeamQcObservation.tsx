@@ -29,9 +29,9 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { QCUpdateService } from '../../../services/qcupdate.service';
 import { agencyService } from '../../../services/agency.service';
-import { AcceptAssignService } from '../../../services/acceptassign.service';
+import { acceptAssignService } from '../../../services/acceptassign.service';
 import { QuestionService } from '../../../services/question.service';
-import { DocumentService } from '../../../services/document.service';
+import { DocumentsService } from '../../../services/document.service';
 
 interface ClaimTeamQcObservationProps {
     previewValues: any;
@@ -347,7 +347,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
     // ========== FETCH REGIONAL USERS (Central Manager) ==========
     const fetchRegionalUsers = async () => {
         try {
-            const response = await AcceptAssignService.getRegionalUsers();
+            const response = await acceptAssignService.getRegionalUsers();
             if (response.statusCode === 0) {
                 setRegionalTeamMembers(response.payload);
             }
@@ -399,7 +399,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
         try {
             if (roleName === 'Regional Manager' || roleName === 'Agency Spoc') {
                 // Fetch both central and regional docs
-                const centralResponse = await DocumentService.viewInvestigationDocsView(
+                const centralResponse = await DocumentsService.viewInvestigationDocsView(
                     'caseAssignmentCentral',
                     investigationId || ''
                 );
@@ -407,7 +407,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
                 if (centralResponse.statusCode === 0) {
                     setDocumentArray(centralResponse.payload);
 
-                    const regionalResponse = await DocumentService.viewInvestigationDocsView(
+                    const regionalResponse = await DocumentsService.viewInvestigationDocsView(
                         'caseAssignmentRegional',
                         investigationId || ''
                     );
@@ -424,7 +424,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
                         ? 'caseAssignmentAgency'
                         : 'caseAssignmentCentral';
 
-                const response = await DocumentService.viewInvestigationDocsView(
+                const response = await DocumentsService.viewInvestigationDocsView(
                     uploadDuring,
                     investigationId || ''
                 );
@@ -572,7 +572,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
                     ? 'caseAssignmentAgency'
                     : 'caseAssignmentCentral';
 
-            const response = await DocumentService.uploadInvestigationDocs(
+            const response = await DocumentsService.uploadInvestigationDocs(
                 uploadDuring,
                 investigationId || '',
                 selectedFiles[0],
@@ -600,7 +600,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
     const handleDeleteDocument = async (documentId: string, docTitle: string, index: number) => {
         try {
-            const response = await DocumentService.deleteDocument(documentId);
+            const response = await DocumentsService.deleteDocument(documentId);
             if (response.statusCode === 0) {
                 setInvestigationDocsView(investigationDocsView.filter((_, i) => i !== index));
                 setDocumentsCodes(documentsCodes.filter(item => item !== documentId));
@@ -812,7 +812,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
                 reassignCase: 'yes'
             };
 
-            const response = await AcceptAssignService.assign(assignData, documentsCodes);
+            const response = await acceptAssignService.assign(assignData, documentsCodes);
 
             if (response.statusCode === 0) {
                 alert('Case reassigned successfully!');
@@ -852,7 +852,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
                 reassignCase: 'yes'
             };
 
-            const response = await AcceptAssignService.assignFO(assignData, documentsCodes);
+            const response = await acceptAssignService.assignFO(assignData, documentsCodes);
 
             if (response.statusCode === 0) {
                 alert('Case reassigned to Field Officer successfully!');

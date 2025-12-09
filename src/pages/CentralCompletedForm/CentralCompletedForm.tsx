@@ -19,7 +19,7 @@ import ClaimDetailsReim from '../../components/sharedComponents/components/Claim
 import HospitalInfo from '../../components/sharedComponents/components/HospitalInfo';
 import ReimburseCaseUpdate from '../../components/sharedComponents/components/ReimburseCaseUpdate';
 import Logs from '../../components/sharedComponents/components/Logs';
-import { agencyQCService } from '../../services/agencyqcupdate.service';
+import { agencyQcUpdateService } from '../../services/agencyqcupdate.service';
 import CentralRegionalDocuments from '../../components/sharedComponents/components/CentralRegionalDocuments';
 import ReimRegionalAgencyQC from '../../components/sharedComponents/components/ReimRegionalAgencyQC';
 import QcPreview from '../../components/sharedComponents/components/QcPreview';
@@ -91,7 +91,7 @@ const CentralCompletedForm: React.FC = () => {
         tabName = 'centralQC';
       }
 
-      const response = await agencyQCService.getQCUpdateData(invId, tabName);
+      const response = await agencyQcUpdateService.getQCUpdateData(invId, tabName);
       if (response.statusCode === 0) {
         setQcData(response.payload);
 

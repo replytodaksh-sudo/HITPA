@@ -17,7 +17,7 @@ import {
   Grid,
 } from '@mui/material';
 import { Save, Send } from '@mui/icons-material';
-import { reimCaseUpdateService } from '../../../services/reim-case-update.service';
+import { reimcaseUpdateService } from '../../../services/reim-case-update.service';
 import { notificationService } from '../../../utils/notification.service';
 import { message } from '../../../constants/messages';
 
@@ -106,7 +106,7 @@ const EmployerVerification: React.FC<EmployerVerificationProps> = ({
 
       console.log('Employer Verification Payload:', payload);
 
-      const response = await reimCaseUpdateService.addEmployeerVerify(payload, investigationId);
+      const response = await reimcaseUpdateService.addEmployeerVerify(payload, investigationId);
 
       if (response.statusCode === 0) {
         notificationService.showAlertSuccess(message.employeerVerifyAddSuccess);
@@ -136,7 +136,7 @@ const EmployerVerification: React.FC<EmployerVerificationProps> = ({
 
       console.log('Final Employer Verification Payload:', payload);
 
-      const response = await reimCaseUpdateService.addEmployeerVerify(payload, investigationId);
+      const response = await reimcaseUpdateService.addEmployeerVerify(payload, investigationId);
 
       if (response.statusCode === 0) {
         notificationService.showAlertSuccess(message.finalSubmitDone);

@@ -26,7 +26,7 @@ import {
   Grid,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { dropdownService } from '../../../services/agency.service';
+import DropdownService from '../../../services/dropdown.service';
 
 interface ChemistDetails {
   chemistName: string;
@@ -120,7 +120,7 @@ const ChemistDetailsComponent: React.FC<ChemistDetailsComponentProps> = ({
 
   const fetchStates = async () => {
     try {
-      const response: any = await dropdownService.getStates();
+      const response: any = await DropdownService.getStates();
       if (response.statusCode === 0) {
         setStates(response.payload || []);
       }
@@ -131,7 +131,7 @@ const ChemistDetailsComponent: React.FC<ChemistDetailsComponentProps> = ({
 
   const fetchCities = async (stateCode: string) => {
     try {
-      const response: any = await dropdownService.getCities(stateCode);
+      const response: any = await DropdownService.getCities(stateCode);
       if (response.statusCode === 0) {
         setCities(response.payload || []);
       }

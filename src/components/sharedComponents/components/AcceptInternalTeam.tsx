@@ -22,13 +22,13 @@ import {
     Alert,
 } from '@mui/material';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { AcceptAssignService } from '../../../services/acceptassign.service';
+import { acceptAssignService } from '../../../services/acceptassign.service';
 import { agencyService } from '../../../services/agency.service';
 import { ReimService } from '../../../services/reim.service';
 import { claimsService } from '../../../services/claims.service';
 import QuestionnaireSection from './QuestionnaireSection';
 import DocumentUpload from './DocumentUpload';
-import { DocumentService } from '../../../services/document.service';
+import { DocumentsService } from '../../../services/document.service';
 
 interface AcceptInternalTeamProps {
     claimType?: string;
@@ -126,7 +126,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
 
     const fetchAssignUsers = async () => {
         try {
-            const res: any = await AcceptAssignService.getAssignUsers();
+            const res: any = await acceptAssignService.getAssignUsers();
             if (res.statusCode === 0) {
                 setAssignUsers(res.payload || []);
             }
@@ -137,7 +137,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
 
     const fetchRegionalUsers = async () => {
         try {
-            const res: any = await AcceptAssignService.getRegionalUsers();
+            const res: any = await acceptAssignService.getRegionalUsers();
             if (res.statusCode === 0) {
                 setRegionalTeamMembers(res.payload || []);
             }
@@ -249,7 +249,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                         : 'caseAssignmentCentral';
 
             // Fetch current stage docs
-            const res1: any = await DocumentService.viewInvestigationDocsView(
+            const res1: any = await DocumentsService.viewInvestigationDocsView(
                 uploadDuring,
                 cleanInvestigationId
             );
@@ -259,7 +259,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
 
             // Fetch previous stage docs for viewing
             if (roleName === 'Regional Manager') {
-                const res2: any = await DocumentService.viewInvestigationDocsView(
+                const res2: any = await DocumentsService.viewInvestigationDocsView(
                     'caseAssignmentCentral',
                     cleanInvestigationId
                 );
@@ -267,11 +267,11 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                     setDocumentArray(res2.payload || []);
                 }
             } else if (roleName === 'Agency Spoc') {
-                const res2: any = await DocumentService.viewInvestigationDocsView(
+                const res2: any = await DocumentsService.viewInvestigationDocsView(
                     'caseAssignmentCentral',
                     cleanInvestigationId
                 );
-                const res3: any = await DocumentService.viewInvestigationDocsView(
+                const res3: any = await DocumentsService.viewInvestigationDocsView(
                     'caseAssignmentRegional',
                     cleanInvestigationId
                 );
@@ -353,9 +353,9 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
         try {
             let res: any;
             if (roleName === 'Regional Manager' || roleName === 'Central Manager') {
-                res = await AcceptAssignService.assign(acceptRequest, documentsCodes);
+                res = await acceptAssignService.assign(acceptRequest, documentsCodes);
             } else if (roleName === 'Agency Spoc') {
-                res = await AcceptAssignService.assignFO(acceptRequest, documentsCodes);
+                res = await acceptAssignService.assignFO(acceptRequest, documentsCodes);
             }
 
             if (res.statusCode === 0) {
@@ -473,9 +473,9 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
         try {
             let res: any;
             if (roleName === 'Regional Manager' || roleName === 'Central Manager') {
-                res = await AcceptAssignService.reimAssign(acceptRequest, documentsCodes);
+                res = await acceptAssignService.reimAssign(acceptRequest, documentsCodes);
             } else if (roleName === 'Agency Spoc') {
-                res = await AcceptAssignService.reimAgencyAssign(acceptRequest, documentsCodes);
+                res = await acceptAssignService.reimAgencyAssign(acceptRequest, documentsCodes);
             }
 
             if (res.statusCode === 0) {

@@ -15,9 +15,9 @@ import {
   Divider,
 } from '@mui/material';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { dropdownService } from '../../../services/agency.service';
 import { claimsService } from '../../../services/claims.service';
-import { agencyQCService } from '../../../services/agencyqcupdate.service';
+import { agencyQcUpdateService } from '../../../services/agencyqcupdate.service';
+import DropdownService from '../../../services/dropdown.service';
 
 interface ReimRegionalAgencyQCProps {
   editable: boolean;
@@ -49,17 +49,17 @@ const ReimRegionalAgencyQC: React.FC<ReimRegionalAgencyQCProps> = ({ editable })
   const fetchDropdowns = async () => {
     try {
       const [recResp, repResp, fraudReasonResp, fraudEvidResp, pedResp] = await Promise.all([
-        dropdownService.getRecomendation(),
-        dropdownService.getRepudiationGrounds(),
-        dropdownService.getFraudClaimReason(),
-        dropdownService.getFraudClaimEvedance(),
+        DropdownService.getRecomendation(),
+        DropdownService.getRepudiationGrounds(),
+        DropdownService.getFraudClaimReason(),
+        DropdownService.getFraudClaimEvedance(),
         claimsService.getAllPEDEvidences(),
       ]);
 
-      if (recResp.statusCode === 0) setRecommendations(recResp.payload);
-      if (repResp.statusCode === 0) setRepudiationGrounds(repResp.payload);
-      if (fraudReasonResp.statusCode === 0) setFraudClaimReasons(fraudReasonResp.payload);
-      if (fraudEvidResp.statusCode === 0) setFraudClaimEvidences(fraudEvidResp.payload);
+      if (recResp.statusCode === 0) setRecommendations(recResp.payload || []);
+      if (repResp.statusCode === 0) setRepudiationGrounds(repResp.payload || []);
+      if (fraudReasonResp.statusCode === 0) setFraudClaimReasons(fraudReasonResp.payload || []);
+      if (fraudEvidResp.statusCode === 0) setFraudClaimEvidences(fraudEvidResp.payload || []);
       if (pedResp.statusCode === 0) setPedEvidences(pedResp.payload);
     } catch (error) {
       console.error('Error fetching dropdowns:', error);
@@ -68,7 +68,7 @@ const ReimRegionalAgencyQC: React.FC<ReimRegionalAgencyQCProps> = ({ editable })
 
   const getData = async () => {
     try {
-      const response = await agencyQCService.getReClaimQCData(investigationId!, '');
+      const response = await agencyQcUpdateService.getReClaimQCData(investigationId!, '');
       if (response.statusCode === 0) {
         setQcdataList(response.payload);
       }

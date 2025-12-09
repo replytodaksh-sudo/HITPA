@@ -1,90 +1,73 @@
+// File: src/services/caseInfoService.ts
 import { apiService } from './api.service';
-import { apiurls } from '../constants/apiConstants';
+import { apiUrls } from '../constants/apiConstants';
 
-interface CaseInfoResponse {
+// ==================== INTERFACES ====================
+export interface CaseInfo {
+  investigationId?: string;
+  claimNumber?: string;
+  policyNumber?: string;
+  insuredName?: string;
+  hospitalName?: string;
+  diagnosis?: string;
+  claimAmount?: number;
+  dateOfAdmission?: string;
+  dateOfDischarge?: string;
+  status?: string;
+  [key: string]: any;
+}
+
+export interface CaseInfoResponse {
   statusCode: number;
-  message: string;
-  payload?: any;
+  message?: string;
+  payload?: CaseInfo | null;
 }
 
-class CaseInfoService {
+// ==================== SERVICE ====================
+export const caseInfoService = {
   /**
-   * Get case information details for cashless cases
+   * Get case information details for cashless claim
+   * @param invClaimId - Investigation/Claim ID (will be cleaned)
+   * @returns Promise with case information
    */
-  async getCaseInfoDetails(investigationId: string): Promise<CaseInfoResponse> {
+  getCaseInfoDetails: async (
+    invClaimId: string
+  ): Promise<CaseInfoResponse> => {
     try {
-      const response:any = await apiService.get<CaseInfoResponse>(
-        `${apiurls.caseInfo}/${investigationId}`
+      // Clean investigation ID (remove suffix after dash)
+      const cleanInvClaimId = invClaimId.split('-')[0];
+      
+      const response = await apiService.get(
+        `${apiUrls.caseInfoDetails}${cleanInvClaimId}`
       );
-      return response.data;
+      return response;
     } catch (error) {
-      console.error('Error fetching case info details:', error);
+      console.error('Error in getCaseInfoDetails:', error);
       throw error;
     }
-  }
+  },
 
   /**
-   * Get case information details for reimbursement cases
+   * Get case information details for reimbursement claim
+   * @param invClaimId - Investigation/Claim ID (will be cleaned)
+   * @returns Promise with case information
    */
-  async getCaseInfoDetailsReim(investigationId: string): Promise<CaseInfoResponse> {
+  getCaseInfoDetailsReim: async (
+    invClaimId: string
+  ): Promise<CaseInfoResponse> => {
     try {
-      const response:any = await apiService.get<CaseInfoResponse>(
-        `${apiurls.caseInfoReim}/${investigationId}`
+      // Clean investigation ID (remove suffix after dash)
+      const cleanInvClaimId = invClaimId.split('-')[0];
+      
+      const response = await apiService.get(
+        `${apiUrls.recaseInfoDetails}${cleanInvClaimId}`
       );
-      return response.data;
+      return response;
     } catch (error) {
-      console.error('Error fetching reimbursement case info details:', error);
+      console.error('Error in getCaseInfoDetailsReim:', error);
       throw error;
     }
-  }
+  },
+};
 
-  /**
-   * Download consent letter
-   */
-  async downloadConsentLetter(investigationId: string): Promise<Blob> {
-    try {
-      const response:any = await apiService.get(
-        `${apiurls.downloadConsentLetter}/${investigationId}`,
-        { responseType: 'blob' }
-      );
-      return response.data;
-    } catch (error) {
-      console.error('Error downloading consent letter:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Download hospital application letter
-   */
-  async downloadHospitalLetter(investigationId: string): Promise<Blob> {
-    try {
-      const response:any = await apiService.get(
-        `${apiurls.downloadHospitalLetter}/${investigationId}`,
-        { responseType: 'blob' }
-      );
-      return response.data;
-    } catch (error) {
-      console.error('Error downloading hospital letter:', error);
-      throw error;
-    }
-  }
-
-  /**
-   * Download vendor authorization letter
-   */
-  async downloadVendorLetter(investigationId: string): Promise<Blob> {
-    try {
-      const response:any = await apiService.get(
-        `${apiurls.downloadVendorLetter}/${investigationId}`,
-        { responseType: 'blob' }
-      );
-      return response.data;
-    } catch (error) {
-      console.error('Error downloading vendor letter:', error);
-      throw error;
-    }
-  }
-}
-
-export const caseInfoService = new CaseInfoService();
+export default caseInfoService;

@@ -1,24 +1,24 @@
 import { apiService } from './api.service';
-import { apiurls } from '../constants/apiConstants';
+import { apiUrls } from '../constants/apiConstants';
 
 class UserService {
   async forgotPassword(username: string): Promise<any> {
     const response = await apiService.post(
-      `${apiurls.forgotPassword}?username=${username}`
+      `${apiUrls.forgotPassword}?username=${username}`
     );
     return response as any;
   }
 
   async verifyPassword(username: string): Promise<any> {
     const response = await apiService.post(
-      `${apiurls.verifyPassword}?username=${username}`
+      `${apiUrls.verifyPassword}?username=${username}`
     );
     return response as any;
   }
 
   async resetPassword(username: string, newPassword: string): Promise<any> {
     const response = await apiService.post(
-      `${apiurls.resetPassword}?username=${username}&newPassword=${newPassword}`
+      `${apiUrls.resetPassword}?username=${username}&newPassword=${newPassword}`
     );
     return response as any;
   }

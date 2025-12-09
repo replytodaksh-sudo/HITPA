@@ -33,7 +33,10 @@ import {
   Search as SearchIcon,
   Refresh as RefreshIcon,
 } from '@mui/icons-material';
-import { agencyService, caseAssignmentService, dropdownService } from '../../services/agency.service';
+import { agencyService } from '../../services/agency.service';
+import DropdownService from '../../services/dropdown.service';
+import caseAssignmentService from '../../services/caseAssignmentService';
+// import { agencyService, caseAssignmentService, DropdownService } from '../../services/agency.service';
 
 interface Agency {
   agencyCode: string;
@@ -126,59 +129,59 @@ const AgencyManagement: React.FC = () => {
   };
 
   const fetchAgencyTypes = async () => {
-    const response = await dropdownService.getAgencyType();
+    const response = await DropdownService.getAgencyType();
     if (response.statusCode === 0) {
-      setAgencyTypes(response.payload);
+      setAgencyTypes(response.payload || []);
     }
   };
 
   const fetchZones = async () => {
-    const response = await dropdownService.getZones();
+    const response = await DropdownService.getZones();
     if (response.statusCode === 0) {
-      setZones(response.payload);
+      setZones(response.payload || []);
     }
   };
 
   const fetchStates = async () => {
-    const response = await dropdownService.getStates();
+    const response = await DropdownService.getStates();
     if (response.statusCode === 0) {
-      setStates(response.payload);
+      setStates(response.payload || []);
     }
   };
 
   const fetchCities = async (stateCode: string) => {
-    const response = await dropdownService.getCities(stateCode);
+    const response = await DropdownService.getCities(stateCode);
     if (response.statusCode === 0) {
-      setCities(response.payload);
+      setCities(response.payload || []);
     }
   };
 
   const fetchCaseAssignmentRules = async () => {
     const response = await caseAssignmentService.getCaseAssignmentRule();
     if (response.statusCode === 0) {
-      setCaseAssignmentRules(response.payload);
+      setCaseAssignmentRules(response.payload || []);
     }
   };
 
   // Cascading selections
   const fetchStatesByZones = async (zoneCodes: string[]) => {
-    const response = await dropdownService.getStatesByZones({ zoneCodes });
+    const response = await DropdownService.getStatesByZones(zoneCodes);
     if (response.statusCode === 0) {
-      setMultiStates(response.payload);
+      setMultiStates(response.payload || []);
     }
   };
 
   const fetchCitiesByStates = async (stateCodes: string[]) => {
-    const response = await dropdownService.getCitiesByStates({ stateCodes });
+    const response = await DropdownService.getCitiesByStates(stateCodes);
     if (response.statusCode === 0) {
-      setMultiCities(response.payload);
+      setMultiCities(response.payload || []);
     }
   };
 
   const fetchPinsByCities = async (cityCodes: string[]) => {
-    const response = await dropdownService.getPinsByCities({ cityCodes });
+    const response = await DropdownService.getPinsByCities(cityCodes);
     if (response.statusCode === 0) {
-      setMultiPins(response.payload);
+      setMultiPins(response.payload || []);
     }
   };
 

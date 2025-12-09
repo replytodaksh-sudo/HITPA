@@ -15,7 +15,7 @@ import {
   CloudUpload as UploadIcon,
 } from '@mui/icons-material';
 import { useParams, useSearchParams } from 'react-router-dom';
-import { DocumentService } from '../../../services/document.service';
+import { DocumentsService } from '../../../services/document.service';
 import { caseUpdateService } from '../../../services/caseupdate.service';
 
 interface Document {
@@ -81,7 +81,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
       ) {
         // Regional Manager: Central + Regional
         if (roleName === 'Regional Manager') {
-          const centralResponse:any = await DocumentService.viewInvestigationDocsView(
+          const centralResponse:any = await DocumentsService.viewInvestigationDocsView(
             'caseAssignmentCentral',
             investigationId
           );
@@ -89,7 +89,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
             allDocs = [...centralResponse.data.payload];
           }
 
-          const regionalResponse:any = await DocumentService.viewInvestigationDocsView(
+          const regionalResponse:any = await DocumentsService.viewInvestigationDocsView(
             'caseAssignmentRegional',
             investigationId
           );
@@ -99,7 +99,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
         }
         // Agency Spoc, Central Manager, Field Officer: Central + Regional + Agency
         else {
-          const centralResponse:any = await DocumentService.viewInvestigationDocsView(
+          const centralResponse:any = await DocumentsService.viewInvestigationDocsView(
             'caseAssignmentCentral',
             investigationId
           );
@@ -107,7 +107,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
             allDocs = [...centralResponse.data.payload];
           }
 
-          const regionalResponse:any = await DocumentService.viewInvestigationDocsView(
+          const regionalResponse:any = await DocumentsService.viewInvestigationDocsView(
             'caseAssignmentRegional',
             investigationId
           );
@@ -115,7 +115,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
             allDocs = [...allDocs, ...regionalResponse.data.payload];
           }
 
-          const agencyResponse:any = await DocumentService.viewInvestigationDocsView(
+          const agencyResponse:any = await DocumentsService.viewInvestigationDocsView(
             'caseAssignmentAgency',
             investigationId
           );
@@ -128,7 +128,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
       setDocumentArray(allDocs);
 
       // Fetch investigation documents
-      const invDocsResponse:any = await DocumentService.viewInvestigationDocsView(
+      const invDocsResponse:any = await DocumentsService.viewInvestigationDocsView(
         'investigation',
         investigationId
       );
@@ -235,7 +235,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
     setSuccess('');
 
     try {
-      const response:any = await DocumentService.uploadInvestigationDocs(
+      const response:any = await DocumentsService.uploadInvestigationDocs(
         'investigation',
         investigationId,
         selectedFile,
@@ -272,7 +272,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
     }
 
     try {
-      const response:any = await DocumentService.deleteDocument(documentId);
+      const response:any = await DocumentsService.deleteDocument(documentId);
       if (response.data.statusCode === 0) {
         setSuccess('Document deleted successfully');
         await getInvestigationDocs();

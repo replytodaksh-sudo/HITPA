@@ -35,9 +35,10 @@ import {
 } from '@mui/icons-material';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { dashboardService } from '../../services/dashboard.service';
+import { DashboardService } from '../../services/dashboard.service';
 import { authService } from '../../services/auth.service';
 import { CircularProgress, Backdrop } from '@mui/material';
+import DropdownService from '../../services/dropdown.service';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -228,7 +229,7 @@ const Dashboard: React.FC = () => {
 
     const fetchZones = async () => {
         try {
-            const response = await dashboardService.getUserZones();
+            const response = await DropdownService.getUserZones();
             if (response.statusCode === 0) {
                 console.log("zones response", response);
                 setZones(response);
@@ -240,9 +241,9 @@ const Dashboard: React.FC = () => {
 
     const fetchStates = async () => {
         try {
-            const response = await dashboardService.getStates();
+            const response = await DropdownService.getStates();
             if (response.statusCode === 0) {
-                setStates(response.payload);
+                setStates(response.payload || []);
             }
         } catch (error) {
             console.error('Failed to fetch states:', error);
@@ -251,9 +252,9 @@ const Dashboard: React.FC = () => {
 
     const fetchAgencies = async () => {
         try {
-            const response = await dashboardService.getAllAgencies();
+            const response = await DropdownService.getAllAgencies();
             if (response.statusCode === 0) {
-                setAgencies(response.payload);
+                setAgencies(response.payload || []);
             }
         } catch (error) {
             console.error('Failed to fetch agencies:', error);
@@ -262,9 +263,9 @@ const Dashboard: React.FC = () => {
 
     const fetchRegionalManagers = async () => {
         try {
-            const response = await dashboardService.getRegionalUsers();
+            const response = await DropdownService.getRegionalUsers();
             if (response.statusCode === 0) {
-                setRegionalManagers(response.payload);
+                setRegionalManagers(response.payload || []);
             }
         } catch (error) {
             console.error('Failed to fetch regional managers:', error);
@@ -273,9 +274,9 @@ const Dashboard: React.FC = () => {
 
     const fetchFieldOfficers = async () => {
         try {
-            const response = await dashboardService.getFieldOfficers();
+            const response = await DropdownService.getFieldOfficers();
             if (response.statusCode === 0) {
-                setFieldOfficers(response.payload);
+                setFieldOfficers(response.payload || []);
             }
         } catch (error) {
             console.error('Failed to fetch field officers:', error);
@@ -285,10 +286,10 @@ const Dashboard: React.FC = () => {
     const getDashboardCounts = async () => {
         try {
             // Fetch individual counts
-            const retailCashless = await dashboardService.getAllDashboardDetails('cashless', 1);
-            const groupCashless = await dashboardService.getAllDashboardDetails('cashless', 0);
-            const retailReimbursement = await dashboardService.getAllDashboardDetails('reimbursement', 1);
-            const groupReimbursement = await dashboardService.getAllDashboardDetails('reimbursement', 0);
+            const retailCashless = await DashboardService.getAllDashboardDetails('cashless', 1);
+            const groupCashless = await DashboardService.getAllDashboardDetails('cashless', 0);
+            const retailReimbursement = await DashboardService.getAllDashboardDetails('reimbursement', 1);
+            const groupReimbursement = await DashboardService.getAllDashboardDetails('reimbursement', 0);
 
             // payload may not be typed as an object with totalCount, so cast to any (or a narrow type) when reading totalCount
             if (retailCashless.statusCode === 0) {
@@ -311,7 +312,7 @@ const Dashboard: React.FC = () => {
     const fetchAllDashboardDetails = async () => {
         setLoading(true);
         try {
-            const response = await dashboardService.getAllDashboard();
+            const response = await DashboardService.allDashboard();
 
             if (response.statusCode === 0) {
                 setDashboardData(response.payload);
@@ -330,11 +331,11 @@ const Dashboard: React.FC = () => {
         const investigationData = data.dashBoardInvestigationDTO;
         const qcData = data.dashBoardQCDTO;
 
-        const activeCase = sumCaseData(investigationData[0].subTypeMenu) +
-            sumCaseData(investigationData[1].subTypeMenu) +
-            (qcData.length > 0 ? sumCaseData(qcData[0].subTypeMenu) : 0);
+        const activeCase = sumCaseData(investigationData[0]?.subTypeMenu) +
+            sumCaseData(investigationData[1]?.subTypeMenu) +
+            (qcData.length > 0 ? sumCaseData(qcData[0]?.subTypeMenu) : 0);
 
-        const completedCase = sumCaseData(investigationData[2].subTypeMenu);
+        const completedCase = sumCaseData(investigationData[2]?.subTypeMenu);
 
         setChartData({
             ...chartData,
@@ -346,7 +347,7 @@ const Dashboard: React.FC = () => {
     };
 
     const sumCaseData = (list: SubTypeMenu[]) => {
-        return list.reduce((total, item) => total + Math.round(item.value), 0);
+        return list?.reduce((total, item) => total + Math.round(item?.value), 0);
     };
 
     const handleCaseTypeChange = async (caseType: string) => {
@@ -357,13 +358,13 @@ const Dashboard: React.FC = () => {
             let response;
 
             if (caseType === 'retailCashless') {
-                response = await dashboardService.getAllDashboardDetails('cashless', 1);
+                response = await DashboardService.getAllDashboardDetails('cashless', 1);
             } else if (caseType === 'groupCashless') {
-                response = await dashboardService.getAllDashboardDetails('cashless', 0);
+                response = await DashboardService.getAllDashboardDetails('cashless', 0);
             } else if (caseType === 'retailReimbursement') {
-                response = await dashboardService.getAllDashboardDetails('reimbursement', 1);
+                response = await DashboardService.getAllDashboardDetails('reimbursement', 1);
             } else if (caseType === 'groupReimbursement') {
-                response = await dashboardService.getAllDashboardDetails('reimbursement', 0);
+                response = await DashboardService.getAllDashboardDetails('reimbursement', 0);
             }
 
             if (response && response.statusCode === 0) {
@@ -389,11 +390,11 @@ const Dashboard: React.FC = () => {
 
         try {
             const response = roleName === 'Central Manager'
-                ? await dashboardService.getStatesByZones(selectedZoneCodes)
-                : await dashboardService.getUserStatesByZones(selectedZoneCodes);
+                ? await DropdownService.getStatesByZones(selectedZoneCodes)
+                : await DropdownService.getUserStatesByZones(selectedZoneCodes);
 
             if (response.statusCode === 0) {
-                setStates(response.payload);
+                setStates(response.payload || []);
             }
         } catch (error) {
             console.error('Failed to fetch states:', error);
@@ -412,11 +413,11 @@ const Dashboard: React.FC = () => {
 
         try {
             const response = roleName === 'Central Manager'
-                ? await dashboardService.getCitiesByStates(selectedStateCodes)
-                : await dashboardService.getUserCitiesByStates(selectedStateCodes);
+                ? await DropdownService.getCitiesByStates(selectedStateCodes)
+                : await DropdownService.getUserCitiesByStates(selectedStateCodes);
 
             if (response.statusCode === 0) {
-                setCities(response.payload);
+                setCities(response.payload || []);
             }
         } catch (error) {
             console.error('Failed to fetch cities:', error);
@@ -438,20 +439,10 @@ const Dashboard: React.FC = () => {
         setLoading(true);
 
         try {
-            const filters = {
-                caseType: selectedCaseType || 'cashless',
-                retailType: selectedCaseType.includes('retail') ? 1 : 0,
-                stateCodes: selectedStates,
-                cityCodes: selectedCities,
-                agencyCodes: roleName === 'Central Manager'
-                    ? selectedRegionalManagers
-                    : selectedAgencies,
-                maxTat: '15',
-                fromDate,
-                toDate,
-            };
+            const caseType = selectedCaseType || 'cashless';
+            const retailType = selectedCaseType.includes('retail') ? 1 : 0;
 
-            const response = await dashboardService.getDashboardWithFilters(filters);
+            const response = await DashboardService.getAllDashboardDetails(caseType, retailType);
 
             if (response.statusCode === 0) {
                 setDashboardData(response.payload);
@@ -1040,10 +1031,10 @@ const Dashboard: React.FC = () => {
                                                 }}
                                             >
                                                 <Typography variant="h3" sx={{ fontWeight: 800, color: 'primary.main' }}>
-                                                    {sumCaseData(dashboardData.dashBoardInvestigationDTO[0].subTypeMenu) +
-                                                        sumCaseData(dashboardData.dashBoardInvestigationDTO[1].subTypeMenu) +
-                                                        sumCaseData(dashboardData.dashBoardInvestigationDTO[2].subTypeMenu) +
-                                                        sumCaseData(dashboardData.dashBoardQCDTO[0].subTypeMenu)}
+                                                    {sumCaseData(dashboardData.dashBoardInvestigationDTO[0]?.subTypeMenu) +
+                                                        sumCaseData(dashboardData.dashBoardInvestigationDTO[1]?.subTypeMenu) +
+                                                        sumCaseData(dashboardData.dashBoardInvestigationDTO[2]?.subTypeMenu) +
+                                                        sumCaseData(dashboardData.dashBoardQCDTO[0]?.subTypeMenu)}
                                                 </Typography>
                                                 <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 600 }}>
                                                     Total Cases

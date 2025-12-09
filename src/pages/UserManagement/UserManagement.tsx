@@ -34,7 +34,7 @@ import {
   LockReset as LockResetIcon,
 } from '@mui/icons-material';
 import { userService } from '../../services/user.service';
-import { dropdownService } from '../../services/agency.service';
+import DropdownService from '../../services/dropdown.service';
 
 interface User {
   userCode: string;
@@ -125,37 +125,37 @@ const UserManagement: React.FC = () => {
   };
 
   const fetchUserTypes = async () => {
-    const response = await dropdownService.getUserType();
+    const response = await DropdownService.getUserType();
     if (response.statusCode === 0) {
-      setUserTypes(response.payload);
+      setUserTypes(response.payload || []);
     }
   };
 
   const fetchZones = async () => {
-    const response = await dropdownService.getZones();
+    const response = await DropdownService.getZones();
     if (response.statusCode === 0) {
-      setZones(response.payload);
+      setZones(response.payload || []);
     }
   };
 
   const fetchStates = async () => {
-    const response = await dropdownService.getStates();
+    const response = await DropdownService.getStates();
     if (response.statusCode === 0) {
-      setStates(response.payload);
+      setStates(response.payload || []);
     }
   };
 
   const fetchCities = async (stateCode: string) => {
-    const response = await dropdownService.getCities(stateCode);
+    const response = await DropdownService.getCities(stateCode);
     if (response.statusCode === 0) {
-      setCities(response.payload);
+      setCities(response.payload || []);
     }
   };
 
   const fetchAssociatedRoles = async (userTypeCode: string) => {
-    const response = await dropdownService.getRoles(userTypeCode);
+    const response = await DropdownService.getRoles(userTypeCode);
     if (response.statusCode === 0) {
-      setRoles(response.payload);
+      setRoles(response.payload || []);
     }
   };
 
@@ -165,9 +165,9 @@ const UserManagement: React.FC = () => {
       setMultiStates([]);
       return;
     }
-    const response = await dropdownService.getStatesByZones({ zoneCodes });
+    const response = await DropdownService.getStatesByZones( zoneCodes);
     if (response.statusCode === 0) {
-      setMultiStates(response.payload);
+      setMultiStates(response.payload || []);
     }
   };
 
@@ -176,9 +176,9 @@ const UserManagement: React.FC = () => {
       setMultiCities([]);
       return;
     }
-    const response = await dropdownService.getCitiesByStates({ stateCodes });
+    const response = await DropdownService.getCitiesByStates( stateCodes);
     if (response.statusCode === 0) {
-      setMultiCities(response.payload);
+      setMultiCities(response.payload || []);
     }
   };
 
@@ -187,9 +187,9 @@ const UserManagement: React.FC = () => {
       setMultiPins([]);
       return;
     }
-    const response = await dropdownService.getPinsByCities({ cityCodes });
+    const response = await DropdownService.getPinsByCities( cityCodes);
     if (response.statusCode === 0) {
-      setMultiPins(response.payload);
+      setMultiPins(response.payload || []);
     }
   };
 

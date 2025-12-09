@@ -26,7 +26,7 @@ import {
   IconButton
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { dropdownService } from '../../../services/agency.service';
+import DropdownService from '../../../services/dropdown.service';
 
 interface PathologyDetail {
   isPathologist?: boolean;
@@ -120,17 +120,17 @@ const PathologyDetails: React.FC<PathologyDetailsProps> = ({
 
   // Fetch states
   const fetchAllStates = async () => {
-    const response = await dropdownService.getStates();
+    const response = await DropdownService.getStates();
     if (response.statusCode === 0) {
-      setStates(response.payload);
+      setStates(response.payload || []);
     }
   };
 
   // Fetch cities
   const getCity = async (stateCode: string) => {
-    const response = await dropdownService.getCities(stateCode);
+    const response = await DropdownService.getCities(stateCode);
     if (response.statusCode === 0) {
-      setCities(response.payload);
+      setCities(response.payload || []);
     }
   };
 

@@ -18,7 +18,7 @@ import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import AcceptInternalTeam from './AcceptInternalTeam';
 
 // Import services
-import { AcceptAssignService } from '../../../services/acceptassign.service';
+import { acceptAssignService } from '../../../services/acceptassign.service';
 import { claimsService } from '../../../services/claims.service';
 import AcceptAgencies from './acceptAgency';
 import DeniedDenyForm from './DeniedDenyForm ';
@@ -103,7 +103,7 @@ const AgencyDeniedAcceptDeny: React.FC<AgencyDeniedAcceptDenyProps> = ({
         denialDecisionReason: denialAgencyJustifiedRemarks,
       };
 
-      const response:any = await AcceptAssignService.deny(denyRequest);
+      const response:any = await acceptAssignService.deny(denyRequest);
 
       if (response.data.statusCode === 0) {
         setSuccess('Denial submitted successfully!');

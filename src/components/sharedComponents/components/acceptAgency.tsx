@@ -21,7 +21,7 @@
 // } from '@mui/material';
 // import { agencyService } from '../../../services/agency.service';
 // import { QuestionService } from '../../../services/question.service';
-// import { DocumentService } from '../../../services/document.service';
+// import { DocumentsService } from '../../../services/document.service';
 // import { AssignService } from '../../../services/assign.service';
 // import AgencySelection from './AgencySelection';
 // import DocumentUpload from './DocumentUpload';
@@ -141,7 +141,7 @@
 //         uploadDuring = 'caseAssignmentCentral';
 //       }
 
-//       const response: any = await DocumentService.viewInvestigationDocsView(
+//       const response: any = await DocumentsService.viewInvestigationDocsView(
 //         uploadDuring,
 //         investigationId
 //       );
@@ -397,7 +397,7 @@ import {
 } from '@mui/material';
 import { agencyService } from '../../../services/agency.service';
 import { QuestionService } from '../../../services/question.service';
-import { DocumentService } from '../../../services/document.service';
+import { DocumentsService } from '../../../services/document.service';
 import { AssignService } from '../../../services/assign.service';
 import AgencySelection from './AgencySelection';
 import DocumentUpload from './DocumentUpload';
@@ -510,7 +510,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
         uploadDuring = 'caseAssignmentCentral';
       }
 
-      const response:any = await DocumentService.viewInvestigationDocsView(
+      const response:any = await DocumentsService.viewInvestigationDocsView(
         uploadDuring,
         investigationId
       );

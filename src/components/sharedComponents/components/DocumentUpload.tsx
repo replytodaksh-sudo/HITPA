@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DescriptionIcon from '@mui/icons-material/Description';
-import { DocumentService } from '../../../services/document.service';
+import { DocumentsService } from '../../../services/document.service';
 
 interface DocumentUploadProps {
     roleName: string;
@@ -72,7 +72,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
                         ? 'caseAssignmentAgency'
                         : 'caseAssignmentCentral';
 
-            const response: any = await DocumentService.uploadInvestigationDocs(
+            const response: any = await DocumentsService.uploadInvestigationDocs(
                 uploadDuring,
                 investigationId,
                 selectedFile,
@@ -103,7 +103,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
 
     const handleDelete = async (documentId: string, index: number) => {
         try {
-            const response: any = await DocumentService.deleteDocument(documentId);
+            const response: any = await DocumentsService.deleteDocument(documentId);
             if (response.data.statusCode === 0) {
                 setDocumentsCodes(documentsCodes.filter((code) => code !== documentId));
                 onDocsUpdate();

@@ -50,7 +50,7 @@ import {
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { authService } from '../services/auth.service';
-import { dashboardService } from '../services/dashboard.service';
+import { DashboardService } from '../services/dashboard.service';
 import { useAuth } from '../hooks/useAuth';
 import keycloak from '../keycloak.config';
 
@@ -164,11 +164,11 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
       let response;
 
       if (searchType === 'corporate') {
-        response = await dashboardService.corporateSearch(formData);
+        response = await DashboardService.corporateSearch(formData);
       } else if (searchType === 'provider') {
-        response = await dashboardService.providerSearch(formData);
+        response = await DashboardService.providerSearch(formData);
       } else if (searchType === 'policyholder') {
-        response = await dashboardService.policySearch(formData);
+        response = await DashboardService.policySearch(formData);
       }
 
       if (response && response.statusCode === 0) {

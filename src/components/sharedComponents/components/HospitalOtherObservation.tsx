@@ -12,7 +12,7 @@ interface HospitalOtherObservationProps {
 // Simple in-memory store - should match the one in HospitalStepTwo
 const defaultCaseUpdateStore: Record<string, any> = {};
 
-const defaultCaseUpdateService = {
+const defaultcaseUpdateService = {
   setCaseUpdateVal: (key: string, value: any) => {
     defaultCaseUpdateStore[key] = value;
   },
@@ -25,7 +25,7 @@ const defaultCaseUpdateService = {
 const HospitalOtherObservation: React.FC<HospitalOtherObservationProps> = ({
   isFormEditable = true,
   previousData = {},
-  caseUpdateService = defaultCaseUpdateService,
+  caseUpdateService = defaultcaseUpdateService,
 }) => {
   const [anyOtherObservations, setAnyOtherObservations] = useState<string>('');
 

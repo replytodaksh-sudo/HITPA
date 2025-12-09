@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import { Save as SaveIcon } from '@mui/icons-material';
 import { QCUpdateService } from '../../../services/qcupdate.service';
-import { dropdownService } from '../../../services/agency.service';
+import DropdownService from '../../../services/dropdown.service';
 
 interface CentralQCUpdateFieldsProps {
   investigationId?: string;
@@ -134,9 +134,9 @@ const CentralQCUpdateFields: React.FC<CentralQCUpdateFieldsProps> = ({
 
   const fetchAllPrimaryDiscrepancy = async () => {
     try {
-      const response = await dropdownService.getAllPrimaryDiscrepancy();
+      const response = await DropdownService.getAllPrimaryDiscrepancy();
       if (response.statusCode === 0) {
-        setDiscrepancyDropdownOptions(response.payload);
+        setDiscrepancyDropdownOptions(response.payload || []);
       }
     } catch (error) {
       console.error('Error fetching primary discrepancies:', error);
@@ -145,9 +145,9 @@ const CentralQCUpdateFields: React.FC<CentralQCUpdateFieldsProps> = ({
 
   const fetchSecondary = async (primaryCode: string) => {
     try {
-      const response = await dropdownService.getSecondaryDiscrepancy(primaryCode);
+      const response = await DropdownService.getSecondaryDiscrepancy(primaryCode);
       if (response.statusCode === 0) {
-        setDiscrepancySecondaryOptions(response.payload);
+        setDiscrepancySecondaryOptions(response.payload || []);
       }
     } catch (error) {
       console.error('Error fetching secondary discrepancies:', error);
@@ -156,9 +156,9 @@ const CentralQCUpdateFields: React.FC<CentralQCUpdateFieldsProps> = ({
 
   const fetchEvidences = async () => {
     try {
-      const response = await dropdownService.getAllEvidenceSupporting();
+      const response = await DropdownService.getAllEvidenceSupporting();
       if (response.statusCode === 0) {
-        setEvidenceOptions(response.payload);
+        setEvidenceOptions(response.payload || []);
       }
     } catch (error) {
       console.error('Error fetching evidences:', error);

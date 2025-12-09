@@ -12,7 +12,7 @@ import {
     Divider
 } from '@mui/material';
 import { QCUpdateService } from '../../services/qcupdate.service';
-import { agencyQCService } from '../../services/agencyqcupdate.service';
+import { agencyQcUpdateService } from '../../services/agencyqcupdate.service';
 import PreAuth from '../../components/sharedComponents/components/PreAuth';
 import HospitalInfo from '../../components/sharedComponents/components/HospitalInfo';
 import CentralRegionalDocuments from '../../components/sharedComponents/components/CentralRegionalDocuments';
@@ -124,7 +124,7 @@ const RegionalCompletedForm: React.FC<RegionalCompletedFormProps> = () => {
                 tabName = 'centralQC';
             }
 
-            const response = await agencyQCService.getQCUpdateData(invId, tabName);
+            const response = await agencyQcUpdateService.getQCUpdateData(invId, tabName);
 
             if (response.statusCode === 0) {
                 setQCData(response.payload);

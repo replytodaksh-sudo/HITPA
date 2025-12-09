@@ -50,7 +50,7 @@ const caseUpdateService = {
     },
 };
 
-const reimCaseUpdateService = {
+const reimcaseUpdateService = {
     addHospitalVerifyTwo: async (payload: any, investigationId: string) => {
         const response = await fetch(
             `${import.meta.env.VITE_API_BASE_URL}/api/reim-case-update/hospital-verify-two/${investigationId}`,
@@ -249,7 +249,7 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
         const payload = buildStepTwoPayload('saveasdraft');
 
         try {
-            const data = await reimCaseUpdateService.addHospitalVerifyTwo(payload, cleanId);
+            const data = await reimcaseUpdateService.addHospitalVerifyTwo(payload, cleanId);
             if (data.statusCode === 0) {
                 notificationService.showAlertSuccess(messages.hospVerifySaved);
             } else {
@@ -269,7 +269,7 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
         const payload = buildStepTwoPayload('submittoqc');
 
         try {
-            const data = await reimCaseUpdateService.addHospitalVerifyTwo(payload, cleanId);
+            const data = await reimcaseUpdateService.addHospitalVerifyTwo(payload, cleanId);
             if (data.statusCode === 0) {
                 notificationService.showAlertSuccess(messages.hospVerifySubmit);
                 navigate('/admin/dashboard');

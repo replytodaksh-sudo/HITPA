@@ -25,7 +25,7 @@ import {
   Typography,
 } from '@mui/material';
 import { caseUpdateService } from '../../../services/caseupdate.service';
-import { dropdownService } from '../../../services/agency.service';
+import DropdownService from '../../../services/dropdown.service';
 
 interface FindingsProps {
   isInsuredVisit?: boolean;
@@ -189,9 +189,9 @@ const Findings: React.FC<FindingsProps> = ({
 
   const fetchAllStates = async () => {
     try {
-      const response = await dropdownService.getStates();
+      const response = await DropdownService.getStates();
       if (response.statusCode === 0) {
-        setStates(response.payload);
+        setStates(response.payload || []);
       }
     } catch (error) {
       console.error('Error fetching states:', error);
@@ -200,9 +200,9 @@ const Findings: React.FC<FindingsProps> = ({
 
   const getCity = async (stateCode: string) => {
     try {
-      const response = await dropdownService.getCities(stateCode);
+      const response = await DropdownService.getCities(stateCode);
       if (response.statusCode === 0) {
-        setCities(response.payload);
+        setCities(response.payload || []);
       }
     } catch (error) {
       console.error('Error fetching cities:', error);
@@ -211,9 +211,9 @@ const Findings: React.FC<FindingsProps> = ({
 
   const getLabCity = async (stateCode: string) => {
     try {
-      const response = await dropdownService.getCities(stateCode);
+      const response = await DropdownService.getCities(stateCode);
       if (response.statusCode === 0) {
-        setLabCities(response.payload);
+        setLabCities(response.payload || []);
       }
     } catch (error) {
       console.error('Error fetching lab cities:', error);
