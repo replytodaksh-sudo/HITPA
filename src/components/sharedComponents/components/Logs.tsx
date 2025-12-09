@@ -44,7 +44,7 @@ const Logs: React.FC<LogsProps> = ({ claimsType }) => {
     setError(null);
     
     try {
-      let response;
+      let response:any;
       
       if (claimsType === 'cashless') {
         response = await logService.allLogs(invId);

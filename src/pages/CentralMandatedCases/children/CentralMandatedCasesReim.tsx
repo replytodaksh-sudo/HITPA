@@ -126,7 +126,7 @@ const CentralMandatedCasesReim: React.FC = () => {
           setLoading(true);
   
           try {
-              let response:any = await claimsService.fetchCentralMandatedCasesByTatReim(tatValue)
+              let response:any = await claimsService.fetchCentralMandatedCasesReimByTat(tatValue)
   
               if (response.statusCode === 0) {
                   setReimClaims(response.payload);

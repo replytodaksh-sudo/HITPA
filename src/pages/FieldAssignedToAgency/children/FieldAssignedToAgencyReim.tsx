@@ -107,9 +107,9 @@ const FieldAssignedToAgencyReim: React.FC = () => {
       let response;
 
       if (roleName === 'Regional Manager') {
-        response = await claimsService.getClaimsAssignedToAgencyCasesReim();
+        response = await claimsService.getReclaimsAssignedToAgencyCases();
       } else if (roleName === 'Agency Spoc') {
-        response = await claimsService.getClaimsAssignedToFOCasesReim();
+        response = await claimsService.getReclaimsAssignedToFOCases();
       } else {
         throw new Error('Invalid role');
       }
@@ -137,9 +137,9 @@ const FieldAssignedToAgencyReim: React.FC = () => {
       let response:any;
 
       if (roleName === 'Regional Manager') {
-        response = await claimsService.getClaimsAssignedToAgencyCasesByTatReim(tatValue);
+        response = await claimsService.getReclaimsAssignedToAgencyCasesByTat(tatValue);
       } else if (roleName === 'Agency Spoc') {
-        response = await claimsService.getClaimsAssignedToFOCasesByTatReim(tatValue);
+        response = await claimsService.getReclaimsAssignedToFOCasesByTat(tatValue);
       } else {
         throw new Error('Invalid role');
       }

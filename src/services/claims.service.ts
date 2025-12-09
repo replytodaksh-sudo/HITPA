@@ -937,6 +937,12 @@ export const claimsService = {
       return response;
     } catch (error) { console.error('Error:', error); throw error; }
   },
+  fetchReimClaimsByTat: async (range:string): Promise<ClaimsResponse> => {
+    try {
+      const response = await apiService.get(`${apiUrls.reimAssignAgencyFreshClaims}?tatFilter=${range}`);
+      return response;
+    } catch (error) { console.error('Error:', error); throw error; }
+  },
   reimRegionalDeniedCases: async (): Promise<ClaimsResponse> => {
     try {
       const response = await apiService.get(apiUrls.reimRegionalDeniedCases);
@@ -1267,6 +1273,12 @@ export const claimsService = {
       return response;
     } catch (error) { console.error('Error:', error); throw error; }
   },
+  getReAssignClaimsRegReimByTat: async (range:string): Promise<ClaimsResponse> => {
+    try {
+      const response = await apiService.get(`${apiUrls.getReAssignClaimsRegReim}?tatFilter=${range}`);
+      return response;
+    } catch (error) { console.error('Error:', error); throw error; }
+  },
   getReAssignReclaimsReg: async (): Promise<ClaimsResponse> => {
     try {
       const response = await apiService.get(apiUrls.getReAssignReclaimsReg);
@@ -1380,6 +1392,12 @@ export const claimsService = {
   getRegionalSelfDeniedCases: async (): Promise<ClaimsResponse> => {
     try {
       const response = await apiService.get(apiUrls.fetchRegionalSelfDeniedCase);
+      return response;
+    } catch (error) { console.error('Error:', error); throw error; }
+  },
+  getRegionalSelfDeniedCasesByTat: async (range: string): Promise<ClaimsResponse> => {
+    try {
+      const response = await apiService.get(`${apiUrls.fetchRegionalSelfDeniedCase}?tatFilter=${range}`);
       return response;
     } catch (error) { console.error('Error:', error); throw error; }
   },

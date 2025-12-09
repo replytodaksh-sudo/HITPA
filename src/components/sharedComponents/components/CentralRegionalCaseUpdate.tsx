@@ -147,6 +147,10 @@ const CentralRegionalCaseUpdate: React.FC<CentralRegionalCaseUpdateProps> = ({
 
   const handleSaveSubmit = async () => {
     const caseUpdateID = localStorage.getItem('activeCaseID');
+    if (!caseUpdateID) {
+      alert('Case ID not found. Please try again.');
+      return;
+    }
     try {
       const response = await caseUpdateService.addCaseUpdateFinal(
         caseUpdateID,

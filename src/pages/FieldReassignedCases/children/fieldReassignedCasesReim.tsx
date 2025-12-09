@@ -435,9 +435,9 @@ const FieldReassignedCasesReim: React.FC = () => {
             let response: any = null;
 
             if (currentRole === 'Regional Manager') {
-                response = await claimsService.getReAssignClaimsRegByTatReim(selectedTatRange);
+                response = await claimsService.getReAssignClaimsRegReimByTat(selectedTatRange);
             } else if (currentRole === 'Agency Spoc') {
-                response = await claimsService.getReAssignClaimsByTatReim(selectedTatRange);
+                response = await claimsService.getReAssignReclaimsByTat(selectedTatRange);
             }
 
             if (response && response.statusCode === 0) {

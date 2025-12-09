@@ -60,9 +60,9 @@ const AssignedToSelfReimburse: React.FC = () => {
             let response:any;
 
             if (role === 'Regional Manager') {
-                response = await claimsService.getAssignedToSelfCasesReimRegional();
+                response = await claimsService.getAssignedToSelfCasesRegionalReim();
             } else if (role === 'Agency Spoc') {
-                response = await claimsService.getAssignedToSelfCasesReim();
+                response = await claimsService.getReclaimsAssignedToSelfCases();
             }
 
             if (response?.statusCode === 0) {
@@ -75,35 +75,35 @@ const AssignedToSelfReimburse: React.FC = () => {
         }
     };
 
-    const handleTatChange = async (event: React.ChangeEvent<{ value: unknown }>) => {
-        const selectedRange = event.target.value as string;
-        setTatRange(selectedRange);
+    // const handleTatChange = async (event: React.ChangeEvent<{ value: unknown }>) => {
+    //     const selectedRange = event.target.value as string;
+    //     setTatRange(selectedRange);
 
-        if (!selectedRange) {
-            fetchAssignedReimCases();
-            return;
-        }
+    //     if (!selectedRange) {
+    //         fetchAssignedReimCases();
+    //         return;
+    //     }
 
-        setLoading(true);
-        try {
-            const role = sessionStorage.getItem('roleName');
-            let response:any;
+    //     setLoading(true);
+    //     try {
+    //         const role = sessionStorage.getItem('roleName');
+    //         let response:any;
 
-            if (role === 'Regional Manager') {
-                response = await claimsService.getAssignedToSelfCasesReimRegionalByTat(selectedRange);
-            } else if (role === 'Agency Spoc') {
-                response = await claimsService.getAssignedToSelfCasesReimByTat(selectedRange);
-            }
+    //         if (role === 'Regional Manager') {
+    //             response = await claimsService.getAssignedToSelfCasesReimRegionalByTat(selectedRange);
+    //         } else if (role === 'Agency Spoc') {
+    //             response = await claimsService.getAssignedToSelfCasesReimByTat(selectedRange);
+    //         }
 
-            if (response?.statusCode === 0) {
-                setClaims(response.payload);
-            }
-        } catch (error) {
-            console.error('Error filtering by TAT:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    //         if (response?.statusCode === 0) {
+    //             setClaims(response.payload);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error filtering by TAT:', error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
     const getTatColor = (tat: number): string => {
         return fetchMenuService.getReimHexColor(tat);

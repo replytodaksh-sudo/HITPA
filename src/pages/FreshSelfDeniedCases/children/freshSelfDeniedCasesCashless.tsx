@@ -107,9 +107,9 @@ const FreshSelfDeniedCasesCashless: React.FC = () => {
       let response;
 
       if (roleName === 'Regional Manager') {
-        response = await claimsService.getClaimsRegionalSelfDeniedCases();
+        response = await claimsService.getRegionalSelfDeniedCases();
       } else if (roleName === 'Agency Spoc') {
-        response = await claimsService.getClaimsAgencySelfDeniedCases();
+        response = await claimsService.getAgencySelfDeniedCases();
       } else {
         throw new Error('Invalid role');
       }
@@ -137,9 +137,9 @@ const FreshSelfDeniedCasesCashless: React.FC = () => {
       let response:any;
 
       if (roleName === 'Regional Manager') {
-        response = await claimsService.getClaimsRegionalSelfDeniedCasesByTat(tatValue);
+        response = await claimsService.getRegionalSelfDeniedCasesByTat(tatValue);
       } else if (roleName === 'Agency Spoc') {
-        response = await claimsService.getClaimsAgencySelfDeniedCasesByTat(tatValue);
+        response = await claimsService.getAgencySelfDeniedCasesByTat(tatValue);
       } else {
         throw new Error('Invalid role');
       }

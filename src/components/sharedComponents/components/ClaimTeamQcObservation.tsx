@@ -347,7 +347,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
     // ========== FETCH REGIONAL USERS (Central Manager) ==========
     const fetchRegionalUsers = async () => {
         try {
-            const response = await acceptAssignService.getRegionalUsers();
+            const response:any = await acceptAssignService.getRegionalUsers();
             if (response.statusCode === 0) {
                 setRegionalTeamMembers(response.payload);
             }
@@ -572,7 +572,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
                     ? 'caseAssignmentAgency'
                     : 'caseAssignmentCentral';
 
-            const response = await DocumentsService.uploadInvestigationDocs(
+            const response:any = await DocumentsService.uploadInvestigationDocs(
                 uploadDuring,
                 investigationId || '',
                 selectedFiles[0],

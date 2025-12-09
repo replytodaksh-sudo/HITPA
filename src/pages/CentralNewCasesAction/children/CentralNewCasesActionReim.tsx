@@ -58,7 +58,7 @@ const CentralNewCasesActionReim: React.FC = () => {
   const fetchClaims = async () => {
     setLoading(true);
     try {
-      const response = await claimsService.getAllAssignedReimToForAction();
+      const response = await claimsService.fetchALLCentralNewCasesForActionReim();
       if (response.statusCode === 0) {
         setClaims(response.payload);
       }

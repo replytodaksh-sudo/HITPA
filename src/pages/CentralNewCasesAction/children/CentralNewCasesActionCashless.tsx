@@ -58,7 +58,7 @@ const CentralNewCasesActionCashless: React.FC = () => {
   const fetchClaims = async () => {
     setLoading(true);
     try {
-      const response = await claimsService.getAllAssignedToForAction();
+      const response = await claimsService.fetchALLCentralNewCasesForAction();
       if (response.statusCode === 0) {
         setClaims(response.payload);
       }

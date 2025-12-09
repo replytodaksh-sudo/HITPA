@@ -107,9 +107,9 @@ const FieldAssignedToAgencyCashless: React.FC = () => {
       let response;
 
       if (roleName === 'Regional Manager') {
-        response = await claimsService.getClaimsAssignedToAgencyCases();
+        response = await claimsService.getAssignedToAgencyCases();
       } else if (roleName === 'Agency Spoc') {
-        response = await claimsService.getClaimsAssignedToFOCases();
+        response = await claimsService.getAssignedToFOCases();
       } else {
         throw new Error('Invalid role');
       }
@@ -137,9 +137,9 @@ const FieldAssignedToAgencyCashless: React.FC = () => {
       let response:any;
 
       if (roleName === 'Regional Manager') {
-        response = await claimsService.getClaimsAssignedToAgencyCasesByTat(tatValue);
+        response = await claimsService.getAssignedToAgencyCasesByTat(tatValue);
       } else if (roleName === 'Agency Spoc') {
-        response = await claimsService.getClaimsAssignedToFOCasesByTat(tatValue);
+        response = await claimsService.getAssignedToFOCasesByTat(tatValue);
       } else {
         throw new Error('Invalid role');
       }

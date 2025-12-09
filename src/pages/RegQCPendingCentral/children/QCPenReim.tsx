@@ -117,7 +117,7 @@ const QCPenReim: React.FC = () => {
 
         setLoading(true);
         try {
-            const response: any = await claimsService.fetchPendingFromCentralByTatReim(tatValue);
+            const response: any = await claimsService.fetchPendingFromCentralReimByTat(tatValue);
             if (response.statusCode === 0) {
                 setClaims(response.payload);
                 setFilteredClaims(response.payload);
