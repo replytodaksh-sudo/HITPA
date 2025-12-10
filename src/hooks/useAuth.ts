@@ -20,7 +20,7 @@ export const useAuth = () => {
         // Get user roles
         const roles = keycloak.tokenParsed?.realm_access?.roles || [];
         const resourceRoles = keycloak.tokenParsed?.resource_access || {};
-
+        
         setUserProfile({
           username: profile.username,
           email: profile.email,
@@ -28,58 +28,58 @@ export const useAuth = () => {
           lastName: profile.lastName,
           roles: roles,
         });
-        console.log('User Profile:', roles)
-      // Store user info in sessionStorage (for backward compatibility)
-      sessionStorage.setItem('username', profile.username || '');
-      sessionStorage.setItem('roleName', roles.toString() || '');
-      sessionStorage.setItem('userEmail', profile.email || '');
-    });
-}
+
+        // Store user info in sessionStorage (for backward compatibility)
+        sessionStorage.setItem('username', profile.username || '');
+        sessionStorage.setItem('roleName', roles.toString() || '');
+        sessionStorage.setItem('userEmail', profile.email || '');
+      });
+    }
   }, [initialized, keycloak.authenticated]);
 
-const logout = () => {
-  // Clear sessionStorage
-  sessionStorage.clear();
-  // Keycloak logout
-  keycloak.logout({
-    redirectUri: window.location.origin,
-  });
-};
+  const logout = () => {
+    // Clear sessionStorage
+    sessionStorage.clear();
+    // Keycloak logout
+    keycloak.logout({
+      redirectUri: window.location.origin,
+    });
+  };
 
-const hasRole = (role: string): boolean => {
-  return keycloak.tokenParsed?.realm_access?.roles?.includes(role) || false;
-};
+  const hasRole = (role: string): boolean => {
+    return keycloak.tokenParsed?.realm_access?.roles?.includes(role) || false;
+  };
 
-const hasAnyRole = (roles: string[]): boolean => {
-  return roles.some(role => hasRole(role));
-};
+  const hasAnyRole = (roles: string[]): boolean => {
+    return roles.some(role => hasRole(role));
+  };
 
-const getToken = (): string | undefined => {
-  return keycloak.token;
-};
+  const getToken = (): string | undefined => {
+    return keycloak.token;
+  };
 
-const refreshToken = async (): Promise<boolean> => {
-  try {
-    const refreshed = await keycloak.updateToken(30);
-    if (refreshed && keycloak.token) {
-      sessionStorage.setItem('token', keycloak.token);
+  const refreshToken = async (): Promise<boolean> => {
+    try {
+      const refreshed = await keycloak.updateToken(30);
+      if (refreshed && keycloak.token) {
+        sessionStorage.setItem('token', keycloak.token);
+      }
+      return refreshed;
+    } catch (error) {
+      console.error('Failed to refresh token:', error);
+      return false;
     }
-    return refreshed;
-  } catch (error) {
-    console.error('Failed to refresh token:', error);
-    return false;
-  }
-};
+  };
 
-return {
-  keycloak,
-  initialized,
-  authenticated: keycloak.authenticated,
-  userProfile,
-  logout,
-  hasRole,
-  hasAnyRole,
-  getToken,
-  refreshToken,
-};
+  return {
+    keycloak,
+    initialized,
+    authenticated: keycloak.authenticated,
+    userProfile,
+    logout,
+    hasRole,
+    hasAnyRole,
+    getToken,
+    refreshToken,
+  };
 };
