@@ -107,7 +107,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
   const fetchUserInfo = () => {
     const name = sessionStorage.getItem('name') || 'User';
-    const role = sessionStorage.getItem('roleName') || 'Role';
+    const role = sessionStorage.getItem('role') || 'Role';
     setUserName(name);
     setRoleName(role);
   };
@@ -252,7 +252,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
             <Button
               color="inherit"
               startIcon={<HomeIcon />}
-              onClick={() => navigate('/dashboard')}
+              onClick={() => navigate('/admin/dashboard')}
               sx={{
                 color: 'white',
                 fontWeight: 600,

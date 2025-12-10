@@ -268,7 +268,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
     // ========== FETCH GROUND OF REJECTION LISTS ==========
     const fetchGroundDetails = async () => {
         try {
-            const response = await QCUpdateService.getGroundDetails();
+            const response: any = await QCUpdateService.getGroundDetails();
             if (response.statusCode === 0) {
                 setGroundOfRegection(response.payload);
             }
@@ -279,7 +279,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
     const fetchGroundFraudDetails = async () => {
         try {
-            const response = await QCUpdateService.getGroundFraudDetails();
+            const response: any = await QCUpdateService.getGroundFraudDetails();
             if (response.statusCode === 0) {
                 setGroundOfRegectionFraud(response.payload);
             }
@@ -290,7 +290,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
     const fetchGroundExclusionDetails = async () => {
         try {
-            const response = await QCUpdateService.getGroundExclusionDetails();
+            const response: any = await QCUpdateService.getGroundExclusionDetails();
             if (response.statusCode === 0) {
                 setGroundOfRejectionExclusion(response.payload);
             }
@@ -301,7 +301,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
     const fetchGroundMisrepresentationDetails = async () => {
         try {
-            const response = await QCUpdateService.getMisrepresentationFraudDetails();
+            const response: any = await QCUpdateService.getMisrepresentationFraudDetails();
             if (response.statusCode === 0) {
                 setGroundOfRejectionMisrepresentation(response.payload);
             }
@@ -313,7 +313,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
     // ========== FETCH AGENCIES/FOs ==========
     const fetchAllAgencies = async () => {
         try {
-            const response = await agencyService.fetchAllAgency();
+            const response: any = await agencyService.fetchAllAgency();
             if (response.statusCode === 0) {
                 setAgencyList(response.payload);
             }
@@ -324,7 +324,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
     const fetchAllSystemSuggestedAgencies = async () => {
         try {
-            const response = await agencyService.getSystemSuggestedAgency();
+            const response: any = await agencyService.getSystemSuggestedAgency();
             if (response.statusCode === 0) {
                 setSystemSuggestedAgencyList(response.payload);
             }
@@ -335,7 +335,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
     const fetchAllFieldOfficer = async () => {
         try {
-            const response = await agencyService.fetchAllFieldOfficer();
+            const response: any = await agencyService.fetchAllFieldOfficer();
             if (response.statusCode === 0) {
                 setFieldOfficerList(response.payload);
             }
@@ -347,7 +347,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
     // ========== FETCH REGIONAL USERS (Central Manager) ==========
     const fetchRegionalUsers = async () => {
         try {
-            const response:any = await acceptAssignService.getRegionalUsers();
+            const response: any = await acceptAssignService.getRegionalUsers();
             if (response.statusCode === 0) {
                 setRegionalTeamMembers(response.payload);
             }
@@ -359,7 +359,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
     // ========== FETCH QUESTIONS ==========
     const fetchForInsuredQuestions = async () => {
         try {
-            const response = await QuestionService.getQuestions('CO0115', investigationId || '');
+            const response: any = await QuestionService.getQuestions('CO0115', investigationId || '');
             if (response.statusCode === 0) {
                 setForInsuredQuestions(response.payload.questionResponseDTOs);
 
@@ -379,7 +379,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
     const fetchTreatingDoctorQuestions = async () => {
         try {
-            const response = await QuestionService.getQuestions('CO0116', investigationId || '');
+            const response: any = await QuestionService.getQuestions('CO0116', investigationId || '');
             if (response.statusCode === 0) {
                 setForTreatingDoctorQuestions(response.payload.questionResponseDTOs);
 
@@ -424,7 +424,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
                         ? 'caseAssignmentAgency'
                         : 'caseAssignmentCentral';
 
-                const response = await DocumentsService.viewInvestigationDocsView(
+                const response: any = await DocumentsService.viewInvestigationDocsView(
                     uploadDuring,
                     investigationId || ''
                 );
@@ -445,7 +445,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
                 ? 'regionalQC'
                 : 'centralQC';
 
-            const response = await QCUpdateService.qcUpdatePreview(
+            const response: any = await QCUpdateService.qcUpdatePreview(
                 investigationId || '',
                 tabName
             );
@@ -464,7 +464,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
         if (!agencyCode) return;
 
         try {
-            const response = await agencyService.getPerformanceIndex(agencyCode);
+            const response: any = await agencyService.getPerformanceIndex(agencyCode);
             if (response.statusCode === 0) {
                 setPerformanceIndex(response.payload);
             }
@@ -572,7 +572,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
                     ? 'caseAssignmentAgency'
                     : 'caseAssignmentCentral';
 
-            const response:any = await DocumentsService.uploadInvestigationDocs(
+            const response: any = await DocumentsService.uploadInvestigationDocs(
                 uploadDuring,
                 investigationId || '',
                 selectedFiles[0],
@@ -600,7 +600,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
     const handleDeleteDocument = async (documentId: string, docTitle: string, index: number) => {
         try {
-            const response = await DocumentsService.deleteDocument(documentId);
+            const response: any = await DocumentsService.deleteDocument(documentId);
             if (response.statusCode === 0) {
                 setInvestigationDocsView(investigationDocsView.filter((_, i) => i !== index));
                 setDocumentsCodes(documentsCodes.filter(item => item !== documentId));
@@ -690,10 +690,14 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
     const handleSubmitCustomInsuredQuestions = async () => {
         try {
-            const response = await QuestionService.addQuestion({
-                questionTypeCode: 'CO0115',
-                questions: customQuestions
-            });
+            let questionModel:any = {};
+            questionModel.questionTypeCode = "CO0115";
+            questionModel.questions = customQuestionsTDctr;
+            const response: any = await QuestionService.addQuestion(questionModel);
+            // const response: any = await QuestionService.addQuestion({
+            //     questionTypeCode: 'CO0115',
+            //     questions: customQuestions
+            // });
 
             if (response.statusCode === 0) {
                 setCustomForInsuredQuestionList([...customForInsuredQuestionList, ...response.payload]);
@@ -709,10 +713,10 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
     const handleSubmitCustomTDctrQuestions = async () => {
         try {
-            const response = await QuestionService.addQuestion({
-                questionTypeCode: 'CO0116',
-                questions: customQuestionsTDctr
-            });
+            let questionModel:any = {};
+            questionModel.questionTypeCode = "CO0116";
+            questionModel.questions = customQuestionsTDctr;
+            const response: any = await QuestionService.addQuestion(questionModel);
 
             if (response.statusCode === 0) {
                 setCustomForTreatingDoctorQuestionList([...customForTreatingDoctorQuestionList, ...response.payload]);
@@ -770,7 +774,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
             console.log('Submitting QC Observation:', qcObservationData);
 
-            const response = await QCUpdateService.addQCObservations(
+            const response: any = await QCUpdateService.addQCObservations(
                 qcObservationData,
                 investigationId || '',
                 documentsCodes
@@ -812,7 +816,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
                 reassignCase: 'yes'
             };
 
-            const response = await acceptAssignService.assign(assignData, documentsCodes);
+            const response: any = await acceptAssignService.assign(assignData, documentsCodes);
 
             if (response.statusCode === 0) {
                 alert('Case reassigned successfully!');
@@ -852,7 +856,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
                 reassignCase: 'yes'
             };
 
-            const response = await acceptAssignService.assignFO(assignData, documentsCodes);
+            const response: any = await acceptAssignService.assignFO(assignData, documentsCodes);
 
             if (response.statusCode === 0) {
                 alert('Case reassigned to Field Officer successfully!');

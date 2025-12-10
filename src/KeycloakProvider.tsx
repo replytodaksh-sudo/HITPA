@@ -13,6 +13,7 @@ const KeycloakProvider: React.FC<KeycloakProviderProps> = ({ children }) => {
     // Keycloak init options
     const initOptions = {
         onLoad: 'login-required', // Redirects to login if not authenticated
+        redirectUri: window.location.origin + "/admin/dashboard",
         checkLoginIframe: false, // Disable iframe check for better performance
         pkceMethod: 'S256', // Use PKCE for security
     };
@@ -66,10 +67,12 @@ const KeycloakProvider: React.FC<KeycloakProviderProps> = ({ children }) => {
         }
 
         const decodedValue: any = sessionService.decodeToken(tokens.token);
+        console.log('Decoded Token:', decodedValue);
         if (decodedValue) {
             sessionService.storeOther('userCode', decodedValue.userCode);
             sessionService.storeOther('name', decodedValue.name);
             sessionService.storeOther('sessionId', decodedValue.sessionId);
+            sessionService.storeOther('role', decodedValue.realm_access.roles);
         }
     };
 

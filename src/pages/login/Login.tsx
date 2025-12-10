@@ -149,8 +149,8 @@ const Login: React.FC = () => {
         }
         
         // Navigate to dashboard
-        window.location.href= "/dashboard"
-        navigate('/dashboard');
+        window.location.href= "/admin/dashboard"
+        navigate('/admin/dashboard');
       } else if (response.statusCode === 4006) {
         // Session already active
         const result = await notificationService.showAlertConfirm(
@@ -184,7 +184,7 @@ const Login: React.FC = () => {
     }
     
     try {
-      const response = await userService.forgotPassword(forgotUsername);
+      const response:any = await userService.forgotPassword(forgotUsername);
       if (response.statusCode === 0) {
         notificationService.showAlertSuccess(response.message);
         setForgotPasswordOpen(false);
@@ -205,7 +205,7 @@ const Login: React.FC = () => {
     }
     
     try {
-      const response = await userService.verifyPassword(resetUsername);
+      const response:any = await userService.verifyPassword(resetUsername);
       if (response.statusCode === 0) {
         setShowPasswordBox(true);
       } else {
@@ -224,7 +224,7 @@ const Login: React.FC = () => {
     }
     
     try {
-      const response = await userService.resetPassword(resetUsername, newPassword);
+      const response:any = await userService.resetPassword(resetUsername, newPassword);
       if (response.statusCode === 0) {
         notificationService.showAlertSuccess(response.message);
         setResetPasswordOpen(false);

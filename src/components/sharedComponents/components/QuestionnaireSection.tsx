@@ -127,7 +127,7 @@ const QuestionnaireSection: React.FC<QuestionnaireSectionProps> = ({
   // Fetch treating doctor questions
   const fetchTreatingDoctorQuestions = async () => {
     try {
-      const response = await QuestionService.getQuestions('CO0116', investigationId);
+      const response:any = await QuestionService.getQuestions('CO0116', investigationId);
       console.log("000000000", response)
       if (response.statusCode === 0) {
         setTreatingDoctorQuestions(response.payload.questionResponseDTOs || []);
@@ -211,6 +211,9 @@ const QuestionnaireSection: React.FC<QuestionnaireSectionProps> = ({
     try {
       const payload = {
         questionTypeCode: 'CO0115',
+        questionType: 'CO0115',
+        questionText: '',
+        investigationId: investigationId,
         questions: validQuestions,
       };
 
@@ -242,6 +245,9 @@ const QuestionnaireSection: React.FC<QuestionnaireSectionProps> = ({
     try {
       const payload = {
         questionTypeCode: 'CO0116',
+        questionType: 'CO0116',
+        questionText: '',
+        investigationId: investigationId,
         questions: validQuestions,
       };
 

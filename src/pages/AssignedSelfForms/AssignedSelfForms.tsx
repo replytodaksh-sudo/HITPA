@@ -151,8 +151,8 @@ const AssignedSelfForms: React.FC = () => {
         try {
             const emailModel = {
                 to: emailTo,
-                cc: emailCc,
-                cc1: emailCc1,
+                cc: emailCc ? [emailCc] : [],
+                cc1: emailCc1 ? [emailCc1] : [],
                 subject: emailSubject,
                 body: emailBody,
             };

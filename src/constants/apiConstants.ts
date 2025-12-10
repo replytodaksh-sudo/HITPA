@@ -282,6 +282,10 @@ export const apiUrls = {
     insuredVerification: `/reactivecase/addReCaseUpdateInsured?investigationId=`,
     reimFinalSubmit: `/api/reim/final-submit`,
     reimDraftSave: `/api/reim/draft-save`,
+
+    addNotes: `/notes/add`,     // POST ?investigationId=INV-123
+    getNotes: `/notes`,
+    getRegQCUpdateData: `/qcupdate/addQCUpdate?investigationId`,
 }
 
 

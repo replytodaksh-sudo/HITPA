@@ -59,8 +59,8 @@ interface TabPanelProps {
 
 interface EmailModel {
   to: string;
-  cc: string;
-  cc1: string;
+  cc: string[];
+  cc1: string[];
   subject: string;
   body: string;
 }
@@ -127,8 +127,8 @@ const AssignToAgencyDetailsTabs: React.FC = () => {
   // Email state
   const [emailModel, setEmailModel] = useState<EmailModel>({
     to: '',
-    cc: '',
-    cc1: '',
+    cc: [],
+    cc1: [],
     subject: '',
     body: '',
   });
@@ -190,7 +190,7 @@ const AssignToAgencyDetailsTabs: React.FC = () => {
 
   const handleCloseReminderModal = () => {
     setShowReminderModal(false);
-    setEmailModel({ to: '', cc: '', cc1: '', subject: '', body: '' });
+    setEmailModel({ to: '', cc: [], cc1: [], subject: '', body: '' });
     setEmailError('');
   };
 
@@ -566,17 +566,17 @@ const AssignToAgencyDetailsTabs: React.FC = () => {
           <TextField
             fullWidth
             label="CC"
-            placeholder="cc@example.com"
-            value={emailModel.cc}
-            onChange={(e) => handleEmailChange('cc', e.target.value)}
+            placeholder="cc@example.com (comma-separated)"
+            value={emailModel.cc.join(',')}
+            onChange={(e:any) => handleEmailChange('cc', e.target.value.split(',').map((s:any) => s.trim()).filter((s:any) => s))}
             margin="normal"
           />
           <TextField
             fullWidth
             label="CC1"
-            placeholder="cc1@example.com"
-            value={emailModel.cc1}
-            onChange={(e) => handleEmailChange('cc1', e.target.value)}
+            placeholder="cc1@example.com (comma-separated)"
+            value={emailModel.cc1.join(',')}
+            onChange={(e:any) => handleEmailChange('cc1', e.target.value.split(',').map((s:any) => s.trim()).filter((s:any) => s))}
             margin="normal"
           />
           <TextField
