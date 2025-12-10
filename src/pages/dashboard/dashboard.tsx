@@ -199,7 +199,8 @@ const Dashboard: React.FC = () => {
     };
 
     const fetchRoleName = async () => {
-        // try {
+        setLoading(true);
+        try {
         const response = await authService.getUserMenu();
         console.log("calleddddd", response)
         if (response.statusCode === 0) {
@@ -221,10 +222,12 @@ const Dashboard: React.FC = () => {
                 await fetchStates();
             }
         }
-        // } catch (error) {
-        //     console.error('Failed to fetch role:', error);
-        //     setRoleName(sessionStorage.getItem('roleName') || 'Central Manager');
-        // }
+        } catch (error) {
+            console.error('Failed to fetch role:', error);
+            setRoleName(sessionStorage.getItem('roleName') || 'Central Manager');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const fetchZones = async () => {
