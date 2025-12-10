@@ -127,9 +127,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
     const fetchAssignUsers = async () => {
         try {
             const res: any = await acceptAssignService.getAssignUsers();
-            if (res.statusCode === 0) {
-                setAssignUsers(res.payload || []);
-            }
+            setAssignUsers(res || []);
         } catch (err) {
             console.error('Error fetching assign users:', err);
         }
@@ -138,9 +136,9 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
     const fetchRegionalUsers = async () => {
         try {
             const res: any = await acceptAssignService.getRegionalUsers();
-            if (res.statusCode === 0) {
-                setRegionalTeamMembers(res.payload || []);
-            }
+            // if (res.statusCode === 0) {
+            setRegionalTeamMembers(res || []);
+            // }
         } catch (err) {
             console.error('Error fetching regional users:', err);
         }
@@ -500,7 +498,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
             handleSubmitReimbursement();
         }
     };
-
+    
     return (
         <Box sx={{ p: 3 }}>
             {error && (
@@ -516,11 +514,12 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                     <Grid container spacing={2} sx={{ mb: 3 }}>
                         <Grid size={{ xs: 12, md: 6 }}>
                             <FormControl fullWidth>
-                                <InputLabel>Assigning investigation to internal team</InputLabel>
+                                <InputLabel>Assigning investigation to internal team 1</InputLabel>
                                 <Select
                                     value={assignedToUser}
                                     onChange={(e) => {
                                         setAssignedToUser(e.target.value);
+                                        setPerformanceIndex(null);
                                         if (e.target.value && e.target.value !== 'assignToSelf') {
                                             fetchPerformanceIndex(e.target.value);
                                         }
@@ -576,7 +575,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                     <Grid container spacing={2} sx={{ mb: 3 }}>
                         <Grid size={{ xs: 12, md: 6 }}>
                             <FormControl fullWidth>
-                                <InputLabel>Assigning investigation to internal team</InputLabel>
+                                <InputLabel>Assigning investigation to internal team 2</InputLabel>
                                 <Select
                                     value={assignedToUser}
                                     onChange={(e) => {
@@ -875,7 +874,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                             <Grid container spacing={2} sx={{ mb: 3 }}>
                                 <Grid size={{ xs: 12, md: 6 }}>
                                     <FormControl fullWidth>
-                                        <InputLabel>Assigning investigation to internal team</InputLabel>
+                                        <InputLabel>Assigning investigation to internal team 3</InputLabel>
                                         <Select
                                             value={internalTeamMemCode}
                                             onChange={(e) => setInternalTeamMemCode(e.target.value)}

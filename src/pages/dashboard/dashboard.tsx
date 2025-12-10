@@ -233,10 +233,10 @@ const Dashboard: React.FC = () => {
     const fetchZones = async () => {
         try {
             const response = await DropdownService.getUserZones();
-            if (response.statusCode === 0) {
+            // if (response.statusCode === 0) {
                 console.log("zones response", response);
                 setZones(response);
-            }
+            // }
         } catch (error) {
             console.error('Failed to fetch zones:', error);
         }
