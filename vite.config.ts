@@ -8,9 +8,14 @@ export default defineConfig({
     port: 3000, // 👈 change to your desired port
     open: true,
     proxy: {
+      // "/api/proxy": {
+      //   target: "http://13.233.128.255:8007",
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/api\/proxy/, ""),
+      // },
       // Proxy API requests to your backend
-      '/api': {
-        target: 'http://localhost:8080', // Your backend URL
+      '/api/proxy': {
+        target: 'http://13.233.128.255:8007', // Your backend URL
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ''), // Remove /api prefix if needed
