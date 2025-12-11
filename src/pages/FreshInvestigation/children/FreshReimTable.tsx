@@ -58,7 +58,7 @@ const FreshReimTable: React.FC = () => {
   const fetchReimClaims = async () => {
     setLoading(true);
     try {
-      const response = await claimsService.fetchReimClaims();
+      const response = await claimsService.fetchClaimsReim();
       if (response.statusCode === 0) {
         setReimClaims(response.payload);
       }
@@ -81,7 +81,7 @@ const FreshReimTable: React.FC = () => {
 
     setLoading(true);
     try {
-      const response: any = await claimsService.fetchReimClaimsByTat(value);
+      const response: any = await claimsService.fetchClaimsReimByTat(value);
       if (response.statusCode === 0) {
         setReimClaims(response.payload);
       }

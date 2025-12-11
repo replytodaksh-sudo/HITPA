@@ -12,7 +12,8 @@ interface KeycloakProviderProps {
 const KeycloakProvider: React.FC<KeycloakProviderProps> = ({ children }) => {
     // Keycloak init options
     const initOptions = {
-        onLoad: 'login-required', // Redirects to login if not authenticated
+        // onLoad: 'login-required', // Redirects to login if not authenticated
+        onLoad: 'check-sso', // Redirects to login if not authenticated
         redirectUri: window.location.origin + "/admin/dashboard",
         checkLoginIframe: false, // Disable iframe check for better performance
         pkceMethod: 'S256', // Use PKCE for security

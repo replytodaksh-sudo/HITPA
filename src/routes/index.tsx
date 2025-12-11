@@ -51,18 +51,23 @@ const AppRoutes: React.FC = () => {
         <Routes>
             {/* Public routes */}
             <Route path="/login" element={<div>Redirecting to Keycloak...</div>} />
-
             <Route
+                path="/"
+                element={<Navigate to="/dashboard" replace />}
+            />
+
+            {/* <Route
                 path="/*"
                 element={
                     <ProtectedRoute>
                         <MainLayout />
                     </ProtectedRoute>
                 }
-            >
+            > */}
+            <Route path="/admin" element={<MainLayout />}>
                 {/* Protected Routes - Dashboard */}
                 <Route
-                    path="admin/dashboard"
+                    path="dashboard"
                     element={
                         <ProtectedRoute>
                             <Dashboard />
@@ -72,7 +77,7 @@ const AppRoutes: React.FC = () => {
 
                 {/* Protected Routes - FO (Field Officer) */}
                 <Route
-                    path="admin/foAssignedToFO"
+                    path="foAssignedToFO"
                     element={
                         <ProtectedRoute>
                             <AssignedFo />
@@ -82,7 +87,7 @@ const AppRoutes: React.FC = () => {
 
                 {/* Protected Routes - Central Team */}
                 <Route
-                    path="admin/centralNewCasesForAction"
+                    path="centralNewCasesForAction"
                     element={
                         <ProtectedRoute>
                             <CentralNewCasesAction />
@@ -90,7 +95,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/centralNewCases"
+                    path="centralNewCases"
                     element={
                         <ProtectedRoute>
                             <CentralNewCases />
@@ -98,7 +103,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/deniedByRegional"
+                    path="deniedByRegional"
                     element={
                         <ProtectedRoute>
                             <DeniedByRegional />
@@ -106,7 +111,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/centralAssignedToRegional"
+                    path="centralAssignedToRegional"
                     element={
                         <ProtectedRoute>
                             <CentralAssignedToRegional />
@@ -114,7 +119,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/centralAssignedToAgency"
+                    path="centralAssignedToAgency"
                     element={
                         <ProtectedRoute>
                             <CentralAssignedToAgency />
@@ -122,7 +127,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/centralReworkCases"
+                    path="centralReworkCases"
                     element={
                         <ProtectedRoute>
                             <CentralReworkCases />
@@ -130,7 +135,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/centralReassignedCases"
+                    path="centralReassignedCases"
                     element={
                         <ProtectedRoute>
                             <CentralReassignedCases />
@@ -138,7 +143,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/centralCaseNotInvestigated"
+                    path="centralCaseNotInvestigated"
                     element={
                         <ProtectedRoute>
                             <CentralCaseNotInvestigated />
@@ -146,7 +151,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 {/* <Route
-                path="admin/centralInvestigationCompleted"
+                path="centralInvestigationCompleted"
                 element={
                     <ProtectedRoute>
                         <CentralInvestigationCompleted />
@@ -156,7 +161,7 @@ const AppRoutes: React.FC = () => {
 
                 {/* Protected Routes - Management */}
                 <Route
-                    path="admin/agencyManagement"
+                    path="agencyManagement"
                     element={
                         <ProtectedRoute>
                             <AgencyManagement />
@@ -164,7 +169,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/caseAssignmentRule"
+                    path="caseAssignmentRule"
                     element={
                         <ProtectedRoute>
                             <CaseAssignmentRule />
@@ -172,7 +177,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/userManagement"
+                    path="userManagement"
                     element={
                         <ProtectedRoute>
                             <UserManagement />
@@ -180,7 +185,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/roleManagement"
+                    path="roleManagement"
                     element={
                         <ProtectedRoute>
                             <RolesManagement />
@@ -190,7 +195,7 @@ const AppRoutes: React.FC = () => {
 
                 {/* Protected Routes - Fresh Cases */}
                 <Route
-                    path="admin/freshNewCases"
+                    path="freshNewCases"
                     element={
                         <ProtectedRoute>
                             <FreshInvestigation />
@@ -198,7 +203,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/freshAgencyDeniedCases"
+                    path="freshAgencyDeniedCases"
                     element={
                         <ProtectedRoute>
                             <AgencyDeniedCases />
@@ -206,7 +211,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/freshSelfDeniedCases"
+                    path="freshSelfDeniedCases"
                     element={
                         <ProtectedRoute>
                             <FreshSelfDeniedCases />
@@ -214,7 +219,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/freshCentralMandatedCases"
+                    path="freshCentralMandatedCases"
                     element={
                         <ProtectedRoute>
                             <CentralMandatedCases />
@@ -224,7 +229,7 @@ const AppRoutes: React.FC = () => {
 
                 {/* Protected Routes - Field Cases */}
                 <Route
-                    path="admin/fieldAssignedToSelf"
+                    path="fieldAssignedToSelf"
                     element={
                         <ProtectedRoute>
                             <AssignedToSelf />
@@ -232,7 +237,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/fieldReassignedCases"
+                    path="fieldReassignedCases"
                     element={
                         <ProtectedRoute>
                             <FieldReassignedCases />
@@ -240,7 +245,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/fieldReworkCases"
+                    path="fieldReworkCases"
                     element={
                         <ProtectedRoute>
                             <FieldReworkCases />
@@ -248,7 +253,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/fieldAssignedToAgency"
+                    path="fieldAssignedToAgency"
                     element={
                         <ProtectedRoute>
                             <FieldAssignedToAgency />
@@ -258,7 +263,7 @@ const AppRoutes: React.FC = () => {
 
                 {/* Protected Routes - Completed Cases */}
                 <Route
-                    path="admin/completedCaseNotInvestigated"
+                    path="completedCaseNotInvestigated"
                     element={
                         <ProtectedRoute>
                             <CompletedCaseNotInvestigated />
@@ -266,7 +271,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/completedInvestigationCompleted"
+                    path="completedInvestigationCompleted"
                     element={
                         <ProtectedRoute>
                             <CompletedInvestigationCompleted />
@@ -277,7 +282,7 @@ const AppRoutes: React.FC = () => {
 
                 {/* Protected Routes - QC */}
                 <Route
-                    path="admin/qcRegPendingFromCentral"
+                    path="qcRegPendingFromCentral"
                     element={
                         <ProtectedRoute>
                             <RegQCPendingCentral />
@@ -285,7 +290,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/qcRegQCPending"
+                    path="qcRegQCPending"
                     element={
                         <ProtectedRoute>
                             <RegQcPending />
@@ -293,7 +298,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/qcRegCentralQuery"
+                    path="qcRegCentralQuery"
                     element={
                         <ProtectedRoute>
                             <RegCentralQuery />
@@ -303,7 +308,7 @@ const AppRoutes: React.FC = () => {
 
                 {/* Protected Routes - Detail/Form Pages with :investigationId */}
                 <Route
-                    path="admin/central-new-cases/:investigationId"
+                    path="central-new-cases/:investigationId"
                     element={
                         <ProtectedRoute>
                             <CentralNewCasesTabs />
@@ -311,7 +316,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/fresh-case-form/:investigationId"
+                    path="fresh-case-form/:investigationId"
                     element={
                         <ProtectedRoute>
                             <FreshCaseForm />
@@ -319,7 +324,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/fresh-agency-denied/:investigationId"
+                    path="fresh-agency-denied/:investigationId"
                     element={
                         <ProtectedRoute>
                             <AgencyDeniedFormTabs />
@@ -327,7 +332,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/central-assign-regional/:investigationId"
+                    path="central-assign-regional/:investigationId"
                     element={
                         <ProtectedRoute>
                             <CentralAssignedToRegionalTabs />
@@ -335,7 +340,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/central-assign-agency/:investigationId"
+                    path="central-assign-agency/:investigationId"
                     element={
                         <ProtectedRoute>
                             <CentralAssignedAgencyTabs />
@@ -343,7 +348,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/assigned-self-form/:investigationId"
+                    path="assigned-self-form/:investigationId"
                     element={
                         <ProtectedRoute>
                             <AssignedSelfForms />
@@ -351,7 +356,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/regional-case-not-inv-form/:investigationId"
+                    path="regional-case-not-inv-form/:investigationId"
                     element={
                         <ProtectedRoute>
                             <RegionalCompletedForms />
@@ -359,7 +364,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/central-completed-form/:investigationId"
+                    path="central-completed-form/:investigationId"
                     element={
                         <ProtectedRoute>
                             <CentralCompletedForm />
@@ -367,7 +372,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/regional-completed-form/:investigationId"
+                    path="regional-completed-form/:investigationId"
                     element={
                         <ProtectedRoute>
                             <RegionalCompletedForm />
@@ -375,7 +380,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/regional-reassign-form/:investigationId"
+                    path="regional-reassign-form/:investigationId"
                     element={
                         <ProtectedRoute>
                             <RegionalReassignForm />
@@ -383,7 +388,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/regional-rework-form/:investigationId"
+                    path="regional-rework-form/:investigationId"
                     element={
                         <ProtectedRoute>
                             <RegionalReworkTabs />
@@ -391,7 +396,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/assignedAgencyCashlessDetails/:investigationId"
+                    path="assignedAgencyCashlessDetails/:investigationId"
                     element={
                         <ProtectedRoute>
                             <AssignToAgencyDetailsTabs />
@@ -399,7 +404,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/agency-self-denied-form/:investigationId"
+                    path="agency-self-denied-form/:investigationId"
                     element={
                         <ProtectedRoute>
                             <AgencySelfDeniedTabs />
@@ -407,7 +412,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/fresh-central-mandate/:investigationId"
+                    path="fresh-central-mandate/:investigationId"
                     element={
                         <ProtectedRoute>
                             <CentralMandatedTabs />
@@ -415,7 +420,7 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
-                    path="admin/qc-pending-form/:investigationId"
+                    path="qc-pending-form/:investigationId"
                     element={
                         <ProtectedRoute>
                             <QCPendingForms />
@@ -424,8 +429,17 @@ const AppRoutes: React.FC = () => {
                 />
             </Route>
             {/* Default redirects */}
-            <Route path="/" element={<Navigate to="admin/dashboard" replace />} />
-            <Route path="*" element={<Navigate to="admin/dashboard" replace />} />
+            <Route path="/" element={<Navigate to="dashboard" replace />} />
+            {/* <Route path="*" element={<Navigate to="dashboard" replace />} /> */}
+            <Route
+                path="*"
+                element={
+                    <div>
+                        <h1>404 - Page Not Found</h1>
+                        <p>Current path: {location.pathname}</p>
+                    </div>
+                }
+            />
         </Routes>
     );
 };
@@ -437,7 +451,7 @@ export default AppRoutes;
 
 // import CompletedInvestigationCompleted from './pages/CentralInvestigationCompleted/CentralInvestigationCompleted';
 
-//             <Route path="admin/completedInvestigationCompleted" element={<CompletedInvestigationCompleted />} />
+//             <Route path="completedInvestigationCompleted" element={<CompletedInvestigationCompleted />} />
 
 
 
@@ -445,4 +459,4 @@ export default AppRoutes;
 
 // import CompletedInvestigationCompleted from './pages/CentralInvestigationCompleted/CentralInvestigationCompleted';
 
-//             <Route path="admin/centralInvestigationCompleted" element={<CentralInvestigationCompleted />} />
+//             <Route path="centralInvestigationCompleted" element={<CentralInvestigationCompleted />} />

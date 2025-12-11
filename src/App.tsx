@@ -52,10 +52,10 @@
 // import QCPendingForms from './pages/QCPendingForms/QCPendingForms';
 
 // interface ProtectedRouteProps {
-  //   children: React.ReactNode;
-  // }
-  
-  // const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+//   children: React.ReactNode;
+// }
+
+// const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 //   const isAuthenticated = authService.isAuthenticated();
 
 //   if (!isAuthenticated) {
@@ -184,22 +184,62 @@
 
 
 
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, useLocation, useNavigate } from 'react-router-dom';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import KeycloakProvider from './KeycloakProvider';
 import { theme } from './theme';
 import AppRoutes from './routes';
 import './App.css';
+import { useKeycloak } from '@react-keycloak/web';
 
 function App() {
-  
+
+  const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { keycloak, initialized } = useKeycloak();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+      if (initialized && !keycloak.authenticated) {
+        // Store the current path before redirecting to login
+        sessionStorage.setItem('redirectPath', location.pathname + location.search);
+        keycloak.login();
+      }
+    }, [initialized, keycloak.authenticated, location, keycloak]);
+
+    useEffect(() => {
+      if (initialized && keycloak.authenticated) {
+        // Check if there's a stored redirect path
+        const redirectPath = sessionStorage.getItem('redirectPath');
+        if (redirectPath && redirectPath !== location.pathname) {
+          // Clear the stored path
+          sessionStorage.removeItem('redirectPath');
+          // Navigate to the stored path
+          navigate(redirectPath, { replace: true });
+        }
+      }
+    }, [initialized, keycloak.authenticated, navigate, location]);
+
+    if (!initialized) {
+      return <div>Loading...</div>;
+    }
+
+    if (!keycloak.authenticated) {
+      return null; // Will redirect to login
+    }
+
+    return <>{children}</>;
+  };
+
   return (
     <KeycloakProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>
-          <AppRoutes />
+          <AuthGuard>
+            <AppRoutes />
+          </AuthGuard>
         </BrowserRouter>
       </ThemeProvider>
     </KeycloakProvider>

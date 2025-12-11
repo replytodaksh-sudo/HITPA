@@ -112,9 +112,10 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
     setRoleName(role);
   };
   const fetchMenus = async () => {
+    console.log("calleddddd 222")
     // try {
     const response = await authService.getUserMenu();
-    console.log("calleddddd", response)
+    console.log("calleddddd 222", response)
     if (response.statusCode === 0) {
       setMenus(response.payload.accessedItem || []);
     }
