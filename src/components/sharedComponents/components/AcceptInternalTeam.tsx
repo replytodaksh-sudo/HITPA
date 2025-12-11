@@ -514,7 +514,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                     <Grid container spacing={2} sx={{ mb: 3 }}>
                         <Grid size={{ xs: 12, md: 6 }}>
                             <FormControl fullWidth>
-                                <InputLabel>Assigning investigation to internal team 1</InputLabel>
+                                <InputLabel>Assigning investigation to internal team</InputLabel>
                                 <Select
                                     value={assignedToUser}
                                     onChange={(e) => {
@@ -575,7 +575,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                     <Grid container spacing={2} sx={{ mb: 3 }}>
                         <Grid size={{ xs: 12, md: 6 }}>
                             <FormControl fullWidth>
-                                <InputLabel>Assigning investigation to internal team 2</InputLabel>
+                                <InputLabel>Assigning investigation to internal team</InputLabel>
                                 <Select
                                     value={assignedToUser}
                                     onChange={(e) => {
@@ -874,7 +874,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                             <Grid container spacing={2} sx={{ mb: 3 }}>
                                 <Grid size={{ xs: 12, md: 6 }}>
                                     <FormControl fullWidth>
-                                        <InputLabel>Assigning investigation to internal team 3</InputLabel>
+                                        <InputLabel>Assigning investigation to internal team</InputLabel>
                                         <Select
                                             value={internalTeamMemCode}
                                             onChange={(e) => setInternalTeamMemCode(e.target.value)}

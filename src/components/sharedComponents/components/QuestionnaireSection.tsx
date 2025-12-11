@@ -226,6 +226,7 @@ const QuestionnaireSection: React.FC<QuestionnaireSectionProps> = ({
         setInsuredCustomQuestionsNames([...insuredCustomQuestionsNames, ...newNames]);
         setCustomInsuredOpen(false);
         setCustomInsuredForms([{ questionName: '', questionIsCustom: false }]);
+        fetchInsuredQuestions()
         alert('Custom questions added successfully');
       }
     } catch (error) {
@@ -260,6 +261,7 @@ const QuestionnaireSection: React.FC<QuestionnaireSectionProps> = ({
         setTreatingDoctorCustomQuestionsNames([...treatingDoctorCustomQuestionsNames, ...newNames]);
         setCustomTreatingDoctorOpen(false);
         setCustomTreatingDoctorForms([{ questionName: '', questionIsCustom: false }]);
+        fetchTreatingDoctorQuestions();
         alert('Custom questions added successfully');
       }
     } catch (error) {

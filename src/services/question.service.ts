@@ -81,11 +81,7 @@ export const QuestionService = {
       const cleanInvClaimId = invClaimId.split('-')[0];
       
       const response = await apiService.get<Question[]>(
-        apiUrls.forQuestions,
-        {
-          questionType,
-          invClaimId: cleanInvClaimId,
-        }
+        `${apiUrls.forQuestions}${questionType}&invClaimId=${cleanInvClaimId}`
       );
       
       return response;

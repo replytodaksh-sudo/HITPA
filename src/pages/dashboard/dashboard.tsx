@@ -690,7 +690,7 @@ const Dashboard: React.FC = () => {
                                                 </Box>
                                             )}
                                         >
-                                            {zones && zones.map((zone: any) => (
+                                            {zones.length && zones.map((zone: any) => (
                                                 <MenuItem key={zone.zoneCode} value={zone.zoneCode}>
                                                     {zone.zoneName}
                                                 </MenuItem>

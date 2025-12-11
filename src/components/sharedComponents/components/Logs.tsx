@@ -67,14 +67,7 @@ const Logs: React.FC<LogsProps> = ({ claimsType }) => {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      day: 'numeric',
-      month: 'short',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
-    });
+    return date.toLocaleDateString() +' ' + date.toLocaleTimeString();
   };
 
   if (loading) {

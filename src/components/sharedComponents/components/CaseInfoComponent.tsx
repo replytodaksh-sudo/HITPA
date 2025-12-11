@@ -226,7 +226,7 @@ const CaseInfoComponent: React.FC = () => {
               <InfoRow label="Investigation Type" value={caseInfo?.investigationType} />
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
-              <InfoRow label="Central Manager Remarks" value={decrypt(caseInfo?.centralRemarks)} />
+              <InfoRow label="Central Manager Remarks" value={caseInfo?.centralRemarks} />
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
