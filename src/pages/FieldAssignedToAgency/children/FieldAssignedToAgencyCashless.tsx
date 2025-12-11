@@ -167,7 +167,7 @@ const FieldAssignedToAgencyCashless: React.FC = () => {
 
   const handleViewClick = (investigationID: string, claim: ReimClaim) => {
     navigate(
-      `/admin/assignedAgencyCashlessDetails/${investigationID}?claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}&acceptAssignId=${claim.acceptAssignId}`
+      `/admin/assignedAgencyCashlessDetails/${investigationID}?claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}&acceptAssignId=${claim.acceptAssignId}`
     );
   };
 

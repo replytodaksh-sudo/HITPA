@@ -108,7 +108,7 @@ const CaseInfoComponent: React.FC = () => {
     }
   };
 
-  const decrypt = (value?: string): string => {
+  const decrypt= (value?: string): string => {
     if (!value || value === '-') {
       return '-';
     }
@@ -119,13 +119,13 @@ const CaseInfoComponent: React.FC = () => {
     const triggers = [];
     
     if (caseInfo?.automatedTriggerScore && caseInfo.automatedTriggerScore !== '-') {
-      triggers.push(decrypt(caseInfo.automatedTriggerScore));
+      triggers.push(caseInfo.automatedTriggerScore);
     }
     if (caseInfo?.fraudPredictiveScore && caseInfo.fraudPredictiveScore !== '-') {
-      triggers.push(decrypt(caseInfo.fraudPredictiveScore));
+      triggers.push(caseInfo.fraudPredictiveScore);
     }
     if (caseInfo?.manualTriggerChecklist && caseInfo.manualTriggerChecklist !== '-') {
-      triggers.push(decrypt(caseInfo.manualTriggerChecklist));
+      triggers.push(caseInfo.manualTriggerChecklist);
     }
 
     return triggers.length > 0 ? triggers.join(', ') : '-';
@@ -230,10 +230,10 @@ const CaseInfoComponent: React.FC = () => {
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
-              <InfoRow label="Assigned by" value={decrypt(caseInfo?.assignedBy)} />
+              <InfoRow label="Assigned by" value={caseInfo?.assignedBy}/>
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
-              <InfoRow label="Regional Manager Remarks" value={decrypt(caseInfo?.rmRemarks)} />
+              <InfoRow label="Regional Manager Remarks" value={caseInfo?.rmRemarks} />
             </Grid>
 
             <Grid size={{ xs: 12, md: 6 }}>
@@ -278,7 +278,7 @@ const CaseInfoComponent: React.FC = () => {
                   textAlign: { xs: 'left', sm: 'right' },
                 }}
               >
-                {decrypt(caseInfo?.claimsRemarks)}
+                {caseInfo?.claimsRemarks}
               </Typography>
             </Grid>
           </Grid>
