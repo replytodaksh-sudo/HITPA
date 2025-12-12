@@ -317,7 +317,7 @@ const Dashboard: React.FC = () => {
         setLoading(true);
         try {
             const response = await DashboardService.allDashboard();
-
+console.log("dashboard response", response);
             if (response.statusCode === 0) {
                 setDashboardData(response.payload);
                 updateChartData(response.payload);
