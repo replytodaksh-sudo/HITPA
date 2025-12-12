@@ -237,7 +237,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
             color="inherit"
             edge="start"
             onClick={onMenuClick}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { md: 'none' } }}
           >
             <MenuIcon />
           </IconButton>

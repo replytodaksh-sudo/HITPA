@@ -45,6 +45,11 @@ import RegCentralQuery from '../pages/RegCentralQuery/RegCentralQuery';
 import RegQcPending from '../pages/RegQcPending/RegQcPending';
 import RegQCPendingCentral from '../pages/RegQCPendingCentral/RegQCPendingCentral';
 import MainLayout from '../components/MainLayout';
+import AgencyNewCases from '../pages/AgencyNewCases/agencyNewCases';
+import AgencyReworkCases from '../pages/AgencyReworkCases/AgencyReworkCases';
+import AgencyReassignedCases from '../pages/AgencyReassignedCases/AgencyReassignedCases';
+import AgencyCaseNotInvestigated from '../pages/AgencyCaseNotInvestigated/AgencyCaseNotInvestigated';
+import AgencyInvestigationCompleted from '../pages/AgencyInvestigationCompleted/AgencyInvestigationCompleted';
 
 const AppRoutes: React.FC = () => {
     return (
@@ -150,6 +155,22 @@ const AppRoutes: React.FC = () => {
                         </ProtectedRoute>
                     }
                 />
+                <Route
+                    path="agencyCaseNotInvestigated"
+                    element={
+                        <ProtectedRoute>
+                            <AgencyCaseNotInvestigated />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="agencyInvestigationCompleted"
+                    element={
+                        <ProtectedRoute>
+                            <AgencyInvestigationCompleted />
+                        </ProtectedRoute>
+                    }
+                />
                 {/* <Route
                 path="centralInvestigationCompleted"
                 element={
@@ -219,6 +240,14 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
+                    path="agencySelfDeniedCases"
+                    element={
+                        <ProtectedRoute>
+                            <FreshSelfDeniedCases />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
                     path="freshCentralMandatedCases"
                     element={
                         <ProtectedRoute>
@@ -237,10 +266,26 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
+                    path="agencyAssignedToSelf"
+                    element={
+                        <ProtectedRoute>
+                            <AssignedToSelf />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
                     path="fieldReassignedCases"
                     element={
                         <ProtectedRoute>
                             <FieldReassignedCases />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="agencyReassignedCases"
+                    element={
+                        <ProtectedRoute>
+                            <AgencyReassignedCases />
                         </ProtectedRoute>
                     }
                 />
@@ -253,7 +298,23 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
+                    path="agencyReworkCases"
+                    element={
+                        <ProtectedRoute>
+                            <AgencyReworkCases />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
                     path="fieldAssignedToAgency"
+                    element={
+                        <ProtectedRoute>
+                            <FieldAssignedToAgency />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="agencyAssignedToFO"
                     element={
                         <ProtectedRoute>
                             <FieldAssignedToAgency />
@@ -275,6 +336,14 @@ const AppRoutes: React.FC = () => {
                     element={
                         <ProtectedRoute>
                             <CompletedInvestigationCompleted />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="agencyNewCases"
+                    element={
+                        <ProtectedRoute>
+                            <AgencyNewCases />
                         </ProtectedRoute>
                     }
                 />
