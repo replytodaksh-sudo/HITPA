@@ -222,14 +222,14 @@ const CaseUpdateForm: React.FC = () => {
             )}
 
             {/* Present Form */}
-            {/* {statusInsuredVisit === '1' && !checkEditable && ( */}
+            {statusInsuredVisit === '1' && !checkEditable && (
                 <Box>
                     <PresentForm
                         isFormEditable={checkEditable}
                         payloadData={previousData}
                     />
                 </Box>
-            {/* )} */}
+             )} 
 
             {/* Not Present Form */}
             {statusInsuredVisit === '0' && !checkEditable && (

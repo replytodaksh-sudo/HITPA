@@ -286,7 +286,7 @@ const CaseInfoComponent: React.FC = () => {
       </Card>
 
       {/* Letter Formats Card */}
-      <Card
+      {/* <Card
         sx={{
           background: 'linear-gradient(135deg, #F0F8FF 0%, #E6F2FF 100%)',
           borderRadius: 3,
@@ -431,7 +431,7 @@ const CaseInfoComponent: React.FC = () => {
             </Grid>
           </Grid>
         </CardContent>
-      </Card>
+      </Card> */}
     </Box>
   );
 };

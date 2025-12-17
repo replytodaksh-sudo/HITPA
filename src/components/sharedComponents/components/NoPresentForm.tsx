@@ -5,6 +5,7 @@ import Preview from './Preview';
 import HospitalFeedback from './HospitalFeedback';
 import NotFoundInHospital from './NotFoundInHospital';
 import Findings from './Findings';
+import PrimaryData from './PrimaryData';
 
 
 // ===========================
@@ -85,14 +86,13 @@ const NotPresentForm: React.FC<NotPresentFormProps> = ({
     switch (reasonValue) {
       case 'discharged':
         return (
-          "4wervc"
-          // <PrimaryData
-          //   isPresent={isPresent}
-          //   previousData={payloadData}
-          //   isFormEditable={isFormEditable}
-          //   reasonVal={reasonValue}
-          //   onNextPage={nextPage}
-          // />
+          <PrimaryData
+            isPresent={isPresent}
+            previuosData={payloadData}
+            isFormEditable={isFormEditable}
+            reasonVal={reasonValue}
+            onNextPage={nextPage}
+          />
         );
 
       case 'plannedadmission':

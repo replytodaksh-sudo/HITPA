@@ -75,14 +75,14 @@ console.log("roleName", roleName, claimType)
             )}
 
             {/* Regional Manager - Cashless - Accept & Assign to Internal Team */}
-            {shouldShowOption(['Regional Manager'], ['cashless']) && (
+            {/* {shouldShowOption(['Regional Manager'], ['cashless']) && (
               <FormControlLabel
                 value="2"
                 control={<Radio />}
                 label="Accept & Assign to internal team for investigation"
                 sx={{ mb: 2 }}
               />
-            )}
+            )} */}
 
             {/* Agency Spoc - Cashless - Accept & Assign to Field Officer */}
             {shouldShowOption(['Agency Spoc'], ['cashless']) && (

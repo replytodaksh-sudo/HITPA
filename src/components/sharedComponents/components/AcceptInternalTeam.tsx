@@ -623,7 +623,8 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                                     <Select
                                         value={caseAllocationType}
                                         onChange={(e) => setCaseAllocationType(Number(e.target.value))}
-                                        disabled={roleName !== 'Regional Manager' || caseAllocationType !== 0}
+                                        // disabled={roleName !== 'Regional Manager' || caseAllocationType !== 0}
+                                        disabled={caseAllocationType !== 0}
                                     >
                                         <MenuItem value={0}>--- Choose Case allocation Type ---</MenuItem>
                                         <MenuItem value={1}>Full case allocation</MenuItem>

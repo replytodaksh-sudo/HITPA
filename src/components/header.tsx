@@ -117,6 +117,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
     const response = await authService.getUserMenu();
     console.log("calleddddd 222", response)
     if (response.statusCode === 0) {
+      sessionStorage.setItem('roleName', response.payload.roleName);
       setMenus(response.payload.accessedItem || []);
     }
     // } catch (error) {

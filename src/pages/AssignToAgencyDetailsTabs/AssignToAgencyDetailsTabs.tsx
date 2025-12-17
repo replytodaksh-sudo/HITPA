@@ -363,7 +363,7 @@ const AssignToAgencyDetailsTabs: React.FC = () => {
             </Grid>
 
             {/* Action Buttons */}
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+            {/* <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
               <Button
                 variant="contained"
                 startIcon={<Refresh />}
@@ -392,7 +392,7 @@ const AssignToAgencyDetailsTabs: React.FC = () => {
               >
                 Send Reminder
               </Button>
-            </Box>
+            </Box> */}
           </Box>
 
           {/* Tabs Section */}

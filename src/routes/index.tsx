@@ -50,6 +50,8 @@ import AgencyReworkCases from '../pages/AgencyReworkCases/AgencyReworkCases';
 import AgencyReassignedCases from '../pages/AgencyReassignedCases/AgencyReassignedCases';
 import AgencyCaseNotInvestigated from '../pages/AgencyCaseNotInvestigated/AgencyCaseNotInvestigated';
 import AgencyInvestigationCompleted from '../pages/AgencyInvestigationCompleted/AgencyInvestigationCompleted';
+import AgencySelfDeniedForms from '../pages/AgencySelfDeniedForms/AgencySelfDeniedForms';
+import AgencyReworkTabs from '../pages/AgencyReworkTabs/AgencyReworkTabs';
 
 const AppRoutes: React.FC = () => {
     return (
@@ -473,6 +475,14 @@ const AppRoutes: React.FC = () => {
                     }
                 />
                 <Route
+                    path="agency-rework-form/:investigationId"
+                    element={
+                        <ProtectedRoute>
+                            <AgencyReworkTabs />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
                     path="agency-self-denied-form/:investigationId"
                     element={
                         <ProtectedRoute>
@@ -485,6 +495,14 @@ const AppRoutes: React.FC = () => {
                     element={
                         <ProtectedRoute>
                             <CentralMandatedTabs />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="agency-self-denied-form/:investigationId"
+                    element={
+                        <ProtectedRoute>
+                            <AgencySelfDeniedForms />
                         </ProtectedRoute>
                     }
                 />
