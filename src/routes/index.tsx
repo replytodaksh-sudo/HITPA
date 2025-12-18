@@ -52,6 +52,8 @@ import AgencyCaseNotInvestigated from '../pages/AgencyCaseNotInvestigated/Agency
 import AgencyInvestigationCompleted from '../pages/AgencyInvestigationCompleted/AgencyInvestigationCompleted';
 import AgencySelfDeniedForms from '../pages/AgencySelfDeniedForms/AgencySelfDeniedForms';
 import AgencyReworkTabs from '../pages/AgencyReworkTabs/AgencyReworkTabs';
+import AgencyReassignTabs from '../pages/AgencyReassignTabs/AgencyReassignTabs';
+import AgencyCaseNotInvestigatedTabs from '../pages/AgencyCaseNotInvestigatedTabs/AgencyCaseNotInvestigatedTabs';
 
 const AppRoutes: React.FC = () => {
     return (
@@ -503,6 +505,22 @@ const AppRoutes: React.FC = () => {
                     element={
                         <ProtectedRoute>
                             <AgencySelfDeniedForms />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="agency-reassign-form/:investigationId"
+                    element={
+                        <ProtectedRoute>
+                            <AgencyReassignTabs />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="agency-case-not-investigated/:investigationId"
+                    element={
+                        <ProtectedRoute>
+                            <AgencyCaseNotInvestigatedTabs />
                         </ProtectedRoute>
                     }
                 />

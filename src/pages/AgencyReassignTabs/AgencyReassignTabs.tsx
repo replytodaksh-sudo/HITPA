@@ -34,15 +34,17 @@ import Logs from '../../components/sharedComponents/components/Logs';
 import claimsService from '../../services/claims.service';
 import QuestionService from '../../services/question.service';
 import CentralAssignedAgencyCaseUpdate from '../../components/sharedComponents/components/CentralAssignedAgencyCaseUpdate';
+import CaseUpdateForm from '../../components/sharedComponents/components/CashlessCaseUpdate';
+import AgencyReassignCaseUpdateReim from '../../components/sharedComponents/components/AgencyReassignCaseUpdateReim';
 
 // API URL - Update with your environment config
 const DOWNLOAD_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.example.com/download?investigationId=';
 
-interface AgencyReworkTabsProps {
+interface AgencyReassignTabsProps {
     // No props needed - gets data from URL params
 }
 
-const AgencyReworkTabs: React.FC<AgencyReworkTabsProps> = () => {
+const AgencyReassignTabs: React.FC<AgencyReassignTabsProps> = () => {
     const { investigationId: paramInvestigationId } = useParams<{ investigationId: string }>();
     const [searchParams] = useSearchParams();
 
@@ -266,13 +268,14 @@ const AgencyReworkTabs: React.FC<AgencyReworkTabsProps> = () => {
 
                     {/* Tab 4: Case Update */}
                     {activeTab === 4 && claimsType === 'cashless' && (
-                        // <CentralAssignedAgencyCaseUpdate />
-                        <CentralAssignedAgencyCaseUpdate />
+                        // app-agency-reassign-case-update
+                        <CaseUpdateForm />
                     )}
                     {activeTab === 4 && claimsType === 'reim' && (
-                        <ReimburseCaseUpdate
-                            //   investigationId={investigationId}
-                            buttonEnable={buttonEnable}
+                        // app-agency-reassign-case-update-reim
+                        <AgencyReassignCaseUpdateReim
+                              investigationId={investigationId}
+                            // buttonEnable={buttonEnable}
                         />
                     )}
 
@@ -339,4 +342,4 @@ const AgencyReworkTabs: React.FC<AgencyReworkTabsProps> = () => {
     );
 };
 
-export default AgencyReworkTabs;
+export default AgencyReassignTabs;
