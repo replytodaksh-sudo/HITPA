@@ -143,7 +143,7 @@ const PreAuth: React.FC<Props> = ({ claimDetails }) => {
       </Box>
     );
   }
-
+console.log("claimDetails in PreAuth:", claimDetails);
   return (
     <Box sx={{ mt: 3 }}>
       {/* Past Claim History */}

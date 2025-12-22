@@ -54,6 +54,10 @@ import AgencySelfDeniedForms from '../pages/AgencySelfDeniedForms/AgencySelfDeni
 import AgencyReworkTabs from '../pages/AgencyReworkTabs/AgencyReworkTabs';
 import AgencyReassignTabs from '../pages/AgencyReassignTabs/AgencyReassignTabs';
 import AgencyCaseNotInvestigatedTabs from '../pages/AgencyCaseNotInvestigatedTabs/AgencyCaseNotInvestigatedTabs';
+import QCSubmitted from '../pages/QCSubmitted/QCSubmitted';
+import QCSubmittedForms from '../pages/QCSubmittedForms/QCSubmittedForms';
+import AgencyQCSubmittedForms from '../pages/AgencyQCSubmitted/AgencyQCSubmitted';
+import AgencyQCPending from '../pages/AgencyQCPending/AgencyQCPending';
 
 const AppRoutes: React.FC = () => {
     return (
@@ -351,6 +355,14 @@ const AppRoutes: React.FC = () => {
                         </ProtectedRoute>
                     }
                 />
+                <Route
+                    path="agencyPendingFromReg"
+                    element={
+                        <ProtectedRoute>
+                            <QCSubmitted />
+                        </ProtectedRoute>
+                    }
+                />
 
 
                 {/* Protected Routes - QC */}
@@ -375,6 +387,14 @@ const AppRoutes: React.FC = () => {
                     element={
                         <ProtectedRoute>
                             <RegCentralQuery />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="agencyQCPending"
+                    element={
+                        <ProtectedRoute>
+                            <AgencyQCPending />
                         </ProtectedRoute>
                     }
                 />
@@ -529,6 +549,22 @@ const AppRoutes: React.FC = () => {
                     element={
                         <ProtectedRoute>
                             <QCPendingForms />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="agency-qc-submitted-form/:investigationId"
+                    element={
+                        <ProtectedRoute>
+                            <AgencyQCSubmittedForms />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="agency-qc-pending-form/:investigationId"
+                    element={
+                        <ProtectedRoute>
+                            <QCSubmittedForms />
                         </ProtectedRoute>
                     }
                 />

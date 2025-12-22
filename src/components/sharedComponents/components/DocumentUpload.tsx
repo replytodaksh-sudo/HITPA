@@ -120,7 +120,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
         }
         return <DescriptionIcon sx={{ fontSize: 60 }} />;
     };
-
+console.log('investigationDocs', documentTitle, selectedFile);
     return (
         <Box sx={{ mb: 3 }}>
             <Typography variant="h6" sx={{ mb: 2, fontWeight: 'bold' }}>
