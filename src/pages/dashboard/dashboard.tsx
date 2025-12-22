@@ -131,21 +131,75 @@ const Dashboard: React.FC = () => {
     const [groupReimbursementCount, setGroupReimbursementCount] = useState<number>(0);
 
     // Chart data with modern colors
+    const [chartData1, setChartData1] = useState({
+        labels: ['Active Cases', 'Completed Cases'],
+        datasets: [{
+            data: [0, 0],
+            backgroundColor: [
+                '#EF5350',
+                '#66BB6A',
+            ],
+            borderWidth: 0,
+            hoverOffset: 15,
+            hoverBorderWidth: 1,
+            hoverBorderColor: '#000',
+        }]
+    });
     const [chartData, setChartData] = useState({
         labels: ['Active Cases', 'Completed Cases'],
         datasets: [{
             data: [0, 0],
             backgroundColor: [
-                'rgba(127, 86, 217, 0.8)',
-                'rgba(38, 194, 129, 0.8)',
+                '#FF7675',
+                '#55EFC4',
             ],
             borderWidth: 0,
             hoverOffset: 15,
-            hoverBorderWidth: 3,
-            hoverBorderColor: '#fff',
+            hoverBorderWidth: 1,
+            hoverBorderColor: '#000',
         }]
     });
 
+    const chartOptions1 = {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '75%',
+        plugins: {
+            legend: {
+                position: 'bottom' as const,
+                labels: {
+                    padding: 25,
+                    font: {
+                        size: 14,
+                        weight: 600,
+                        family: 'Inter',
+                    },
+                    usePointStyle: true,
+                    pointStyle: 'circle',
+                    color: "#fff",
+                }
+            },
+            tooltip: {
+                backgroundColor: alpha(theme.palette.background.paper, 0.95),
+                titleColor: theme.palette.text.primary,
+                bodyColor: theme.palette.text.secondary,
+                borderColor: theme.palette.divider,
+                borderWidth: 1,
+                padding: 16,
+                displayColors: true,
+                boxPadding: 8,
+                titleFont: {
+                    size: 14,
+                    weight: 700,
+                },
+                bodyFont: {
+                    size: 13,
+                    weight: 500,
+                },
+                cornerRadius: 12,
+            }
+        }
+    };
     const chartOptions = {
         responsive: true,
         maintainAspectRatio: false,
@@ -162,7 +216,7 @@ const Dashboard: React.FC = () => {
                     },
                     usePointStyle: true,
                     pointStyle: 'circle',
-                    color: theme.palette.text.primary,
+                    color: "#1A202C",
                 }
             },
             tooltip: {
@@ -317,7 +371,7 @@ const Dashboard: React.FC = () => {
         setLoading(true);
         try {
             const response = await DashboardService.allDashboard();
-console.log("dashboard response", response);
+            console.log("dashboard response", response);
             if (response.statusCode === 0) {
                 setDashboardData(response.payload);
                 updateChartData(response.payload);
@@ -525,10 +579,10 @@ console.log("dashboard response", response);
     return (
         <Box sx={{
             minHeight: '100vh',
-            background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+            // background: 'linear-gradient(135deg, #1E40AF 0%, #2563EB 100%)',
             p: 4,
         }}>
-            {loading && (
+            {/* {loading && (
                 <Backdrop
                     sx={{
                         color: '#fff',
@@ -545,7 +599,7 @@ console.log("dashboard response", response);
                         </Typography>
                     </Box>
                 </Backdrop>
-            )}
+            )} */}
             {/* Header */}
             <Fade in timeout={500}>
                 <Box sx={{ mb: 4 }}>
@@ -553,7 +607,8 @@ console.log("dashboard response", response);
                         <Typography
                             variant="h4"
                             sx={{
-                                color: 'white',
+                                color: '#2563EB',
+                                // color: '#1E40AF',
                                 fontWeight: 800,
                                 textShadow: '0 2px 10px rgba(0,0,0,0.2)',
                             }}
@@ -576,7 +631,7 @@ console.log("dashboard response", response);
                             <RefreshIcon />
                         </IconButton>
                     </Box>
-                    <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.9)' }}>
+                    <Typography variant="body1" sx={{ color: '#1E40AF', }}>
                         Welcome back! Here's what's happening with your cases today.
                     </Typography>
                 </Box>
@@ -618,10 +673,10 @@ console.log("dashboard response", response);
                                 <CardContent sx={{ position: 'relative', zIndex: 1 }}>
                                     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
                                         <Box>
-                                            <Typography variant="body2" sx={{ opacity: 0.9, mb: 0.5, fontWeight: 600 }}>
+                                            <Typography variant="body2" sx={{ opacity: 0.9, mb: 0.5, fontWeight: 600, color: "#fff" }}>
                                                 {card.title}
                                             </Typography>
-                                            <Typography variant="h3" sx={{ fontWeight: 800, mb: 0.5 }}>
+                                            <Typography variant="h3" sx={{ fontWeight: 800, mb: 0.5, color: "#fff" }}>
                                                 {card.count}
                                             </Typography>
                                             <Chip
@@ -659,14 +714,15 @@ console.log("dashboard response", response);
                 <Card sx={{ mb: 4, overflow: 'visible' }}>
                     <CardContent sx={{ pb: 3 }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                            <Avatar sx={{ bgcolor: 'primary.main', mr: 2 }}>
+
+                              <Avatar sx={{ bgcolor: 'primary.main', mr: 2 }}>
                                 <FilterListIcon />
                             </Avatar>
                             <Box>
-                                <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                                <Typography variant="h6" sx={{ fontWeight: 700, color: '#2563EB' }}>
                                     Filters
                                 </Typography>
-                                <Typography variant="body2" color="text.secondary">
+                                <Typography variant="body2" sx={{ color: '#1E40AF' }}>
                                     Refine your dashboard data
                                 </Typography>
                             </Box>
@@ -675,7 +731,7 @@ console.log("dashboard response", response);
                         <Grid container spacing={2}>
                             {roleName !== 'Field Officer' && (
                                 <Grid size={{ xs: 12, md: 3 }}>
-                                    <FormControl fullWidth>
+                                    <FormControl fullWidth sx={{ background: "rgba(255,255,255,0.9)", borderRadius: "8px" }}>
                                         <InputLabel>Zone</InputLabel>
                                         <Select
                                             multiple
@@ -702,7 +758,7 @@ console.log("dashboard response", response);
                             )}
 
                             <Grid size={{ xs: 12, md: 3 }}>
-                                <FormControl fullWidth>
+                                <FormControl fullWidth sx={{ background: "rgba(255,255,255,0.9)", borderRadius: "8px" }}>
                                     <InputLabel>State</InputLabel>
                                     <Select
                                         multiple
@@ -728,7 +784,7 @@ console.log("dashboard response", response);
                             </Grid>
 
                             <Grid size={{ xs: 12, md: 3 }}>
-                                <FormControl fullWidth>
+                                <FormControl fullWidth sx={{ background: "rgba(255,255,255,0.9)", borderRadius: "8px" }}>
                                     <InputLabel>City</InputLabel>
                                     <Select
                                         multiple
@@ -755,7 +811,7 @@ console.log("dashboard response", response);
 
                             {roleName === 'Central Manager' && (
                                 <Grid size={{ xs: 12, md: 3 }}>
-                                    <FormControl fullWidth>
+                                    <FormControl fullWidth sx={{ background: "rgba(255,255,255,0.9)", borderRadius: "8px" }}>
                                         <InputLabel>Regional Manager</InputLabel>
                                         <Select
                                             multiple
@@ -783,7 +839,7 @@ console.log("dashboard response", response);
 
                             {roleName === 'Regional Manager' && (
                                 <Grid size={{ xs: 12, md: 3 }}>
-                                    <FormControl fullWidth>
+                                    <FormControl fullWidth sx={{ background: "rgba(255,255,255,0.9)", borderRadius: "8px" }}>
                                         <InputLabel>Agency</InputLabel>
                                         <Select
                                             multiple
@@ -811,7 +867,7 @@ console.log("dashboard response", response);
 
                             {roleName === 'Agency Spoc' && (
                                 <Grid size={{ xs: 12, md: 3 }}>
-                                    <FormControl fullWidth>
+                                    <FormControl fullWidth sx={{ background: "rgba(255,255,255,0.9)", borderRadius: "8px" }}>
                                         <InputLabel>Field Officer</InputLabel>
                                         <Select
                                             multiple
@@ -870,7 +926,7 @@ console.log("dashboard response", response);
                                         startIcon={<FilterListIcon />}
                                         onClick={applyFilter}
                                         sx={{
-                                            background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+                                            background: 'linear-gradient(135deg, #1E40AF 0%, #2563EB 100%)',
                                             px: 4,
                                         }}
                                     >
@@ -897,16 +953,15 @@ console.log("dashboard response", response);
             {/* Dashboard Content */}
             {dashboardData && (
                 <Grid container spacing={3}>
-                    {/* Fresh Cases & Under QC */}
                     <Grid size={{ xs: 12, lg: 4 }}>
-                        <Fade in timeout={900}>
-                            <Card sx={{ height: '100%', background: 'linear-gradient(135deg, #FF4757 0%, #FF6348 100%)', color: 'white' }}>
+                        <Fade in timeout={1300}>
+                            <Card sx={{ height: '550px', background: 'linear-gradient(135deg, #FF4757 0%, #FF6348 100%)', color: 'white' }}>
                                 <CardContent>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
                                         <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)', mr: 2 }}>
                                             <PaymentIcon />
                                         </Avatar>
-                                        <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, color: '#fff' }}>
                                             Fresh Cases
                                         </Typography>
                                     </Box>
@@ -932,7 +987,7 @@ console.log("dashboard response", response);
                                                     transition: 'all 0.2s ease',
                                                 }}
                                             >
-                                                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                                <Typography variant="body2" sx={{ fontWeight: 600, color: '#fff' }}>
                                                     {item.label}
                                                 </Typography>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -955,7 +1010,7 @@ console.log("dashboard response", response);
                                         <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)', mr: 2 }}>
                                             <BusinessIcon />
                                         </Avatar>
-                                        <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, color: '#fff' }}>
                                             Under QC
                                         </Typography>
                                     </Box>
@@ -981,7 +1036,7 @@ console.log("dashboard response", response);
                                                     transition: 'all 0.2s ease',
                                                 }}
                                             >
-                                                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                                <Typography variant="body2" sx={{ fontWeight: 600, color: '#fff' }}>
                                                     {item.label}
                                                 </Typography>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -1007,17 +1062,17 @@ console.log("dashboard response", response);
                     {/* Chart */}
                     <Grid size={{ xs: 12, lg: 4 }}>
                         <Fade in timeout={1100}>
-                            <Card sx={{ height: '100%' }}>
+                            <Card sx={{ height: '550px', background: '#F8F9FA', color: 'white', border:"4px solid, #E2E8F0" }}>
                                 <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
                                         <Avatar sx={{ bgcolor: 'primary.main', mr: 2 }}>
                                             <TrendingUpIcon />
                                         </Avatar>
                                         <Box>
-                                            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                                            <Typography variant="h6" sx={{ fontWeight: 700, color: '#2D3436' }}>
                                                 Case Summary
                                             </Typography>
-                                            <Typography variant="body2" color="text.secondary">
+                                            <Typography variant="body2" sx={{ color: '#636E72' }}>
                                                 Overall performance
                                             </Typography>
                                         </Box>
@@ -1034,13 +1089,13 @@ console.log("dashboard response", response);
                                                     textAlign: 'center',
                                                 }}
                                             >
-                                                <Typography variant="h3" sx={{ fontWeight: 800, color: 'primary.main' }}>
+                                                <Typography variant="h3" sx={{ fontWeight: 800, color: '#1A202C' }}>
                                                     {sumCaseData(dashboardData.dashBoardInvestigationDTO[0]?.subTypeMenu) +
                                                         sumCaseData(dashboardData.dashBoardInvestigationDTO[1]?.subTypeMenu) +
                                                         sumCaseData(dashboardData.dashBoardInvestigationDTO[2]?.subTypeMenu) +
                                                         sumCaseData(dashboardData.dashBoardQCDTO[0]?.subTypeMenu)}
                                                 </Typography>
-                                                <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 600 }}>
+                                                <Typography variant="body2" sx={{ fontWeight: 600, color: '#1A202C' }}>
                                                     Total Cases
                                                 </Typography>
                                             </Box>
@@ -1050,17 +1105,62 @@ console.log("dashboard response", response);
                             </Card>
                         </Fade>
                     </Grid>
+                    {/* <Grid size={{ xs: 12, lg: 4 }}>
+                        <Fade in timeout={1100}>
+                            <Card sx={{ height: '550px', background: '#1E293B', color: 'white' }}>
+                                <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                                    <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+                                        <Avatar sx={{ bgcolor: 'primary.main', mr: 2 }}>
+                                            <TrendingUpIcon />
+                                        </Avatar>
+                                        <Box>
+                                            <Typography variant="h6" sx={{ fontWeight: 700, color: '#fff' }}>
+                                                Case Summary
+                                            </Typography>
+                                            <Typography variant="body2" sx={{ color: '#fff' }}>
+                                                Overall performance
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                    <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                                        <Box sx={{ width: '100%', height: '380px', position: 'relative' }}>
+                                            <Doughnut data={chartData} options={chartOptions1} />
+                                            <Box
+                                                sx={{
+                                                    position: 'absolute',
+                                                    top: '50%',
+                                                    left: '50%',
+                                                    transform: 'translate(-50%, -50%)',
+                                                    textAlign: 'center',
+                                                }}
+                                            >
+                                                <Typography variant="h3" sx={{ fontWeight: 800, color: '#FFFFFF' }}>
+                                                    {sumCaseData(dashboardData.dashBoardInvestigationDTO[0]?.subTypeMenu) +
+                                                        sumCaseData(dashboardData.dashBoardInvestigationDTO[1]?.subTypeMenu) +
+                                                        sumCaseData(dashboardData.dashBoardInvestigationDTO[2]?.subTypeMenu) +
+                                                        sumCaseData(dashboardData.dashBoardQCDTO[0]?.subTypeMenu)}
+                                                </Typography>
+                                                <Typography variant="body2" sx={{ fontWeight: 600, color: '#FFFFFF' }}>
+                                                    Total Cases
+                                                </Typography>
+                                            </Box>
+                                        </Box>
+                                    </Box>
+                                </CardContent>
+                            </Card>
+                        </Fade>
+                    </Grid> */}
 
                     {/* On Field & Completed */}
                     <Grid size={{ xs: 12, lg: 4 }}>
                         <Fade in timeout={1300}>
-                            <Card sx={{ height: '100%', background: 'linear-gradient(135deg, #26C281 0%, #1ABC9C 100%)', color: 'white' }}>
+                            <Card sx={{ height: '550px', background: 'linear-gradient(135deg, #26C281 0%, #1ABC9C 100%)', color: 'white' }}>
                                 <CardContent>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
                                         <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)', mr: 2 }}>
                                             <ReceiptIcon />
                                         </Avatar>
-                                        <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, color: '#fff' }}>
                                             On Field
                                         </Typography>
                                     </Box>
@@ -1086,7 +1186,7 @@ console.log("dashboard response", response);
                                                     transition: 'all 0.2s ease',
                                                 }}
                                             >
-                                                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                                <Typography variant="body2" sx={{ fontWeight: 600, color: '#fff' }}>
                                                     {item.label}
                                                 </Typography>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
@@ -1109,7 +1209,7 @@ console.log("dashboard response", response);
                                         <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)', mr: 2 }}>
                                             <AccountBalanceIcon />
                                         </Avatar>
-                                        <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                                        <Typography variant="h6" sx={{ fontWeight: 700, color: '#fff' }}>
                                             Completed
                                         </Typography>
                                     </Box>
@@ -1135,7 +1235,7 @@ console.log("dashboard response", response);
                                                     transition: 'all 0.2s ease',
                                                 }}
                                             >
-                                                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                                <Typography variant="body2" sx={{ fontWeight: 600, color: '#fff' }}>
                                                     {item.label}
                                                 </Typography>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>

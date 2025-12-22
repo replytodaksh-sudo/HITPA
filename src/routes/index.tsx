@@ -58,6 +58,10 @@ import QCSubmitted from '../pages/QCSubmitted/QCSubmitted';
 import QCSubmittedForms from '../pages/QCSubmittedForms/QCSubmittedForms';
 import AgencyQCSubmittedForms from '../pages/AgencyQCSubmitted/AgencyQCSubmitted';
 import AgencyQCPending from '../pages/AgencyQCPending/AgencyQCPending';
+import CentralQueryResponsePending from '../pages/CentralQueryResponsePending/CentralQueryResponsePending';
+import CentralQueryResponse from '../pages/CentralQueryResponse/CentralQueryResponse';
+import CentralQCPending from '../pages/CentralQCPending/CentralQCPending';
+import QueriesByClaimsTeam from '../pages/QueriesByClaimsTeam/QueriesByClaimsTeam';
 
 const AppRoutes: React.FC = () => {
     return (
@@ -395,6 +399,62 @@ const AppRoutes: React.FC = () => {
                     element={
                         <ProtectedRoute>
                             <AgencyQCPending />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="agencyQCPending"
+                    element={
+                        <ProtectedRoute>
+                            <AgencyQCPending />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="agencyQCPending"
+                    element={
+                        <ProtectedRoute>
+                            <AgencyQCPending />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="agencyQCPending"
+                    element={
+                        <ProtectedRoute>
+                            <AgencyQCPending />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="CentralQueryResponsePending"
+                    element={
+                        <ProtectedRoute>
+                            <CentralQueryResponsePending />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="centralQueryResponse"
+                    element={
+                        <ProtectedRoute>
+                            <CentralQueryResponse />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="centralQCPending"
+                    element={
+                        <ProtectedRoute>
+                            <CentralQCPending />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="queriesByClaimsTeam"
+                    element={
+                        <ProtectedRoute>
+                            <QueriesByClaimsTeam />
                         </ProtectedRoute>
                     }
                 />

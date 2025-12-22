@@ -32,6 +32,8 @@ import CentralRegionalDocuments from '../../components/sharedComponents/componen
 import Logs from '../../components/sharedComponents/components/Logs';
 import QCUpdateCentral from '../../components/sharedComponents/components/QCUpdateCentral';
 import CentralAssignedAgencyCaseUpdate from '../../components/sharedComponents/components/CentralAssignedAgencyCaseUpdate';
+import claimsService from '../../services/claims.service';
+import QCUpdates from '../../components/sharedComponents/components/QCUpdates';
 
 
 // API URL - Update with your environment config
@@ -84,8 +86,26 @@ const QCPendingForms: React.FC<QCPendingFormsProps> = () => {
       const cleanedId = paramInvestigationId.split(' ')[0];
       setInvestigationId(cleanedId);
       fetchCaseDetails(cleanedId);
+      fetchClaimDetails(cleanedId);
     }
   }, [paramInvestigationId, searchParams]);
+
+  const fetchClaimDetails = async (invId: string) => {
+          // setLoading(true);
+          try {
+              const response = await claimsService.claimDetails(invId);
+              if (response.statusCode === 0) {
+                  console.log("ppppp", response.payload)
+                  setClaimDetails(response.payload);
+                  sessionStorage.setItem('formEditable', response.payload.editable);
+                  sessionStorage.setItem('canAssignToInternalTeam', response.payload.canAssignToInternalTeam);
+              }
+          } catch (error) {
+              console.error('Error fetching claim details:', error);
+          } finally {
+              // setLoading(false);
+          }
+      };
 
   const fetchCaseDetails = async (invId: string) => {
     try {
@@ -93,7 +113,7 @@ const QCPendingForms: React.FC<QCPendingFormsProps> = () => {
       const response = await caseUpdateService.caseUpdatePreview(invId);
       
       if (response.statusCode === 0) {
-        setClaimDetails(response.payload);
+        // setClaimDetails(response.payload);
         setReworkCaseComments(response.payload.reworkCaseComments || '');
       }
     } catch (error) {
@@ -290,12 +310,11 @@ const QCPendingForms: React.FC<QCPendingFormsProps> = () => {
 
           {/* Tab 5: Agency QC */}
           {activeTab === 5 && (
-            "?ertghj"
-            // <QCUpdates
-            //   investigationId={investigationId}
-            //   display="block"
-            //   editable={true}
-            // />
+            <QCUpdates
+              // investigationId={investigationId}
+              // display="block"
+              editable={true}
+            />
           )}
 
           {/* Tab 6: QC Update */}
