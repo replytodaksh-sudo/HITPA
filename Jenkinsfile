@@ -74,7 +74,7 @@ pipeline {
         }
           stage('Deploy Code On Target Machine'){
             steps{
-                ansiblePlaybook credentialsId: 'gcp', disableHostKeyChecking: true, extras: '-e thost=$thost  -e ansible_python_interpreter=/usr/bin/python3 ', installation: 'ansible', inventory: 'codedir/Inventory.txt', playbook: 'codedir/deploy_desk_audit_ui.yml', sudoUser: null 
+                ansiblePlaybook credentialsId: 'gcp', disableHostKeyChecking: true, extras: '-e thost=$thost  -e ansible_python_interpreter=/usr/bin/python3 ', installation: 'ansible', inventory: 'codedir/Inventory.txt', playbook: 'codedir/investigation.yml', sudoUser: null 
               }
           }  
     }
