@@ -1,26 +1,20 @@
-FROM python:3.11
+# Use official Node.js image
+FROM node:20-alpine
 
-ENV TZ=Asia/Kolkata \
-    DEBIAN_FRONTEND=noninteractive
-
+# Set working directory
 WORKDIR /app
-COPY . /app
 
-# Add Microsoft GPG key and repo securely (apt-key is deprecated)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    unixodbc-dev \
-    curl \
-    gnupg \
-    poppler-utils && \
-    mkdir -p /etc/apt/keyrings && \
-    curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /etc/apt/keyrings/microsoft.gpg && \
-    echo "deb [signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/debian/10/prod buster main" > /etc/apt/sources.list.d/mssql-release.list && \
-    apt-get update && \
-    ACCEPT_EULA=Y apt-get install -y msodbcsql17 && \
-    rm -rf /var/lib/apt/lists/*
+# Copy package files first (for better caching)
+COPY package*.json ./
 
-RUN python3 -m pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+# Install dependencies
+RUN npm install
 
-CMD ["python3", "main.py"]
+# Copy source code
+COPY . .
+
+# Expose Vite default port
+EXPOSE 3000
+
+# Run the dev server
+CMD ["npm", "run", "dev", "--", "--host"]
