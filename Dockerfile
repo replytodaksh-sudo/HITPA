@@ -1,20 +1,20 @@
-# Use official Node.js image
+# Use Node.js 18+ (supports structuredClone)
 FROM node:20-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files first (for better caching)
-COPY package*.json ./
+# Copy package files
+COPY package.json package-lock.json ./
 
-# Install dependencies
 RUN npm install
 
-# Copy source code
+# Copy all source files
 COPY . .
 
-# Expose Vite default port
-EXPOSE 3000
+# Ensure the correct Node.js version
+RUN node -v
 
-# Run the dev server
-CMD ["npm", "run", "dev", "--", "--host"]
+# Build the application
+RUN npm run build
+
+CMD ["npm", "start"]
