@@ -62,6 +62,7 @@ import CentralQueryResponsePending from '../pages/CentralQueryResponsePending/Ce
 import CentralQueryResponse from '../pages/CentralQueryResponse/CentralQueryResponse';
 import CentralQCPending from '../pages/CentralQCPending/CentralQCPending';
 import QueriesByClaimsTeam from '../pages/QueriesByClaimsTeam/QueriesByClaimsTeam';
+import CentralQCForm from '../pages/CentralQCForm/CentralQCForm';
 
 const AppRoutes: React.FC = () => {
     return (
@@ -625,6 +626,14 @@ const AppRoutes: React.FC = () => {
                     element={
                         <ProtectedRoute>
                             <QCSubmittedForms />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="central-qc-form/:investigationId"
+                    element={
+                        <ProtectedRoute>
+                            <CentralQCForm />
                         </ProtectedRoute>
                     }
                 />
