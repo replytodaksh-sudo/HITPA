@@ -1,6 +1,6 @@
-import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import ProtectedRoute from '../hooks/ProtectedRoute';
+import React from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
+import ProtectedRoute from "../hooks/ProtectedRoute";
 
 import Dashboard from '../pages/dashboard/dashboard';
 import AssignedFo from '../pages/AssignedFo/AssignedFo';
@@ -65,16 +65,13 @@ import QueriesByClaimsTeam from '../pages/QueriesByClaimsTeam/QueriesByClaimsTea
 import CentralQCForm from '../pages/CentralQCForm/CentralQCForm';
 
 const AppRoutes: React.FC = () => {
-    return (
-        <Routes>
-            {/* Public routes */}
-            <Route path="/login" element={<div>Redirecting to Keycloak...</div>} />
-            <Route
-                path="/"
-                element={<Navigate to="/dashboard" replace />}
-            />
+  return (
+    <Routes>
+      {/* Public routes */}
+      <Route path="/login" element={<div>Redirecting to Keycloak...</div>} />
+      <Route path="/" element={<Navigate to="/admin/dashboard" replace />} />
 
-            {/* <Route
+      {/* <Route
                 path="/*"
                 element={
                     <ProtectedRoute>
@@ -82,109 +79,109 @@ const AppRoutes: React.FC = () => {
                     </ProtectedRoute>
                 }
             > */}
-            <Route path="/admin" element={<MainLayout />}>
-                {/* Protected Routes - Dashboard */}
-                <Route
-                    path="dashboard"
-                    element={
-                        <ProtectedRoute>
-                            <Dashboard />
-                        </ProtectedRoute>
-                    }
-                />
+      <Route path="/admin" element={<MainLayout />}>
+        {/* Protected Routes - Dashboard */}
+        <Route
+          path="dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
 
-                {/* Protected Routes - FO (Field Officer) */}
-                <Route
-                    path="foAssignedToFO"
-                    element={
-                        <ProtectedRoute>
-                            <AssignedFo />
-                        </ProtectedRoute>
-                    }
-                />
+        {/* Protected Routes - FO (Field Officer) */}
+        <Route
+          path="foAssignedToFO"
+          element={
+            <ProtectedRoute>
+              <AssignedFo />
+            </ProtectedRoute>
+          }
+        />
 
-                {/* Protected Routes - Central Team */}
-                <Route
-                    path="centralNewCasesForAction"
-                    element={
-                        <ProtectedRoute>
-                            <CentralNewCasesAction />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="centralNewCases"
-                    element={
-                        <ProtectedRoute>
-                            <CentralNewCases />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="deniedByRegional"
-                    element={
-                        <ProtectedRoute>
-                            <DeniedByRegional />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="centralAssignedToRegional"
-                    element={
-                        <ProtectedRoute>
-                            <CentralAssignedToRegional />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="centralAssignedToAgency"
-                    element={
-                        <ProtectedRoute>
-                            <CentralAssignedToAgency />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="centralReworkCases"
-                    element={
-                        <ProtectedRoute>
-                            <CentralReworkCases />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="centralReassignedCases"
-                    element={
-                        <ProtectedRoute>
-                            <CentralReassignedCases />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="centralCaseNotInvestigated"
-                    element={
-                        <ProtectedRoute>
-                            <CentralCaseNotInvestigated />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agencyCaseNotInvestigated"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyCaseNotInvestigated />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agencyInvestigationCompleted"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyInvestigationCompleted />
-                        </ProtectedRoute>
-                    }
-                />
-                {/* <Route
+        {/* Protected Routes - Central Team */}
+        <Route
+          path="centralNewCasesForAction"
+          element={
+            <ProtectedRoute>
+              <CentralNewCasesAction />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="centralNewCases"
+          element={
+            <ProtectedRoute>
+              <CentralNewCases />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="deniedByRegional"
+          element={
+            <ProtectedRoute>
+              <DeniedByRegional />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="centralAssignedToRegional"
+          element={
+            <ProtectedRoute>
+              <CentralAssignedToRegional />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="centralAssignedToAgency"
+          element={
+            <ProtectedRoute>
+              <CentralAssignedToAgency />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="centralReworkCases"
+          element={
+            <ProtectedRoute>
+              <CentralReworkCases />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="centralReassignedCases"
+          element={
+            <ProtectedRoute>
+              <CentralReassignedCases />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="centralCaseNotInvestigated"
+          element={
+            <ProtectedRoute>
+              <CentralCaseNotInvestigated />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyCaseNotInvestigated"
+          element={
+            <ProtectedRoute>
+              <AgencyCaseNotInvestigated />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyInvestigationCompleted"
+          element={
+            <ProtectedRoute>
+              <AgencyInvestigationCompleted />
+            </ProtectedRoute>
+          }
+        />
+        {/* <Route
                 path="centralInvestigationCompleted"
                 element={
                     <ProtectedRoute>
@@ -193,182 +190,271 @@ const AppRoutes: React.FC = () => {
                 }
             /> */}
 
-                {/* Protected Routes - Management */}
-                <Route
-                    path="agencyManagement"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyManagement />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="caseAssignmentRule"
-                    element={
-                        <ProtectedRoute>
-                            <CaseAssignmentRule />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="userManagement"
-                    element={
-                        <ProtectedRoute>
-                            <UserManagement />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="roleManagement"
-                    element={
-                        <ProtectedRoute>
-                            <RolesManagement />
-                        </ProtectedRoute>
-                    }
-                />
+        {/* Protected Routes - Management */}
+        <Route
+          path="agencyManagement"
+          element={
+            <ProtectedRoute>
+              <AgencyManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="caseAssignmentRule"
+          element={
+            <ProtectedRoute>
+              <CaseAssignmentRule />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="userManagement"
+          element={
+            <ProtectedRoute>
+              <UserManagement />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="roleManagement"
+          element={
+            <ProtectedRoute>
+              <RolesManagement />
+            </ProtectedRoute>
+          }
+        />
 
-                {/* Protected Routes - Fresh Cases */}
-                <Route
-                    path="freshNewCases"
-                    element={
-                        <ProtectedRoute>
-                            <FreshInvestigation />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="freshAgencyDeniedCases"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyDeniedCases />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="freshSelfDeniedCases"
-                    element={
-                        <ProtectedRoute>
-                            <FreshSelfDeniedCases />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agencySelfDeniedCases"
-                    element={
-                        <ProtectedRoute>
-                            <FreshSelfDeniedCases />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="freshCentralMandatedCases"
-                    element={
-                        <ProtectedRoute>
-                            <CentralMandatedCases />
-                        </ProtectedRoute>
-                    }
-                />
+        {/* Protected Routes - Fresh Cases */}
+        <Route
+          path="freshNewCases"
+          element={
+            <ProtectedRoute>
+              <FreshInvestigation />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="freshAgencyDeniedCases"
+          element={
+            <ProtectedRoute>
+              <AgencyDeniedCases />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="freshSelfDeniedCases"
+          element={
+            <ProtectedRoute>
+              <FreshSelfDeniedCases />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencySelfDeniedCases"
+          element={
+            <ProtectedRoute>
+              <FreshSelfDeniedCases />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="freshCentralMandatedCases"
+          element={
+            <ProtectedRoute>
+              <CentralMandatedCases />
+            </ProtectedRoute>
+          }
+        />
 
-                {/* Protected Routes - Field Cases */}
-                <Route
-                    path="fieldAssignedToSelf"
-                    element={
-                        <ProtectedRoute>
-                            <AssignedToSelf />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agencyAssignedToSelf"
-                    element={
-                        <ProtectedRoute>
-                            <AssignedToSelf />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="fieldReassignedCases"
-                    element={
-                        <ProtectedRoute>
-                            <FieldReassignedCases />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agencyReassignedCases"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyReassignedCases />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="fieldReworkCases"
-                    element={
-                        <ProtectedRoute>
-                            <FieldReworkCases />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agencyReworkCases"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyReworkCases />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="fieldAssignedToAgency"
-                    element={
-                        <ProtectedRoute>
-                            <FieldAssignedToAgency />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agencyAssignedToFO"
-                    element={
-                        <ProtectedRoute>
-                            <FieldAssignedToAgency />
-                        </ProtectedRoute>
-                    }
-                />
+        {/* Protected Routes - Field Cases */}
+        <Route
+          path="fieldAssignedToSelf"
+          element={
+            <ProtectedRoute>
+              <AssignedToSelf />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyAssignedToSelf"
+          element={
+            <ProtectedRoute>
+              <AssignedToSelf />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="fieldReassignedCases"
+          element={
+            <ProtectedRoute>
+              <FieldReassignedCases />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyReassignedCases"
+          element={
+            <ProtectedRoute>
+              <AgencyReassignedCases />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="fieldReworkCases"
+          element={
+            <ProtectedRoute>
+              <FieldReworkCases />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyReworkCases"
+          element={
+            <ProtectedRoute>
+              <AgencyReworkCases />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="fieldAssignedToAgency"
+          element={
+            <ProtectedRoute>
+              <FieldAssignedToAgency />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyAssignedToFO"
+          element={
+            <ProtectedRoute>
+              <FieldAssignedToAgency />
+            </ProtectedRoute>
+          }
+        />
 
-                {/* Protected Routes - Completed Cases */}
-                <Route
-                    path="completedCaseNotInvestigated"
-                    element={
-                        <ProtectedRoute>
-                            <CompletedCaseNotInvestigated />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="completedInvestigationCompleted"
-                    element={
-                        <ProtectedRoute>
-                            <CompletedInvestigationCompleted />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agencyNewCases"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyNewCases />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agencyPendingFromReg"
-                    element={
-                        <ProtectedRoute>
-                            <QCSubmitted />
-                        </ProtectedRoute>
-                    }
-                />
+        {/* Protected Routes - Completed Cases */}
+        <Route
+          path="completedCaseNotInvestigated"
+          element={
+            <ProtectedRoute>
+              <CompletedCaseNotInvestigated />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="completedInvestigationCompleted"
+          element={
+            <ProtectedRoute>
+              <CompletedInvestigationCompleted />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyNewCases"
+          element={
+            <ProtectedRoute>
+              <AgencyNewCases />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyPendingFromReg"
+          element={
+            <ProtectedRoute>
+              <QCSubmitted />
+            </ProtectedRoute>
+          }
+        />
 
+        {/* Protected Routes - QC */}
+        <Route
+          path="qcRegPendingFromCentral"
+          element={
+            <ProtectedRoute>
+              <RegQCPendingCentral />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="qcRegQCPending"
+          element={
+            <ProtectedRoute>
+              <RegQcPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="qcRegCentralQuery"
+          element={
+            <ProtectedRoute>
+              <RegCentralQuery />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="CentralQueryResponsePending"
+          element={
+            <ProtectedRoute>
+              <CentralQueryResponsePending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="centralQueryResponse"
+          element={
+            <ProtectedRoute>
+              <CentralQueryResponse />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="centralQCPending"
+          element={
+            <ProtectedRoute>
+              <CentralQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="queriesByClaimsTeam"
+          element={
+            <ProtectedRoute>
+              <QueriesByClaimsTeam />
+            </ProtectedRoute>
+          }
+        />
 
                 {/* Protected Routes - QC */}
                 <Route
@@ -656,14 +742,9 @@ const AppRoutes: React.FC = () => {
 
 export default AppRoutes;
 
-
-
-
 // import CompletedInvestigationCompleted from './pages/CentralInvestigationCompleted/CentralInvestigationCompleted';
 
 //             <Route path="completedInvestigationCompleted" element={<CompletedInvestigationCompleted />} />
-
-
 
 // import CentralInvestigationCompleted from './pages/CentralInvestigationCompleted/CentralInvestigationCompleted';
 
