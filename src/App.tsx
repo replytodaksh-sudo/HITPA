@@ -52,10 +52,10 @@
 // import QCPendingForms from './pages/QCPendingForms/QCPendingForms';
 
 // interface ProtectedRouteProps {
-  //   children: React.ReactNode;
-  // }
-  
-  // const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+//   children: React.ReactNode;
+// }
+
+// const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 //   const isAuthenticated = authService.isAuthenticated();
 
 //   if (!isAuthenticated) {
@@ -182,23 +182,20 @@
 
 // export default App;
 
-
-
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import KeycloakProvider from './KeycloakProvider';
-import { theme } from './theme';
-import AppRoutes from './routes';
-import './App.css';
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import KeycloakProvider from "./KeycloakProvider";
+import { theme } from "./theme";
+import AppRoutes from "./routes";
+import "./App.css";
 
 function App() {
-  
   return (
     <KeycloakProvider>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <BrowserRouter>
+        <BrowserRouter basename="/investigation">
           <AppRoutes />
         </BrowserRouter>
       </ThemeProvider>

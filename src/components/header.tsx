@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -35,7 +35,7 @@ import {
   Grid,
   Tab,
   Tabs,
-} from '@mui/material';
+} from "@mui/material";
 import {
   Home as HomeIcon,
   Notifications as NotificationsIcon,
@@ -47,12 +47,12 @@ import {
   Menu as MenuIcon,
   Close as CloseIcon,
   KeyboardArrowRight as ArrowRightIcon,
-} from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
-import { authService } from '../services/auth.service';
-import { DashboardService } from '../services/dashboard.service';
-import { useAuth } from '../hooks/useAuth';
-import keycloak from '../keycloak.config';
+} from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { authService } from "../services/auth.service";
+import { DashboardService } from "../services/dashboard.service";
+import { useAuth } from "../hooks/useAuth";
+import keycloak from "../keycloak.config";
 
 interface SubMenu {
   submenuName: string;
@@ -79,45 +79,50 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const { userProfile, logout } = useAuth();
 
   // State
-  const [userName, setUserName] = useState('');
-  const [roleName, setRoleName] = useState('');
+  const [userName, setUserName] = useState("");
+  const [roleName, setRoleName] = useState("");
   const [menus, setMenus] = useState<any>([]);
   const [profileAnchor, setProfileAnchor] = useState<null | HTMLElement>(null);
-  const [notificationAnchor, setNotificationAnchor] = useState<null | HTMLElement>(null);
-  const [menuAnchors, setMenuAnchors] = useState<{ [key: string]: HTMLElement | null }>({});
-  const [submenuAnchors, setSubmenuAnchors] = useState<{ [key: string]: HTMLElement | null }>({});
+  const [notificationAnchor, setNotificationAnchor] =
+    useState<null | HTMLElement>(null);
+  const [menuAnchors, setMenuAnchors] = useState<{
+    [key: string]: HTMLElement | null;
+  }>({});
+  const [submenuAnchors, setSubmenuAnchors] = useState<{
+    [key: string]: HTMLElement | null;
+  }>({});
 
   // Dialogs
   const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
   const [searchDialogOpen, setSearchDialogOpen] = useState(false);
 
   // Password change
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   // Search
-  const [searchType, setSearchType] = useState('');
+  const [searchType, setSearchType] = useState("");
   const [searchResults, setSearchResults] = useState<any>(null);
   const [showResults, setShowResults] = useState(false);
-  
+
   useEffect(() => {
     fetchUserInfo();
     fetchMenus();
   }, []);
 
   const fetchUserInfo = () => {
-    const name = sessionStorage.getItem('name') || 'User';
-    const role = sessionStorage.getItem('role') || 'Role';
+    const name = sessionStorage.getItem("name") || "User";
+    const role = sessionStorage.getItem("role") || "Role";
     setUserName(name);
     setRoleName(role);
   };
   const fetchMenus = async () => {
-    console.log("calleddddd 222")
+    console.log("calleddddd 222");
     // try {
     const response = await authService.getUserMenu();
-    console.log("calleddddd 222", response)
+    console.log("calleddddd 222", response);
     if (response.statusCode === 0) {
-      sessionStorage.setItem('roleName', response.payload.roleName);
+      sessionStorage.setItem("roleName", response.payload.roleName);
       setMenus(response.payload.accessedItem || []);
     }
     // } catch (error) {
@@ -126,14 +131,14 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
   };
 
   const handleLogout = async () => {
-    const confirmed = window.confirm('Do you want to logout?');
+    const confirmed = window.confirm("Do you want to logout?");
     if (confirmed) {
       try {
         await authService.logout();
         logout();
         // navigate('/login');
       } catch (error) {
-        console.error('Logout failed:', error);
+        console.error("Logout failed:", error);
       }
     }
     setProfileAnchor(null);
@@ -141,7 +146,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
   const handlePasswordChange = async () => {
     if (newPassword !== confirmPassword) {
-      alert('New password and confirm password should be same');
+      alert("New password and confirm password should be same");
       return;
     }
 
@@ -152,12 +157,12 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
       });
 
       if (response.statusCode === 0) {
-        alert('Password changed successfully. Please login again.');
+        alert("Password changed successfully. Please login again.");
         await authService.logout();
-        navigate('/login');
+        navigate("/login");
       }
     } catch (error) {
-      console.error('Password change failed:', error);
+      console.error("Password change failed:", error);
     }
   };
 
@@ -165,11 +170,11 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
     try {
       let response;
 
-      if (searchType === 'corporate') {
+      if (searchType === "corporate") {
         response = await DashboardService.corporateSearch(formData);
-      } else if (searchType === 'provider') {
+      } else if (searchType === "provider") {
         response = await DashboardService.providerSearch(formData);
-      } else if (searchType === 'policyholder') {
+      } else if (searchType === "policyholder") {
         response = await DashboardService.policySearch(formData);
       }
 
@@ -178,19 +183,22 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
         setShowResults(true);
       }
     } catch (error) {
-      console.error('Search failed:', error);
+      console.error("Search failed:", error);
     }
   };
 
-  const handleMenuClick = (menuName: string, event: React.MouseEvent<HTMLElement>) => {
-    setMenuAnchors(prev => ({
+  const handleMenuClick = (
+    menuName: string,
+    event: React.MouseEvent<HTMLElement>
+  ) => {
+    setMenuAnchors((prev) => ({
       ...prev,
       [menuName]: event.currentTarget,
     }));
   };
 
   const handleMenuClose = (menuName: string) => {
-    setMenuAnchors(prev => ({
+    setMenuAnchors((prev) => ({
       ...prev,
       [menuName]: null,
     }));
@@ -198,15 +206,18 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
     setSubmenuAnchors({});
   };
 
-  const handleSubmenuOpen = (key: string, event: React.MouseEvent<HTMLElement>) => {
-    setSubmenuAnchors(prev => ({
+  const handleSubmenuOpen = (
+    key: string,
+    event: React.MouseEvent<HTMLElement>
+  ) => {
+    setSubmenuAnchors((prev) => ({
       ...prev,
       [key]: event.currentTarget,
     }));
   };
 
   const handleSubmenuClose = (key: string) => {
-    setSubmenuAnchors(prev => ({
+    setSubmenuAnchors((prev) => ({
       ...prev,
       [key]: null,
     }));
@@ -214,22 +225,26 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
   const handleSubmenuItemClick = (url: string, menuName: string) => {
     // Remove hash and navigate
-    const cleanUrl = url.replace('/healthinv/#', '');
+    const cleanUrl = url.replace("/healthinv/#", "");
     navigate(cleanUrl);
     handleMenuClose(menuName);
   };
 
-  const userInitials = userName.split(' ').map(n => n[0]).join('').toUpperCase();
+  const userInitials = userName
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase();
 
   return (
     <>
       <AppBar
         position="fixed"
         sx={{
-          background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+          background: "linear-gradient(135deg, #667EEA 0%, #764BA2 100%)",
+          boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
           zIndex: theme.zIndex.drawer + 1,
-          borderRadius: '0',
+          borderRadius: "0",
         }}
       >
         <Toolbar sx={{ px: { xs: 2, sm: 3 } }}>
@@ -238,30 +253,36 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
             color="inherit"
             edge="start"
             onClick={onMenuClick}
-            sx={{ mr: 2, display: { md: 'none' } }}
+            sx={{ mr: 2, display: { md: "none" } }}
           >
             <MenuIcon />
           </IconButton>
 
           {/* Logo */}
-          <Box sx={{ display: 'flex', alignItems: 'center', mr: 4 }}>
-            <img src="/logo.png" alt="logo" style={{ height: "40px" }} />
+          <Box sx={{ display: "flex", alignItems: "center", mr: 4 }}>
+            <img
+              src="/investigation/logo.png"
+              alt="logo"
+              style={{ height: "40px" }}
+            />
           </Box>
 
           {/* Navigation Menu */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: 1 }}>
+          <Box
+            sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, gap: 1 }}
+          >
             {/* Dashboard */}
             <Button
               color="inherit"
               startIcon={<HomeIcon />}
-              onClick={() => navigate('/admin/dashboard')}
+              onClick={() => navigate("/admin/dashboard")}
               sx={{
-                color: 'white',
+                color: "white",
                 fontWeight: 600,
-                textTransform: 'none',
+                textTransform: "none",
                 px: 2,
-                '&:hover': {
-                  bgcolor: 'rgba(255,255,255,0.1)',
+                "&:hover": {
+                  bgcolor: "rgba(255,255,255,0.1)",
                 },
               }}
             >
@@ -270,18 +291,18 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
 
             {/* Dynamic Menus */}
             {menus.map((menu: any) => (
-              <Box key={menu.menuName} sx={{ position: 'relative' }}>
+              <Box key={menu.menuName} sx={{ position: "relative" }}>
                 <Button
                   color="inherit"
                   endIcon={<ExpandMoreIcon />}
                   onClick={(e) => handleMenuClick(menu.menuName, e)}
                   sx={{
-                    color: 'white',
+                    color: "white",
                     fontWeight: 600,
-                    textTransform: 'none',
+                    textTransform: "none",
                     px: 2,
-                    '&:hover': {
-                      bgcolor: 'rgba(255,255,255,0.1)',
+                    "&:hover": {
+                      bgcolor: "rgba(255,255,255,0.1)",
                     },
                   }}
                 >
@@ -297,7 +318,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
                       mt: 1,
                       minWidth: 200,
                       borderRadius: 2,
-                      boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
                     },
                   }}
                 >
@@ -309,12 +330,17 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
                         {child.subMenu && child.subMenu.length > 0 ? (
                           <>
                             <MenuItem
-                              onMouseEnter={(e) => handleSubmenuOpen(submenuKey, e)}
+                              onMouseEnter={(e) =>
+                                handleSubmenuOpen(submenuKey, e)
+                              }
                               sx={{
-                                '&:hover': {
-                                  bgcolor: alpha(theme.palette.primary.main, 0.1),
+                                "&:hover": {
+                                  bgcolor: alpha(
+                                    theme.palette.primary.main,
+                                    0.1
+                                  ),
                                 },
-                                justifyContent: 'space-between',
+                                justifyContent: "space-between",
                               }}
                             >
                               <ListItemText primary={child.childMenuName} />
@@ -327,31 +353,40 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
                               open={Boolean(submenuAnchors[submenuKey])}
                               onClose={() => handleSubmenuClose(submenuKey)}
                               anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
+                                vertical: "top",
+                                horizontal: "right",
                               }}
                               transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
+                                vertical: "top",
+                                horizontal: "left",
                               }}
                               PaperProps={{
                                 sx: {
                                   ml: 0.5,
                                   minWidth: 180,
                                   borderRadius: 2,
-                                  boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+                                  boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
                                 },
-                                onMouseLeave: () => handleSubmenuClose(submenuKey),
+                                onMouseLeave: () =>
+                                  handleSubmenuClose(submenuKey),
                               }}
                             >
                               {child.subMenu.map((sub: any) => (
                                 <MenuItem
                                   key={sub.submenuName}
-                                  onClick={() => handleSubmenuItemClick(sub.submenuUrl, menu.menuName)}
+                                  onClick={() =>
+                                    handleSubmenuItemClick(
+                                      sub.submenuUrl,
+                                      menu.menuName
+                                    )
+                                  }
                                   sx={{
-                                    fontSize: '0.875rem',
-                                    '&:hover': {
-                                      bgcolor: alpha(theme.palette.primary.main, 0.1),
+                                    fontSize: "0.875rem",
+                                    "&:hover": {
+                                      bgcolor: alpha(
+                                        theme.palette.primary.main,
+                                        0.1
+                                      ),
                                     },
                                   }}
                                 >
@@ -366,7 +401,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
                               handleMenuClose(menu.menuName);
                             }}
                             sx={{
-                              '&:hover': {
+                              "&:hover": {
                                 bgcolor: alpha(theme.palette.primary.main, 0.1),
                               },
                             }}
@@ -383,16 +418,16 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
           </Box>
 
           {/* Right Side Actions */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             {/* Search Button */}
             <Tooltip title="Search">
               <IconButton
                 color="inherit"
                 onClick={() => setSearchDialogOpen(true)}
                 sx={{
-                  color: 'white',
-                  '&:hover': {
-                    bgcolor: 'rgba(255,255,255,0.1)',
+                  color: "white",
+                  "&:hover": {
+                    bgcolor: "rgba(255,255,255,0.1)",
                   },
                 }}
               >
@@ -406,9 +441,9 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
                 color="inherit"
                 onClick={(e) => setNotificationAnchor(e.currentTarget)}
                 sx={{
-                  color: 'white',
-                  '&:hover': {
-                    bgcolor: 'rgba(255,255,255,0.1)',
+                  color: "white",
+                  "&:hover": {
+                    bgcolor: "rgba(255,255,255,0.1)",
                   },
                 }}
               >
@@ -428,10 +463,10 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
                   sx={{
                     width: 40,
                     height: 40,
-                    bgcolor: 'white',
-                    color: 'primary.main',
+                    bgcolor: "white",
+                    color: "primary.main",
                     fontWeight: 700,
-                    border: '2px solid rgba(255,255,255,0.3)',
+                    border: "2px solid rgba(255,255,255,0.3)",
                   }}
                 >
                   {userInitials}
@@ -447,14 +482,14 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
         anchorEl={profileAnchor}
         open={Boolean(profileAnchor)}
         onClose={() => setProfileAnchor(null)}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         PaperProps={{
           sx: {
             mt: 1.5,
             minWidth: 280,
             borderRadius: 2,
-            boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+            boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
           },
         }}
       >
@@ -462,19 +497,19 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
           sx={{
             px: 2,
             py: 2,
-            background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
-            color: 'white',
+            background: "linear-gradient(135deg, #667EEA 0%, #764BA2 100%)",
+            color: "white",
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
             <Avatar
               sx={{
                 width: 56,
                 height: 56,
-                bgcolor: 'rgba(255,255,255,0.2)',
-                backdropFilter: 'blur(10px)',
+                bgcolor: "rgba(255,255,255,0.2)",
+                backdropFilter: "blur(10px)",
                 fontWeight: 700,
-                fontSize: '1.5rem',
+                fontSize: "1.5rem",
               }}
             >
               {userInitials}
@@ -521,15 +556,15 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
         anchorEl={notificationAnchor}
         open={Boolean(notificationAnchor)}
         onClose={() => setNotificationAnchor(null)}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         PaperProps={{
           sx: {
             mt: 1.5,
             width: 360,
-            maxWidth: '100%',
+            maxWidth: "100%",
             borderRadius: 2,
-            boxShadow: '0 8px 24px rgba(0,0,0,0.12)',
+            boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
           },
         }}
       >
@@ -539,7 +574,7 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
           </Typography>
         </Box>
         <Divider />
-        <Box sx={{ maxHeight: 400, overflow: 'auto' }}>
+        <Box sx={{ maxHeight: 400, overflow: "auto" }}>
           <MenuItem>
             <Box sx={{ py: 1 }}>
               <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
@@ -548,7 +583,12 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
               <Typography variant="caption" color="text.secondary">
                 Case #12345 has been assigned to you
               </Typography>
-              <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 0.5 }}>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                display="block"
+                sx={{ mt: 0.5 }}
+              >
                 2 hours ago
               </Typography>
             </Box>
@@ -562,7 +602,12 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
               <Typography variant="caption" color="text.secondary">
                 Your investigation report has been approved
               </Typography>
-              <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 0.5 }}>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                display="block"
+                sx={{ mt: 0.5 }}
+              >
                 5 hours ago
               </Typography>
             </Box>
@@ -630,18 +675,30 @@ const ModernHeader: React.FC<HeaderProps> = ({ onMenuClick }) => {
                 setShowResults(false);
               }}
             >
-              {(roleName === 'Super Admin' ||
-                roleName === 'Central Manager' ||
-                roleName === 'Regional Manager') && (
-                  <FormControlLabel
-                    value="policyholder"
-                    control={<Radio />}
-                    label="Policyholder Search"
-                  />
-                )}
-              <FormControlLabel value="provider" control={<Radio />} label="Provider Search" />
-              <FormControlLabel value="corporate" control={<Radio />} label="Corporate Search" />
-              <FormControlLabel value="global" control={<Radio />} label="Claim Search" />
+              {(roleName === "Super Admin" ||
+                roleName === "Central Manager" ||
+                roleName === "Regional Manager") && (
+                <FormControlLabel
+                  value="policyholder"
+                  control={<Radio />}
+                  label="Policyholder Search"
+                />
+              )}
+              <FormControlLabel
+                value="provider"
+                control={<Radio />}
+                label="Provider Search"
+              />
+              <FormControlLabel
+                value="corporate"
+                control={<Radio />}
+                label="Corporate Search"
+              />
+              <FormControlLabel
+                value="global"
+                control={<Radio />}
+                label="Claim Search"
+              />
             </RadioGroup>
 
             {searchType && (
