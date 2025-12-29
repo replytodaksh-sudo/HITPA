@@ -1,5 +1,9 @@
+// ===========================
+// CENTRAL INVESTIGATION COMPLETED CASHLESS - MODERN DATAGRID
+// ===========================
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Card,
@@ -9,17 +13,24 @@ import {
   Chip,
   IconButton,
   Tooltip,
+  TextField,
+  Button,
+  Grid,
   alpha,
   useTheme,
 } from '@mui/material';
 import {
   Visibility as ViewIcon,
+  Search as SearchIcon,
+  Refresh as RefreshIcon,
 } from '@mui/icons-material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import type { GridColDef } from '@mui/x-data-grid';
-import { useNavigate } from 'react-router-dom';
 import { claimsService } from '../../../services/claims.service';
 
+// ===========================
+// INTERFACES
+// ===========================
 interface Claim {
   investigationID: string;
   sbigClaimNo: string;
@@ -36,31 +47,42 @@ interface Claim {
   patientName: string;
   memberAge: number;
   finalDiagnosis: string;
-  dateOfIntimetion: string;
+  claimIntimationDate: string;
   admissionDate: string;
   dischargeDate: string;
   workflowStatus: string;
-  acceptAssignId?: string;
 }
 
-const CompletedCaseNotInvestigatedReim: React.FC = () => {
+// ===========================
+// MAIN COMPONENT
+// ===========================
+const CompletedInvestigationCompletedReim: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  
+
+  // ===========================
+  // STATE
+  // ===========================
   const [claims, setClaims] = useState<Claim[]>([]);
   const [loading, setLoading] = useState(true);
-  const [paginationModel, setPaginationModel] = useState({ pageSize: 50, page: 0 });
+  const [pageSize, setPageSize] = useState(50);
 
+  // ===========================
+  // LOAD DATA ON MOUNT
+  // ===========================
   useEffect(() => {
     fetchClaims();
   }, []);
 
+  // ===========================
+  // FETCH CLAIMS
+  // ===========================
   const fetchClaims = async () => {
     setLoading(true);
     try {
-      const response = await claimsService.getNotCompletedCasesRegionalReim();
-      if (response.statusCode === 0) {
-        setClaims(response.payload);
+      const data = await claimsService.getCompletedRegionalReim();
+      if (data.statusCode === 0) {
+        setClaims(data.payload);
       }
     } catch (error) {
       console.error('Failed to fetch claims:', error);
@@ -69,16 +91,33 @@ const CompletedCaseNotInvestigatedReim: React.FC = () => {
     }
   };
 
+
+  // ===========================
+  // NAVIGATION HANDLER
+  // ===========================
   const handleViewClick = (investigationID: string, claim: Claim) => {
-    navigate(`/admin/regional-case-not-inv-form/${investigationID}?redirectTo=${location.pathname}&claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`)
+    navigate(`/admin/regional-completed-form/${investigationID}?claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`)
+    // navigate(`/admin/central-completed-form/${investigationID}`, {
+    //   state: {
+    //     claimsType: 'cashless',
+    //     claimNo: claim.tpaClaimNo,
+    //     sbigclaimno: claim.sbigClaimNo
+    //   }
+    // });
   };
 
+  // ===========================
+  // TAT COLOR HELPER
+  // ===========================
   const getTatColor = (tat: number): string => {
     if (tat <= 3) return theme.palette.success.main;
     if (tat <= 7) return theme.palette.warning.main;
     return theme.palette.error.main;
   };
 
+  // ===========================
+  // DATAGRID COLUMNS
+  // ===========================
   const columns: GridColDef[] = [
     {
       field: 'investigationID',
@@ -147,7 +186,7 @@ const CompletedCaseNotInvestigatedReim: React.FC = () => {
       field: 'tat',
       headerName: 'TAT',
       width: 100,
-      renderCell: (params: any) => (
+      renderCell: (params) => (
         <Chip
           label={params.value}
           size="small"
@@ -177,7 +216,8 @@ const CompletedCaseNotInvestigatedReim: React.FC = () => {
         return new Intl.NumberFormat('en-IN', {
           style: 'currency',
           currency: 'INR',
-        }).format(params.value ?? 0);
+          maximumFractionDigits: 0,
+        }).format(params.value || 0);
       },
     },
     {
@@ -196,7 +236,7 @@ const CompletedCaseNotInvestigatedReim: React.FC = () => {
       width: 200,
     },
     {
-      field: 'dateOfIntimetion',
+      field: 'claimIntimationDate',
       headerName: 'Date of Intimation',
       width: 150,
       valueFormatter: (params: any) => {
@@ -230,13 +270,13 @@ const CompletedCaseNotInvestigatedReim: React.FC = () => {
     },
     {
       field: 'workflowStatus',
-      headerName: 'Workflow Status',
+      headerName: 'Status',
       width: 150,
       renderCell: (params) => (
         <Chip
           label={params.value}
           size="small"
-          color="secondary"
+          color="primary"
           variant="outlined"
         />
       ),
@@ -251,7 +291,7 @@ const CompletedCaseNotInvestigatedReim: React.FC = () => {
         <Tooltip title="View Details">
           <IconButton
             size="small"
-            color="secondary"
+            color="primary"
             onClick={() => handleViewClick(params.row.investigationID, params.row)}
           >
             <ViewIcon />
@@ -261,19 +301,25 @@ const CompletedCaseNotInvestigatedReim: React.FC = () => {
     },
   ];
 
+  // ===========================
+  // LOADING STATE
+  // ===========================
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 8 }}>
         <Box sx={{ textAlign: 'center' }}>
           <CircularProgress size={60} thickness={4} />
           <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-            Loading reimbursement cases...
+            Loading completed cashless cases...
           </Typography>
         </Box>
       </Box>
     );
   }
 
+  // ===========================
+  // RENDER
+  // ===========================
   return (
     <Box>
       {/* Summary Cards */}
@@ -283,7 +329,7 @@ const CompletedCaseNotInvestigatedReim: React.FC = () => {
             <Typography variant="body2" color="text.secondary" gutterBottom>
               Total Cases
             </Typography>
-            <Typography variant="h4" sx={{ fontWeight: 800, color: 'secondary.main' }}>
+            <Typography variant="h4" sx={{ fontWeight: 800, color: 'primary.main' }}>
               {claims.length}
             </Typography>
           </CardContent>
@@ -311,7 +357,7 @@ const CompletedCaseNotInvestigatedReim: React.FC = () => {
             </Typography>
             <Typography variant="h4" sx={{ fontWeight: 800, color: 'warning.main' }}>
               {claims.length > 0
-                ? (claims.reduce((sum, claim) => sum + claim.tat, 0) / claims.length).toFixed(1)
+                ? (claims.reduce((sum, claim) => sum + (claim.tat || 0), 0) / claims.length).toFixed(1)
                 : 0}{' '}
               days
             </Typography>
@@ -319,26 +365,17 @@ const CompletedCaseNotInvestigatedReim: React.FC = () => {
         </Card>
       </Box>
 
-      {/* Data Grid */}
+      {/* DataGrid */}
       <Card sx={{ height: 700 }}>
         <DataGrid
           rows={claims}
           columns={columns}
-          paginationModel={paginationModel}
-          onPaginationModelChange={setPaginationModel}
+          pagination
+          paginationModel={{ page: 0, pageSize }}
+          onPaginationModelChange={(model: any) => setPageSize(model.pageSize ?? pageSize)}
           pageSizeOptions={[25, 50, 100]}
           checkboxSelection
-        //   disableSelectionOnClick
           getRowId={(row) => row.investigationID}
-          slots={{
-            toolbar: GridToolbar,
-          }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-            },
-          }}
           sx={{
             border: 'none',
             '& .MuiDataGrid-cell': {
@@ -355,11 +392,11 @@ const CompletedCaseNotInvestigatedReim: React.FC = () => {
               fontWeight: 700,
             },
             '& .MuiDataGrid-row:hover': {
-              bgcolor: alpha(theme.palette.secondary.main, 0.05),
+              bgcolor: alpha(theme.palette.primary.main, 0.05),
             },
             '& .MuiDataGrid-footerContainer': {
               borderTop: `2px solid ${theme.palette.divider}`,
-              bgcolor: alpha(theme.palette.secondary.main, 0.02),
+              bgcolor: alpha(theme.palette.primary.main, 0.02),
             },
           }}
         />
@@ -368,4 +405,4 @@ const CompletedCaseNotInvestigatedReim: React.FC = () => {
   );
 };
 
-export default CompletedCaseNotInvestigatedReim;
+export default CompletedInvestigationCompletedReim;

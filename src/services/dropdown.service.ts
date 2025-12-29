@@ -590,7 +590,7 @@ export class DropdownService {
 
 static async getRecomendation(): Promise<DropdownResponse<PrimaryDiscrepancy[]>> {
     try {
-      const response = await apiService.get(apiUrls.fetchDenyClaim);
+      const response = await apiService.get(apiUrls.recomendationDropdown);
       return response;
     } catch (error) {
       console.error('Error in getAllPrimaryDiscrepancy:', error);
@@ -599,7 +599,7 @@ static async getRecomendation(): Promise<DropdownResponse<PrimaryDiscrepancy[]>>
   }
   static async getFraudClaimEvedance(): Promise<DropdownResponse<PrimaryDiscrepancy[]>> {
     try {
-      const response = await apiService.get(apiUrls.fetchDenyClaim);
+      const response = await apiService.get(apiUrls.froudClaimEvidences);
       return response;
     } catch (error) {
       console.error('Error in getAllPrimaryDiscrepancy:', error);

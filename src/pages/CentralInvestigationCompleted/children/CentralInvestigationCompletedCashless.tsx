@@ -1,42 +1,32 @@
-// ===========================
-// CENTRAL INVESTIGATION COMPLETED CASHLESS - MODERN DATAGRID
-// ===========================
-
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Card,
   CardContent,
-  Typography,
-  CircularProgress,
-  Chip,
-  IconButton,
-  Tooltip,
   TextField,
   Button,
   Grid,
-  alpha,
-  useTheme,
+  IconButton,
+  Tooltip,
+  Typography,
+  Chip,
 } from '@mui/material';
+import type { GridColDef, GridRowParams } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import {
   Visibility as ViewIcon,
   Search as SearchIcon,
   Refresh as RefreshIcon,
 } from '@mui/icons-material';
-import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import type { GridColDef } from '@mui/x-data-grid';
-import { claimsService } from '../../../services/claims.service';
+import { useNavigate } from 'react-router-dom';
+import claimsService from '../../../services/claims.service';
 
-// ===========================
-// INTERFACES
-// ===========================
+// ==================== INTERFACES ====================
 interface Claim {
   investigationID: string;
   sbigClaimNo: string;
   tpaClaimNo: string;
   tpaName: string;
-  proposerName: string;
   policyCode: string;
   policyStartDate: string;
   hospitalName: string;
@@ -44,100 +34,129 @@ interface Claim {
   hospitalCity: string;
   hospitalState: string;
   claimAmount: number;
-  patientName: string;
+  proposerName: string;
+  memberName: string;
   memberAge: number;
   finalDiagnosis: string;
-  claimIntimationDate: string;
   admissionDate: string;
   dischargeDate: string;
+  claimIntimationDate: string;
   workflowStatus: string;
 }
 
-// ===========================
-// MAIN COMPONENT
-// ===========================
-const CompletedInvestigationCompletedCashless: React.FC = () => {
-  const theme = useTheme();
+const CentralInvestigationCompletedCashless: React.FC = () => {
   const navigate = useNavigate();
-
-  // ===========================
-  // STATE
-  // ===========================
+  
   const [claims, setClaims] = useState<Claim[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [pageSize, setPageSize] = useState(50);
+  const [loading, setLoading] = useState(false);
+  const [claimNo, setClaimNo] = useState('');
+  const [totalCount, setTotalCount] = useState(0);
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 50,
+  });
 
-  // ===========================
-  // LOAD DATA ON MOUNT
-  // ===========================
+  // Fetch total count on mount
   useEffect(() => {
-    fetchClaims();
+    fetchTotalCount();
   }, []);
 
-  // ===========================
-  // FETCH CLAIMS
-  // ===========================
-  const fetchClaims = async () => {
-    setLoading(true);
+  // Fetch data on mount and pagination change
+  useEffect(() => {
+    fetchClaims(paginationModel.page + 1, paginationModel.pageSize);
+  }, [paginationModel]);
+
+  // Fetch total count
+  const fetchTotalCount = async () => {
     try {
-      const data = await claimsService.getCompletedRegional();
-      if (data.statusCode === 0) {
-        setClaims(data.payload);
+      const response = await claimsService.getAllCentralInvestigationTotalCompletedReClaims();
+      if (response.statusCode === 0) {
+        setTotalCount(response.payload || 0);
       }
     } catch (error) {
-      console.error('Failed to fetch claims:', error);
+      console.error('Error fetching total count:', error);
+    }
+  };
+
+  // Fetch claims by page
+  const fetchClaims = async (pageNo: number, pageSize: number) => {
+    setLoading(true);
+    try {
+      const response = await claimsService.getAllCentralInvestigationCompletedByPageReClaims(
+        pageNo,
+        pageSize
+      );
+      
+      if (response.statusCode === 0) {
+        setClaims(response.payload || []);
+      }
+    } catch (error) {
+      console.error('Error fetching claims:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  // ===========================
-  // NAVIGATION HANDLER
-  // ===========================
-  const handleViewClick = (investigationID: string, claim: Claim) => {
-    navigate(`/admin/regional-completed-form/${investigationID}?claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`)
-    // navigate(`/admin/central-completed-form/${investigationID}`, {
-    //   state: {
-    //     claimsType: 'cashless',
-    //     claimNo: claim.tpaClaimNo,
-    //     sbigclaimno: claim.sbigClaimNo
-    //   }
-    // });
+  // Handle search
+  const handleSearch = async () => {
+    if (!claimNo.trim()) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await claimsService.getAllCentralInvestigationCompletedBySearchReClaims(
+        claimNo
+      );
+      
+      if (response.statusCode === 0) {
+        setClaims(response.payload || []);
+      }
+    } catch (error) {
+      console.error('Error searching claims:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // ===========================
-  // TAT COLOR HELPER
-  // ===========================
-  const getTatColor = (tat: number): string => {
-    if (tat <= 3) return theme.palette.success.main;
-    if (tat <= 7) return theme.palette.warning.main;
-    return theme.palette.error.main;
+  // Handle reset
+  const handleReset = () => {
+    setClaimNo('');
+    fetchClaims(1, paginationModel.pageSize);
   };
 
-  // ===========================
-  // DATAGRID COLUMNS
-  // ===========================
+  // Handle row click
+  const handleRowClick = (params: GridRowParams) => {
+    const claim = params.row as Claim;
+    navigate(
+      `/admin/central-completed-form/${claim.investigationID}?claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`
+    );
+  };
+
+  // Handle Enter key in search
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  // Define columns
   const columns: GridColDef[] = [
     {
       field: 'investigationID',
       headerName: 'Investigation No',
-      width: 150,
+      width: 180,
       renderCell: (params) => (
-        <Tooltip title="Click to view details">
-          <Box
-            onClick={() => handleViewClick(params.value, params.row)}
-            sx={{
-              color: 'primary.main',
-              cursor: 'pointer',
-              fontWeight: 600,
-              '&:hover': {
-                textDecoration: 'underline',
-              },
-            }}
-          >
-            {params.value}
-          </Box>
-        </Tooltip>
+        <Box
+          sx={{
+            color: 'primary.main',
+            fontWeight: 600,
+            cursor: 'pointer',
+            '&:hover': { textDecoration: 'underline' },
+          }}
+        >
+          {params.value}
+        </Box>
       ),
     },
     {
@@ -153,12 +172,13 @@ const CompletedInvestigationCompletedCashless: React.FC = () => {
     {
       field: 'tpaName',
       headerName: 'TPA Name',
-      width: 180,
+      width: 150,
     },
     {
-      field: 'proposerName',
-      headerName: 'Proposer Name',
-      width: 180,
+      field: 'corporateName',
+      headerName: 'Corporate Name (only if GMC)',
+      width: 200,
+      renderCell: () => <Typography variant="body2">-</Typography>,
     },
     {
       field: 'policyCode',
@@ -169,12 +189,6 @@ const CompletedInvestigationCompletedCashless: React.FC = () => {
       field: 'policyStartDate',
       headerName: 'Policy Start Date',
       width: 150,
-      valueFormatter: (params: any) => {
-        if (params.value) {
-          return new Date(params.value).toLocaleDateString();
-        }
-        return '';
-      },
     },
     {
       field: 'hospitalName',
@@ -185,17 +199,6 @@ const CompletedInvestigationCompletedCashless: React.FC = () => {
       field: 'tat',
       headerName: 'TAT',
       width: 100,
-      renderCell: (params) => (
-        <Chip
-          label={params.value}
-          size="small"
-          sx={{
-            bgcolor: alpha(getTatColor(params.value), 0.1),
-            color: getTatColor(params.value),
-            fontWeight: 700,
-          }}
-        />
-      ),
     },
     {
       field: 'hospitalCity',
@@ -210,17 +213,20 @@ const CompletedInvestigationCompletedCashless: React.FC = () => {
     {
       field: 'claimAmount',
       headerName: 'Claim Amount',
-      width: 130,
-      valueFormatter: (params: any) => {
-        return new Intl.NumberFormat('en-IN', {
-          style: 'currency',
-          currency: 'INR',
-          maximumFractionDigits: 0,
-        }).format(params.value || 0);
-      },
+      width: 140,
+      renderCell: (params) => (
+        <Typography variant="body2" fontWeight={600}>
+          ₹{params.value?.toLocaleString('en-IN')}
+        </Typography>
+      ),
     },
     {
-      field: 'patientName',
+      field: 'proposerName',
+      headerName: 'Proposer Name',
+      width: 180,
+    },
+    {
+      field: 'memberName',
       headerName: 'Patient Name',
       width: 180,
     },
@@ -235,37 +241,19 @@ const CompletedInvestigationCompletedCashless: React.FC = () => {
       width: 200,
     },
     {
-      field: 'claimIntimationDate',
-      headerName: 'Date of Intimation',
-      width: 150,
-      valueFormatter: (params: any) => {
-        if (params.value) {
-          return new Date(params.value).toLocaleDateString();
-        }
-        return '';
-      },
-    },
-    {
       field: 'admissionDate',
       headerName: 'DOA',
-      width: 120,
-      valueFormatter: (params: any) => {
-        if (params.value) {
-          return new Date(params.value).toLocaleDateString();
-        }
-        return '';
-      },
+      width: 130,
     },
     {
       field: 'dischargeDate',
-      headerName: 'Expected Discharge',
-      width: 150,
-      valueFormatter: (params: any) => {
-        if (params.value) {
-          return new Date(params.value).toLocaleDateString();
-        }
-        return '';
-      },
+      headerName: 'DOD',
+      width: 130,
+    },
+    {
+      field: 'claimIntimationDate',
+      headerName: 'DOI',
+      width: 130,
     },
     {
       field: 'workflowStatus',
@@ -275,7 +263,7 @@ const CompletedInvestigationCompletedCashless: React.FC = () => {
         <Chip
           label={params.value}
           size="small"
-          color="primary"
+          color="secondary"
           variant="outlined"
         />
       ),
@@ -286,12 +274,15 @@ const CompletedInvestigationCompletedCashless: React.FC = () => {
       width: 100,
       sortable: false,
       filterable: false,
-      renderCell: (params) => (
+      renderCell: (params:any) => (
         <Tooltip title="View Details">
           <IconButton
             size="small"
             color="primary"
-            onClick={() => handleViewClick(params.row.investigationID, params.row)}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleRowClick(params);
+            }}
           >
             <ViewIcon />
           </IconButton>
@@ -300,108 +291,97 @@ const CompletedInvestigationCompletedCashless: React.FC = () => {
     },
   ];
 
-  // ===========================
-  // LOADING STATE
-  // ===========================
-  if (loading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 8 }}>
-        <Box sx={{ textAlign: 'center' }}>
-          <CircularProgress size={60} thickness={4} />
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-            Loading completed cashless cases...
-          </Typography>
-        </Box>
-      </Box>
-    );
-  }
-
-  // ===========================
-  // RENDER
-  // ===========================
   return (
     <Box>
-      {/* Summary Cards */}
-      <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
-        <Card sx={{ flex: 1 }}>
-          <CardContent>
-            <Typography variant="body2" color="text.secondary" gutterBottom>
-              Total Cases
-            </Typography>
-            <Typography variant="h4" sx={{ fontWeight: 800, color: 'primary.main' }}>
-              {claims.length}
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card sx={{ flex: 1 }}>
-          <CardContent>
-            <Typography variant="body2" color="text.secondary" gutterBottom>
-              Total Claim Amount
-            </Typography>
-            <Typography variant="h4" sx={{ fontWeight: 800, color: 'success.main' }}>
-              {new Intl.NumberFormat('en-IN', {
-                style: 'currency',
-                currency: 'INR',
-                maximumFractionDigits: 0,
-              }).format(
-                claims.reduce((sum, claim) => sum + (claim.claimAmount || 0), 0)
-              )}
-            </Typography>
-          </CardContent>
-        </Card>
-        <Card sx={{ flex: 1 }}>
-          <CardContent>
-            <Typography variant="body2" color="text.secondary" gutterBottom>
-              Avg TAT
-            </Typography>
-            <Typography variant="h4" sx={{ fontWeight: 800, color: 'warning.main' }}>
-              {claims.length > 0
-                ? (claims.reduce((sum, claim) => sum + (claim.tat || 0), 0) / claims.length).toFixed(1)
-                : 0}{' '}
-              days
-            </Typography>
-          </CardContent>
-        </Card>
-      </Box>
+      {/* Search Section */}
+      <Card sx={{ mb: 3 }}>
+        <CardContent>
+          <Grid container spacing={2} alignItems="flex-end">
+            <Grid size={{ xs: 12, sm: 8, md:6 }}>
+              <TextField
+                fullWidth
+                label="Claim No."
+                placeholder="Enter Claim No."
+                value={claimNo}
+                onChange={(e) => setClaimNo(e.target.value)}
+                onKeyPress={handleKeyPress}
+                variant="outlined"
+                size="small"
+                autoComplete="off"
+              />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 4, md:2 }}>
+              <Button
+                fullWidth
+                variant="contained"
+                startIcon={<SearchIcon />}
+                onClick={handleSearch}
+                disabled={loading || !claimNo.trim()}
+                sx={{
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%)',
+                  },
+                }}
+              >
+                Search
+              </Button>
+            </Grid>
+            <Grid size={{ xs: 12, sm: 4, md:2 }}>
+              <Button
+                fullWidth
+                variant="outlined"
+                startIcon={<RefreshIcon />}
+                onClick={handleReset}
+                disabled={loading}
+              >
+                Reset
+              </Button>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
 
       {/* DataGrid */}
-      <Card sx={{ height: 700 }}>
+      <Card elevation={2}>
         <DataGrid
           rows={claims}
           columns={columns}
-          pagination
-          paginationModel={{ page: 0, pageSize }}
-          onPaginationModelChange={(model: any) => setPageSize(model.pageSize ?? pageSize)}
-          pageSizeOptions={[25, 50, 100]}
-          checkboxSelection
           getRowId={(row) => row.investigationID}
+          loading={loading}
+          pagination
+          paginationMode="server"
+          rowCount={totalCount}
+          paginationModel={paginationModel}
+          onPaginationModelChange={setPaginationModel}
+          pageSizeOptions={[25, 50, 100]}
+          onRowClick={handleRowClick}
           sx={{
-            border: 'none',
+            minHeight: 500,
+            '& .MuiDataGrid-row': {
+              cursor: 'pointer',
+              '&:hover': {
+                backgroundColor: 'action.hover',
+              },
+            },
             '& .MuiDataGrid-cell': {
-              borderColor: theme.palette.divider,
+              borderRight: '1px solid',
+              borderColor: 'divider',
             },
             '& .MuiDataGrid-columnHeaders': {
-              background: 'linear-gradient(135deg, #FFA726 0%, #FF7043 100%)',
-              color: '#7a7a7a',
-              fontSize: '0.875rem',
-              fontWeight: 700,
-              borderRadius: 0,
-            },
-            '& .MuiDataGrid-columnHeaderTitle': {
-              fontWeight: 700,
-            },
-            '& .MuiDataGrid-row:hover': {
-              bgcolor: alpha(theme.palette.primary.main, 0.05),
-            },
-            '& .MuiDataGrid-footerContainer': {
-              borderTop: `2px solid ${theme.palette.divider}`,
-              bgcolor: alpha(theme.palette.primary.main, 0.02),
+              backgroundColor: '#6F62C2',
+              color: 'white',
+              fontWeight: 600,
+              '& .MuiDataGrid-columnHeaderTitle': {
+                fontWeight: 600,
+              },
             },
           }}
+          disableRowSelectionOnClick
         />
       </Card>
     </Box>
   );
 };
 
-export default CompletedInvestigationCompletedCashless;
+export default CentralInvestigationCompletedCashless;

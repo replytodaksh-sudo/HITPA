@@ -25,7 +25,6 @@ import FieldReassignedCases from '../pages/FieldReassignedCases/fieldReassignedC
 import FieldReworkCases from '../pages/FieldReworkCases/FieldReworkCases';
 import FieldAssignedToAgency from '../pages/FieldAssignedToAgency/FieldAssignedToAgency';
 import CompletedCaseNotInvestigated from '../pages/CompletedCaseNotInvestigated/CompletedCaseNotInvestigated';
-import CompletedInvestigationCompleted from '../pages/CentralInvestigationCompleted/CentralInvestigationCompleted';
 import QCPendingForms from '../pages/QCPendingForms/QCPendingForms';
 import CentralMandatedTabs from '../pages/CentralMandatedCasesTabs/CentralMandatedCasesTabs';
 import AgencySelfDeniedTabs from '../pages/AgencySelfDeniedTabs/AgencySelfDeniedTabs';
@@ -63,6 +62,8 @@ import CentralQueryResponse from '../pages/CentralQueryResponse/CentralQueryResp
 import CentralQCPending from '../pages/CentralQCPending/CentralQCPending';
 import QueriesByClaimsTeam from '../pages/QueriesByClaimsTeam/QueriesByClaimsTeam';
 import CentralQCForm from '../pages/CentralQCForm/CentralQCForm';
+import CompletedInvestigationCompleted from "../pages/CompletedInvestigationCompleted/CompletedInvestigationCompleted";
+import CentralInvestigationCompleted from "../pages/CentralInvestigationCompleted/CentralInvestigationCompleted";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -181,14 +182,14 @@ const AppRoutes: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        {/* <Route
-                path="centralInvestigationCompleted"
-                element={
-                    <ProtectedRoute>
-                        <CentralInvestigationCompleted />
-                    </ProtectedRoute>
-                }
-            /> */}
+        <Route
+          path="centralInvestigationCompleted"
+          element={
+            <ProtectedRoute>
+              <CentralInvestigationCompleted />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Protected Routes - Management */}
         <Route
@@ -456,298 +457,288 @@ const AppRoutes: React.FC = () => {
           }
         />
 
-                {/* Protected Routes - QC */}
-                <Route
-                    path="qcRegPendingFromCentral"
-                    element={
-                        <ProtectedRoute>
-                            <RegQCPendingCentral />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="qcRegQCPending"
-                    element={
-                        <ProtectedRoute>
-                            <RegQcPending />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="qcRegCentralQuery"
-                    element={
-                        <ProtectedRoute>
-                            <RegCentralQuery />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agencyQCPending"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyQCPending />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agencyQCPending"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyQCPending />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agencyQCPending"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyQCPending />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agencyQCPending"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyQCPending />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="CentralQueryResponsePending"
-                    element={
-                        <ProtectedRoute>
-                            <CentralQueryResponsePending />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="centralQueryResponse"
-                    element={
-                        <ProtectedRoute>
-                            <CentralQueryResponse />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="centralQCPending"
-                    element={
-                        <ProtectedRoute>
-                            <CentralQCPending />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="queriesByClaimsTeam"
-                    element={
-                        <ProtectedRoute>
-                            <QueriesByClaimsTeam />
-                        </ProtectedRoute>
-                    }
-                />
+        {/* Protected Routes - QC */}
+        <Route
+          path="qcRegPendingFromCentral"
+          element={
+            <ProtectedRoute>
+              <RegQCPendingCentral />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="qcRegQCPending"
+          element={
+            <ProtectedRoute>
+              <RegQcPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="qcRegCentralQuery"
+          element={
+            <ProtectedRoute>
+              <RegCentralQuery />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="CentralQueryResponsePending"
+          element={
+            <ProtectedRoute>
+              <CentralQueryResponsePending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="centralQueryResponse"
+          element={
+            <ProtectedRoute>
+              <CentralQueryResponse />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="centralQCPending"
+          element={
+            <ProtectedRoute>
+              <CentralQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="queriesByClaimsTeam"
+          element={
+            <ProtectedRoute>
+              <QueriesByClaimsTeam />
+            </ProtectedRoute>
+          }
+        />
 
-                {/* Protected Routes - Detail/Form Pages with :investigationId */}
-                <Route
-                    path="central-new-cases/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <CentralNewCasesTabs />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="fresh-case-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <FreshCaseForm />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="fresh-agency-denied/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyDeniedFormTabs />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="central-assign-regional/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <CentralAssignedToRegionalTabs />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="central-assign-agency/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <CentralAssignedAgencyTabs />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="assigned-self-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <AssignedSelfForms />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="regional-case-not-inv-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <RegionalCompletedForms />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="central-completed-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <CentralCompletedForm />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="regional-completed-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <RegionalCompletedForm />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="regional-reassign-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <RegionalReassignForm />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="regional-rework-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <RegionalReworkTabs />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="assignedAgencyCashlessDetails/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <AssignToAgencyDetailsTabs />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agency-rework-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyReworkTabs />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agency-self-denied-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <AgencySelfDeniedTabs />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="fresh-central-mandate/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <CentralMandatedTabs />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agency-self-denied-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <AgencySelfDeniedForms />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agency-reassign-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyReassignTabs />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agency-case-not-investigated/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyCaseNotInvestigatedTabs />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="qc-pending-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <QCPendingForms />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agency-qc-submitted-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <AgencyQCSubmittedForms />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="agency-qc-pending-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <QCSubmittedForms />
-                        </ProtectedRoute>
-                    }
-                />
-                <Route
-                    path="central-qc-form/:investigationId"
-                    element={
-                        <ProtectedRoute>
-                            <CentralQCForm />
-                        </ProtectedRoute>
-                    }
-                />
-            </Route>
-            {/* Default redirects */}
-            <Route path="/" element={<Navigate to="dashboard" replace />} />
-            {/* <Route path="*" element={<Navigate to="dashboard" replace />} /> */}
-            <Route
-                path="*"
-                element={
-                    <div>
-                        <h1>404 - Page Not Found</h1>
-                        <p>Current path: {location.pathname}</p>
-                    </div>
-                }
-            />
-        </Routes>
-    );
+        {/* Protected Routes - Detail/Form Pages with :investigationId */}
+        <Route
+          path="central-new-cases/:investigationId"
+          element={
+            <ProtectedRoute>
+              <CentralNewCasesTabs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="fresh-case-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <FreshCaseForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="fresh-agency-denied/:investigationId"
+          element={
+            <ProtectedRoute>
+              <AgencyDeniedFormTabs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="central-assign-regional/:investigationId"
+          element={
+            <ProtectedRoute>
+              <CentralAssignedToRegionalTabs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="central-assign-agency/:investigationId"
+          element={
+            <ProtectedRoute>
+              <CentralAssignedAgencyTabs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="assigned-self-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <AssignedSelfForms />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="regional-case-not-inv-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <RegionalCompletedForms />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="central-completed-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <CentralCompletedForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="regional-completed-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <RegionalCompletedForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="regional-reassign-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <RegionalReassignForm />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="regional-rework-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <RegionalReworkTabs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="assignedAgencyCashlessDetails/:investigationId"
+          element={
+            <ProtectedRoute>
+              <AssignToAgencyDetailsTabs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agency-rework-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <AgencyReworkTabs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agency-self-denied-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <AgencySelfDeniedTabs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="fresh-central-mandate/:investigationId"
+          element={
+            <ProtectedRoute>
+              <CentralMandatedTabs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agency-self-denied-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <AgencySelfDeniedForms />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agency-reassign-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <AgencyReassignTabs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agency-case-not-investigated/:investigationId"
+          element={
+            <ProtectedRoute>
+              <AgencyCaseNotInvestigatedTabs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="qc-pending-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <QCPendingForms />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agency-qc-submitted-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <AgencyQCSubmittedForms />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agency-qc-pending-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <QCSubmittedForms />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="central-qc-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <CentralQCForm />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
+      {/* Default redirects */}
+      <Route path="/" element={<Navigate to="dashboard" replace />} />
+      {/* <Route path="*" element={<Navigate to="dashboard" replace />} /> */}
+      <Route
+        path="*"
+        element={
+          <div>
+            <h1>404 - Page Not Found</h1>
+            <p>Current path: {location.pathname}</p>
+          </div>
+        }
+      />
+    </Routes>
+  );
 };
 
 export default AppRoutes;
-
-// import CompletedInvestigationCompleted from './pages/CentralInvestigationCompleted/CentralInvestigationCompleted';
-
-//             <Route path="completedInvestigationCompleted" element={<CompletedInvestigationCompleted />} />
-
-// import CentralInvestigationCompleted from './pages/CentralInvestigationCompleted/CentralInvestigationCompleted';
-
-// import CompletedInvestigationCompleted from './pages/CentralInvestigationCompleted/CentralInvestigationCompleted';
-
-//             <Route path="centralInvestigationCompleted" element={<CentralInvestigationCompleted />} />

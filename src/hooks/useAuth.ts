@@ -42,7 +42,7 @@ export const useAuth = () => {
     sessionStorage.clear();
     // Keycloak logout
     keycloak.logout({
-      redirectUri: "https://qa-hitpa.consint.ai/investigation",
+      // redirectUri: "https://qa-hitpa.consint.ai/investigation",
     });
     // keycloak.logout({
     //   redirectUri: window.location.origin,
