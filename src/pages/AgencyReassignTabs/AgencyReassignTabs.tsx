@@ -169,7 +169,7 @@ const AgencyReassignTabs: React.FC<AgencyReassignTabsProps> = () => {
                             />
                         </Box>
                         <Typography variant="body1">
-                            <strong>SBIG Claim No:</strong> {sbigClaimNo}
+                            <strong>Claim No:</strong> {sbigClaimNo}
                         </Typography>
                         <Typography variant="body1">
                             <strong>TPA Claim No:</strong> {claimNo}

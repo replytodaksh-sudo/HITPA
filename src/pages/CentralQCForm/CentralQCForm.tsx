@@ -47,6 +47,8 @@ import Logs from '../../components/sharedComponents/components/Logs';
 import QCUpdateService from '../../services/qcupdate.service';
 import agencyQcUpdateService from '../../services/agencyqcupdate.service';
 import claimsService from '../../services/claims.service';
+import Preview from '../../components/sharedComponents/components/Preview';
+import ReimburseCaseUpdate from '../../components/sharedComponents/components/ReimburseCaseUpdate';
 
 // ==================== INTERFACES ====================
 interface ClaimDetails {
@@ -124,21 +126,21 @@ const CentralQCForm: React.FC = () => {
     }, [investigationId]);
 
     const fetchClaimDetails = async (invId: string) => {
-            // setLoading(true);
-            try {
-                const response = await claimsService.claimDetails(invId);
-                if (response.statusCode === 0) {
-                    setClaimDetails(response.payload);
-                    // setInvestigationType(response.payload.investigationType);
-                    sessionStorage.setItem('formEditable', response.payload.editable);
-                    sessionStorage.setItem('canAssignToInternalTeam', response.payload.canAssignToInternalTeam);
-                }
-            } catch (error) {
-                console.error('Error fetching claim details:', error);
-            } finally {
-                // setLoading(false);
+        // setLoading(true);
+        try {
+            const response = await claimsService.claimDetails(invId);
+            if (response.statusCode === 0) {
+                setClaimDetails(response.payload);
+                // setInvestigationType(response.payload.investigationType);
+                sessionStorage.setItem('formEditable', response.payload.editable);
+                sessionStorage.setItem('canAssignToInternalTeam', response.payload.canAssignToInternalTeam);
             }
-        };
+        } catch (error) {
+            console.error('Error fetching claim details:', error);
+        } finally {
+            // setLoading(false);
+        }
+    };
 
     // Fetch claim details
     const fetchClaimQCDetails = async () => {
@@ -362,7 +364,7 @@ const CentralQCForm: React.FC = () => {
                         </Grid>
                         <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: { xs: 'left', md: 'center' } }}>
                             <Typography variant="body1">
-                                <strong>SBIG Claim No:</strong> {sbigClaimNo}
+                                <strong>Claim No:</strong> {sbigClaimNo}
                             </Typography>
                         </Grid>
                         <Grid size={{ xs: 12, md: 4 }} sx={{ textAlign: { xs: 'left', md: 'right' } }}>
@@ -435,7 +437,7 @@ const CentralQCForm: React.FC = () => {
                     {/* Tab 0: Pre-Auth / Claim Details */}
                     <Box hidden={currentTabContent !== 0}>
                         {claimsType === 'cashless' ? (
-                            <PreAuth claimDetails={claimDetails}/>
+                            <PreAuth claimDetails={claimDetails} />
                         ) : (
                             <ClaimDetailsReim claimDetails={claimDetails} claimsType={claimsType} />
                         )}
@@ -443,7 +445,7 @@ const CentralQCForm: React.FC = () => {
 
                     {/* Tab 1: Hospital Info */}
                     <Box hidden={currentTabContent !== 1}>
-                        <HospitalInfo claimsType={claimsType} claimDetails={claimDetails}/>
+                        <HospitalInfo claimsType={claimsType} claimDetails={claimDetails} />
                     </Box>
 
                     {/* Tab 2: Case Info */}
@@ -470,14 +472,13 @@ const CentralQCForm: React.FC = () => {
                         )}
 
                         {claimsType === 'cashless' ?
-                            "12345yu"
-                            // (
-                            //   <Preview buttonVisible={true} />
-                            // ) 
-                            : "asdfgh"
-                            // (
-                            //   <ReimburseCaseUpdate buttonEnable={buttonEnable} />
-                            // )
+                            (
+                                <Preview buttonVisible={true} />
+                            )
+                            :
+                            (
+                                <ReimburseCaseUpdate buttonEnable={buttonEnable} />
+                            )
                         }
                     </Box>
 

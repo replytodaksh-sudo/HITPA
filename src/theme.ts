@@ -805,7 +805,7 @@ const themeOptions: ThemeOptions = {
       fontSize: '1rem',
       fontWeight: 600,
       lineHeight: 1.5,
-      color: "#fff",
+      color: colors.text.primary,
     },
     body1: {
       fontSize: '0.875rem',
@@ -817,7 +817,7 @@ const themeOptions: ThemeOptions = {
       fontSize: '0.8125rem',
       lineHeight: 1.6,
       letterSpacing: '0.01071em',
-      color: "#fff",
+      color: colors.text.secondary,
     },
     button: {
       textTransform: 'none',

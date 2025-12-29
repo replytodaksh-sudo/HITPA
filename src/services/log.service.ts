@@ -167,10 +167,10 @@ export const logService = {
   },
 
   /**
-   * Get SBIG log details by claim number and type
-   * @param sbigClaimNo - SBIG Claim Number
+   * Get log details by claim number and type
+   * @param sbigClaimNo - Claim Number
    * @param claimType - Type of claim (e.g., 'cashless', 'reimbursement')
-   * @returns Promise with SBIG log details
+   * @returns Promise with log details
    * 
    * @example
    * const details = await logService.getSbigLogDetails('SBIG123', 'cashless');

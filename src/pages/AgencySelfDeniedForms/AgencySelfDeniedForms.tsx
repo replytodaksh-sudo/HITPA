@@ -120,7 +120,7 @@ const AgencySelfDeniedForms: React.FC = () => {
                         </Grid>
                         <Grid size={{ xs: 12, lg: 4 }} sx={{ textAlign: { xs: 'left', md: 'center' } }}>
                             <Typography variant="body1">
-                                <strong>SBIG Claim No:</strong> {sbigclaimNo}
+                                <strong>Claim No:</strong> {sbigclaimNo}
                             </Typography>
                         </Grid>
                         <Grid size={{ xs: 12, lg: 4 }} sx={{ textAlign: { xs: 'left', md: 'right' } }}>
