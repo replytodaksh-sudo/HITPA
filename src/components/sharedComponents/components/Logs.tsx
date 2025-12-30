@@ -73,7 +73,7 @@ const Logs: React.FC<LogsProps> = ({ claimsType }) => {
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 300 }}>
-        <CircularProgress />
+        <CircularProgress sx={{ color: '#2E5A96' }}/>
       </Box>
     );
   }

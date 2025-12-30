@@ -190,7 +190,7 @@ const CentralMandatedCasesCashless: React.FC = () => {
             renderCell: (params) => (
                 <Tooltip title="Click to view details">
                     <Box
-                        onClick={() => handleViewClick(params.value, params.row)}
+                        onClick={() => handleViewClick(params?.value, params?.row)}
                         sx={{
                             color: 'primary.main',
                             cursor: 'pointer',
@@ -200,7 +200,7 @@ const CentralMandatedCasesCashless: React.FC = () => {
                             },
                         }}
                     >
-                        {params.value}
+                        {params?.value}
                     </Box>
                 </Tooltip>
             ),
@@ -236,8 +236,8 @@ const CentralMandatedCasesCashless: React.FC = () => {
             headerName: 'Policy Start Date',
             width: 140,
             valueFormatter: (params: any) => {
-                if (params.value) {
-                    return new Date(params.value).toLocaleDateString('en-IN');
+                if (params?.value) {
+                    return new Date(params?.value).toLocaleDateString('en-IN');
                 }
                 return '';
             },
@@ -253,13 +253,13 @@ const CentralMandatedCasesCashless: React.FC = () => {
             width: 120,
             renderCell: (params: any) => (
                 <Chip
-                    label={`${params.value} days`}
+                    label={`${params?.value} days`}
                     size="small"
                     sx={{
-                        bgcolor: alpha(getTatColor(params.value), 0.1),
-                        color: getTatColor(params.value),
+                        bgcolor: alpha(getTatColor(params?.value), 0.1),
+                        color: getTatColor(params?.value),
                         fontWeight: 700,
-                        borderLeft: `4px solid ${getTatColor(params.value)}`,
+                        borderLeft: `4px solid ${getTatColor(params?.value)}`,
                     }}
                 />
             ),
@@ -280,11 +280,11 @@ const CentralMandatedCasesCashless: React.FC = () => {
             width: 130,
             type: 'number',
             valueFormatter: (params: any) => {
-                return params.value
+                return params?.value
                     ? new Intl.NumberFormat('en-IN', {
                         style: 'currency',
                         currency: 'INR',
-                    }).format(params.value)
+                    }).format(params?.value)
                     : '';
             },
         },
@@ -314,8 +314,8 @@ const CentralMandatedCasesCashless: React.FC = () => {
             headerName: 'DOA',
             width: 110,
             valueFormatter: (params: any) => {
-                if (params.value) {
-                    return new Date(params.value).toLocaleDateString('en-IN');
+                if (params?.value) {
+                    return new Date(params?.value).toLocaleDateString('en-IN');
                 }
                 return '';
             },
@@ -325,8 +325,8 @@ const CentralMandatedCasesCashless: React.FC = () => {
             headerName: 'DOD',
             width: 110,
             valueFormatter: (params: any) => {
-                if (params.value) {
-                    return new Date(params.value).toLocaleDateString('en-IN');
+                if (params?.value) {
+                    return new Date(params?.value).toLocaleDateString('en-IN');
                 }
                 return '';
             },
@@ -336,8 +336,8 @@ const CentralMandatedCasesCashless: React.FC = () => {
             headerName: 'DOI',
             width: 110,
             valueFormatter: (params: any) => {
-                if (params.value) {
-                    return new Date(params.value).toLocaleDateString('en-IN');
+                if (params?.value) {
+                    return new Date(params?.value).toLocaleDateString('en-IN');
                 }
                 return '';
             },
@@ -348,7 +348,7 @@ const CentralMandatedCasesCashless: React.FC = () => {
             width: 150,
             renderCell: (params) => (
                 <Chip
-                    label={params.value}
+                    label={params?.value}
                     size="small"
                     color="secondary"
                     variant="outlined"
@@ -366,7 +366,7 @@ const CentralMandatedCasesCashless: React.FC = () => {
                     <IconButton
                         size="small"
                         color="secondary"
-                        onClick={() => handleViewClick(params.row.investigationID, params.row)}
+                        onClick={() => handleViewClick(params?.row?.investigationID, params?.row)}
                     >
                         <ViewIcon />
                     </IconButton>
@@ -383,7 +383,7 @@ const CentralMandatedCasesCashless: React.FC = () => {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 8 }}>
                 <Box sx={{ textAlign: 'center' }}>
-                    <CircularProgress size={60} thickness={4} />
+                    <CircularProgress size={60} thickness={4} sx={{ color: '#2E5A96' }} />
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
                         Loading reimbursement cases...
                     </Typography>
@@ -478,7 +478,7 @@ const CentralMandatedCasesCashless: React.FC = () => {
                     onPaginationModelChange={setPaginationModel}
                     pageSizeOptions={[25, 50, 100]}
                     checkboxSelection
-                    getRowId={(row) => row.investigationID}
+                    getRowId={(row) => row?.investigationID}
                     loading={loading}
                     slots={{
                         toolbar: GridToolbar,

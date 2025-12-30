@@ -167,7 +167,7 @@ const FreshCaseForm: React.FC = () => {
                     <Box
                         sx={{
                             p: 3,
-                            background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+                            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
                             color: 'white',
                             borderRadius: '12px 12px 0 0',
                         }}
@@ -250,7 +250,7 @@ const FreshCaseForm: React.FC = () => {
                                 '& .MuiTabs-indicator': {
                                     height: '3px',
                                     borderRadius: '3px 3px 0 0',
-                                    background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+                                    background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
                                 },
                             }}
                         >

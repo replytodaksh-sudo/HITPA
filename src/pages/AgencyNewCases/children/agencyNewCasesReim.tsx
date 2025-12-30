@@ -123,9 +123,9 @@ const AgencyNewCasesReim: React.FC = () => {
                         textDecoration: 'underline',
                         '&:hover': { color: '#1565c0' },
                     }}
-                    onClick={() => handleRowClick(params.value, params.row)}
+                    onClick={() => handleRowClick(params?.value, params?.row)}
                 >
-                    {params.value}
+                    {params?.value}
                 </Typography>
             ),
         },
@@ -141,7 +141,7 @@ const AgencyNewCasesReim: React.FC = () => {
             headerName: 'TAT',
             width: 80,
             renderCell: (params) => (
-                <Typography sx={{ fontWeight: 'bold' }}>{params.value}</Typography>
+                <Typography sx={{ fontWeight: 'bold' }}>{params?.value}</Typography>
             ),
         },
         { field: 'hospitalCity', headerName: 'City', width: 120 },
@@ -152,7 +152,7 @@ const AgencyNewCasesReim: React.FC = () => {
             width: 130,
             renderCell: (params) => (
                 <Typography sx={{ color: '#1976d2', fontWeight: 500 }}>
-                    {formatCurrency(params.value)}
+                    {formatCurrency(params?.value)}
                 </Typography>
             ),
         },
@@ -198,14 +198,14 @@ const AgencyNewCasesReim: React.FC = () => {
                 {/* DataGrid Table */}
                 {loading ? (
                     <Box sx={{ display: 'flex', justifyContent: 'center', p: 5 }}>
-                        <CircularProgress />
+                        <CircularProgress sx={{ color: '#2E5A96' }}/>
                     </Box>
                 ) : (
                     <Box sx={{ height: 600, width: '100%' }}>
                         <DataGrid
                             rows={claims}
                             columns={columns}
-                            getRowId={(row) => row.investigationID}
+                            getRowId={(row) => row?.investigationID}
                             pageSizeOptions={[25, 50, 100]}
                             getRowClassName={(params) => ''}
                             sx={{
@@ -214,7 +214,7 @@ const AgencyNewCasesReim: React.FC = () => {
                                     borderColor: theme.palette.divider,
                                 },
                                 '& .MuiDataGrid-columnHeaders': {
-                                    background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+                                    background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
                                     color: '#7a7a7a',
                                     fontSize: '0.875rem',
                                     fontWeight: 700,
@@ -230,7 +230,7 @@ const AgencyNewCasesReim: React.FC = () => {
                         // componentsProps={{
                         //     row: {
                         //         style: (params: any) => ({
-                        //             backgroundColor: getTatColor(params.row.tat),
+                        //             backgroundColor: getTatColor(params?.row.tat),
                         //         }),
                         //     },
                         // }}

@@ -94,7 +94,7 @@ const AssignedFoCashless: React.FC = () => {
       renderCell: (params) => (
         <Tooltip title="Click to view details">
           <Box
-            onClick={() => handleViewClick(params.value, params.row)}
+            onClick={() => handleViewClick(params?.value, params?.row)}
             sx={{
               color: 'primary.main',
               cursor: 'pointer',
@@ -104,7 +104,7 @@ const AssignedFoCashless: React.FC = () => {
               },
             }}
           >
-            {params.value}
+            {params?.value}
           </Box>
         </Tooltip>
       ),
@@ -139,8 +139,8 @@ const AssignedFoCashless: React.FC = () => {
       headerName: 'Policy Start Date',
       width: 150,
       valueFormatter: (params: any) => {
-        if (params.value) {
-          return new Date(params.value).toLocaleDateString();
+        if (params?.value) {
+          return new Date(params?.value).toLocaleDateString();
         }
         return '';
       },
@@ -156,11 +156,11 @@ const AssignedFoCashless: React.FC = () => {
       width: 100,
       renderCell: (params) => (
         <Chip
-          label={params.value}
+          label={params?.value}
           size="small"
           sx={{
-            bgcolor: alpha(getTatColor(params.value), 0.1),
-            color: getTatColor(params.value),
+            bgcolor: alpha(getTatColor(params?.value), 0.1),
+            color: getTatColor(params?.value),
             fontWeight: 700,
           }}
         />
@@ -184,7 +184,7 @@ const AssignedFoCashless: React.FC = () => {
         return new Intl.NumberFormat('en-IN', {
           style: 'currency',
           currency: 'INR',
-        }).format(params.value || 0);
+        }).format(params?.value || 0);
       },
     },
     {
@@ -207,8 +207,8 @@ const AssignedFoCashless: React.FC = () => {
       headerName: 'Date of Intimation',
       width: 150,
       valueFormatter: (params: any) => {
-        if (params.value) {
-          return new Date(params.value).toLocaleDateString();
+        if (params?.value) {
+          return new Date(params?.value).toLocaleDateString();
         }
         return '';
       },
@@ -218,8 +218,8 @@ const AssignedFoCashless: React.FC = () => {
       headerName: 'DOA',
       width: 120,
       valueFormatter: (params: any) => {
-        if (params.value) {
-          return new Date(params.value).toLocaleDateString();
+        if (params?.value) {
+          return new Date(params?.value).toLocaleDateString();
         }
         return '';
       },
@@ -229,8 +229,8 @@ const AssignedFoCashless: React.FC = () => {
       headerName: 'Expected Discharge',
       width: 150,
       valueFormatter: (params: any) => {
-        if (params.value) {
-          return new Date(params.value).toLocaleDateString();
+        if (params?.value) {
+          return new Date(params?.value).toLocaleDateString();
         }
         return '';
       },
@@ -241,7 +241,7 @@ const AssignedFoCashless: React.FC = () => {
       width: 150,
       renderCell: (params) => (
         <Chip
-          label={params.value}
+          label={params?.value}
           size="small"
           color="primary"
           variant="outlined"
@@ -259,7 +259,7 @@ const AssignedFoCashless: React.FC = () => {
           <IconButton
             size="small"
             color="primary"
-            onClick={() => handleViewClick(params.row.investigationID, params.row)}
+            onClick={() => handleViewClick(params?.row?.investigationID, params?.row)}
           >
             <ViewIcon />
           </IconButton>
@@ -272,7 +272,7 @@ const AssignedFoCashless: React.FC = () => {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 8 }}>
         <Box sx={{ textAlign: 'center' }}>
-          <CircularProgress size={60} thickness={4} />
+          <CircularProgress size={60} thickness={4} sx={{ color: '#2E5A96' }} />
           <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
             Loading cashless cases...
           </Typography>
@@ -337,7 +337,7 @@ const AssignedFoCashless: React.FC = () => {
             pageSizeOptions={[25, 50, 100]}
             checkboxSelection
             // disableSelectionOnClick
-            getRowId={(row) => row.investigationID}
+            getRowId={(row) => row?.investigationID}
             // components={{
             //   Toolbar: GridToolbar,
             // }}
@@ -353,7 +353,7 @@ const AssignedFoCashless: React.FC = () => {
                 borderColor: theme.palette.divider,
               },
               '& .MuiDataGrid-columnHeaders': {
-                background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+                background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
                 color: '#7a7a7a',
                 fontSize: '0.875rem',
                 fontWeight: 700,

@@ -126,7 +126,7 @@ const CompletedInvestigationCompletedReim: React.FC = () => {
       renderCell: (params) => (
         <Tooltip title="Click to view details">
           <Box
-            onClick={() => handleViewClick(params.value, params.row)}
+            onClick={() => handleViewClick(params?.value, params?.row)}
             sx={{
               color: 'primary.main',
               cursor: 'pointer',
@@ -136,7 +136,7 @@ const CompletedInvestigationCompletedReim: React.FC = () => {
               },
             }}
           >
-            {params.value}
+            {params?.value}
           </Box>
         </Tooltip>
       ),
@@ -171,8 +171,8 @@ const CompletedInvestigationCompletedReim: React.FC = () => {
       headerName: 'Policy Start Date',
       width: 150,
       valueFormatter: (params: any) => {
-        if (params.value) {
-          return new Date(params.value).toLocaleDateString();
+        if (params?.value) {
+          return new Date(params?.value).toLocaleDateString();
         }
         return '';
       },
@@ -188,11 +188,11 @@ const CompletedInvestigationCompletedReim: React.FC = () => {
       width: 100,
       renderCell: (params) => (
         <Chip
-          label={params.value}
+          label={params?.value}
           size="small"
           sx={{
-            bgcolor: alpha(getTatColor(params.value), 0.1),
-            color: getTatColor(params.value),
+            bgcolor: alpha(getTatColor(params?.value), 0.1),
+            color: getTatColor(params?.value),
             fontWeight: 700,
           }}
         />
@@ -217,7 +217,7 @@ const CompletedInvestigationCompletedReim: React.FC = () => {
           style: 'currency',
           currency: 'INR',
           maximumFractionDigits: 0,
-        }).format(params.value || 0);
+        }).format(params?.value || 0);
       },
     },
     {
@@ -240,8 +240,8 @@ const CompletedInvestigationCompletedReim: React.FC = () => {
       headerName: 'Date of Intimation',
       width: 150,
       valueFormatter: (params: any) => {
-        if (params.value) {
-          return new Date(params.value).toLocaleDateString();
+        if (params?.value) {
+          return new Date(params?.value).toLocaleDateString();
         }
         return '';
       },
@@ -251,8 +251,8 @@ const CompletedInvestigationCompletedReim: React.FC = () => {
       headerName: 'DOA',
       width: 120,
       valueFormatter: (params: any) => {
-        if (params.value) {
-          return new Date(params.value).toLocaleDateString();
+        if (params?.value) {
+          return new Date(params?.value).toLocaleDateString();
         }
         return '';
       },
@@ -262,8 +262,8 @@ const CompletedInvestigationCompletedReim: React.FC = () => {
       headerName: 'Expected Discharge',
       width: 150,
       valueFormatter: (params: any) => {
-        if (params.value) {
-          return new Date(params.value).toLocaleDateString();
+        if (params?.value) {
+          return new Date(params?.value).toLocaleDateString();
         }
         return '';
       },
@@ -274,7 +274,7 @@ const CompletedInvestigationCompletedReim: React.FC = () => {
       width: 150,
       renderCell: (params) => (
         <Chip
-          label={params.value}
+          label={params?.value}
           size="small"
           color="primary"
           variant="outlined"
@@ -292,7 +292,7 @@ const CompletedInvestigationCompletedReim: React.FC = () => {
           <IconButton
             size="small"
             color="primary"
-            onClick={() => handleViewClick(params.row.investigationID, params.row)}
+            onClick={() => handleViewClick(params?.row?.investigationID, params?.row)}
           >
             <ViewIcon />
           </IconButton>
@@ -308,7 +308,7 @@ const CompletedInvestigationCompletedReim: React.FC = () => {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 8 }}>
         <Box sx={{ textAlign: 'center' }}>
-          <CircularProgress size={60} thickness={4} />
+          <CircularProgress size={60} thickness={4} sx={{ color: '#2E5A96' }} />
           <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
             Loading completed cashless cases...
           </Typography>
@@ -375,7 +375,7 @@ const CompletedInvestigationCompletedReim: React.FC = () => {
           onPaginationModelChange={(model: any) => setPageSize(model.pageSize ?? pageSize)}
           pageSizeOptions={[25, 50, 100]}
           checkboxSelection
-          getRowId={(row) => row.investigationID}
+          getRowId={(row) => row?.investigationID}
           sx={{
             border: 'none',
             '& .MuiDataGrid-cell': {

@@ -77,7 +77,7 @@ const DeniedDenyForm: React.FC = () => {
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
-        <CircularProgress />
+        <CircularProgress sx={{ color: '#2E5A96' }}/>
       </Box>
     );
   }

@@ -746,6 +746,7 @@ import {
   ListItemIcon,
   alpha,
   useTheme,
+  Paper,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -799,13 +800,16 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({
     .slice(0, 2);
 
   return (
-    <>
+    <Paper elevation={6}>
       <AppBar
         position="fixed"
         elevation={0}
         sx={{
           bgcolor: 'white',
-          borderRadius:"0",
+          height: "60px",
+          display: "flex",
+          justifyContent: "center",
+          borderRadius: "0",
           borderColor: 'divider',
           zIndex: (theme) => theme.zIndex.drawer + 1, // Above drawer
         }}
@@ -818,7 +822,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({
               color="default"
               edge="start"
               onClick={onMenuClick}
-              sx={{ 
+              sx={{
                 display: { xs: 'block', md: 'none' },
                 color: 'text.primary',
               }}
@@ -846,16 +850,16 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({
               <IconButton
                 onClick={(e) => setNotificationAnchor(e.currentTarget)}
                 sx={{
-                  color: 'white',
-                  background: "linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)",
+                  // color: 'white',
+                  // background: "linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)",
                   width: 40,
                   height: 40,
-                  '&:hover': {
-                    bgcolor: theme.palette.primary.dark,
-                  },
+                  // '&:hover': {
+                  //   bgcolor: theme.palette.primary.dark,
+                  // },
                 }}
               >
-                <NotificationsIcon sx={{ fontSize: 20 }} />
+                <NotificationsIcon sx={{ fontSize: 20, color:"#2E5A96" }} />
               </IconButton>
             </Tooltip>
 
@@ -888,7 +892,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({
                 sx={{
                   width: 40,
                   height: 40,
-                  bgcolor: '#64748B',
+                  bgcolor: '#2E5A96',
                   color: 'white',
                   fontWeight: 700,
                   fontSize: '0.875rem',
@@ -986,7 +990,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({
           </MenuItem>
         </Box>
       </Menu>
-    </>
+    </Paper>
   );
 };
 

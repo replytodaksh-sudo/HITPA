@@ -287,7 +287,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-        <CircularProgress />
+        <CircularProgress sx={{ color: '#2E5A96' }}/>
       </Box>
     );
   }
@@ -531,7 +531,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
                   mt: 1,
                 }}
               >
-                {uploading ? <CircularProgress size={24} /> : 'Upload'}
+                {uploading ? <CircularProgress size={24} sx={{ color: '#2E5A96' }}/> : 'Upload'}
               </Button>
             </Box>
           </Box>

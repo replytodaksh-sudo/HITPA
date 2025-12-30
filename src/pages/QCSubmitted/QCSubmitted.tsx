@@ -12,12 +12,30 @@ import {
   Typography,
 } from '@mui/material';
 import {
-  Description as CashlessIcon,
-  Receipt as ReimIcon,
-  NavigateNext as NavigateNextIcon,
+  Payment as PaymentIcon,
+  Receipt as ReceiptIcon,
 } from '@mui/icons-material';
 import QCSubmittedCashless from './children/QCSubmittedCashless';
 import QCSubmittedReimTable from './children/QCSubmittedReimTable';
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+const TabPanel: React.FC<TabPanelProps> = ({ children, value, index }) => {
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
+    >
+      {value === index && <Box sx={{ pt: 3 }}>{children}</Box>}
+    </div>
+  );
+};
 
 const QCSubmitted: React.FC = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -42,117 +60,193 @@ const QCSubmitted: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="xl" sx={{ py: 3 }}>
+    // <Container maxWidth="xl" sx={{ py: 3 }}>
+    //   <Card
+    //     elevation={0}
+    //     sx={{
+    //       background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
+    //       color: 'white',
+    //       mb: 3,
+    //       borderRadius: 2,
+    //     }}
+    //   >
+    //     <CardContent>
+    //       {/* Breadcrumbs */}
+    //       <Breadcrumbs
+    //         separator={<NavigateNextIcon fontSize="small" sx={{ color: 'rgba(255,255,255,0.7)' }} />}
+    //         sx={{ mb: 2, color: 'rgba(255,255,255,0.9)' }}
+    //       >
+    //         <Link
+    //           color="inherit"
+    //           href="#"
+    //           onClick={(e) => e.preventDefault()}
+    //           sx={{
+    //             textDecoration: 'none',
+    //             '&:hover': { textDecoration: 'underline' },
+    //           }}
+    //         >
+    //           QC
+    //         </Link>
+    //         <Link
+    //           color="inherit"
+    //           href="#"
+    //           onClick={(e) => e.preventDefault()}
+    //           sx={{
+    //             textDecoration: 'none',
+    //             '&:hover': { textDecoration: 'underline' },
+    //           }}
+    //         >
+    //           Agency QC
+    //         </Link>
+    //         <Typography color="inherit" sx={{ fontWeight: 600 }}>
+    //           QC Submitted
+    //         </Typography>
+    //       </Breadcrumbs>
+
+    //       {/* Tabs */}
+    //       <Tabs
+    //         value={activeTab}
+    //         onChange={handleTabChange}
+    //         sx={{
+    //           '& .MuiTabs-indicator': {
+    //             backgroundColor: 'white',
+    //             height: 3,
+    //             borderRadius: '3px 3px 0 0',
+    //           },
+    //           '& .MuiTab-root': {
+    //             color: 'rgba(255,255,255,0.7)',
+    //             fontWeight: 600,
+    //             fontSize: '1rem',
+    //             textTransform: 'none',
+    //             minHeight: 48,
+    //             '&:hover': {
+    //               color: 'rgba(255,255,255,0.9)',
+    //             },
+    //             '&.Mui-selected': {
+    //               color: 'white',
+    //             },
+    //           },
+    //         }}
+    //       >
+    //         <Tab
+    //           icon={<CashlessIcon />}
+    //           iconPosition="start"
+    //           label="Cashless"
+    //         />
+    //         <Tab
+    //           icon={<ReimIcon />}
+    //           iconPosition="start"
+    //           label="Reimbursement"
+    //         />
+    //       </Tabs>
+    //     </CardContent>
+    //   </Card>
+
+    //   {/* Tab Content */}
+    //   <Card elevation={2}>
+    //     <CardContent>
+    //       <Box
+    //         role="tabpanel"
+    //         hidden={activeTab !== 0}
+    //         sx={{
+    //           animation: activeTab === 0 ? 'fadeIn 0.3s ease-in' : 'none',
+    //           '@keyframes fadeIn': {
+    //             from: { opacity: 0, transform: 'translateY(10px)' },
+    //             to: { opacity: 1, transform: 'translateY(0)' },
+    //           },
+    //         }}
+    //       >
+    //         {activeTab === 0 && <QCSubmittedCashless />}
+    //       </Box>
+
+    //       <Box
+    //         role="tabpanel"
+    //         hidden={activeTab !== 1}
+    //         sx={{
+    //           animation: activeTab === 1 ? 'fadeIn 0.3s ease-in' : 'none',
+    //           '@keyframes fadeIn': {
+    //             from: { opacity: 0, transform: 'translateY(10px)' },
+    //             to: { opacity: 1, transform: 'translateY(0)' },
+    //           },
+    //         }}
+    //       >
+    //         {activeTab === 1 && <QCSubmittedReimTable />}
+    //       </Box>
+    //     </CardContent>
+    //   </Card>
+    // </Container>
+    <Container sx={{ mt: 2 }}>
       <Card
-        elevation={0}
         sx={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          color: 'white',
-          mb: 3,
-          borderRadius: 2,
+          // borderRadius: 3,
+          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+          overflow: 'hidden',
         }}
       >
-        <CardContent>
-          {/* Breadcrumbs */}
-          <Breadcrumbs
-            separator={<NavigateNextIcon fontSize="small" sx={{ color: 'rgba(255,255,255,0.7)' }} />}
-            sx={{ mb: 2, color: 'rgba(255,255,255,0.9)' }}
-          >
-            <Link
-              color="inherit"
-              href="#"
-              onClick={(e) => e.preventDefault()}
-              sx={{
-                textDecoration: 'none',
-                '&:hover': { textDecoration: 'underline' },
-              }}
-            >
-              QC
-            </Link>
-            <Link
-              color="inherit"
-              href="#"
-              onClick={(e) => e.preventDefault()}
-              sx={{
-                textDecoration: 'none',
-                '&:hover': { textDecoration: 'underline' },
-              }}
-            >
-              Agency QC
-            </Link>
-            <Typography color="inherit" sx={{ fontWeight: 600 }}>
-              QC Submitted
-            </Typography>
-          </Breadcrumbs>
-
-          {/* Tabs */}
-          <Tabs
-            value={activeTab}
-            onChange={handleTabChange}
-            sx={{
-              '& .MuiTabs-indicator': {
-                backgroundColor: 'white',
-                height: 3,
-                borderRadius: '3px 3px 0 0',
-              },
-              '& .MuiTab-root': {
-                color: 'rgba(255,255,255,0.7)',
-                fontWeight: 600,
-                fontSize: '1rem',
-                textTransform: 'none',
-                minHeight: 48,
-                '&:hover': {
-                  color: 'rgba(255,255,255,0.9)',
-                },
-                '&.Mui-selected': {
-                  color: 'white',
-                },
-              },
-            }}
-          >
-            <Tab
-              icon={<CashlessIcon />}
-              iconPosition="start"
-              label="Cashless"
-            />
-            <Tab
-              icon={<ReimIcon />}
-              iconPosition="start"
-              label="Reimbursement"
-            />
-          </Tabs>
-        </CardContent>
-      </Card>
-
-      {/* Tab Content */}
-      <Card elevation={2}>
-        <CardContent>
+        <CardContent sx={{ p: 0 }}>
+          {/* Modern Tabs */}
           <Box
-            role="tabpanel"
-            hidden={activeTab !== 0}
             sx={{
-              animation: activeTab === 0 ? 'fadeIn 0.3s ease-in' : 'none',
-              '@keyframes fadeIn': {
-                from: { opacity: 0, transform: 'translateY(10px)' },
-                to: { opacity: 1, transform: 'translateY(0)' },
-              },
+              borderBottom: 1,
+              borderColor: 'divider',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
+              px: 3,
             }}
           >
-            {activeTab === 0 && <QCSubmittedCashless />}
+            <Tabs
+              value={activeTab}
+              onChange={handleTabChange}
+              TabIndicatorProps={{
+                sx: {
+                  height: 3,
+                  backgroundColor: 'white',
+                  borderRadius: '3px 3px 0 0',
+                },
+              }}
+              sx={{
+                '& .MuiTab-root': {
+                  color: 'rgba(255,255,255,0.7)',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  textTransform: 'none',
+                  minHeight: 64,
+                  px: 3,
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    color: 'white',
+                    bgcolor: 'rgba(255,255,255,0.1)',
+                  },
+                  '&.Mui-selected': {
+                    color: 'white',
+                  },
+                },
+              }}
+            >
+              <Tab
+                icon={<PaymentIcon sx={{ mb: 0.5 }} />}
+                iconPosition="start"
+                label="Cashless"
+                id="tab-0"
+                aria-controls="tabpanel-0"
+              />
+              <Tab
+                icon={<ReceiptIcon sx={{ mb: 0.5 }} />}
+                iconPosition="start"
+                label="Reimbursement"
+                id="tab-1"
+                aria-controls="tabpanel-1"
+              />
+            </Tabs>
           </Box>
 
-          <Box
-            role="tabpanel"
-            hidden={activeTab !== 1}
-            sx={{
-              animation: activeTab === 1 ? 'fadeIn 0.3s ease-in' : 'none',
-              '@keyframes fadeIn': {
-                from: { opacity: 0, transform: 'translateY(10px)' },
-                to: { opacity: 1, transform: 'translateY(0)' },
-              },
-            }}
-          >
-            {activeTab === 1 && <QCSubmittedReimTable />}
+          {/* Tab Content */}
+          <Box sx={{ px: 3, pb: 3 }}>
+            <TabPanel value={activeTab} index={0}>
+              <QCSubmittedCashless />
+            </TabPanel>
+            <TabPanel value={activeTab} index={1}>
+              <QCSubmittedReimTable />
+            </TabPanel>
           </Box>
         </CardContent>
       </Card>

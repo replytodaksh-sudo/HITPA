@@ -237,7 +237,7 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
   if (loading && !payloadData) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
-        <CircularProgress />
+        <CircularProgress sx={{ color: '#2E5A96' }}/>
       </Box>
     );
   }
@@ -687,7 +687,7 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
             onClick={handleSaveSubmit}
             disabled={loading}
             sx={{
-              background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
               '&:hover': {
                 background: 'linear-gradient(135deg, #764BA2 0%, #667EEA 100%)',
               },

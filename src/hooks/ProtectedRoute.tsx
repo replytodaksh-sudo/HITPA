@@ -24,7 +24,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, roles }) => {
           gap: 2,
         }}
       >
-        <CircularProgress size={60} thickness={4} />
+        <CircularProgress size={60} thickness={4} sx={{ color: '#2E5A96' }} />
         <Typography variant="h6" color="text.secondary">
           Loading...
         </Typography>

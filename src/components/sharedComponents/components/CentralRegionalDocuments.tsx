@@ -272,7 +272,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
     if (loading) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-                <CircularProgress />
+                <CircularProgress sx={{ color: '#2E5A96' }}/>
             </Box>
         );
     }
@@ -522,7 +522,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                                             background: 'linear-gradient(45deg, #6F62C2 30%, #9C89E3 90%)',
                                         }}
                                     >
-                                        {uploading ? <CircularProgress size={24} /> : 'Upload'}
+                                        {uploading ? <CircularProgress size={24} sx={{ color: '#2E5A96' }}/> : 'Upload'}
                                     </Button>
                                 </Box>
 

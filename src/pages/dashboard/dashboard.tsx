@@ -579,7 +579,7 @@
 //     return (
 //         <Box sx={{
 //             minHeight: '100vh',
-//             // background: 'linear-gradient(135deg, #1E40AF 0%, #2563EB 100%)',
+//             // background: 'linear-gradient(135deg, #1E40AF 0%, #2E5A96 100%)',
 //             p: 4,
 //         }}>
 //             {/* {loading && (
@@ -593,7 +593,7 @@
 //                     open={loading}
 //                 >
 //                     <Box sx={{ textAlign: 'center' }}>
-//                         <CircularProgress size={60} thickness={4} />
+//                         <CircularProgress size={60} thickness={4} sx={{ color: '#2E5A96' }} />
 //                         <Typography variant="h6" sx={{ mt: 2, color: 'white' }}>
 //                             Loading...
 //                         </Typography>
@@ -607,7 +607,7 @@
 //                         <Typography
 //                             variant="h4"
 //                             sx={{
-//                                 color: '#2563EB',
+//                                 color: '#2E5A96',
 //                                 // color: '#1E40AF',
 //                                 fontWeight: 800,
 //                                 textShadow: '0 2px 10px rgba(0,0,0,0.2)',
@@ -719,7 +719,7 @@
 //                                 <FilterListIcon />
 //                             </Avatar>
 //                             <Box>
-//                                 <Typography variant="h6" sx={{ fontWeight: 700, color: '#2563EB' }}>
+//                                 <Typography variant="h6" sx={{ fontWeight: 700, color: '#2E5A96' }}>
 //                                     Filters
 //                                 </Typography>
 //                                 <Typography variant="body2" sx={{ color: '#1E40AF' }}>
@@ -926,7 +926,7 @@
 //                                         startIcon={<FilterListIcon />}
 //                                         onClick={applyFilter}
 //                                         sx={{
-//                                             background: 'linear-gradient(135deg, #1E40AF 0%, #2563EB 100%)',
+//                                             background: 'linear-gradient(135deg, #1E40AF 0%, #2E5A96 100%)',
 //                                             px: 4,
 //                                         }}
 //                                     >
@@ -1403,8 +1403,8 @@ const Dashboard: React.FC = () => {
         datasets: [{
             data: [0, 0],
             backgroundColor: [
-                '#2563EB',
-                '#93C5FD',
+                '#2E5A96',
+                '#4A7FC1',
             ],
             borderWidth: 0,
             hoverOffset: 15,
@@ -1756,7 +1756,7 @@ const Dashboard: React.FC = () => {
             title: 'Retail Cashless',
             count: retailCashlessCount,
             icon: <PaymentIcon sx={{ fontSize: 32 }} />,
-            gradient: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
+            gradient: 'linear-gradient(135deg, #4A7FC1 0%, #2E5A96 100%)',
             change: '+12.5%',
         },
         {
@@ -1764,7 +1764,7 @@ const Dashboard: React.FC = () => {
             title: 'Group Cashless',
             count: groupCashlessCount,
             icon: <BusinessIcon sx={{ fontSize: 32 }} />,
-            gradient: 'linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%)',
+            gradient: 'linear-gradient(135deg, #4A7FC1 100%, #2E5A96 0%)',
             change: '+8.3%',
         },
         {
@@ -1772,7 +1772,7 @@ const Dashboard: React.FC = () => {
             title: 'Retail Reimbursement',
             count: retailReimbursementCount,
             icon: <ReceiptIcon sx={{ fontSize: 32 }} />,
-            gradient: 'linear-gradient(135deg, #93C5FD 0%, #60A5FA 100%)',
+            gradient: 'linear-gradient(135deg, #2E5A96 0%, #4A7FC1 100%)',
             change: '+5.7%',
         },
         {
@@ -1780,7 +1780,7 @@ const Dashboard: React.FC = () => {
             title: 'Group Reimbursement',
             count: groupReimbursementCount,
             icon: <AccountBalanceIcon sx={{ fontSize: 32 }} />,
-            gradient: 'linear-gradient(135deg, #BFDBFE 0%, #93C5FD 100%)',
+            gradient: 'linear-gradient(135deg, #2E5A96 100%, #4A7FC1 0%)',
             change: '+15.2%',
         }
     ];
@@ -1788,7 +1788,7 @@ const Dashboard: React.FC = () => {
     return (
         <Box sx={{
             minHeight: '100vh',
-            bgcolor: '#f8fafc',
+            background: 'transparent',
             p: 4,
         }}>
             {/* Header */}
@@ -1855,7 +1855,7 @@ const Dashboard: React.FC = () => {
                                         height: '150px',
                                         background: 'rgba(255,255,255,0.1)',
                                         borderRadius: '50%',
-                                        transform: 'translate(50%, -50%)',
+                                        transform: index == 0 ? 'translate(50%, -50%)' : index == 1 ? 'translate(-50%, 50%)' : index == 2 ? 'translate(0%, -50%)' : 'translate(-100%, 50%)',
                                     }
                                 }}
                                 onClick={() => handleCaseTypeChange(card.type)}
@@ -1904,7 +1904,7 @@ const Dashboard: React.FC = () => {
                 <Card sx={{ mb: 4, overflow: 'visible', bgcolor: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
                     <CardContent sx={{ pb: 3 }}>
                         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                            <Avatar sx={{ bgcolor: '#2563EB', mr: 2 }}>
+                            <Avatar sx={{ bgcolor: '#2E5A96', mr: 2 }}>
                                 <FilterListIcon />
                             </Avatar>
                             <Box>
@@ -2115,7 +2115,7 @@ const Dashboard: React.FC = () => {
                                         startIcon={<FilterListIcon />}
                                         onClick={applyFilter}
                                         sx={{
-                                            background: 'linear-gradient(135deg, #1E40AF 0%, #2563EB 100%)',
+                                            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
                                             px: 4,
                                         }}
                                     >
@@ -2150,7 +2150,7 @@ const Dashboard: React.FC = () => {
                                                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                                                     {selected.map((value) => {
                                                         const officer = fieldOfficers.find(o => o.userCode === value);
-                                                        return <Chip key={value} label={officer?.name} size="small" sx={{ bgcolor: '#eff6ff', color: '#2563EB' }} />;
+                                                        return <Chip key={value} label={officer?.name} size="small" sx={{ bgcolor: '#eff6ff', color: '#2E5A96' }} />;
                                                     })}
                                                 </Box>
                                             )}
@@ -2198,7 +2198,7 @@ const Dashboard: React.FC = () => {
                                         startIcon={<FilterListIcon />}
                                         onClick={applyFilter}
                                         sx={{
-                                            bgcolor: '#2563EB',
+                                            bgcolor: '#2E5A96',
                                             px: 4,
                                             '&:hover': {
                                                 bgcolor: '#1d4ed8',
@@ -2241,7 +2241,7 @@ const Dashboard: React.FC = () => {
                             <Card sx={{ height: '550px', bgcolor: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e2e8f0' }}>
                                 <CardContent>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                                        <Avatar sx={{ bgcolor: '#eff6ff', color: '#2563EB', mr: 2 }}>
+                                        <Avatar sx={{ bgcolor: '#eff6ff', color: '#2E5A96', mr: 2 }}>
                                             <PaymentIcon />
                                         </Avatar>
                                         <Typography variant="h6" sx={{ fontWeight: 700, color: '#1e293b' }}>
@@ -2278,7 +2278,7 @@ const Dashboard: React.FC = () => {
                                                         label={item.value}
                                                         size="small"
                                                         sx={{
-                                                            bgcolor: '#2563EB',
+                                                            bgcolor: '#2E5A96',
                                                             color: 'white',
                                                             fontWeight: 700,
                                                         }}
@@ -2290,7 +2290,7 @@ const Dashboard: React.FC = () => {
                                     </Box>
 
                                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                                        <Avatar sx={{ bgcolor: '#eff6ff', color: '#2563EB', mr: 2 }}>
+                                        <Avatar sx={{ bgcolor: '#eff6ff', color: '#2E5A96', mr: 2 }}>
                                             <BusinessIcon />
                                         </Avatar>
                                         <Typography variant="h6" sx={{ fontWeight: 700, color: '#1e293b' }}>
@@ -2327,7 +2327,7 @@ const Dashboard: React.FC = () => {
                                                         label={item.value}
                                                         size="small"
                                                         sx={{
-                                                            bgcolor: '#2563EB',
+                                                            bgcolor: '#2E5A96',
                                                             color: 'white',
                                                             fontWeight: 700,
                                                         }}
@@ -2348,7 +2348,7 @@ const Dashboard: React.FC = () => {
                             <Card sx={{ height: '550px', bgcolor: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e2e8f0' }}>
                                 <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                                        <Avatar sx={{ bgcolor: '#eff6ff', color: '#2563EB', mr: 2 }}>
+                                        <Avatar sx={{ bgcolor: '#eff6ff', color: '#2E5A96', mr: 2 }}>
                                             <TrendingUpIcon />
                                         </Avatar>
                                         <Box>
@@ -2395,7 +2395,7 @@ const Dashboard: React.FC = () => {
                             <Card sx={{ height: '550px', bgcolor: 'white', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: '1px solid #e2e8f0' }}>
                                 <CardContent>
                                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-                                        <Avatar sx={{ bgcolor: '#eff6ff', color: '#2563EB', mr: 2 }}>
+                                        <Avatar sx={{ bgcolor: '#eff6ff', color: '#2E5A96', mr: 2 }}>
                                             <ReceiptIcon />
                                         </Avatar>
                                         <Typography variant="h6" sx={{ fontWeight: 700, color: '#1e293b' }}>
@@ -2432,7 +2432,7 @@ const Dashboard: React.FC = () => {
                                                         label={item.value}
                                                         size="small"
                                                         sx={{
-                                                            bgcolor: '#2563EB',
+                                                            bgcolor: '#2E5A96',
                                                             color: 'white',
                                                             fontWeight: 700,
                                                         }}
@@ -2444,7 +2444,7 @@ const Dashboard: React.FC = () => {
                                     </Box>
 
                                     <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                                        <Avatar sx={{ bgcolor: '#eff6ff', color: '#2563EB', mr: 2 }}>
+                                        <Avatar sx={{ bgcolor: '#eff6ff', color: '#2E5A96', mr: 2 }}>
                                             <AccountBalanceIcon />
                                         </Avatar>
                                         <Typography variant="h6" sx={{ fontWeight: 700, color: '#1e293b' }}>
@@ -2481,7 +2481,7 @@ const Dashboard: React.FC = () => {
                                                         label={item.value}
                                                         size="small"
                                                         sx={{
-                                                            bgcolor: '#2563EB',
+                                                            bgcolor: '#2E5A96',
                                                             color: 'white',
                                                             fontWeight: 700,
                                                         }}

@@ -153,7 +153,7 @@
 
 //   // Handle row click
 //   const handleRowClick = (params: GridRowParams) => {
-//     const claim = params.row as CashlessClaim;
+//     const claim = params?.row as CashlessClaim;
 //     navigate(
 //       `/admin/agency-qc-submitted-form/${claim.investigationID}?claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`
 //     );
@@ -174,7 +174,7 @@
 //             '&:hover': { textDecoration: 'underline' },
 //           }}
 //         >
-//           {params.value}
+//           {params?.value}
 //         </Box>
 //       ),
 //     },
@@ -217,7 +217,7 @@
 //       field: 'tat',
 //       headerName: 'TAT',
 //       width: 100,
-//       renderCell: (params) => getTatColorChip(params.value),
+//       renderCell: (params) => getTatColorChip(params?.value),
 //     },
 //     {
 //       field: 'hospitalCity',
@@ -235,7 +235,7 @@
 //       width: 140,
 //       renderCell: (params) => (
 //         <Typography variant="body2" fontWeight={600}>
-//           ₹{params.value?.toLocaleString('en-IN')}
+//           ₹{params?.value?.toLocaleString('en-IN')}
 //         </Typography>
 //       ),
 //     },
@@ -275,7 +275,7 @@
 //       width: 150,
 //       renderCell: (params) => (
 //         <Chip
-//           label={params.value}
+//           label={params?.value}
 //           size="small"
 //           color="secondary"
 //           variant="outlined"
@@ -320,7 +320,7 @@
 //           <Card
 //             elevation={0}
 //             sx={{
-//               background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+//               background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
 //               color: 'white',
 //             }}
 //           >
@@ -409,7 +409,7 @@
 //         <DataGrid
 //           rows={claims}
 //           columns={columns}
-//           getRowId={(row) => row.investigationID}
+//           getRowId={(row) => row?.investigationID}
 //           loading={loading}
 //           pageSizeOptions={[25, 50, 100]}
 //           initialState={{
@@ -570,9 +570,9 @@ const AgencyQCPendingCashless: React.FC = () => {
                         textDecoration: 'underline',
                         '&:hover': { color: '#1565c0' },
                     }}
-                    onClick={() => handleRowClick(params.value, params.row)}
+                    onClick={() => handleRowClick(params?.value, params?.row)}
                 >
-                    {params.value}
+                    {params?.value}
                 </Typography>
             ),
         },
@@ -588,7 +588,7 @@ const AgencyQCPendingCashless: React.FC = () => {
             headerName: 'TAT',
             width: 80,
             renderCell: (params) => (
-                <Typography sx={{ fontWeight: 'bold' }}>{params.value}</Typography>
+                <Typography sx={{ fontWeight: 'bold' }}>{params?.value}</Typography>
             ),
         },
         { field: 'hospitalCity', headerName: 'City', width: 120 },
@@ -599,7 +599,7 @@ const AgencyQCPendingCashless: React.FC = () => {
             width: 130,
             renderCell: (params) => (
                 <Typography sx={{ color: '#1976d2', fontWeight: 500 }}>
-                    {formatCurrency(params.value)}
+                    {formatCurrency(params?.value)}
                 </Typography>
             ),
         },
@@ -645,14 +645,14 @@ const AgencyQCPendingCashless: React.FC = () => {
                 {/* DataGrid Table */}
                 {loading ? (
                     <Box sx={{ display: 'flex', justifyContent: 'center', p: 5 }}>
-                        <CircularProgress />
+                        <CircularProgress sx={{ color: '#2E5A96' }}/>
                     </Box>
                 ) : (
                     <Box sx={{ height: 600, width: '100%' }}>
                         <DataGrid
                             rows={claims}
                             columns={columns}
-                            getRowId={(row) => row.investigationID}
+                            getRowId={(row) => row?.investigationID}
                             pageSizeOptions={[25, 50, 100]}
                             getRowClassName={(params) => ''}
                             sx={{
@@ -661,7 +661,7 @@ const AgencyQCPendingCashless: React.FC = () => {
                                     borderColor: theme.palette.divider,
                                 },
                                 '& .MuiDataGrid-columnHeaders': {
-                                    background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+                                    background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
                                     color: '#7a7a7a',
                                     fontSize: '0.875rem',
                                     fontWeight: 700,
@@ -677,7 +677,7 @@ const AgencyQCPendingCashless: React.FC = () => {
                         // componentsProps={{
                         //     row: {
                         //         style: (params: any) => ({
-                        //             backgroundColor: getTatColor(params.row.tat),
+                        //             backgroundColor: getTatColor(params?.row.tat),
                         //         }),
                         //     },
                         // }}

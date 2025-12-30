@@ -491,21 +491,21 @@ const AgencyManagement: React.FC = () => {
         <Box sx={{ display: 'flex', gap: 1 }}>
           <IconButton
             size="small"
-            onClick={() => handleOpenModal('view', params.row.agencyCode)}
+            onClick={() => handleOpenModal('view', params?.row.agencyCode)}
             sx={{ color: 'primary.main' }}
           >
             <VisibilityIcon fontSize="small" />
           </IconButton>
           <IconButton
             size="small"
-            onClick={() => handleOpenModal('edit', params.row.agencyCode)}
+            onClick={() => handleOpenModal('edit', params?.row.agencyCode)}
             sx={{ color: 'success.main' }}
           >
             <EditIcon fontSize="small" />
           </IconButton>
           <IconButton
             size="small"
-            onClick={() => handleDelete(params.row.agencyCode)}
+            onClick={() => handleDelete(params?.row.agencyCode)}
             sx={{ color: 'error.main' }}
           >
             <DeleteIcon fontSize="small" />
@@ -529,7 +529,7 @@ const AgencyManagement: React.FC = () => {
           startIcon={<AddIcon />}
           onClick={() => handleOpenModal('create')}
           sx={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
             '&:hover': {
               background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)',
             },
@@ -554,7 +554,7 @@ const AgencyManagement: React.FC = () => {
               borderColor: theme.palette.divider,
             },
             '& .MuiDataGrid-columnHeaders': {
-              background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
               color: '#7a7a7a',
               fontSize: '0.875rem',
               fontWeight: 700,
@@ -585,7 +585,7 @@ const AgencyManagement: React.FC = () => {
       >
         <DialogTitle
           sx={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
             color: 'white',
             display: 'flex',
             justifyContent: 'space-between',
@@ -1006,7 +1006,7 @@ const AgencyManagement: React.FC = () => {
               variant="contained"
               onClick={handleSubmit}
               sx={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
                 '&:hover': {
                   background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)',
                 },

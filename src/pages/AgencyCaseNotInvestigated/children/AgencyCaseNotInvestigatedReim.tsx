@@ -144,7 +144,7 @@ const AgencyCaseNotInvestigatedReim: React.FC = () => {
             renderCell: (params) => (
                 <Tooltip title="Click to view details">
                     <Box
-                        onClick={() => handleViewClick(params.value, params.row)}
+                        onClick={() => handleViewClick(params?.value, params?.row)}
                         sx={{
                             color: 'primary.main',
                             cursor: 'pointer',
@@ -154,7 +154,7 @@ const AgencyCaseNotInvestigatedReim: React.FC = () => {
                             },
                         }}
                     >
-                        {params.value}
+                        {params?.value}
                     </Box>
                 </Tooltip>
             ),
@@ -189,8 +189,8 @@ const AgencyCaseNotInvestigatedReim: React.FC = () => {
             headerName: 'Policy Start Date',
             width: 150,
             valueFormatter: (params: any) => {
-                if (params.value) {
-                    return new Date(params.value).toLocaleDateString();
+                if (params?.value) {
+                    return new Date(params?.value).toLocaleDateString();
                 }
                 return '';
             },
@@ -206,11 +206,11 @@ const AgencyCaseNotInvestigatedReim: React.FC = () => {
             width: 100,
             renderCell: (params: any) => (
                 <Chip
-                    label={`${params.value} days`}
+                    label={`${params?.value} days`}
                     size="small"
                     sx={{
-                        bgcolor: alpha(getTatColor(params.value), 0.1),
-                        color: getTatColor(params.value),
+                        bgcolor: alpha(getTatColor(params?.value), 0.1),
+                        color: getTatColor(params?.value),
                         fontWeight: 700,
                         borderRadius: '6px',
                     }}
@@ -235,7 +235,7 @@ const AgencyCaseNotInvestigatedReim: React.FC = () => {
                 return new Intl.NumberFormat('en-IN', {
                     style: 'currency',
                     currency: 'INR',
-                }).format(params.value ?? 0);
+                }).format(params?.value ?? 0);
             },
         },
         {
@@ -258,8 +258,8 @@ const AgencyCaseNotInvestigatedReim: React.FC = () => {
             headerName: 'Date of Intimation',
             width: 150,
             valueFormatter: (params: any) => {
-                if (params.value) {
-                    return new Date(params.value).toLocaleDateString();
+                if (params?.value) {
+                    return new Date(params?.value).toLocaleDateString();
                 }
                 return '';
             },
@@ -269,8 +269,8 @@ const AgencyCaseNotInvestigatedReim: React.FC = () => {
             headerName: 'DOA',
             width: 120,
             valueFormatter: (params: any) => {
-                if (params.value) {
-                    return new Date(params.value).toLocaleDateString();
+                if (params?.value) {
+                    return new Date(params?.value).toLocaleDateString();
                 }
                 return '';
             },
@@ -280,8 +280,8 @@ const AgencyCaseNotInvestigatedReim: React.FC = () => {
             headerName: 'Expected Discharge',
             width: 150,
             valueFormatter: (params: any) => {
-                if (params.value) {
-                    return new Date(params.value).toLocaleDateString();
+                if (params?.value) {
+                    return new Date(params?.value).toLocaleDateString();
                 }
                 return '';
             },
@@ -292,7 +292,7 @@ const AgencyCaseNotInvestigatedReim: React.FC = () => {
             width: 150,
             renderCell: (params) => (
                 <Chip
-                    label={params.value}
+                    label={params?.value}
                     size="small"
                     color="secondary"
                     variant="outlined"
@@ -310,7 +310,7 @@ const AgencyCaseNotInvestigatedReim: React.FC = () => {
                     <IconButton
                         size="small"
                         color="secondary"
-                        onClick={() => handleViewClick(params.row.investigationID, params.row)}
+                        onClick={() => handleViewClick(params?.row?.investigationID, params?.row)}
                     >
                         <ViewIcon />
                     </IconButton>
@@ -323,7 +323,7 @@ const AgencyCaseNotInvestigatedReim: React.FC = () => {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', py: 8 }}>
                 <Box sx={{ textAlign: 'center' }}>
-                    <CircularProgress size={60} thickness={4} />
+                    <CircularProgress size={60} thickness={4} sx={{ color: '#2E5A96' }} />
                     <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
                         Loading reassignment cases...
                     </Typography>
@@ -423,7 +423,7 @@ const AgencyCaseNotInvestigatedReim: React.FC = () => {
                     onPaginationModelChange={setPaginationModel}
                     pageSizeOptions={[25, 50, 100]}
                     checkboxSelection
-                    getRowId={(row) => row.investigationID}
+                    getRowId={(row) => row?.investigationID}
                     slots={{
                         toolbar: GridToolbar,
                     }}

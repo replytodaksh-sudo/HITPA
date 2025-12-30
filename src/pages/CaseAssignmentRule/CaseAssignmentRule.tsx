@@ -493,7 +493,7 @@ const CaseAssignmentRule: React.FC = () => {
           <IconButton
             size="small"
             sx={{ color: 'success.main' }}
-            onClick={() => handleEdit(params.row.ruleCode)}
+            onClick={() => handleEdit(params?.row.ruleCode)}
             title="Edit"
           >
             <EditIcon />
@@ -527,7 +527,7 @@ const CaseAssignmentRule: React.FC = () => {
           variant="contained"
           onClick={handleOpenModal}
           sx={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
             '&:hover': {
               background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)',
             },
@@ -552,7 +552,7 @@ const CaseAssignmentRule: React.FC = () => {
               borderColor: theme.palette.divider,
             },
             '& .MuiDataGrid-columnHeaders': {
-              background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
               color: '#7a7a7a',
               fontSize: '0.875rem',
               fontWeight: 700,
@@ -582,7 +582,7 @@ const CaseAssignmentRule: React.FC = () => {
       >
         <DialogTitle
           sx={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
             color: 'white',
             display: 'flex',
             justifyContent: 'space-between',
@@ -921,7 +921,7 @@ const CaseAssignmentRule: React.FC = () => {
             onClick={handleSaveChanges}
             variant="contained"
             sx={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
               '&:hover': {
                 background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)',
               },

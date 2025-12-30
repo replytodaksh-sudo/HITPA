@@ -13,7 +13,7 @@ const KeycloakProvider: React.FC<KeycloakProviderProps> = ({ children }) => {
   // Keycloak init options
   const initOptions = {
     onLoad: "login-required", // Redirects to login if not authenticated
-    // redirectUri: window.location.origin + "/investigation/admin/dashboard",
+    redirectUri: window.location.origin + "/investigation/admin/dashboard",
     checkLoginIframe: false, // Disable iframe check for better performance
     pkceMethod: "S256", // Use PKCE for security
   };
@@ -30,7 +30,7 @@ const KeycloakProvider: React.FC<KeycloakProviderProps> = ({ children }) => {
         gap: 2,
       }}
     >
-      <CircularProgress size={60} thickness={4} />
+      <CircularProgress size={60} thickness={4} sx={{ color: '#2E5A96' }} />
       <Typography variant="h6" color="text.secondary">
         Authenticating...
       </Typography>

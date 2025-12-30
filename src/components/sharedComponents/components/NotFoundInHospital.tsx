@@ -364,7 +364,7 @@ const NotFoundInHospital: React.FC<NotFoundInHospitalProps> = ({
             variant="contained"
             onClick={saveAsDraft}
             sx={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
               color: 'white',
               px: 4,
               py: 1.5,

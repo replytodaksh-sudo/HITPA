@@ -124,9 +124,9 @@ const FreshReimTable: React.FC = () => {
               color: 'primary.dark',
             },
           }}
-          onClick={() => handleRowClick(params.row)}
+          onClick={() => handleRowClick(params?.row)}
         >
-          {params.value}
+          {params?.value}
         </Box>
       ),
     },
@@ -157,7 +157,7 @@ const FreshReimTable: React.FC = () => {
             fontWeight: 600,
           }}
         >
-          {params.value}
+          {params?.value}
         </Box>
       ),
     },
@@ -167,7 +167,7 @@ const FreshReimTable: React.FC = () => {
       field: 'claimAmount',
       headerName: 'Claim Amount',
       width: 130,
-      valueFormatter: (params: any) => `₹${params.value?.toLocaleString('en-IN') || 0}`,
+      valueFormatter: (params: any) => `₹${params?.value?.toLocaleString('en-IN') || 0}`,
     },
     { field: 'proposerName', headerName: 'Proposer Name', width: 150 },
     { field: 'memberName', headerName: 'Patient Name', width: 150 },
@@ -215,13 +215,13 @@ const FreshReimTable: React.FC = () => {
           initialState={{
             pagination: { paginationModel: { pageSize: 50 } },
           }}
-          getRowClassName={(params) => getTatColor(params.row.tat)}
+          getRowClassName={(params) => getTatColor(params?.row.tat)}
           sx={{
             '& .MuiDataGrid-cell': {
               borderColor: theme.palette.divider,
             },
             '& .MuiDataGrid-columnHeaders': {
-              background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
               color: '#7a7a7a',
               fontSize: '0.875rem',
               fontWeight: 700,

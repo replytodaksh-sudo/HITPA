@@ -462,10 +462,10 @@ const UserManagement: React.FC = () => {
       headerName: 'Name',
       width: 200,
       renderCell: (params) => (
-        <span>{params.row?.firstName} {params.row?.middleName || ''} {params.row?.lastName}</span>
+        <span>{params?.row?.firstName} {params?.row?.middleName || ''} {params?.row?.lastName}</span>
       )
       //   valueGetter: (params: any) =>
-      // `${params.row?.firstName} ${params.row?.middleName || ''} ${params.row?.lastName}`.trim(),
+      // `${params?.row?.firstName} ${params?.row?.middleName || ''} ${params?.row?.lastName}`.trim(),
     },
     { field: 'userType', headerName: 'User Type', width: 150 },
     { field: 'emailId', headerName: 'Email', width: 200 },
@@ -478,14 +478,14 @@ const UserManagement: React.FC = () => {
         <Box sx={{ display: 'flex', gap: 0.5 }}>
           <IconButton
             size="small"
-            onClick={() => handleViewUser(params.row.userCode)}
+            onClick={() => handleViewUser(params?.row.userCode)}
             sx={{ color: 'primary.main' }}
           >
             <VisibilityIcon fontSize="small" />
           </IconButton>
           <IconButton
             size="small"
-            onClick={() => handleEditUser(params.row.userCode)}
+            onClick={() => handleEditUser(params?.row.userCode)}
             sx={{ color: 'success.main' }}
           >
             <EditIcon fontSize="small" />
@@ -498,7 +498,7 @@ const UserManagement: React.FC = () => {
           </IconButton>
           <IconButton
             size="small"
-            onClick={() => handleOpenPasswordModal(params.row.employeeCode)}
+            onClick={() => handleOpenPasswordModal(params?.row.employeeCode)}
             sx={{ color: 'warning.main' }}
           >
             <LockResetIcon fontSize="small" />
@@ -525,7 +525,7 @@ const UserManagement: React.FC = () => {
           startIcon={<AddIcon />}
           onClick={handleOpenModal}
           sx={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
             '&:hover': {
               background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)',
             },
@@ -550,7 +550,7 @@ const UserManagement: React.FC = () => {
               borderColor: theme.palette.divider,
             },
             '& .MuiDataGrid-columnHeaders': {
-              background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
               color: '#7a7a7a',
               fontSize: '0.875rem',
               fontWeight: 700,
@@ -581,7 +581,7 @@ const UserManagement: React.FC = () => {
       >
         <DialogTitle
           sx={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
             color: 'white',
             display: 'flex',
             justifyContent: 'space-between',
@@ -937,7 +937,7 @@ const UserManagement: React.FC = () => {
               variant="contained"
               onClick={handleSubmit}
               sx={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
                 '&:hover': {
                   background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)',
                 },
@@ -964,7 +964,7 @@ const UserManagement: React.FC = () => {
       >
         <DialogTitle
           sx={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
             color: 'white',
             display: 'flex',
             justifyContent: 'space-between',
@@ -993,7 +993,7 @@ const UserManagement: React.FC = () => {
                 onClick={verifyPassword}
                 fullWidth
                 sx={{
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
                 }}
               >
                 Verify
@@ -1021,7 +1021,7 @@ const UserManagement: React.FC = () => {
             onClick={resetPassword}
             disabled={!showPasswordBox || !newPassword}
             sx={{
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
               '&:hover': {
                 background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)',
               },

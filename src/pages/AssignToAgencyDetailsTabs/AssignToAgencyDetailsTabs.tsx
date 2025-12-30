@@ -294,7 +294,7 @@ const AssignToAgencyDetailsTabs: React.FC = () => {
           minHeight: '60vh',
         }}
       >
-        <CircularProgress size={60} thickness={4} />
+        <CircularProgress size={60} thickness={4} sx={{ color: '#2E5A96' }} />
       </Box>
     );
   }

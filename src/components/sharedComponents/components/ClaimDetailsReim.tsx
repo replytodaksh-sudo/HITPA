@@ -79,7 +79,7 @@ const ClaimDetailsReim: React.FC<ClaimDetailsReimProps> = ({ claimDetails, claim
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-        <CircularProgress />
+        <CircularProgress sx={{ color: '#2E5A96' }}/>
       </Box>
     );
   }
@@ -95,7 +95,7 @@ const ClaimDetailsReim: React.FC<ClaimDetailsReimProps> = ({ claimDetails, claim
       >
         <Box
           sx={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
             p: 2,
           }}
         >

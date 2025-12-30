@@ -250,7 +250,7 @@ const Login: React.FC = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+        background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -319,7 +319,7 @@ const Login: React.FC = () => {
             gutterBottom
             sx={{
               fontWeight: 700,
-              background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
               backgroundClip: 'text',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
@@ -403,7 +403,7 @@ const Login: React.FC = () => {
                 color="primary"
                 title="Refresh Captcha"
                 sx={{
-                  background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+                  background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
                   color: 'white',
                   '&:hover': {
                     background: 'linear-gradient(135deg, #764BA2 0%, #667EEA 100%)',
@@ -458,7 +458,7 @@ const Login: React.FC = () => {
             disabled={isLoading || !isCaptchaValid}
             sx={{
               py: 1.5,
-              background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
               fontSize: '1.1rem',
               fontWeight: 600,
               '&:hover': {
@@ -510,7 +510,7 @@ const Login: React.FC = () => {
       >
         <DialogTitle
           sx={{
-            background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
             color: 'white',
             fontWeight: 600,
           }}
@@ -541,7 +541,7 @@ const Login: React.FC = () => {
             variant="contained"
             onClick={handleForgotPassword}
             sx={{
-              background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
             }}
           >
             Send Password
@@ -566,7 +566,7 @@ const Login: React.FC = () => {
       >
         <DialogTitle
           sx={{
-            background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
             color: 'white',
             fontWeight: 600,
           }}
@@ -588,7 +588,7 @@ const Login: React.FC = () => {
               onClick={handleVerifyPassword}
               sx={{
                 mt: 0.5,
-                background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+                background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
               }}
             >
               Verify
@@ -623,7 +623,7 @@ const Login: React.FC = () => {
             onClick={handleResetPassword}
             disabled={!showPasswordBox}
             sx={{
-              background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
             }}
           >
             Submit

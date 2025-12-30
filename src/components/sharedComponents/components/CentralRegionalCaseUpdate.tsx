@@ -204,7 +204,7 @@ const CentralRegionalCaseUpdate: React.FC<CentralRegionalCaseUpdateProps> = ({
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 5 }}>
-        <CircularProgress />
+        <CircularProgress sx={{ color: '#2E5A96' }}/>
       </Box>
     );
   }

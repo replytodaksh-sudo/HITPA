@@ -159,7 +159,7 @@ const CentralNewCasesTabs: React.FC = () => {
             sx={{
               mb: 3,
               p: 2,
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
               borderRadius: 2,
               color: 'white',
             }}
@@ -227,7 +227,7 @@ const CentralNewCasesTabs: React.FC = () => {
                 '& .MuiTabs-indicator': {
                   height: 3,
                   borderRadius: '3px 3px 0 0',
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
                 },
               }}
             >

@@ -136,7 +136,7 @@ const ClaimTeamQcUpdate: React.FC<ClaimTeamQcUpdateProps> = ({
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-        <CircularProgress />
+        <CircularProgress sx={{ color: '#2E5A96' }}/>
       </Box>
     );
   }

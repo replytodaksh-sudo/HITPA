@@ -17,6 +17,10 @@ import {
   Receipt,
   NavigateNext,
 } from '@mui/icons-material';
+import {
+  Payment as PaymentIcon,
+  Receipt as ReceiptIcon,
+} from '@mui/icons-material';
 import RegCentralQueryReim from './children/RegCentralQueryReim';
 import RegCentralQueryCashless from './children/RegCentralQueryCashless';
 
@@ -124,120 +128,196 @@ const RegCentralQuery: React.FC = () => {
   // ============================================================================
 
   return (
-    <Container maxWidth={false} sx={{ py: 3 }}>
+    // <Container maxWidth={false} sx={{ py: 3 }}>
+    //   <Card
+    //     sx={{
+    //       borderRadius: 3,
+    //       boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+    //       overflow: 'visible',
+    //     }}
+    //   >
+    //     <CardContent sx={{ p: 0 }}>
+    //       {/* Header Section with Gradient */}
+    //       <Box
+    //         sx={{
+    //           p: 3,
+    //           background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
+    //           color: 'white',
+    //           borderRadius: '12px 12px 0 0',
+    //         }}
+    //       >
+    //         <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
+    //           Central Query
+    //         </Typography>
+
+    //         {/* Breadcrumbs */}
+    //         <Breadcrumbs
+    //           separator={<NavigateNext fontSize="small" sx={{ color: 'rgba(255,255,255,0.7)' }} />}
+    //           sx={{
+    //             color: 'white',
+    //             '& .MuiBreadcrumbs-ol': {
+    //               flexWrap: 'nowrap',
+    //             },
+    //           }}
+    //         >
+    //           <Link
+    //             underline="hover"
+    //             sx={{
+    //               color: 'rgba(255,255,255,0.9)',
+    //               cursor: 'pointer',
+    //               '&:hover': { color: 'white' },
+    //             }}
+    //             onClick={() => console.log('Navigate to QC')}
+    //           >
+    //             QC
+    //           </Link>
+    //           <Link
+    //             underline="hover"
+    //             sx={{
+    //               color: 'rgba(255,255,255,0.9)',
+    //               cursor: 'pointer',
+    //               '&:hover': { color: 'white' },
+    //             }}
+    //             onClick={() => console.log('Navigate to Regional QC')}
+    //           >
+    //             Regional QC
+    //           </Link>
+    //           <Typography sx={{ color: 'white', fontWeight: 600 }}>Central Query</Typography>
+    //         </Breadcrumbs>
+    //       </Box>
+
+    //       {/* Tabs Section */}
+    //       <Box
+    //         sx={{
+    //           borderBottom: 1,
+    //           borderColor: 'divider',
+    //           background: 'linear-gradient(to bottom, #EFF6FF 0%, #FFFFFF 100%)',
+    //         }}
+    //       >
+    //         <Tabs
+    //           value={activeTab}
+    //           onChange={handleTabChange}
+    //           variant="fullWidth"
+    //           sx={{
+    //             px: 2,
+    //             '& .MuiTab-root': {
+    //               fontSize: '0.95rem',
+    //               fontWeight: 600,
+    //               textTransform: 'none',
+    //               minHeight: '64px',
+    //               color: 'text.secondary',
+    //               transition: 'all 0.3s ease',
+    //               '&:hover': {
+    //                 color: 'primary.main',
+    //                 background: 'rgba(59, 130, 246, 0.05)',
+    //               },
+    //               '&.Mui-selected': {
+    //                 color: 'primary.main',
+    //               },
+    //             },
+    //             '& .MuiTabs-indicator': {
+    //               height: '3px',
+    //               borderRadius: '3px 3px 0 0',
+    //               background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
+    //             },
+    //           }}
+    //         >
+    //           {tabs.map((tab, index) => (
+    //             <Tab
+    //               key={index}
+    //               label={tab.label}
+    //               icon={tab.icon}
+    //               iconPosition="start"
+    //               id={`qc-tab-${index}`}
+    //               aria-controls={`qc-tabpanel-${index}`}
+    //             />
+    //           ))}
+    //         </Tabs>
+    //       </Box>
+
+    //       {/* Tab Panels */}
+    //       <Box sx={{ px: 3 }}>
+    //         {tabs.map((tab, index) => (
+    //           <TabPanel key={index} value={activeTab} index={index}>
+    //             {tab.component}
+    //           </TabPanel>
+    //         ))}
+    //       </Box>
+    //     </CardContent>
+    //   </Card>
+    // </Container>
+    <Container sx={{ mt: 2 }}>
       <Card
         sx={{
-          borderRadius: 3,
-          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
-          overflow: 'visible',
+          // borderRadius: 3,
+          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+          overflow: 'hidden',
         }}
       >
         <CardContent sx={{ p: 0 }}>
-          {/* Header Section with Gradient */}
-          <Box
-            sx={{
-              p: 3,
-              background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
-              color: 'white',
-              borderRadius: '12px 12px 0 0',
-            }}
-          >
-            <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
-              Central Query
-            </Typography>
-
-            {/* Breadcrumbs */}
-            <Breadcrumbs
-              separator={<NavigateNext fontSize="small" sx={{ color: 'rgba(255,255,255,0.7)' }} />}
-              sx={{
-                color: 'white',
-                '& .MuiBreadcrumbs-ol': {
-                  flexWrap: 'nowrap',
-                },
-              }}
-            >
-              <Link
-                underline="hover"
-                sx={{
-                  color: 'rgba(255,255,255,0.9)',
-                  cursor: 'pointer',
-                  '&:hover': { color: 'white' },
-                }}
-                onClick={() => console.log('Navigate to QC')}
-              >
-                QC
-              </Link>
-              <Link
-                underline="hover"
-                sx={{
-                  color: 'rgba(255,255,255,0.9)',
-                  cursor: 'pointer',
-                  '&:hover': { color: 'white' },
-                }}
-                onClick={() => console.log('Navigate to Regional QC')}
-              >
-                Regional QC
-              </Link>
-              <Typography sx={{ color: 'white', fontWeight: 600 }}>Central Query</Typography>
-            </Breadcrumbs>
-          </Box>
-
-          {/* Tabs Section */}
+          {/* Modern Tabs */}
           <Box
             sx={{
               borderBottom: 1,
               borderColor: 'divider',
-              background: 'linear-gradient(to bottom, #EFF6FF 0%, #FFFFFF 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
+              px: 3,
             }}
           >
             <Tabs
               value={activeTab}
               onChange={handleTabChange}
-              variant="fullWidth"
+              TabIndicatorProps={{
+                sx: {
+                  height: 3,
+                  backgroundColor: 'white',
+                  borderRadius: '3px 3px 0 0',
+                },
+              }}
               sx={{
-                px: 2,
                 '& .MuiTab-root': {
-                  fontSize: '0.95rem',
+                  color: 'rgba(255,255,255,0.7)',
                   fontWeight: 600,
+                  fontSize: '1rem',
                   textTransform: 'none',
-                  minHeight: '64px',
-                  color: 'text.secondary',
+                  minHeight: 64,
+                  px: 3,
                   transition: 'all 0.3s ease',
                   '&:hover': {
-                    color: 'primary.main',
-                    background: 'rgba(59, 130, 246, 0.05)',
+                    color: 'white',
+                    bgcolor: 'rgba(255,255,255,0.1)',
                   },
                   '&.Mui-selected': {
-                    color: 'primary.main',
+                    color: 'white',
                   },
-                },
-                '& .MuiTabs-indicator': {
-                  height: '3px',
-                  borderRadius: '3px 3px 0 0',
-                  background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
                 },
               }}
             >
-              {tabs.map((tab, index) => (
-                <Tab
-                  key={index}
-                  label={tab.label}
-                  icon={tab.icon}
-                  iconPosition="start"
-                  id={`qc-tab-${index}`}
-                  aria-controls={`qc-tabpanel-${index}`}
-                />
-              ))}
+              <Tab
+                icon={<PaymentIcon sx={{ mb: 0.5 }} />}
+                iconPosition="start"
+                label="Cashless"
+                id="tab-0"
+                aria-controls="tabpanel-0"
+              />
+              <Tab
+                icon={<ReceiptIcon sx={{ mb: 0.5 }} />}
+                iconPosition="start"
+                label="Reimbursement"
+                id="tab-1"
+                aria-controls="tabpanel-1"
+              />
             </Tabs>
           </Box>
 
-          {/* Tab Panels */}
-          <Box sx={{ px: 3 }}>
-            {tabs.map((tab, index) => (
-              <TabPanel key={index} value={activeTab} index={index}>
-                {tab.component}
-              </TabPanel>
-            ))}
+          {/* Tab Content */}
+          <Box sx={{ px: 3, pb: 3 }}>
+            <TabPanel value={activeTab} index={0}>
+              <RegCentralQueryCashless />
+            </TabPanel>
+            <TabPanel value={activeTab} index={1}>
+              <RegCentralQueryReim />
+            </TabPanel>
           </Box>
         </CardContent>
       </Card>

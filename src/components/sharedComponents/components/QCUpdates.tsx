@@ -742,7 +742,7 @@ const QCUpdates: React.FC<QCUpdatesProps> = ({ editable = true }) => {
                   onClick={submitQCUpdate}
                   disabled={loading}
                   sx={{
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
                     '&:hover': {
                       background: 'linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%)',
                     },

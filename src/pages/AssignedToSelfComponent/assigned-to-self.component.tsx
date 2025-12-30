@@ -6,6 +6,7 @@ import {
   Breadcrumbs,
   Card,
   CardContent,
+  Container,
   Link,
   Tab,
   Tabs,
@@ -80,119 +81,195 @@ const AssignedToSelf: React.FC = () => {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
+    // <Box sx={{ p: 3 }}>
+    //   <Card
+    //     sx={{
+    //       boxShadow: 3,
+    //       borderRadius: 3,
+    //     }}
+    //   >
+    //     <CardContent>
+    //       {/* Tabs */}
+    //       <Tabs
+    //         value={activeTab}
+    //         onChange={handleTabChange}
+    //         sx={{
+    //           mb: 2,
+    //           '& .MuiTab-root': {
+    //             textTransform: 'none',
+    //             fontWeight: 600,
+    //             fontSize: '0.95rem',
+    //             minHeight: 48,
+    //             transition: 'all 0.3s ease',
+    //             '&:hover': {
+    //               bgcolor: 'action.hover',
+    //             },
+    //             '&.Mui-selected': {
+    //               color: 'primary.main',
+    //             },
+    //           },
+    //           '& .MuiTabs-indicator': {
+    //             height: 3,
+    //             borderRadius: '3px 3px 0 0',
+    //             background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
+    //           },
+    //         }}
+    //       >
+    //         <Tab
+    //           label="Cashless"
+    //           icon={<PaymentIcon />}
+    //           iconPosition="start"
+    //           id="assigned-tab-0"
+    //           aria-controls="assigned-tabpanel-0"
+    //         />
+    //         <Tab
+    //           label="Reimbursement"
+    //           icon={<ReceiptIcon />}
+    //           iconPosition="start"
+    //           id="assigned-tab-1"
+    //           aria-controls="assigned-tabpanel-1"
+    //         />
+    //       </Tabs>
+
+    //       {/* Breadcrumbs */}
+    //       <Breadcrumbs
+    //         separator={<NavigateNextIcon fontSize="small" />}
+    //         aria-label="breadcrumb"
+    //         sx={{
+    //           mb: 3,
+    //           '& .MuiBreadcrumbs-ol': {
+    //             flexWrap: 'nowrap',
+    //           },
+    //         }}
+    //       >
+    //         <Link
+    //           underline="hover"
+    //           color="inherit"
+    //           href="#"
+    //           onClick={(e) => e.preventDefault()}
+    //           sx={{
+    //             display: 'flex',
+    //             alignItems: 'center',
+    //             '&:hover': {
+    //               color: 'primary.main',
+    //             },
+    //           }}
+    //         >
+    //           Investigation
+    //         </Link>
+    //         <Link
+    //           underline="hover"
+    //           color="inherit"
+    //           href="#"
+    //           onClick={(e) => e.preventDefault()}
+    //           sx={{
+    //             display: 'flex',
+    //             alignItems: 'center',
+    //             '&:hover': {
+    //               color: 'primary.main',
+    //             },
+    //           }}
+    //         >
+    //           On Field Cases
+    //         </Link>
+    //         <Typography
+    //           color="text.primary"
+    //           sx={{
+    //             display: 'flex',
+    //             alignItems: 'center',
+    //             fontWeight: 600,
+    //           }}
+    //         >
+    //           Assigned To Self
+    //         </Typography>
+    //       </Breadcrumbs>
+
+    //       {/* Tab Panels */}
+    //       <TabPanel value={activeTab} index={0}>
+    //         <AssignedToSelfCashless />
+    //       </TabPanel>
+    //       <TabPanel value={activeTab} index={1}>
+    //         <AssignedToSelfReimburse />
+    //       </TabPanel>
+    //     </CardContent>
+    //   </Card>
+    // </Box>
+    <Container sx={{ mt: 2 }}>
       <Card
         sx={{
-          boxShadow: 3,
-          borderRadius: 3,
+          // borderRadius: 3,
+          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+          overflow: 'hidden',
         }}
       >
-        <CardContent>
-          {/* Tabs */}
-          <Tabs
-            value={activeTab}
-            onChange={handleTabChange}
+        <CardContent sx={{ p: 0 }}>
+          {/* Modern Tabs */}
+          <Box
             sx={{
-              mb: 2,
-              '& .MuiTab-root': {
-                textTransform: 'none',
-                fontWeight: 600,
-                fontSize: '0.95rem',
-                minHeight: 48,
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  bgcolor: 'action.hover',
-                },
-                '&.Mui-selected': {
-                  color: 'primary.main',
-                },
-              },
-              '& .MuiTabs-indicator': {
-                height: 3,
-                borderRadius: '3px 3px 0 0',
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              },
+              borderBottom: 1,
+              borderColor: 'divider',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
+              px: 3,
             }}
           >
-            <Tab
-              label="Cashless"
-              icon={<PaymentIcon />}
-              iconPosition="start"
-              id="assigned-tab-0"
-              aria-controls="assigned-tabpanel-0"
-            />
-            <Tab
-              label="Reimbursement"
-              icon={<ReceiptIcon />}
-              iconPosition="start"
-              id="assigned-tab-1"
-              aria-controls="assigned-tabpanel-1"
-            />
-          </Tabs>
-
-          {/* Breadcrumbs */}
-          <Breadcrumbs
-            separator={<NavigateNextIcon fontSize="small" />}
-            aria-label="breadcrumb"
-            sx={{
-              mb: 3,
-              '& .MuiBreadcrumbs-ol': {
-                flexWrap: 'nowrap',
-              },
-            }}
-          >
-            <Link
-              underline="hover"
-              color="inherit"
-              href="#"
-              onClick={(e) => e.preventDefault()}
+            <Tabs
+              value={activeTab}
+              onChange={handleTabChange}
+              TabIndicatorProps={{
+                sx: {
+                  height: 3,
+                  backgroundColor: 'white',
+                  borderRadius: '3px 3px 0 0',
+                },
+              }}
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                '&:hover': {
-                  color: 'primary.main',
+                '& .MuiTab-root': {
+                  color: 'rgba(255,255,255,0.7)',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  textTransform: 'none',
+                  minHeight: 64,
+                  px: 3,
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    color: 'white',
+                    bgcolor: 'rgba(255,255,255,0.1)',
+                  },
+                  '&.Mui-selected': {
+                    color: 'white',
+                  },
                 },
               }}
             >
-              Investigation
-            </Link>
-            <Link
-              underline="hover"
-              color="inherit"
-              href="#"
-              onClick={(e) => e.preventDefault()}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                '&:hover': {
-                  color: 'primary.main',
-                },
-              }}
-            >
-              On Field Cases
-            </Link>
-            <Typography
-              color="text.primary"
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                fontWeight: 600,
-              }}
-            >
-              Assigned To Self
-            </Typography>
-          </Breadcrumbs>
+              <Tab
+                icon={<PaymentIcon sx={{ mb: 0.5 }} />}
+                iconPosition="start"
+                label="Cashless"
+                id="tab-0"
+                aria-controls="tabpanel-0"
+              />
+              <Tab
+                icon={<ReceiptIcon sx={{ mb: 0.5 }} />}
+                iconPosition="start"
+                label="Reimbursement"
+                id="tab-1"
+                aria-controls="tabpanel-1"
+              />
+            </Tabs>
+          </Box>
 
-          {/* Tab Panels */}
-          <TabPanel value={activeTab} index={0}>
-            <AssignedToSelfCashless />
-          </TabPanel>
-          <TabPanel value={activeTab} index={1}>
-            <AssignedToSelfReimburse />
-          </TabPanel>
+          {/* Tab Content */}
+          <Box sx={{ px: 3, pb: 3 }}>
+            <TabPanel value={activeTab} index={0}>
+              <AssignedToSelfCashless />
+            </TabPanel>
+            <TabPanel value={activeTab} index={1}>
+              <AssignedToSelfReimburse />
+            </TabPanel>
+          </Box>
         </CardContent>
       </Card>
-    </Box>
+    </Container>
   );
 };
 

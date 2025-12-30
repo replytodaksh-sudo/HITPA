@@ -54,10 +54,10 @@ const CentralNewCasesAction: React.FC = () => {
   };
 
   return (
-    <Container maxWidth={false} sx={{ mt: 4 }}>
+    <Container sx={{ mt: 2 }}>
       <Card
         sx={{
-          borderRadius: 3,
+          // borderRadius: 3,
           boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
           overflow: 'hidden',
         }}
@@ -68,7 +68,7 @@ const CentralNewCasesAction: React.FC = () => {
             sx={{
               borderBottom: 1,
               borderColor: 'divider',
-              background: 'linear-gradient(135deg, #667EEA 0%, #764BA2 100%)',
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
               px: 3,
             }}
           >

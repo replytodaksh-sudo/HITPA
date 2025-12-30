@@ -10,6 +10,8 @@ import {
   Tooltip,
   Typography,
   Chip,
+  alpha,
+  useTheme,
 } from '@mui/material';
 import type { GridColDef, GridRowParams } from '@mui/x-data-grid';
 import { DataGrid } from '@mui/x-data-grid';
@@ -46,7 +48,7 @@ interface Claim {
 
 const CentralInvestigationCompletedCashless: React.FC = () => {
   const navigate = useNavigate();
-  
+  const theme = useTheme();
   const [claims, setClaims] = useState<Claim[]>([]);
   const [loading, setLoading] = useState(false);
   const [claimNo, setClaimNo] = useState('');
@@ -86,7 +88,7 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
         pageNo,
         pageSize
       );
-      
+
       if (response.statusCode === 0) {
         setClaims(response.payload || []);
       }
@@ -108,7 +110,7 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
       const response = await claimsService.getAllCentralInvestigationCompletedBySearchReClaims(
         claimNo
       );
-      
+
       if (response.statusCode === 0) {
         setClaims(response.payload || []);
       }
@@ -127,7 +129,7 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
 
   // Handle row click
   const handleRowClick = (params: GridRowParams) => {
-    const claim = params.row as Claim;
+    const claim = params?.row as Claim;
     navigate(
       `/admin/central-completed-form/${claim.investigationID}?claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`
     );
@@ -155,7 +157,7 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
             '&:hover': { textDecoration: 'underline' },
           }}
         >
-          {params.value}
+          {params?.value}
         </Box>
       ),
     },
@@ -216,7 +218,7 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
       width: 140,
       renderCell: (params) => (
         <Typography variant="body2" fontWeight={600}>
-          ₹{params.value?.toLocaleString('en-IN')}
+          ₹{params?.value?.toLocaleString('en-IN')}
         </Typography>
       ),
     },
@@ -261,34 +263,34 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
       width: 150,
       renderCell: (params) => (
         <Chip
-          label={params.value}
+          label={params?.value}
           size="small"
           color="secondary"
           variant="outlined"
         />
       ),
     },
-    {
-      field: 'actions',
-      headerName: 'Actions',
-      width: 100,
-      sortable: false,
-      filterable: false,
-      renderCell: (params:any) => (
-        <Tooltip title="View Details">
-          <IconButton
-            size="small"
-            color="primary"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleRowClick(params);
-            }}
-          >
-            <ViewIcon />
-          </IconButton>
-        </Tooltip>
-      ),
-    },
+    // {
+    //   field: 'actions',
+    //   headerName: 'Actions',
+    //   width: 100,
+    //   sortable: false,
+    //   filterable: false,
+    //   renderCell: (params:any) => (
+    //     <Tooltip title="View Details">
+    //       <IconButton
+    //         size="small"
+    //         color="primary"
+    //         onClick={(e) => {
+    //           e.stopPropagation();
+    //           handleRowClick(params);
+    //         }}
+    //       >
+    //         <ViewIcon />
+    //       </IconButton>
+    //     </Tooltip>
+    //   ),
+    // },
   ];
 
   return (
@@ -297,7 +299,7 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
       <Card sx={{ mb: 3 }}>
         <CardContent>
           <Grid container spacing={2} alignItems="flex-end">
-            <Grid size={{ xs: 12, sm: 8, md:6 }}>
+            <Grid size={{ xs: 12, sm: 8, md: 6 }}>
               <TextField
                 fullWidth
                 label="Claim No."
@@ -310,7 +312,7 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
                 autoComplete="off"
               />
             </Grid>
-            <Grid size={{ xs: 12, sm: 4, md:2 }}>
+            <Grid size={{ xs: 12, sm: 4, md: 2 }}>
               <Button
                 fullWidth
                 variant="contained"
@@ -318,7 +320,7 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
                 onClick={handleSearch}
                 disabled={loading || !claimNo.trim()}
                 sx={{
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                  background: loading || !claimNo.trim() ? '' : 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
                   '&:hover': {
                     background: 'linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%)',
                   },
@@ -327,7 +329,7 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
                 Search
               </Button>
             </Grid>
-            <Grid size={{ xs: 12, sm: 4, md:2 }}>
+            <Grid size={{ xs: 12, sm: 4, md: 2 }}>
               <Button
                 fullWidth
                 variant="outlined"
@@ -347,7 +349,7 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
         <DataGrid
           rows={claims}
           columns={columns}
-          getRowId={(row) => row.investigationID}
+          getRowId={(row) => row?.investigationID}
           loading={loading}
           pagination
           paginationMode="server"
@@ -357,24 +359,26 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
           pageSizeOptions={[25, 50, 100]}
           onRowClick={handleRowClick}
           sx={{
-            minHeight: 500,
-            '& .MuiDataGrid-row': {
-              cursor: 'pointer',
-              '&:hover': {
-                backgroundColor: 'action.hover',
-              },
-            },
+            border: 'none',
             '& .MuiDataGrid-cell': {
-              borderRight: '1px solid',
-              borderColor: 'divider',
+              borderColor: theme.palette.divider,
             },
             '& .MuiDataGrid-columnHeaders': {
-              backgroundColor: '#6F62C2',
-              color: 'white',
-              fontWeight: 600,
-              '& .MuiDataGrid-columnHeaderTitle': {
-                fontWeight: 600,
-              },
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
+              color: '#7a7a7a',
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              borderRadius: 0,
+            },
+            '& .MuiDataGrid-columnHeaderTitle': {
+              fontWeight: 700,
+            },
+            '& .MuiDataGrid-row:hover': {
+              bgcolor: alpha(theme.palette.primary.main, 0.05),
+            },
+            '& .MuiDataGrid-footerContainer': {
+              borderTop: `2px solid ${theme.palette.divider}`,
+              bgcolor: alpha(theme.palette.primary.main, 0.02),
             },
           }}
           disableRowSelectionOnClick
