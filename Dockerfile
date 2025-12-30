@@ -1,7 +1,7 @@
 # Use Node.js 18+ (supports structuredClone)
 FROM node:20-alpine
 
-WORKDIR /app
+WORKDIR /
 
 RUN npm install
 
