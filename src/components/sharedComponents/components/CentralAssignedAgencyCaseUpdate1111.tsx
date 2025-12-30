@@ -184,11 +184,11 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
         localStorage.clear();
         alert('Case submitted successfully!');
         
-        if (redirectTo) {
-          navigate(redirectTo);
-        } else {
-          navigate('/admin/dashboard');
-        }
+        // if (redirectTo) {
+        //   navigate(redirectTo);
+        // } else {
+        //   navigate('/admin/dashboard');
+        // }
       }
     } catch (error) {
       console.error('Error submitting case:', error);

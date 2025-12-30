@@ -97,7 +97,7 @@ const QcPreview: React.FC<QcPreviewProps> = ({
         if (response.statusCode === 0) {
           alert('Final submission successful');
           localStorage.clear();
-          navigate(redirectTo || '/admin/dashboard');
+          // navigate(redirectTo || '/admin/dashboard');
         } else if (response.statusCode === 4004) {
           alert(response.message);
         }
@@ -119,7 +119,7 @@ const QcPreview: React.FC<QcPreviewProps> = ({
             if (response.statusCode === 0) {
               alert('Final submission successful');
               localStorage.clear();
-              navigate(redirectTo || '/admin/dashboard');
+              // navigate(redirectTo || '/admin/dashboard');
             }
           } else {
             // Build pending visits message
@@ -140,7 +140,7 @@ const QcPreview: React.FC<QcPreviewProps> = ({
           if (response.statusCode === 0) {
             alert('Final submission successful');
             localStorage.clear();
-            navigate(redirectTo || '/admin/dashboard');
+            // navigate(redirectTo || '/admin/dashboard');
           }
         }
       }

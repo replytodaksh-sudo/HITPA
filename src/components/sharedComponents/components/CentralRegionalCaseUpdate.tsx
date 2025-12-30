@@ -159,7 +159,7 @@ const CentralRegionalCaseUpdate: React.FC<CentralRegionalCaseUpdateProps> = ({
       if (response?.statusCode === 0) {
         localStorage.clear();
         alert('Final submission successful!');
-        navigate('/admin/dashboard');
+        // navigate('/admin/dashboard');
       }
     } catch (error) {
       console.error('Error submitting case update:', error);

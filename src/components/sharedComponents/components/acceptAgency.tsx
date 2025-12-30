@@ -598,7 +598,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
 
       if (response.statusCode === 0) {
         alert('Assignment successful!');
-        navigate(redirectTo);
+        // navigate(redirectTo);
       } else {
         setError(response.message || 'Assignment failed');
       }

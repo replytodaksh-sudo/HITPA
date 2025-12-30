@@ -85,6 +85,7 @@ const MainLayout: React.FC = () => {
       // Padding left for sidebar (only on desktop)
       pl: isMobile ? 0 : `${currentDrawerWidth}px`,
       minHeight: '100vh',
+      width:"60%",
       bgcolor: 'background.default',
       transition: theme.transitions.create(['padding-left'], {
         easing: theme.transitions.easing.sharp,

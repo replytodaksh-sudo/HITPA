@@ -149,8 +149,8 @@ const Login: React.FC = () => {
         }
         
         // Navigate to dashboard
-        window.location.href= "/admin/dashboard"
-        navigate('/admin/dashboard');
+        // window.location.href= "/admin/dashboard"
+        // navigate('/admin/dashboard');
       } else if (response.statusCode === 4006) {
         // Session already active
         const result = await notificationService.showAlertConfirm(

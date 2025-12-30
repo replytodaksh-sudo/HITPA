@@ -1577,7 +1577,7 @@ const Dashboard: React.FC = () => {
     };
 
     const fetchAllDashboardDetails = async () => {
-        setLoading(true);
+        // setLoading(true);
         try {
             const response = await DashboardService.allDashboard();
             console.log("dashboard response", response);
@@ -1588,7 +1588,7 @@ const Dashboard: React.FC = () => {
         } catch (error) {
             console.error('Failed to fetch dashboard:', error);
         } finally {
-            setLoading(false);
+            // setLoading(false);
         }
     };
 
@@ -1619,7 +1619,7 @@ const Dashboard: React.FC = () => {
 
     const handleCaseTypeChange = async (caseType: string) => {
         setSelectedCaseType(caseType);
-        setLoading(true);
+        // setLoading(true);
 
         try {
             let response;
@@ -1641,7 +1641,7 @@ const Dashboard: React.FC = () => {
         } catch (error) {
             console.error('Failed to change case type:', error);
         } finally {
-            setLoading(false);
+            // setLoading(false);
         }
     };
 
@@ -1791,6 +1791,24 @@ const Dashboard: React.FC = () => {
             background: 'transparent',
             p: 4,
         }}>
+            {loading && (
+                <Backdrop
+                    sx={{
+                        color: '#fff',
+                        zIndex: (theme) => theme.zIndex.drawer + 1,
+                        background: 'rgba(0, 0, 0, 0.7)',
+                        backdropFilter: 'blur(5px)',
+                    }}
+                    open={loading}
+                >
+                    <Box sx={{ textAlign: 'center' }}>
+                        <CircularProgress size={60} thickness={4} sx={{ color: '#2E5A96' }} />
+                        <Typography variant="h6" sx={{ mt: 2, color: 'white' }}>
+                            Loading...
+                        </Typography>
+                    </Box>
+                </Backdrop>
+            )}
             {/* Header */}
             <Fade in timeout={500}>
                 <Box sx={{ mb: 4 }}>

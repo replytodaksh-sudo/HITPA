@@ -356,7 +356,7 @@ const InsuredVerification: React.FC<InsuredVerificationProps> = ({
       const data = await reimcaseUpdateService.addInsuredVerify(submitData, cleanId);
       if (data.statusCode === 0) {
         notificationService.showAlertSuccess(messages.insuredSavedDraft);
-        navigate(redirectTo || '/admin/dashboard');
+        // navigate(redirectTo || '/admin/dashboard');
       } else {
         notificationService.showAlertError(data.message);
       }
