@@ -3,10 +3,10 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-RUN npm install
-
 # Copy all source files
 COPY . .
+
+RUN npm install
 
 # Ensure the correct Node.js version
 RUN node -v
