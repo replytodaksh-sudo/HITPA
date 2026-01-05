@@ -93,7 +93,7 @@ const ClaimDetailsReim: React.FC<ClaimDetailsReimProps> = ({ claimDetails, claim
           overflow: 'hidden',
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
             p: 2,
@@ -105,7 +105,7 @@ const ClaimDetailsReim: React.FC<ClaimDetailsReimProps> = ({ claimDetails, claim
           >
             Claim Details - {claimsType === 'reim' ? 'Reimbursement' : 'Cashless'}
           </Typography>
-        </Box>
+        </Box> */}
 
         <CardContent sx={{ p: 4 }}>
           <Grid container spacing={4}>

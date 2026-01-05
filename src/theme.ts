@@ -1048,8 +1048,8 @@ const themeOptions: ThemeOptions = {
     MuiTableCell: {
       styleOverrides: {
         head: {
-          background: colors.table.header,
-          color: colors.table.headerText,
+          color: colors.table.header,
+          // color: colors.table.headerText,
           fontWeight: 700,
           fontSize: '0.75rem',
           letterSpacing: '0.05em',

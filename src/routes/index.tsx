@@ -64,6 +64,10 @@ import QueriesByClaimsTeam from '../pages/QueriesByClaimsTeam/QueriesByClaimsTea
 import CentralQCForm from '../pages/CentralQCForm/CentralQCForm';
 import CompletedInvestigationCompleted from "../pages/CompletedInvestigationCompleted/CompletedInvestigationCompleted";
 import CentralInvestigationCompleted from "../pages/CentralInvestigationCompleted/CentralInvestigationCompleted";
+import CentralDeniedByRegionalTabs from "../pages/CentralDeniedByRegionalTabs/CentralDeniedByRegionalTabs";
+import CentralQueryForms from "../pages/QCRegCentralQuery/QCRegCentralQuery";
+import QCPendingFromCentralForms from "../pages/QCRegPendingFromCentralForm/QCRegPendingFromCentralForm";
+import RegQCPendingFormsReim from "../pages/RegQCPendingFormsReim/RegQCPendingFormsReim";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -557,6 +561,22 @@ const AppRoutes: React.FC = () => {
           }
         />
         <Route
+          path="qc-pending-central-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <QCPendingFromCentralForms />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="reg-qc-pending-reim/:investigationId"
+          element={
+            <ProtectedRoute>
+              <RegQCPendingFormsReim />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="fresh-case-form/:investigationId"
           element={
             <ProtectedRoute>
@@ -577,6 +597,14 @@ const AppRoutes: React.FC = () => {
           element={
             <ProtectedRoute>
               <CentralAssignedToRegionalTabs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="denied-by-regional/:investigationId"
+          element={
+            <ProtectedRoute>
+              <CentralDeniedByRegionalTabs />
             </ProtectedRoute>
           }
         />
@@ -652,19 +680,27 @@ const AppRoutes: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="agency-self-denied-form/:investigationId"
           element={
             <ProtectedRoute>
               <AgencySelfDeniedTabs />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route
           path="fresh-central-mandate/:investigationId"
           element={
             <ProtectedRoute>
               <CentralMandatedTabs />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="central-query-form/:investigationId"
+          element={
+            <ProtectedRoute>
+              <CentralQueryForms />
             </ProtectedRoute>
           }
         />

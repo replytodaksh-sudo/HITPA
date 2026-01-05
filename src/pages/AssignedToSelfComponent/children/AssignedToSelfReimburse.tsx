@@ -185,8 +185,8 @@ const AssignedToSelfReimburse: React.FC = () => {
     ];
 
     return (
-        <Box sx={{ p: 3 }}>
-            <Paper elevation={3} sx={{ p: 3 }}>
+        <Box sx={{ p: 0 }}>
+            <Paper elevation={3} sx={{ p: 1 }}>
                 {/* TAT Filter */}
                 <Box sx={{ mb: 3, display: 'flex', justifyContent: 'flex-start' }}>
                     <FormControl sx={{ minWidth: 250 }}>

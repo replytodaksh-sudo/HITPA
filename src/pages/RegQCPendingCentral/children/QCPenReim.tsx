@@ -141,7 +141,7 @@ const QCPenReim: React.FC = () => {
 
     const handleViewClick = (investigationID: string, claim: CashlessClaim) => {
         navigate(
-            `/admin/qc-pending-central-form/${investigationID}?claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`
+            `/admin/reg-qc-pending-reim/${investigationID}?claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`
         );
     };
 

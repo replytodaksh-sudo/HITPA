@@ -147,7 +147,7 @@ console.log("claimDetails in PreAuth:", claimDetails);
   return (
     <Box sx={{ mt: 3 }}>
       {/* Past Claim History */}
-      {shouldShowPastClaims && (
+      {/* {shouldShowPastClaims && (
         <>
           <Typography
             variant="subtitle1"
@@ -196,7 +196,7 @@ console.log("claimDetails in PreAuth:", claimDetails);
             </Table>
           </TableContainer>
         </>
-      )}
+      )} */}
 
       {/* Claim Details Card */}
       <Card
@@ -334,14 +334,14 @@ console.log("claimDetails in PreAuth:", claimDetails);
       </Card>
 
       {/* Bill Breakup Table 1 */}
-      <Typography
+      {/* <Typography
         variant="subtitle1"
         sx={{ fontWeight: 700, color: '#6F62C2', mb: 2 }}
       >
         Bill Breakup
-      </Typography>
+      </Typography> */}
 
-      <TableContainer component={Paper} sx={{ mb: 4, boxShadow: 2 }}>
+      {/* <TableContainer component={Paper} sx={{ mb: 4, boxShadow: 2 }}>
         <Table size="small">
           <TableHead>
             <TableRow sx={{ bgcolor: '#f5f5f5' }}>
@@ -360,10 +360,10 @@ console.log("claimDetails in PreAuth:", claimDetails);
             </TableRow>
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
 
       {/* Bill Breakup Table 2 */}
-      <TableContainer component={Paper} sx={{ mb: 4, boxShadow: 2 }}>
+      {/* <TableContainer component={Paper} sx={{ mb: 4, boxShadow: 2 }}>
         <Table size="small">
           <TableHead>
             <TableRow sx={{ bgcolor: '#f5f5f5' }}>
@@ -382,7 +382,7 @@ console.log("claimDetails in PreAuth:", claimDetails);
             </TableRow>
           </TableBody>
         </Table>
-      </TableContainer>
+      </TableContainer> */}
     </Box>
   );
 };

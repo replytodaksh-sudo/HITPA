@@ -1,227 +1,212 @@
+// // File: src/components/CentralDeniedByRegionalTabs.tsx
 // import React, { useState, useEffect } from 'react';
-// import { Box, Paper, Typography, Chip, Tabs, Tab } from '@mui/material';
-// import { useParams, useLocation } from 'react-router-dom';
-// import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-// import InfoIcon from '@mui/icons-material/Info';
-// import DescriptionIcon from '@mui/icons-material/Description';
-// import AssignmentIcon from '@mui/icons-material/Assignment';
-// import UpdateIcon from '@mui/icons-material/Update';
-// import HistoryIcon from '@mui/icons-material/History';
-// import Logs from '../../components/sharedComponents/components/Logs';
-// import HospitalInfo from '../../components/sharedComponents/components/HospitalInfo';
-// import ClaimDetailsReim from '../../components/sharedComponents/components/ClaimDetailsReim';
+// import { useParams, useSearchParams } from 'react-router-dom';
+// import {
+//   Box,
+//   Card,
+//   CardContent,
+//   Tabs,
+//   Tab,
+//   Typography,
+//   Chip,
+//   Grid,
+// } from '@mui/material';
 // import PreAuth from '../../components/sharedComponents/components/PreAuth';
-// import { claimsService } from '../../services/claims.service';
+// import ClaimDetailsReim from '../../components/sharedComponents/components/ClaimDetailsReim';
+// import HospitalInfo from '../../components/sharedComponents/components/HospitalInfo';
 // import CaseInfoComponent from '../../components/sharedComponents/components/CaseInfoComponent';
-// import CentralRegionalCaseUpdate from '../../components/sharedComponents/components/CentralRegionalCaseUpdate';
-// import CentralRegionalDocuments from '../../components/sharedComponents/components/CentralRegionalDocuments';
+// import Logs from '../../components/sharedComponents/components/Logs';
+// import claimsService from '../../services/claims.service';
+// import CentralDeniedRegionalAcceptDeny from '../../components/sharedComponents/components/CentralDeniedRegionalAcceptDeny';
 
 // interface TabPanelProps {
-//     children?: React.ReactNode;
-//     index: number;
-//     value: number;
+//   children?: React.ReactNode;
+//   index: number;
+//   value: number;
 // }
 
-// function TabPanel(props: TabPanelProps) {
-//     const { children, value, index, ...other } = props;
-
-//     return (
-//         <div
-//             role="tabpanel"
-//             hidden={value !== index}
-//             id={`case-tabpanel-${index}`}
-//             aria-labelledby={`case-tab-${index}`}
-//             {...other}
-//         >
-//             {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-//         </div>
-//     );
-// }
-
-// const CentralAssignedToRegionalTabs: React.FC = () => {
-//     const { investigationId } = useParams<{ investigationId: string }>();
-//     const location = useLocation();
-//     const [activeTab, setActiveTab] = useState(0);
-//     const [claimDetails, setClaimDetails] = useState<any>(null);
-
-//     // Get query parameters from location state or URL
-//     const searchParams = new URLSearchParams(location.search);
-//     const claimsType = searchParams.get('claimsType') || 'cashless';
-//     const claimNo = searchParams.get('claimNo') || '';
-//     const sbiclaimNo = searchParams.get('sbigclaimno') || '';
-
-//     // Clean investigation ID (remove any extra spaces)
-//     const cleanInvestigationId = investigationId?.split(' ')[0] || '';
-
-//     // Get claim type label
-//     const claimsTypeLabel =
-//         claimsType === 'cashless'
-//             ? 'Cashless'
-//             : claimsType === 'reim'
-//                 ? 'Reimbursement'
-//                 : '';
-
-//     useEffect(() => {
-//         if (cleanInvestigationId) {
-//             fetchClaimDetails(cleanInvestigationId);
-//         }
-//     }, [cleanInvestigationId]);
-
-//     const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-//         setActiveTab(newValue);
-//     };
-
-//     const fetchClaimDetails = async (invId: string) => {
-//         // setLoading(true);
-//         try {
-//             const response = await claimsService.claimDetails(invId);
-//             if (response.statusCode === 0) {
-//                 console.log("ppppp", response.payload)
-//                 setClaimDetails(response.payload);
-//                 sessionStorage.setItem('formEditable', response.payload.editable);
-//                 sessionStorage.setItem('canAssignToInternalTeam', response.payload.canAssignToInternalTeam);
-//             }
-//         } catch (error) {
-//             console.error('Error fetching claim details:', error);
-//         } finally {
-//             // setLoading(false);
-//         }
-//     };
-
-//     return (
-//         <Box sx={{ p: 3 }}>
-//             <Paper elevation={3}>
-//                 {/* Header Section */}
-//                 <Box
-//                     sx={{
-//                         background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
-//                         p: 2,
-//                         borderTopLeftRadius: 4,
-//                         borderTopRightRadius: 4,
-//                     }}
-//                 >
-//                     <Box
-//                         sx={{
-//                             display: 'flex',
-//                             justifyContent: 'space-between',
-//                             alignItems: 'center',
-//                             flexWrap: 'wrap',
-//                             gap: 2,
-//                         }}
-//                     >
-//                         {/* Investigation No */}
-//                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-//                             <Typography variant="body1" sx={{ color: 'white', fontWeight: 600 }}>
-//                                 Investigation No:
-//                             </Typography>
-//                             <Typography variant="body1" sx={{ color: 'white' }}>
-//                                 {cleanInvestigationId}
-//                             </Typography>
-//                             <Chip
-//                                 label={claimsTypeLabel}
-//                                 size="small"
-//                                 sx={{
-//                                     backgroundColor: '#ffc107',
-//                                     color: '#000',
-//                                     fontWeight: 600,
-//                                 }}
-//                             />
-//                         </Box>
-
-//                         {/* Claim No */}
-//                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-//                             <Typography variant="body1" sx={{ color: 'white', fontWeight: 600 }}>
-//                                 Claim No:
-//                             </Typography>
-//                             <Typography variant="body1" sx={{ color: 'white' }}>
-//                                 {sbiclaimNo}
-//                             </Typography>
-//                         </Box>
-
-//                         {/* TPA Claim No */}
-//                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-//                             <Typography variant="body1" sx={{ color: 'white', fontWeight: 600 }}>
-//                                 TPA Claim No:
-//                             </Typography>
-//                             <Typography variant="body1" sx={{ color: 'white' }}>
-//                                 {claimNo}
-//                             </Typography>
-//                         </Box>
-//                     </Box>
-//                 </Box>
-
-//                 {/* Tabs Section */}
-//                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-//                     <Tabs
-//                         value={activeTab}
-//                         onChange={handleTabChange}
-//                         variant="scrollable"
-//                         scrollButtons="auto"
-//                         sx={{
-//                             '& .MuiTab-root': {
-//                                 textTransform: 'none',
-//                                 fontWeight: 600,
-//                                 fontSize: '0.95rem',
-//                             },
-//                             '& .Mui-selected': {
-//                                 color: '#667eea',
-//                             },
-//                             '& .MuiTabs-indicator': {
-//                                 backgroundColor: '#667eea',
-//                             },
-//                         }}
-//                     >
-//                         {/* First tab: Pre-Auth (Cashless) or Claim Details (Reim) */}
-//                         {claimsType === 'cashless' ? (
-//                             <Tab icon={<AssignmentIcon />} iconPosition="start" label="Pre-Auth Details" />
-//                         ) : (
-//                             <Tab icon={<DescriptionIcon />} iconPosition="start" label="Claim Details" />
-//                         )}
-
-//                         <Tab icon={<LocalHospitalIcon />} iconPosition="start" label="Insured & Hospital Details" />
-//                         <Tab icon={<InfoIcon />} iconPosition="start" label="Case Info" />
-//                         <Tab icon={<DescriptionIcon />} iconPosition="start" label="Document" />
-//                         <Tab icon={<UpdateIcon />} iconPosition="start" label="F.O Update" />
-//                         <Tab icon={<HistoryIcon />} iconPosition="start" label="Logs" />
-//                     </Tabs>
-//                 </Box>
-
-//                 {/* Tab Panels */}
-//                 {claimsType === 'cashless' ? (
-//                     <TabPanel value={activeTab} index={0}>
-//                         <PreAuth claimDetails={claimDetails} />
-//                     </TabPanel>
-//                 ) : (
-//                     <TabPanel value={activeTab} index={0}>
-//                         <ClaimDetailsReim claimsType={claimsType} claimDetails={claimDetails} />
-//                     </TabPanel>
-//                 )}
-
-//                 <TabPanel value={activeTab} index={1}>
-//                     <HospitalInfo claimsType={claimsType} claimDetails={claimDetails} />
-//                 </TabPanel>
-
-//                 <TabPanel value={activeTab} index={2}>
-//                     <CaseInfoComponent />
-//                 </TabPanel>
-
-//                 <TabPanel value={activeTab} index={3}>
-//                     <CentralRegionalDocuments />
-//                 </TabPanel>
-
-//                 <TabPanel value={activeTab} index={4}>
-//                     <CentralRegionalCaseUpdate  />
-//                 </TabPanel>
-
-//                 <TabPanel value={activeTab} index={5}>
-//                     <Logs claimsType={claimsType} />
-//                 </TabPanel>
-//             </Paper>
-//         </Box>
-//     );
+// const TabPanel: React.FC<TabPanelProps> = ({ children, value, index }) => {
+//   return (
+//     <div
+//       role="tabpanel"
+//       hidden={value !== index}
+//       id={`tabpanel-${index}`}
+//       aria-labelledby={`tab-${index}`}
+//     >
+//       {value === index && <Box sx={{ py: 3 }}>{children}</Box>}
+//     </div>
+//   );
 // };
 
-// export default CentralAssignedToRegionalTabs;
+// const CentralDeniedByRegionalTabs: React.FC = () => {
+//   const { investigationId } = useParams<{ investigationId: string }>();
+//   const [searchParams] = useSearchParams();
+
+//   // State
+//   const [activeTab, setActiveTab] = useState<number>(0);
+//   const [claimsType, setClaimsType] = useState<string>('');
+//   const [claimsTypeLabel, setClaimsTypeLabel] = useState<string>('');
+//   const [claimNo, setClaimNo] = useState<string>('');
+//   const [sbiclaimNo, setSbiclaimNo] = useState<string>('');
+//   const [cleanInvestigationId, setCleanInvestigationId] = useState<string>('');
+//   const [claimDetails, setClaimDetails] = useState<any>(null);
+
+//   useEffect(() => {
+//     // Get query parameters
+//     const type = searchParams.get('claimsType') || '';
+//     const tpaClaimNo = searchParams.get('claimNo') || '';
+//     const sbigClaimNo = searchParams.get('sbigclaimno') || '';
+
+//     setClaimsType(type);
+//     setClaimNo(tpaClaimNo);
+//     setSbiclaimNo(sbigClaimNo);
+
+//     // Set label
+//     if (type === 'cashless') {
+//       setClaimsTypeLabel('Cashless');
+//     } else if (type === 'reim') {
+//       setClaimsTypeLabel('Reimbursement');
+//     } else {
+//       setClaimsTypeLabel('');
+//     }
+
+//     // Clean investigation ID
+//     if (investigationId) {
+//       const cleanId = investigationId.split(' ')[0];
+//       setCleanInvestigationId(cleanId);
+//       fetchClaimDetails(cleanId);
+//     }
+//   }, [investigationId, searchParams]);
+
+//   const fetchClaimDetails = async (invId: string) => {
+//           try {
+//               const response = await claimsService.claimDetails(invId);
+//               if (response.statusCode === 0) {
+//                   setClaimDetails(response.payload);
+//                   sessionStorage.setItem('formEditable', response.payload.editable);
+//                   sessionStorage.setItem('canAssignToInternalTeam', response.payload.canAssignToInternalTeam);
+//               }
+//           } catch (error) {
+//               console.error('Error fetching claim details:', error);
+//           }
+//       };
+
+//   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+//     setActiveTab(newValue);
+//   };
+
+//   return (
+//     <Box sx={{ width: '100%', p: 3 }}>
+//       <Card elevation={3}>
+//         <CardContent>
+//           {/* Header Section with Investigation Details */}
+//           <Grid container spacing={2} sx={{ mb: 3 }}>
+//             <Grid size={{xs:12, md:4}}>
+//               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+//                 <Typography variant="body1">
+//                   <strong>Investigation No:</strong> {cleanInvestigationId}
+//                 </Typography>
+//                 <Chip
+//                   label={claimsTypeLabel}
+//                   color="warning"
+//                   size="small"
+//                   sx={{ fontWeight: 'bold' }}
+//                 />
+//               </Box>
+//             </Grid>
+//             <Grid size={{xs:12, md:4}} sx={{ textAlign: { xs: 'left', md: 'center' } }}>
+//               <Typography variant="body1">
+//                 <strong>SBIG Claim No:</strong> {sbiclaimNo}
+//               </Typography>
+//             </Grid>
+//             <Grid size={{xs:12, md:4}} sx={{ textAlign: { xs: 'left', md: 'right' } }}>
+//               <Typography variant="body1">
+//                 <strong>TPA Claim No:</strong> {claimNo}
+//               </Typography>
+//             </Grid>
+//           </Grid>
+
+//           {/* Tabs Navigation */}
+//           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+//             <Tabs
+//               value={activeTab}
+//               onChange={handleTabChange}
+//               aria-label="central denied by regional tabs"
+//               variant="scrollable"
+//               scrollButtons="auto"
+//               sx={{
+//                 '& .MuiTab-root': {
+//                   textTransform: 'none',
+//                   fontWeight: 500,
+//                   fontSize: '0.95rem',
+//                 },
+//                 '& .Mui-selected': {
+//                   color: '#667eea',
+//                 },
+//                 '& .MuiTabs-indicator': {
+//                   backgroundColor: '#667eea',
+//                 },
+//               }}
+//             >
+//               {/* First tab - conditional based on claimsType */}
+//               {claimsType === 'cashless' && (
+//                 <Tab label="Pre-Auth Details" id="tab-0" />
+//               )}
+//               {claimsType === 'reim' && (
+//                 <Tab label="Claim Details" id="tab-0" />
+//               )}
+
+//               {/* Common tabs */}
+//               <Tab label="Insured & Hospital Details" id="tab-1" />
+//               <Tab label="Case Info" id="tab-2" />
+//               <Tab label="Accept / Deny" id="tab-3" />
+//               <Tab label="Logs" id="tab-4" />
+//             </Tabs>
+//           </Box>
+
+//           {/* Tab Panels */}
+//           <Box sx={{ mt: 2 }}>
+//             {/* Pre-Auth Details (Cashless) */}
+//             {claimsType === 'cashless' && (
+//               <TabPanel value={activeTab} index={0}>
+//                 <PreAuth claimDetails={claimDetails}/>
+//               </TabPanel>
+//             )}
+
+//             {/* Claim Details (Reimbursement) */}
+//             {claimsType === 'reim' && (
+//               <TabPanel value={activeTab} index={0}>
+//                 <ClaimDetailsReim claimsType={claimsType} claimDetails={claimDetails}/>
+//               </TabPanel>
+//             )}
+
+//             {/* Insured & Hospital Details */}
+//             <TabPanel value={activeTab} index={1}>
+//               <HospitalInfo claimsType={claimsType} claimDetails={claimDetails}/>
+//             </TabPanel>
+
+//             {/* Case Info */}
+//             <TabPanel value={activeTab} index={2}>
+//               <CaseInfoComponent />
+//             </TabPanel>
+
+//             {/* Accept / Deny */}
+//             <TabPanel value={activeTab} index={3}>
+//               <CentralDeniedRegionalAcceptDeny claimType={claimsType} />
+//             </TabPanel>
+
+//             {/* Logs */}
+//             <TabPanel value={activeTab} index={4}>
+//               <Logs claimsType={claimsType} />
+//             </TabPanel>
+//           </Box>
+//         </CardContent>
+//       </Card>
+//     </Box>
+//   );
+// };
+
+// export default CentralDeniedByRegionalTabs;
 
 import React, { useState, useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
@@ -252,8 +237,6 @@ import {
     ExpandMore as ExpandMoreIcon,
     Close as CloseIcon,
 } from '@mui/icons-material';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import UpdateIcon from '@mui/icons-material/Update';
 import PreAuth from '../../components/sharedComponents/components/PreAuth';
 import ClaimDetailsReim from '../../components/sharedComponents/components/ClaimDetailsReim';
 import HospitalInfo from '../../components/sharedComponents/components/HospitalInfo';
@@ -261,10 +244,9 @@ import CaseInfoComponent from '../../components/sharedComponents/components/Case
 import AcceptDeny from '../../components/sharedComponents/components/AcceptDeny';
 import Logs from '../../components/sharedComponents/components/Logs';
 import { claimsService } from '../../services/claims.service';
-import CentralRegionalDocuments from '../../components/sharedComponents/components/CentralRegionalDocuments';
-import CentralRegionalCaseUpdate from '../../components/sharedComponents/components/CentralRegionalCaseUpdate';
+import CentralDeniedRegionalAcceptDeny from '../../components/sharedComponents/components/CentralDeniedRegionalAcceptDeny';
 
-const CentralAssignedToRegionalTabs: React.FC = () => {
+const CentralDeniedByRegionalTabs: React.FC = () => {
     const { investigationId: paramInvestigationId } = useParams<{ investigationId: string }>();
     const [searchParams] = useSearchParams();
 
@@ -386,7 +368,8 @@ const CentralAssignedToRegionalTabs: React.FC = () => {
 
                     {/* Content Area */}
                     <Box sx={{ p: 3, bgcolor: '#F5F7FA' }}>
-                        {/*     <Box sx={{ mb: 3, display: 'flex', justifyContent: 'flex-end' }}>
+                        {/* Accept/Deny Button at Top */}
+                        <Box sx={{ mb: 3, display: 'flex', justifyContent: 'flex-end' }}>
                             <Button
                                 variant="contained"
                                 size="large"
@@ -411,7 +394,7 @@ const CentralAssignedToRegionalTabs: React.FC = () => {
                             >
                                 Accept / Deny
                             </Button>
-                        </Box> */}
+                        </Box>
 
                         {/* Accordion Sections */}
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -445,7 +428,7 @@ const CentralAssignedToRegionalTabs: React.FC = () => {
                                     }}
                                 >
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                                        <AssignmentIcon sx={{ color: '#3B82F6' }} />
+                                        <Description sx={{ color: '#3B82F6' }} />
                                         <Typography sx={{ fontWeight: 600, color: '#1E293B' }}>
                                             {claimsType === 'cashless' ? 'Pre-Auth Details' : 'Claim Details'}
                                         </Typography>
@@ -541,89 +524,11 @@ const CentralAssignedToRegionalTabs: React.FC = () => {
                                     <CaseInfoComponent />
                                 </AccordionDetails>
                             </Accordion>
-                            <Accordion
-                                expanded={expanded === 'panel4'}
-                                onChange={handleAccordionChange('panel4')}
-                                sx={{
-                                    bgcolor: '#E0F2FE',
-                                    borderRadius: '8px !important',
-                                    boxShadow: 'none',
-                                    '&:before': { display: 'none' },
-                                    '&.Mui-expanded': {
-                                        margin: 0,
-                                    },
-                                }}
-                            >
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon sx={{ color: '#1E293B' }} />}
-                                    sx={{
-                                        minHeight: 56,
-                                        '&.Mui-expanded': {
-                                            minHeight: 56,
-                                        },
-                                        '& .MuiAccordionSummary-content': {
-                                            margin: '12px 0',
-                                            '&.Mui-expanded': {
-                                                margin: '12px 0',
-                                            },
-                                        },
-                                    }}
-                                >
-                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                                        <Description sx={{ color: '#3B82F6' }} />
-                                        <Typography sx={{ fontWeight: 600, color: '#1E293B' }}>
-                                            Document
-                                        </Typography>
-                                    </Box>
-                                </AccordionSummary>
-                                <AccordionDetails sx={{ bgcolor: 'white', borderRadius: '0 0 8px 8px' }}>
-                                    <CentralRegionalDocuments />
-                                </AccordionDetails>
-                            </Accordion>
-                            <Accordion
-                                expanded={expanded === 'panel5'}
-                                onChange={handleAccordionChange('panel5')}
-                                sx={{
-                                    bgcolor: '#E0F2FE',
-                                    borderRadius: '8px !important',
-                                    boxShadow: 'none',
-                                    '&:before': { display: 'none' },
-                                    '&.Mui-expanded': {
-                                        margin: 0,
-                                    },
-                                }}
-                            >
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon sx={{ color: '#1E293B' }} />}
-                                    sx={{
-                                        minHeight: 56,
-                                        '&.Mui-expanded': {
-                                            minHeight: 56,
-                                        },
-                                        '& .MuiAccordionSummary-content': {
-                                            margin: '12px 0',
-                                            '&.Mui-expanded': {
-                                                margin: '12px 0',
-                                            },
-                                        },
-                                    }}
-                                >
-                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                                        <UpdateIcon sx={{ color: '#3B82F6' }} />
-                                        <Typography sx={{ fontWeight: 600, color: '#1E293B' }}>
-                                            F.O. Updates
-                                        </Typography>
-                                    </Box>
-                                </AccordionSummary>
-                                <AccordionDetails sx={{ bgcolor: 'white', borderRadius: '0 0 8px 8px' }}>
-                                    <CentralRegionalCaseUpdate />
-                                </AccordionDetails>
-                            </Accordion>
 
                             {/* Logs Accordion */}
                             <Accordion
-                                expanded={expanded === 'panel6'}
-                                onChange={handleAccordionChange('panel6')}
+                                expanded={expanded === 'panel4'}
+                                onChange={handleAccordionChange('panel4')}
                                 sx={{
                                     bgcolor: '#E0F2FE',
                                     borderRadius: '8px !important',
@@ -664,8 +569,46 @@ const CentralAssignedToRegionalTabs: React.FC = () => {
                     </Box>
                 </CardContent>
             </Card>
+
+            {/* Accept/Deny Dialog */}
+            <Dialog
+                open={acceptDenyDialogOpen}
+                onClose={handleCloseDialog}
+                maxWidth="md"
+                fullWidth
+                PaperProps={{
+                    sx: {
+                        borderRadius: 3,
+                        maxHeight: '90vh',
+                    },
+                }}
+            >
+                <DialogTitle
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        bgcolor: '#E0F2FE',
+                        borderBottom: '1px solid',
+                        borderColor: 'divider',
+                    }}
+                >
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                        <CheckCircle sx={{ color: '#3B82F6' }} />
+                        <Typography variant="h6" sx={{ fontWeight: 600, color: '#1E293B' }}>
+                            Accept / Deny
+                        </Typography>
+                    </Box>
+                    <IconButton onClick={handleCloseDialog} size="small">
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent sx={{ p: 3, mt: 2 }}>
+                    <CentralDeniedRegionalAcceptDeny claimType={claimsType} />
+                </DialogContent>
+            </Dialog>
         </Container>
     );
 };
 
-export default CentralAssignedToRegionalTabs;
+export default CentralDeniedByRegionalTabs;

@@ -520,6 +520,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                                         sx={{
                                             minWidth: 120,
                                             background: 'linear-gradient(45deg, #6F62C2 30%, #9C89E3 90%)',
+                                            color:"#fff !important",
                                         }}
                                     >
                                         {uploading ? <CircularProgress size={24} sx={{ color: '#2E5A96' }}/> : 'Upload'}
