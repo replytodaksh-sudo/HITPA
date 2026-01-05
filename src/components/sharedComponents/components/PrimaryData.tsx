@@ -33,6 +33,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import MedicalManagement from './MedicalManagement';
 import SurgicalManagementSec from './SurgicalManagementSec';
 import RtaAccidental from './RtaAccidental';
+import caseUpdateService from '../../../services/caseupdate.service';
 
 // ===========================
 // INTERFACES
@@ -176,17 +177,6 @@ export interface MedicalManagementData {
 // ===========================
 // SERVICES
 // ===========================
-const caseUpdateService = {
-    addCaseUpdate: async (model: CaseUpdateModel, investigationId: string) => {
-        const response = await fetch(`/api/case-update/${investigationId}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(model)
-        });
-        if (!response.ok) throw new Error('Failed to save case update');
-        return response.json();
-    }
-};
 
 // Case Update Service (for child components like Medical/Surgical Management)
 export const caseupdatePrimaryService = {
