@@ -151,7 +151,7 @@
 //                         </Grid>
 //                         <Grid size={{ xs: 4 }} sx={{ textAlign: 'center' }}>
 //                             <Typography variant="body2">
-//                                 <strong>SBIG Claim No: </strong>
+//                                 <strong>Claim No: </strong>
 //                                 {sbigClaimNo}
 //                             </Typography>
 //                         </Grid>
@@ -533,7 +533,7 @@ const CentralQueryForms: React.FC = () => {
                             <Grid size={{ xs: 12, md: 4 }}>
                                 <Box sx={{ textAlign: { xs: 'left', md: 'center' } }}>
                                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#f9f9f9' }}>
-                                        SBIG Claim No:
+                                        Claim No:
                                     </Typography>
                                     <Typography variant="body2" sx={{ fontWeight: 400, color: '#f9f9f9' }}>
                                         {sbigClaimNo || '-'}

@@ -120,6 +120,7 @@ const AssignedToSelfCashless: React.FC = () => {
     // fieldAssignedToSelf
 
     const handleRowClick = (investigationID: string, claim: Claim) => {
+        console.log("clicked-", investigationID);
         navigate(`/admin/assigned-self-form/${investigationID}?redirectTo=${location.pathname}&claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`)
     };
 

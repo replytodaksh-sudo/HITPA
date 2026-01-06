@@ -727,6 +727,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
         disabled={loading || (roleName === 'Regional Manager' && !majorTrigger)}
         sx={{
           background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
+          color:"#fff !important",
           '&:hover': {
             background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)',
           },

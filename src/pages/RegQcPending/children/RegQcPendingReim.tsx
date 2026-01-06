@@ -483,8 +483,8 @@ const RegQcPendingReim: React.FC = () => {
                             borderColor: theme.palette.divider,
                         },
                         '& .MuiDataGrid-columnHeaders': {
-                            background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
-                            color: 'white',
+                            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
+                            color: '#7a7a7a',
                             fontSize: '0.875rem',
                             fontWeight: 700,
                             borderRadius: 0,

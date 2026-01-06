@@ -14,6 +14,7 @@ import {
   Typography,
 } from '@mui/material';
 import { caseUpdateService } from '../../../services/caseupdate.service';
+import { jwtDecode } from 'jwt-decode';
 
 interface HospitalFeedbackProps {
   isInsuredVisit?: boolean;
@@ -29,44 +30,114 @@ const HospitalFeedback: React.FC<HospitalFeedbackProps> = ({
   onNextPage,
 }) => {
   const { investigationId } = useParams<{ investigationId: string }>();
-  
+  const token = sessionStorage.getItem('token') || '';
+  const roleName = sessionStorage.getItem('roleName') || '';
   // State
   const [hospitalFeedback, setHospitalFeedback] = useState('Select');
   const [hospitalRemarks, setHospitalRemarks] = useState('');
   const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<any>();
+  const [statusInsuredVisit, setStatusInsuredVisit] = useState<string>('');
+  const [IsEditable, setIsEditable] = useState(false);
 
+  useEffect(() => {
+    refetchData();
+  }, []);
   // Populate data from previousData
   useEffect(() => {
-    if (previousData) {
-      setHospitalFeedback(previousData.hospitalFeedBack || 'Select');
-      setHospitalRemarks(previousData.hospitalRemarks || '');
+    if (data) {
+      setHospitalFeedback(data.hospitalFeedBack || 'Select');
+      setHospitalRemarks(data.hospitalRemarks || '');
     }
-  }, [previousData]);
+  }, [data]);
+
+  const refetchData = async () => {
+    // setLoading(true);
+    try {
+      // Decode JWT token
+      let decodedToken: any = {};
+      if (token) {
+        try {
+          decodedToken = jwtDecode(token);
+        } catch (error) {
+          console.error('Error decoding token:', error);
+        }
+      }
+
+      const response: any = await caseUpdateService.caseUpdatePreviousData(investigationId!);
+
+      if (response.statusCode === 0) {
+        const payload = response.payload;
+
+        // Set investigator name based on role
+        if (roleName === 'Field Officer' || roleName === 'Agency Spoc') {
+          payload.investigatorName = decodedToken.name || '';
+        } else {
+          payload.investigatorName = '';
+        }
+
+        setData(payload);
+
+        // Store active case ID in localStorage
+        if (payload.activeCaseID) {
+          localStorage.setItem('activeCaseID', payload.activeCaseID);
+        }
+
+        // Set insured visit status
+        if (payload.boolStatusOfInsured !== null) {
+          setStatusInsuredVisit(payload.boolStatusOfInsured ? '1' : '0');
+        }
+
+        // Check if form is editable
+        checkIsEditable(payload);
+      } else {
+        setData(response.payload);
+        checkIsEditable(response.payload);
+      }
+    } catch (error) {
+      console.error('Error fetching previous data:', error);
+    } finally {
+      // setLoading(false);
+    }
+  };
+
+  const checkIsEditable = (data: any) => {
+    if (!data) return;
+
+    // Determine if form is editable based on noDataStatus
+    if (data.noDataStatus === 'NonEditable') {
+      setIsEditable(true);
+    } else if (data.noDataStatus === 'Editable') {
+      setIsEditable(false);
+    }
+  };
+
+
 
   /**
    * Handle form submission
    */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       setLoading(true);
-      
+
       const payload = {
         hospitalFeedBack: hospitalFeedback,
         hospitalRemarks: hospitalRemarks,
         activeCaseID: localStorage.getItem('activeCaseID'),
       };
-      
+
       const cleanInvId = investigationId?.split(' ')[0] || '';
       const response = await caseUpdateService.addCaseUpdateHospital(
         payload,
         cleanInvId
       );
-      
+
       if (response.statusCode === 0) {
         alert('Hospital feedback saved successfully');
-        
+
         // Emit next page event (go to page 2)
         if (onNextPage) {
           onNextPage(2);
@@ -79,7 +150,7 @@ const HospitalFeedback: React.FC<HospitalFeedbackProps> = ({
       setLoading(false);
     }
   };
-
+console.log("IsEditable", IsEditable);
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ p: 2 }}>
       <Typography variant="h6" gutterBottom>
@@ -90,7 +161,7 @@ const HospitalFeedback: React.FC<HospitalFeedbackProps> = ({
         {/* Hospital Feedback Dropdown */}
         <Grid size={{ xs: 12 }}>
           <Grid container spacing={2} alignItems="center">
-            <Grid size={{ xs: 12, sm:2 }}>
+            <Grid size={{ xs: 12, sm: 2 }}>
               <Typography variant="body2" fontWeight={500}>
                 Hospital Feedback
               </Typography>
@@ -105,7 +176,7 @@ const HospitalFeedback: React.FC<HospitalFeedbackProps> = ({
                   value={hospitalFeedback}
                   label="Select"
                   onChange={(e) => setHospitalFeedback(e.target.value)}
-                  disabled={!isFormEditable}
+                  disabled={IsEditable}
                 >
                   <MenuItem value="Select">Select</MenuItem>
                   <MenuItem value="Good">Good</MenuItem>
@@ -120,7 +191,7 @@ const HospitalFeedback: React.FC<HospitalFeedbackProps> = ({
         {/* Hospital Remarks Textarea */}
         <Grid size={{ xs: 12 }}>
           <Grid container spacing={2}>
-            <Grid size={{ xs: 12, sm:2 }}>
+            <Grid size={{ xs: 12, sm: 2 }}>
               <Typography variant="body2" fontWeight={500}>
                 Hospital Remarks
               </Typography>
@@ -135,7 +206,7 @@ const HospitalFeedback: React.FC<HospitalFeedbackProps> = ({
                 placeholder="Hospital Remarks"
                 value={hospitalRemarks}
                 onChange={(e) => setHospitalRemarks(e.target.value)}
-                disabled={!isFormEditable}
+                disabled={IsEditable}
                 variant="outlined"
                 size="small"
               />
@@ -151,7 +222,7 @@ const HospitalFeedback: React.FC<HospitalFeedbackProps> = ({
                 type="submit"
                 variant="contained"
                 color="primary"
-                disabled={loading || !isFormEditable}
+                disabled={loading || IsEditable}
                 sx={{ textTransform: 'none' }}
               >
                 {loading ? 'Saving...' : 'Save as Draft'}

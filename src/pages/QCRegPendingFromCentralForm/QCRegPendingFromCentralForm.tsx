@@ -136,7 +136,7 @@
 //                         </Grid>
 //                         <Grid size={{ xs: 4 }} sx={{ textAlign: 'center' }}>
 //                             <Typography variant="body2">
-//                                 <strong>SBIG Claim No: </strong>
+//                                 <strong>Claim No: </strong>
 //                                 {sbigClaimNo}
 //                             </Typography>
 //                         </Grid>

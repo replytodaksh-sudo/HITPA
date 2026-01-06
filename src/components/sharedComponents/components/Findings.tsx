@@ -26,6 +26,7 @@ import {
 } from '@mui/material';
 import { caseUpdateService } from '../../../services/caseupdate.service';
 import DropdownService from '../../../services/dropdown.service';
+import { jwtDecode } from 'jwt-decode';
 
 interface FindingsProps {
   isInsuredVisit?: boolean;
@@ -51,15 +52,16 @@ const Findings: React.FC<FindingsProps> = ({
   onNextPage,
 }) => {
   const { investigationId } = useParams<{ investigationId: string }>();
-  
+  const token = sessionStorage.getItem('token') || '';
+  // const roleName = sessionStorage.getItem('roleName') || '';
   // User info
   const [roleName, setRoleName] = useState('');
   const [username, setUsername] = useState('');
-  
+
   // Main form fields
   const [anyOtherFindings, setAnyOtherFindings] = useState('');
   const [rowData, setRowData] = useState<DoctorRow[]>([{}]);
-  
+
   // Chemist Fraud
   const [isChemistFraud, setIsChemistFraud] = useState<boolean | null>(null);
   const [chemistName, setChemistName] = useState('');
@@ -70,7 +72,7 @@ const Findings: React.FC<FindingsProps> = ({
   const [chemistLicence, setChemistLicence] = useState('');
   const [chemistGstNum, setChemistGstNum] = useState('');
   const [chemistReason, setChemistReason] = useState('');
-  
+
   // Lab Fraud
   const [isLabFraud, setIsLabFraud] = useState<boolean | null>(null);
   const [labName, setLabName] = useState('');
@@ -81,7 +83,7 @@ const Findings: React.FC<FindingsProps> = ({
   const [labLicence, setLabLicence] = useState('');
   const [labGstNum, setLabGstNum] = useState('');
   const [labDetails, setLabDetails] = useState('');
-  
+
   // Pathologist
   const [isPathologistAttach, setIsPathologistAttach] = useState<boolean | null>(null);
   const [pathologistName, setPathologistName] = useState('');
@@ -89,21 +91,23 @@ const Findings: React.FC<FindingsProps> = ({
   const [pathologistRegistrationNumber, setPathologistRegistrationNumber] = useState('');
   const [pathologistFeedback, setPathologistFeedback] = useState('');
   const [pathologistFinding, setPathologistFinding] = useState('');
-  
+  const [data, setData] = useState<any>();
+  const [statusInsuredVisit, setStatusInsuredVisit] = useState<string>('');
+  const [IsEditable, setIsEditable] = useState(false);
   // Dropdowns
   const [states, setStates] = useState<any[]>([]);
   const [cities, setCities] = useState<any[]>([]);
   const [labCities, setLabCities] = useState<any[]>([]);
-  
+
   const [loading, setLoading] = useState(false);
 
   // Initialize
   useEffect(() => {
     const role = sessionStorage.getItem('roleName') || '';
     const token = sessionStorage.getItem('token');
-    
+
     setRoleName(role);
-    
+
     // Decode JWT to get username
     if (token) {
       try {
@@ -121,69 +125,135 @@ const Findings: React.FC<FindingsProps> = ({
         console.error('Error decoding token:', error);
       }
     }
-    
+
     fetchAllStates();
   }, []);
 
   // Populate data from previousData
   useEffect(() => {
-    if (previousData) {
+    if (data) {
       populateData();
     }
-  }, [previousData]);
+  }, [data]);
+
+  useEffect(() => {
+    refetchData();
+  }, []);
+
+  const refetchData = async () => {
+    // setLoading(true);
+    try {
+      // Decode JWT token
+      let decodedToken: any = {};
+      if (token) {
+        try {
+          decodedToken = jwtDecode(token);
+        } catch (error) {
+          console.error('Error decoding token:', error);
+        }
+      }
+
+      const response: any = await caseUpdateService.caseUpdatePreviousData(investigationId!);
+
+      if (response.statusCode === 0) {
+        const payload = response.payload;
+
+        // Set investigator name based on role
+        if (roleName === 'Field Officer' || roleName === 'Agency Spoc') {
+          payload.investigatorName = decodedToken.name || '';
+        } else {
+          payload.investigatorName = '';
+        }
+
+        setData(payload);
+
+        // Store active case ID in localStorage
+        if (payload.activeCaseID) {
+          localStorage.setItem('activeCaseID', payload.activeCaseID);
+        }
+
+        // Set insured visit status
+        if (payload.boolStatusOfInsured !== null) {
+          setStatusInsuredVisit(payload.boolStatusOfInsured ? '1' : '0');
+        }
+
+        // Check if form is editable
+        checkIsEditable(payload);
+      } else {
+        setData(response.payload);
+        checkIsEditable(response.payload);
+      }
+    } catch (error) {
+      console.error('Error fetching previous data:', error);
+    } finally {
+      // setLoading(false);
+    }
+  };
+
+
+  const checkIsEditable = (data: any) => {
+    if (!data) return;
+
+    // Determine if form is editable based on noDataStatus
+    if (data.noDataStatus === 'NonEditable') {
+      setIsEditable(true);
+    } else if (data.noDataStatus === 'Editable') {
+      setIsEditable(false);
+    }
+  };
 
   const populateData = () => {
-    if (!previousData) return;
-    
+    if (!data) return;
+
     // Auto-fill investigator name for Field Officer
     if (roleName === 'Field Officer') {
-      // previousData.investigatorName = username; // If needed
+      // data.investigatorName = username; // If needed
     }
-    
+
     // Doctor table
-    if (previousData.caseUpdateDoctor && previousData.caseUpdateDoctor.length > 0) {
-      setRowData(previousData.caseUpdateDoctor);
+    if (data.caseUpdateDoctor && data.caseUpdateDoctor.length > 0) {
+      setRowData(data.caseUpdateDoctor);
     }
-    
+
     // Other findings
-    setAnyOtherFindings(previousData.anyOtherObservationsFindings || '');
-    
+    setAnyOtherFindings(data.anyOtherObservationsFindings || '');
+
     // Chemist
-    setIsChemistFraud(previousData.chemistFraud);
-    setChemistName(previousData.chemistName || '');
-    setChemistAddress(previousData.chemistAddress || '');
-    setChemistCity(previousData.chemistCity || '');
-    setChemistState(previousData.chemistState || '');
-    setChemistPin(previousData.chemistPinCode || '');
-    setChemistLicence(previousData.chemistLicenceNumber || '');
-    setChemistGstNum(previousData.chemistGSTNo || '');
-    setChemistReason(previousData.chemistDetails || '');
-    
+    setIsChemistFraud(data.chemistFraud);
+    setChemistName(data.chemistName || '');
+    setChemistAddress(data.chemistAddress || '');
+    setChemistCity(data.chemistCity || '');
+    setChemistState(data.chemistState || '');
+    setChemistPin(data.chemistPinCode || '');
+    setChemistLicence(data.chemistLicenceNumber || '');
+    setChemistGstNum(data.chemistGSTNo || '');
+    setChemistReason(data.chemistDetails || '');
+
     // Lab
-    setIsLabFraud(previousData.labFraud);
-    setLabName(previousData.labName || '');
-    setLabAddress(previousData.labAddress || '');
-    setLabState(previousData.labState || '');
-    setLabCity(previousData.labCity || '');
-    setLabPin(previousData.labPinCode || '');
-    setLabGstNum(previousData.labGSTNo || '');
-    setLabLicence(previousData.labLicenceNumber || '');
-    setLabDetails(previousData.labDetails || '');
-    
+    setIsLabFraud(data.labFraud);
+    setLabName(data.labName || '');
+    setLabAddress(data.labAddress || '');
+    setLabState(data.labState || '');
+    setLabCity(data.labCity || '');
+    setLabPin(data.labPinCode || '');
+    setLabGstNum(data.labGSTNo || '');
+    setLabLicence(data.labLicenceNumber || '');
+    setLabDetails(data.labDetails || '');
+
     // Pathologist
-    setIsPathologistAttach(previousData.pathologist);
-    setPathologistName(previousData.pathologistName || '');
-    setPathologistContactNumber(previousData.pathologistContactNumber || '');
-    setPathologistRegistrationNumber(previousData.pathologistRegistrationNumber || '');
-    setPathologistFeedback(previousData.pathologistFeedback || '');
-    setPathologistFinding(previousData.pathologistFinding || '');
-    
+    setIsPathologistAttach(data.pathologist);
+    setPathologistName(data.pathologistName || '');
+    setPathologistContactNumber(data.pathologistContactNumber || '');
+    setPathologistRegistrationNumber(data.pathologistRegistrationNumber || '');
+    setPathologistFeedback(data.pathologistFeedback || '');
+    setPathologistFinding(data.pathologistFinding || '');
+
     // Fetch cities if states are already selected
-    if (previousData.chemistState) {
-      getCity(previousData.chemistState);
+    if (data.chemistState) {
+      getCity(data.chemistState);
     }
-    if (previousData.labState) {
-      getLabCity(previousData.labState);
+    if (data.labState) {
+      getLabCity(data.labState);
     }
   };
 
@@ -232,10 +302,10 @@ const Findings: React.FC<FindingsProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       setLoading(true);
-      
+
       const payload: any = {
         activeCaseID: localStorage.getItem('activeCaseID'),
         anyOtherObservationsFindings: anyOtherFindings,
@@ -243,7 +313,7 @@ const Findings: React.FC<FindingsProps> = ({
         labFraud: isLabFraud,
         caseUpdateDoctor: rowData,
       };
-      
+
       // Chemist fraud details
       if (isChemistFraud === true) {
         payload.chemistName = chemistName;
@@ -254,16 +324,16 @@ const Findings: React.FC<FindingsProps> = ({
         payload.chemistLicenceNumber = chemistLicence;
         payload.chemistGSTNo = chemistGstNum;
       }
-      
+
       if (isChemistFraud === false) {
         payload.chemistDetails = chemistReason;
       }
-      
+
       // Lab fraud details
       if (isLabFraud === false) {
         payload.labDetails = labDetails;
       }
-      
+
       if (isLabFraud === true) {
         payload.labName = labName;
         payload.labAddress = labAddress;
@@ -274,7 +344,7 @@ const Findings: React.FC<FindingsProps> = ({
         payload.labGSTNo = labGstNum;
         payload.pathologist = isPathologistAttach;
       }
-      
+
       // Pathologist details
       if (isPathologistAttach === true) {
         payload.pathologistName = pathologistName;
@@ -282,20 +352,20 @@ const Findings: React.FC<FindingsProps> = ({
         payload.pathologistRegistrationNumber = pathologistRegistrationNumber;
         payload.pathologistFeedback = pathologistFeedback;
       }
-      
+
       if (isPathologistAttach === false) {
         payload.pathologistFinding = pathologistFinding;
       }
-      
+
       const cleanInvId = investigationId?.split(' ')[0] || '';
       const response = await caseUpdateService.addCaseUpdateFindings(
         payload,
         cleanInvId
       );
-      
+
       if (response.statusCode === 0) {
         alert('Other observations saved successfully');
-        
+
         if (onNextPage) {
           onNextPage(3);
         }
@@ -333,7 +403,7 @@ const Findings: React.FC<FindingsProps> = ({
       <Typography variant="h6" gutterBottom sx={{ fontSize: '14px', fontWeight: 600, mb: 2 }}>
         Doctor Details
       </Typography>
-      
+
       <TableContainer component={Paper} sx={{ mb: 2 }}>
         <Table>
           <TableHead>
@@ -445,7 +515,7 @@ const Findings: React.FC<FindingsProps> = ({
           </TableBody>
         </Table>
       </TableContainer>
-      
+
       <Button onClick={addRow} sx={{ mb: 3, textTransform: 'none', color: 'blue' }}>
         +Add More
       </Button>
@@ -481,12 +551,12 @@ const Findings: React.FC<FindingsProps> = ({
                 <Grid size={{ xs: 8 }}>
                   <TextField size="small" fullWidth value={chemistName} onChange={(e) => setChemistName(e.target.value)} />
                 </Grid>
-                
+
                 <Grid size={{ xs: 4 }}><Typography variant="caption">Address</Typography></Grid>
                 <Grid size={{ xs: 8 }}>
                   <TextField size="small" fullWidth multiline rows={3} value={chemistAddress} onChange={(e) => setChemistAddress(e.target.value)} />
                 </Grid>
-                
+
                 <Grid size={{ xs: 4 }}><Typography variant="caption">State</Typography></Grid>
                 <Grid size={{ xs: 3 }}>
                   <Select size="small" fullWidth value={chemistState} onChange={(e) => { setChemistState(e.target.value); getCity(e.target.value); }}>
@@ -496,7 +566,7 @@ const Findings: React.FC<FindingsProps> = ({
                     ))}
                   </Select>
                 </Grid>
-                
+
                 <Grid size={{ xs: 2 }}><Typography variant="caption">City</Typography></Grid>
                 <Grid size={{ xs: 3 }}>
                   <Select size="small" fullWidth value={chemistCity} onChange={(e) => setChemistCity(e.target.value)}>
@@ -506,17 +576,17 @@ const Findings: React.FC<FindingsProps> = ({
                     ))}
                   </Select>
                 </Grid>
-                
+
                 <Grid size={{ xs: 4 }}><Typography variant="caption">Pin Code</Typography></Grid>
                 <Grid size={{ xs: 8 }}>
                   <TextField size="small" fullWidth value={chemistPin} onChange={(e) => setChemistPin(e.target.value)} />
                 </Grid>
-                
+
                 <Grid size={{ xs: 4 }}><Typography variant="caption">Licence Number</Typography></Grid>
                 <Grid size={{ xs: 3 }}>
                   <TextField size="small" fullWidth value={chemistLicence} onChange={(e) => setChemistLicence(e.target.value)} />
                 </Grid>
-                
+
                 <Grid size={{ xs: 2 }}><Typography variant="caption">GST No.</Typography></Grid>
                 <Grid size={{ xs: 3 }}>
                   <TextField size="small" fullWidth value={chemistGstNum} onChange={(e) => setChemistGstNum(e.target.value)} />
@@ -560,12 +630,12 @@ const Findings: React.FC<FindingsProps> = ({
                 <Grid size={{ xs: 8 }}>
                   <TextField size="small" fullWidth value={labName} onChange={(e) => setLabName(e.target.value)} />
                 </Grid>
-                
+
                 <Grid size={{ xs: 4 }}><Typography variant="caption">Address</Typography></Grid>
                 <Grid size={{ xs: 8 }}>
                   <TextField size="small" fullWidth multiline rows={3} value={labAddress} onChange={(e) => setLabAddress(e.target.value)} />
                 </Grid>
-                
+
                 <Grid size={{ xs: 4 }}><Typography variant="caption">State</Typography></Grid>
                 <Grid size={{ xs: 3 }}>
                   <Select size="small" fullWidth value={labState} onChange={(e) => { setLabState(e.target.value); getLabCity(e.target.value); }}>
@@ -575,7 +645,7 @@ const Findings: React.FC<FindingsProps> = ({
                     ))}
                   </Select>
                 </Grid>
-                
+
                 <Grid size={{ xs: 2 }}><Typography variant="caption">City</Typography></Grid>
                 <Grid size={{ xs: 3 }}>
                   <Select size="small" fullWidth value={labCity} onChange={(e) => setLabCity(e.target.value)}>
@@ -585,22 +655,22 @@ const Findings: React.FC<FindingsProps> = ({
                     ))}
                   </Select>
                 </Grid>
-                
+
                 <Grid size={{ xs: 4 }}><Typography variant="caption">Pin Code</Typography></Grid>
                 <Grid size={{ xs: 8 }}>
                   <TextField size="small" fullWidth value={labPin} onChange={(e) => setLabPin(e.target.value)} />
                 </Grid>
-                
+
                 <Grid size={{ xs: 4 }}><Typography variant="caption">Licence Number</Typography></Grid>
                 <Grid size={{ xs: 3 }}>
                   <TextField size="small" fullWidth value={labLicence} onChange={(e) => setLabLicence(e.target.value)} />
                 </Grid>
-                
+
                 <Grid size={{ xs: 2 }}><Typography variant="caption">GST No.</Typography></Grid>
                 <Grid size={{ xs: 3 }}>
                   <TextField size="small" fullWidth value={labGstNum} onChange={(e) => setLabGstNum(e.target.value)} />
                 </Grid>
-                
+
                 {/* Pathologist Section */}
                 <Grid size={{ xs: 4 }}><Typography variant="caption">Is Pathologist Attached?</Typography></Grid>
                 <Grid size={{ xs: 8 }}>
@@ -613,33 +683,33 @@ const Findings: React.FC<FindingsProps> = ({
                     <FormControlLabel value="false" control={<Radio size="small" />} label="No" />
                   </RadioGroup>
                 </Grid>
-                
+
                 {isPathologistAttach === true && (
                   <>
                     <Grid size={{ xs: 4 }}><Typography variant="caption">Pathologist Name</Typography></Grid>
                     <Grid size={{ xs: 8 }}>
                       <TextField size="small" fullWidth value={pathologistName} onChange={(e) => setPathologistName(e.target.value)} />
                     </Grid>
-                    
+
                     <Grid size={{ xs: 4 }}><Typography variant="caption">Contact Number</Typography></Grid>
                     <Grid size={{ xs: 8 }}>
-                      <TextField 
-                        size="small" 
-                        fullWidth 
+                      <TextField
+                        size="small"
+                        fullWidth
                         inputProps={{ maxLength: 10 }}
-                        value={pathologistContactNumber} 
+                        value={pathologistContactNumber}
                         onChange={(e) => {
                           const value = e.target.value.replace(/\D/g, '');
                           setPathologistContactNumber(value);
-                        }} 
+                        }}
                       />
                     </Grid>
-                    
+
                     <Grid size={{ xs: 4 }}><Typography variant="caption">Registration Number</Typography></Grid>
                     <Grid size={{ xs: 8 }}>
                       <TextField size="small" fullWidth value={pathologistRegistrationNumber} onChange={(e) => setPathologistRegistrationNumber(e.target.value)} />
                     </Grid>
-                    
+
                     <Grid size={{ xs: 4 }}><Typography variant="caption">Pathologist Feedback</Typography></Grid>
                     <Grid size={{ xs: 8 }}>
                       <Select size="small" fullWidth value={pathologistFeedback} onChange={(e) => setPathologistFeedback(e.target.value)}>
@@ -651,7 +721,7 @@ const Findings: React.FC<FindingsProps> = ({
                     </Grid>
                   </>
                 )}
-                
+
                 {isPathologistAttach === false && (
                   <>
                     <Grid size={{ xs: 4 }}><Typography variant="caption">Findings</Typography></Grid>

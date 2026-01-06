@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
 import HospitalFeedback from './HospitalFeedback';
 import Preview from './Preview';
@@ -17,6 +17,7 @@ import PrimaryData from './PrimaryData';
 interface PresentFormProps {
     isFormEditable: boolean;
     payloadData?: any;
+    refetch?: () => void;
 }
 
 // ===========================
@@ -24,7 +25,8 @@ interface PresentFormProps {
 // ===========================
 const PresentForm: React.FC<PresentFormProps> = ({
     isFormEditable,
-    payloadData = ''
+    payloadData = '',
+    refetch,
 }) => {
     // ===========================
     // STATE
@@ -60,6 +62,11 @@ const PresentForm: React.FC<PresentFormProps> = ({
             setPreviewRefresh(false);
         }
     };
+
+    // useEffect(() => {
+    //     if (activeTab > 0)
+    //         refetch?.()
+    // }, [activeTab])
 
     // ===========================
     // RENDER

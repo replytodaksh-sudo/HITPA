@@ -20,6 +20,9 @@ import CentralQCUpdateFields from './CentralQCUpdateFields';
 import RegQcObservations from './RegQcObservations';
 import RegQcVendorFeedback from './RegQcVendorFeedback';
 import QcPreview from './QcPreview';
+import QcupdateFields from './QcupdateFields';
+import QCObservations from './QCObservations';
+import QcVendorFeedback from './QcVendorFeedback';
 
 interface QCUpdateCentralProps {
   investigationId?: string;
@@ -43,7 +46,7 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
 }) => {
   const { investigationId: paramInvestigationId } = useParams<{ investigationId: string }>();
   const [searchParams] = useSearchParams();
-  
+
   // State
   const [activeTab, setActiveTab] = useState(0);
   const [investigationId, setInvestigationId] = useState('');
@@ -85,7 +88,7 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
   const fetchQCPreviewDetails = async (invId: string, role_data: string, role: string, type: string) => {
     try {
       setLoading(true);
-      
+
       // Determine tab name based on role
       let tabName = '';
       if (role === 'Regional Manager') {
@@ -95,7 +98,7 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
       }
 
       let response;
-      
+
       // Fetch based on claim type
       if (type === 'cashless') {
         response = await QCUpdateService.qcUpdatePreview(invId, tabName);
@@ -115,10 +118,10 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
       setLoading(false);
     }
   };
-
+console.log('Preview Values at render:', previewValues);
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
-    
+
     // Set preview refresh to true only for Preview & Submit tab
     if (newValue === 3) {
       setPreviewRefresh(true);
@@ -130,7 +133,7 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
   const handleNextTab = () => {
     if (activeTab < 3) {
       setActiveTab(activeTab + 1);
-      
+
       // Set preview refresh for Preview & Submit tab
       if (activeTab + 1 === 3) {
         setPreviewRefresh(true);
@@ -139,9 +142,9 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
   };
 
   // Show visit status table for reimbursement (non-part verification)
-  const showVisitStatusTable = 
-    claimsType === 'reim' && 
-    previewValues && 
+  const showVisitStatusTable =
+    claimsType === 'reim' &&
+    previewValues &&
     previewValues.investigationType !== 'Part verification';
 
   if (loading) {
@@ -210,19 +213,20 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
         <Box sx={{ pt: 3 }}>
           {/* Tab 0: QC Update Fields */}
           {activeTab === 0 && (
-            <CentralQCUpdateFields
-              investigationId={investigationId}
-              previewValues={previewValues}
-              buttonEnable={buttonEnable}
-              onNextTab={handleNextTab}
-            />
+            <QcupdateFields buttonEnable={buttonEnable} previewValues={previewValues} onChangeTab={handleNextTab} />
+            // <CentralQCUpdateFields
+            //   investigationId={investigationId}
+            //   previewValues={previewValues}
+            //   buttonEnable={buttonEnable}
+            //   onNextTab={handleNextTab}
+            // />
           )}
 
-          {/* Tab 1: QC Observations */}
+          {/* {/* Tab 1: QC Observations *  /} */}
           {activeTab === 1 && (
-            // <QCObservations
-            <RegQcObservations
-            //   investigationId={investigationId}
+            <QCObservations
+              // <RegQcObservations
+              //   investigationId={investigationId}
               previewValues={previewValues}
             //   buttonEnable={buttonEnable}
             //   onNextTab={handleNextTab}
@@ -232,18 +236,23 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
           {/* Tab 2: Vendor Feedback */}
           {activeTab === 2 && (
             // <QCVendorFeedback
-            <RegQcVendorFeedback
-            //   investigationId={investigationId}
+            // <RegQcVendorFeedback
+            // //   investigationId={investigationId}
+            //   previewValues={previewValues}
+            // //   buttonEnable={buttonEnable}
+            // //   onNextTab={handleNextTab}
+            // />
+            <QcVendorFeedback
               previewValues={previewValues}
-            //   buttonEnable={buttonEnable}
-            //   onNextTab={handleNextTab}
+              buttonEnable={buttonEnable}
+              onChangeTab={handleNextTab}
             />
           )}
 
           {/* Tab 3: Preview & Submit */}
           {activeTab === 3 && (
             <QcPreview
-            //   investigationId={investigationId}
+              //   investigationId={investigationId}
               dataRole={dataRole}
               previewRefresh={previewRefresh}
               previewValues={previewValues}

@@ -104,6 +104,56 @@ const CaseUpdateForm: React.FC = () => {
             setLoading(false);
         }
     };
+    
+    const refetchData = async () => {
+        // setLoading(true);
+        try {
+            // Decode JWT token
+            let decodedToken: any = {};
+            if (token) {
+                try {
+                    decodedToken = jwtDecode(token);
+                } catch (error) {
+                    console.error('Error decoding token:', error);
+                }
+            }
+
+            const response: any = await caseUpdateService.caseUpdatePreviousData(investigationId);
+
+            if (response.statusCode === 0) {
+                const payload = response.payload;
+
+                // Set investigator name based on role
+                if (roleName === 'Field Officer' || roleName === 'Agency Spoc') {
+                    payload.investigatorName = decodedToken.name || '';
+                } else {
+                    payload.investigatorName = '';
+                }
+
+                setPreviousData(payload);
+
+                // Store active case ID in localStorage
+                if (payload.activeCaseID) {
+                    localStorage.setItem('activeCaseID', payload.activeCaseID);
+                }
+
+                // Set insured visit status
+                if (payload.boolStatusOfInsured !== null) {
+                    setStatusInsuredVisit(payload.boolStatusOfInsured ? '1' : '0');
+                }
+
+                // Check if form is editable
+                checkIsEditable(payload);
+            } else {
+                setPreviousData(response.payload);
+                checkIsEditable(response.payload);
+            }
+        } catch (error) {
+            console.error('Error fetching previous data:', error);
+        } finally {
+            // setLoading(false);
+        }
+    };
 
     const checkIsEditable = (data: any) => {
         if (!data) return;
@@ -114,6 +164,7 @@ const CaseUpdateForm: React.FC = () => {
         } else if (data.noDataStatus === 'Editable') {
             setCheckEditable(false);
         }
+    };
 
         // Original commented logic for reference:
         // const globalUserCode = data.createdBy;
@@ -137,7 +188,6 @@ const CaseUpdateForm: React.FC = () => {
         //     setCheckEditable(false);
         //   }
         // }
-    };
 
     if (loading) {
         return (
@@ -227,6 +277,7 @@ const CaseUpdateForm: React.FC = () => {
                     <PresentForm
                         isFormEditable={checkEditable}
                         payloadData={previousData}
+                        // refetch={refetchData}
                     />
                 </Box>
              )} 

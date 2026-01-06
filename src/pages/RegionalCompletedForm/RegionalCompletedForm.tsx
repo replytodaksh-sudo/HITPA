@@ -798,12 +798,12 @@ const RegionalCompletedForm: React.FC = () => {
                                             <Divider sx={{ my: 3 }} />
                                             <RegQcObservations />
                                         </>
-                                    )}
+                                    )} 
                                     {agencyQcForm === 'none' && (
                                         <Typography color="text.secondary">
                                             QC form is not available for this case.
                                         </Typography>
-                                    )}
+                                     )} 
                                 </AccordionDetails>
                             </Accordion>
 

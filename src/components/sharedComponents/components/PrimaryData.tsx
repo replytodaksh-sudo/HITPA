@@ -216,7 +216,7 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
 }) => {
     const { investigationId } = useParams<{ investigationId: string }>();
     const [loading, setLoading] = useState(false);
-
+console.log("1234567890-", investigationId?.split(' ')[0])
     // ===========================
     // BASIC FORM FIELDS STATE
     // ===========================
@@ -833,7 +833,7 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
         }
 
         try {
-            const data = await caseUpdateService.addCaseUpdate(caseUpdateModel, investigationId!);
+            const data = await caseUpdateService.addCaseUpdate(caseUpdateModel, investigationId?.split(' ')[0]!);
             if (data.payload && data.payload.activeCaseID) {
                 localStorage.setItem('activeCaseID', data.payload.activeCaseID);
             }
