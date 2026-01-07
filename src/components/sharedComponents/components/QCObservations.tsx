@@ -533,7 +533,6 @@ const QCObservations: React.FC<QCObservationsProps> = ({
 
             if (response.statusCode === 0) {
                 alertService.showAlertSuccess('QC Observations submitted successfully');
-
                 // Navigate based on observation type
                 if (
                     qcObservations === 'Raise query to Regional QC manager' ||
