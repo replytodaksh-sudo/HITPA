@@ -68,6 +68,8 @@ import CentralDeniedByRegionalTabs from "../pages/CentralDeniedByRegionalTabs/Ce
 import CentralQueryForms from "../pages/QCRegCentralQuery/QCRegCentralQuery";
 import QCPendingFromCentralForms from "../pages/QCRegPendingFromCentralForm/QCRegPendingFromCentralForm";
 import RegQCPendingFormsReim from "../pages/RegQCPendingFormsReim/RegQCPendingFormsReim";
+import FoReworkCases from "../pages/FoReworkCases/FoReworkCases";
+import FoReassignedCases from "../pages/FoReassignedCases/FoReassignedCases";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -101,6 +103,22 @@ const AppRoutes: React.FC = () => {
           element={
             <ProtectedRoute>
               <AssignedFo />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="foReworkCases"
+          element={
+            <ProtectedRoute>
+              <FoReworkCases />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="foReassignedCases"
+          element={
+            <ProtectedRoute>
+              <FoReassignedCases />
             </ProtectedRoute>
           }
         />
