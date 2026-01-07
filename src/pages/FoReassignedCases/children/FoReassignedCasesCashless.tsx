@@ -69,7 +69,7 @@ const FoReassignedCasesCashless: React.FC = () => {
   };
 
   const handleViewClick = (investigationID: string, claim: Claim) => {
-    navigate(`/admin/assigned-self-form/${investigationID}`, {
+    navigate(`/admin/active-case-form/${investigationID}`, {
       state: {
         redirectTo: location.pathname,
         claimsType: 'cashless',
