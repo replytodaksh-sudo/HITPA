@@ -511,7 +511,7 @@ const handleSubmit = async () => {
                 // FIX: Send ground rejections in correct structure
                 if (groundOfRejection.length > 0) {
                     qcOb.groundRejectionQCDTO = {
-                        groundRejectionQCViewDTOs: groundOfRejection.map((code) => ({
+                        groundRejectionQCViewDTOs: groundOfRejection && groundOfRejection.map((code) => ({
                             groundRejectionCode: code,
                         })),
                     };
@@ -520,7 +520,7 @@ const handleSubmit = async () => {
                 // FIX: Send fraud rejections in correct structure
                 if (groundOfRejectionFraud.length > 0) {
                     qcOb.groundRejectionFraudulentQCDTO = {
-                        groundRejectionFraudulentQCViewDTOs: groundOfRejectionFraud.map((code) => ({
+                        groundRejectionFraudulentQCViewDTOs: groundOfRejectionFraud && groundOfRejectionFraud.map((code) => ({
                             groundRejectionFraudulentCode: code,
                         })),
                     };
@@ -529,7 +529,7 @@ const handleSubmit = async () => {
                 // FIX: Send exclusion rejections in correct structure
                 if (groundOfRejectionExclusion.length > 0) {
                     qcOb.groundRejectionExclusionQCDTO = {
-                        groundRejectionExclusionDTO: groundOfRejectionExclusion.map((code) => ({
+                        groundRejectionExclusionDTO: groundOfRejectionExclusion && groundOfRejectionExclusion.map((code) => ({
                             groundRejectionExclusionCode: code,
                         })),
                     };
@@ -538,7 +538,7 @@ const handleSubmit = async () => {
                 // FIX: Send misrepresentation rejections in correct structure
                 if (groundOfRejectionMisrepresentation.length > 0) {
                     qcOb.groundRejectionMisrepresentQCDTO = {
-                        groundRejectionMisrepresentationDTO: groundOfRejectionMisrepresentation.map((code) => ({
+                        groundRejectionMisrepresentationDTO: groundOfRejectionMisrepresentation && groundOfRejectionMisrepresentation.map((code) => ({
                             groundRejectionMisrepresentCode: code,
                         })),
                     };
