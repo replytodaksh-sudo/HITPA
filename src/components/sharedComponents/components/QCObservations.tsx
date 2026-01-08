@@ -509,7 +509,7 @@ const handleSubmit = async () => {
                 qcOb.repudiateFraudulentRemarks = repadiateRemarks;
                 
                 // FIX: Send ground rejections in correct structure
-                if (groundOfRejection.length > 0) {
+                if (groundOfRejection?.length > 0) {
                     qcOb.groundRejectionQCDTO = {
                         groundRejectionQCViewDTOs: groundOfRejection && groundOfRejection.map((code) => ({
                             groundRejectionCode: code,
@@ -518,7 +518,7 @@ const handleSubmit = async () => {
                 }
 
                 // FIX: Send fraud rejections in correct structure
-                if (groundOfRejectionFraud.length > 0) {
+                if (groundOfRejectionFraud?.length > 0) {
                     qcOb.groundRejectionFraudulentQCDTO = {
                         groundRejectionFraudulentQCViewDTOs: groundOfRejectionFraud && groundOfRejectionFraud.map((code) => ({
                             groundRejectionFraudulentCode: code,
@@ -527,7 +527,7 @@ const handleSubmit = async () => {
                 }
 
                 // FIX: Send exclusion rejections in correct structure
-                if (groundOfRejectionExclusion.length > 0) {
+                if (groundOfRejectionExclusion?.length > 0) {
                     qcOb.groundRejectionExclusionQCDTO = {
                         groundRejectionExclusionDTO: groundOfRejectionExclusion && groundOfRejectionExclusion.map((code) => ({
                             groundRejectionExclusionCode: code,
@@ -536,7 +536,7 @@ const handleSubmit = async () => {
                 }
 
                 // FIX: Send misrepresentation rejections in correct structure
-                if (groundOfRejectionMisrepresentation.length > 0) {
+                if (groundOfRejectionMisrepresentation?.length > 0) {
                     qcOb.groundRejectionMisrepresentQCDTO = {
                         groundRejectionMisrepresentationDTO: groundOfRejectionMisrepresentation && groundOfRejectionMisrepresentation.map((code) => ({
                             groundRejectionMisrepresentCode: code,
