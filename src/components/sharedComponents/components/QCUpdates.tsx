@@ -355,7 +355,7 @@ const QCUpdates: React.FC<QCUpdatesProps> = ({ editable = true }) => {
 
       if (response.statusCode === 0) {
         alert('QC Updated Successfully!');
-        // navigate('/admin/dashboard');
+        navigate('/admin/dashboard');
       }
     } catch (error) {
       console.error('Error submitting QC update:', error);

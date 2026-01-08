@@ -229,7 +229,7 @@ console.log('Preview Values at render:', previewValues);
               //   investigationId={investigationId}
               previewValues={previewValues}
             //   buttonEnable={buttonEnable}
-            //   onNextTab={handleNextTab}
+              onChangeTab={handleNextTab}
             />
           )}
 

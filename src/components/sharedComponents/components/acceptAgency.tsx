@@ -415,7 +415,8 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
   accid,
 }) => {
   const navigate = useNavigate();
-  const { investigationId } = useParams<{ investigationId: string }>();
+  // const { investigationId } = useParams<{ investigationId: string }>();
+  const { investigationId: paramInvestigationId } = useParams<{ investigationId: string }>();
   const [searchParams] = useSearchParams();
   
   const claimsType = searchParams.get('claimsType') || '';
@@ -445,12 +446,15 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
   // Form fields
   const [instruction, setInstruction] = useState('');
   const [majorTrigger, setMajorTrigger] = useState('');
+  const [investigationId, setInvestigationId] = useState('');
 
   // Loading & error states
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const invId = paramInvestigationId ? paramInvestigationId.split(' ')[0] : ''
+    setInvestigationId(invId);
     const role = sessionStorage.getItem('roleName') || '';
     setRoleName(role);
     
@@ -598,7 +602,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
 
       if (response.statusCode === 0) {
         alert('Assignment successful!');
-        // navigate(redirectTo);
+        navigate(redirectTo);
       } else {
         setError(response.message || 'Assignment failed');
       }
