@@ -107,9 +107,9 @@ const AgencyDeniedAcceptDeny: React.FC<AgencyDeniedAcceptDenyProps> = ({
 
       if (response.data.statusCode === 0) {
         setSuccess('Denial submitted successfully!');
-        // setTimeout(() => {
-        //   navigate('/admin/dashboard');
-        // }, 1500);
+        setTimeout(() => {
+          navigate('/admin/dashboard');
+        }, 1500);
       } else {
         setError(response.data.message || 'Failed to submit denial');
       }

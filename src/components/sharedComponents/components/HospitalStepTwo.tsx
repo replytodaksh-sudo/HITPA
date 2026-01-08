@@ -272,7 +272,7 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
             const data = await reimcaseUpdateService.addHospitalVerifyTwo(payload, cleanId);
             if (data.statusCode === 0) {
                 notificationService.showAlertSuccess(messages.hospVerifySubmit);
-                // navigate('/admin/dashboard');
+                navigate('/admin/dashboard');
             } else {
                 notificationService.showAlertError(data.message);
             }

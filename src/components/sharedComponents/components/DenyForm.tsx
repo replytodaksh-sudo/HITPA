@@ -121,11 +121,11 @@ const DenyForm: React.FC<AcceptDenyProps> = ({
         alert('Case denied successfully');
         
         // Navigate to redirect URL or dashboard
-        // if (redirectTo) {
-        //   navigate(redirectTo);
-        // } else {
-        //   navigate('/admin/dashboard');
-        // }
+        if (redirectTo) {
+          navigate(redirectTo);
+        } else {
+          navigate('/admin/dashboard');
+        }
       }
     } catch (error) {
       console.error('Error denying case:', error);

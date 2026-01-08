@@ -478,11 +478,11 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
 
             if (res.statusCode === 0) {
                 alert('Case assigned successfully');
-                // if (redirectTo) {
-                //     navigate(redirectTo);
-                // } else {
-                //     navigate('/admin/dashboard');
-                // }
+                if (redirectTo) {
+                    navigate(redirectTo);
+                } else {
+                    navigate('/admin/dashboard');
+                }
             } else {
                 setError(res.message || 'Assignment failed');
             }

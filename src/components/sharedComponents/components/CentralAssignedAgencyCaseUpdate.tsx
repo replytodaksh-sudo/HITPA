@@ -189,11 +189,11 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
         localStorage.clear();
         notificationService.showAlertSuccess(message.finalSubmit);
 
-        // if (redirectTo) {
-        //   navigate(redirectTo);
-        // } else {
-        //   navigate('/admin/dashboard');
-        // }
+        if (redirectTo) {
+          navigate(redirectTo);
+        } else {
+          navigate('/admin/dashboard');
+        }
       } else {
         notificationService.showAlertError(response.message ?? 'Failed to submit case update');
       }

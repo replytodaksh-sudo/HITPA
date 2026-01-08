@@ -783,7 +783,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
             if (response.statusCode === 0) {
                 alert('QC Observations submitted successfully!');
                 localStorage.clear();
-                // navigate(redirectTo || '/admin/dashboard');
+                navigate(redirectTo || '/admin/dashboard');
             }
         } catch (error) {
             console.error('Error submitting QC observation:', error);
@@ -820,7 +820,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
             if (response.statusCode === 0) {
                 alert('Case reassigned successfully!');
-                // navigate(redirectTo || '/admin/dashboard');
+                navigate(redirectTo || '/admin/dashboard');
             } else {
                 alert(response.message || 'Failed to reassign case');
             }
@@ -860,7 +860,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
             if (response.statusCode === 0) {
                 alert('Case reassigned to Field Officer successfully!');
-                // navigate(redirectTo || '/admin/dashboard');
+                navigate(redirectTo || '/admin/dashboard');
             }
         } catch (error) {
             console.error('Error reassigning to FO:', error);

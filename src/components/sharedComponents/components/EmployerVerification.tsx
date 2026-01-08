@@ -141,11 +141,11 @@ const EmployerVerification: React.FC<EmployerVerificationProps> = ({
       if (response.statusCode === 0) {
         notificationService.showAlertSuccess(message.finalSubmitDone);
 
-        // if (redirectTo) {
-        //   navigate(redirectTo);
-        // } else {
-        //   navigate('/admin/dashboard');
-        // }
+        if (redirectTo) {
+          navigate(redirectTo);
+        } else {
+          navigate('/admin/dashboard');
+        }
       }
     } catch (error) {
       console.error('Error submitting employer verification:', error);

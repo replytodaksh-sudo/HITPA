@@ -327,11 +327,11 @@ const Preview: React.FC<PreviewProps> = ({
         alert('Case submitted successfully to QC');
         
         // Navigate to redirect URL or dashboard
-        // if (redirectTo) {
-        //   navigate(redirectTo);
-        // } else {
-        //   navigate('/admin/dashboard');
-        // }
+        if (redirectTo) {
+          navigate(redirectTo);
+        } else {
+          navigate('/admin/dashboard');
+        }
       }
     } catch (error) {
       console.error('Error submitting case:', error);
