@@ -1,4 +1,3 @@
-// File: src/components/AssignedFo/children/AssignedFoCashless.tsx
 import React, { useState, useEffect } from 'react';
 import {
   Box,
@@ -11,10 +10,15 @@ import {
   Tooltip,
   alpha,
   useTheme,
+  Grid,
+  TextField,
+  Button,
 } from '@mui/material';
 import {
   Visibility as ViewIcon,
   FilterList as FilterIcon,
+  Search as SearchIcon,
+  Refresh as RefreshIcon,
 } from '@mui/icons-material';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import type { GridColDef } from '@mui/x-data-grid';
@@ -46,32 +50,57 @@ interface Claim {
 const CentralNewCasesCashless: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
-  
+
   const [claims, setClaims] = useState<Claim[]>([]);
   const [loading, setLoading] = useState(true);
   const [pageSize, setPageSize] = useState(50);
+  const [claimNo, setClaimNo] = useState('');
+  const [totalCount, setTotalCount] = useState(0);
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 50,
+  });
 
   useEffect(() => {
-    fetchClaims();
+    fetchTotalCount();
   }, []);
 
-  const fetchClaims = async () => {
+  useEffect(() => {
+    fetchClaims(paginationModel.page + 1, paginationModel.pageSize);
+  }, [paginationModel]);
+
+  const fetchClaims = async (pageNo: number, pageSize: number) => {
     setLoading(true);
     try {
-      const response = await claimsService.fetchAllCentralNewCases();
+      const response = await claimsService.getAllCentralNewClaims(
+        pageNo,
+        pageSize
+      );
+
       if (response.statusCode === 0) {
-        setClaims(response.payload);
+        setClaims(response.payload || []);
       }
     } catch (error) {
-      console.error('Failed to fetch claims:', error);
+      console.error('Error fetching claims:', error);
     } finally {
       setLoading(false);
     }
   };
 
+  const fetchTotalCount = async () => {
+    try {
+      const response = await claimsService.getAllNewCasesCentral();
+      if (response.statusCode === 0) {
+        setTotalCount(response.payload || 0);
+      }
+    } catch (error) {
+      console.error('Error fetching total count:', error);
+    }
+  };
+
   const handleViewClick = (investigationID: string, claim: Claim) => {
     console.log("123456789", investigationID, claim)
-    
+
     navigate(`/admin/central-new-cases/${investigationID}?redirectTo=${location.pathname}&claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`, {
       state: {
         redirectTo: location.pathname,
@@ -81,6 +110,11 @@ const CentralNewCasesCashless: React.FC = () => {
       },
     });
   };
+
+  const handleRowClick = (params: any) => {
+      const claim = params?.row as Claim;
+      navigate(`/admin/central-new-cases/${claim?.investigationID}?redirectTo=${location.pathname}&claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`)
+    };
 
   const getTatColor = (tat: number): string => {
     if (tat <= 3) return theme.palette.success.main;
@@ -283,6 +317,40 @@ const CentralNewCasesCashless: React.FC = () => {
     );
   }
 
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  const handleSearch = async () => {
+    if (!claimNo.trim()) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await claimsService.getAllCentralNewCaseBySearchClaims(
+        claimNo
+      );
+
+      if (response.statusCode === 0) {
+        setClaims(response.payload || []);
+      }
+    } catch (error) {
+      console.error('Error searching claims:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleReset = () => {
+    setClaimNo('');
+    fetchClaims(1, paginationModel.pageSize);
+  };
+
+
   return (
     <Box>
       {/* Summary Cards */}
@@ -328,54 +396,102 @@ const CentralNewCasesCashless: React.FC = () => {
         </Card>
       </Box>
 
+      <Card sx={{ mb: 3 }}>
+        <CardContent>
+          <Grid container spacing={2} alignItems="flex-end">
+            <Grid size={{ xs: 12, sm: 8, md: 6 }}>
+              <TextField
+                fullWidth
+                label="Claim No."
+                placeholder="Enter Claim No."
+                value={claimNo}
+                onChange={(e) => setClaimNo(e.target.value)}
+                onKeyPress={handleKeyPress}
+                variant="outlined"
+                size="small"
+                autoComplete="off"
+              />
+            </Grid>
+            <Grid size={{ xs: 12, sm: 4, md: 2 }}>
+              <Button
+                fullWidth
+                variant="contained"
+                startIcon={<SearchIcon />}
+                onClick={handleSearch}
+                disabled={loading || !claimNo.trim()}
+                sx={{
+                  background: loading || !claimNo.trim() ? '' : 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, #5568d3 0%, #6a3f8f 100%)',
+                  },
+                }}
+              >
+                Search
+              </Button>
+            </Grid>
+            <Grid size={{ xs: 12, sm: 4, md: 2 }}>
+              <Button
+                fullWidth
+                variant="outlined"
+                startIcon={<RefreshIcon />}
+                onClick={handleReset}
+                disabled={loading}
+              >
+                Reset
+              </Button>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+
       {/* Data Grid */}
       <Card sx={{ height: 700 }}>
         <DataGrid
-            rows={claims}
-            columns={columns}
-            pagination
-            paginationModel={{ page: 0, pageSize }}
-            onPaginationModelChange={(model: any) => setPageSize(model.pageSize ?? pageSize)}
-            pageSizeOptions={[25, 50, 100]}
-            checkboxSelection
-            // disableSelectionOnClick
-            getRowId={(row) => row?.investigationID}
-            // components={{
-            //   Toolbar: GridToolbar,
-            // }}
-            // componentsProps={{
-            //   toolbar: {
-            //     showQuickFilter: true,
-            //     quickFilterProps: { debounceMs: 500 },
-            //   },
-            // }}
-            sx={{
-              border: 'none',
-              '& .MuiDataGrid-cell': {
-                borderColor: theme.palette.divider,
-              },
-              '& .MuiDataGrid-columnHeaders': {
-                background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
-                color: '#7a7a7a',
-                fontSize: '0.875rem',
-                fontWeight: 700,
-                borderRadius: 0,
-              },
-              '& .MuiDataGrid-columnHeaderTitle': {
-                fontWeight: 700,
-              },
-              '& .MuiDataGrid-row:hover': {
-                bgcolor: alpha(theme.palette.primary.main, 0.05),
-              },
-              '& .MuiDataGrid-footerContainer': {
-                borderTop: `2px solid ${theme.palette.divider}`,
-                bgcolor: alpha(theme.palette.primary.main, 0.02),
-              },
-            }}
-          />
+          rows={claims}
+          columns={columns}
+          pagination
+          pageSizeOptions={[25, 50, 100]}
+          // checkboxSelection
+          rowCount={totalCount}
+          // disableSelectionOnClick
+          getRowId={(row) => row?.investigationID}
+          loading={loading}
+          paginationMode="server"
+          paginationModel={paginationModel}
+          onPaginationModelChange={setPaginationModel}
+          sx={{
+            border: 'none',
+            '& .MuiDataGrid-cell': {
+              borderColor: theme.palette.divider,
+            },
+            '& .MuiDataGrid-columnHeaders': {
+              background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
+              color: '#7a7a7a',
+              fontSize: '0.875rem',
+              fontWeight: 700,
+              borderRadius: 0,
+            },
+            '& .MuiDataGrid-columnHeaderTitle': {
+              fontWeight: 700,
+            },
+            '& .MuiDataGrid-row:hover': {
+              bgcolor: alpha(theme.palette.primary.main, 0.05),
+            },
+            '& .MuiDataGrid-footerContainer': {
+              borderTop: `2px solid ${theme.palette.divider}`,
+              bgcolor: alpha(theme.palette.primary.main, 0.02),
+            },
+          }}
+        />
       </Card>
     </Box>
   );
 };
 
 export default CentralNewCasesCashless;
+
+
+
+// api/v1/claims/getAllCentralNewCasesBySearch?sbigClaimNo=100621000013-01
+// api/v1/claims/getAllCentralNewCasesTotalCompleted -- this will show the total count
+// api/v1/claims/getAllCentralNewCasesByPage?pageNo=1&pageSize=10'

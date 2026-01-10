@@ -1559,15 +1559,51 @@ export const claimsService = {
       return response;
     } catch (error) { console.error('Error:', error); throw error; }
   },
+  getAllNewCasesCentral: async (): Promise<ClaimsResponse> => {
+    try {
+      const response = await apiService.get(apiUrls.getAllNewCasesCentral);
+      return response;
+    } catch (error) { console.error('Error:', error); throw error; }
+  },
+  getAllNewReCasesCentral: async (): Promise<ClaimsResponse> => {
+    try {
+      const response = await apiService.get(apiUrls.getAllNewReCasesCentral);
+      return response;
+    } catch (error) { console.error('Error:', error); throw error; }
+  },
   getAllCentralInvestigationCompletedByPageReClaims: async (pageNo: number, pageSize: number): Promise<ClaimsResponse> => {
     try {
       const response = await apiService.get(`${apiUrls.getAllCentralInvestigationCompletedByPageReClaims}?pageNo=${pageNo}&pageSize=${pageSize}`);
       return response;
     } catch (error) { console.error('Error:', error); throw error; }
   },
+  getAllCentralNewClaims: async (pageNo: number, pageSize: number): Promise<ClaimsResponse> => {
+    try {
+      const response = await apiService.get(`${apiUrls.getAllCentralNewCasesByPage}?pageNo=${pageNo}&pageSize=${pageSize}`);
+      return response;
+    } catch (error) { console.error('Error:', error); throw error; }
+  },
+  getAllCentralNewReClaims: async (pageNo: number, pageSize: number): Promise<ClaimsResponse> => {
+    try {
+      const response = await apiService.get(`${apiUrls.getAllCentralNewReCasesByPage}?pageNo=${pageNo}&pageSize=${pageSize}`);
+      return response;
+    } catch (error) { console.error('Error:', error); throw error; }
+  },
   getAllCentralInvestigationCompletedBySearchReClaims: async (sbigClaimNo: string): Promise<ClaimsResponse> => {
     try {
       const response = await apiService.get(`${apiUrls.getAllCentralInvestigationCompletedBySearchReClaims}?sbigClaimNo=${sbigClaimNo}`);
+      return response;
+    } catch (error) { console.error('Error:', error); throw error; }
+  },
+  getAllCentralNewCaseBySearchClaims: async (sbigClaimNo: string): Promise<ClaimsResponse> => {
+    try {
+      const response = await apiService.get(`${apiUrls.getAllCentralNewCaseBySearchClaims}?sbigClaimNo=${sbigClaimNo}`);
+      return response;
+    } catch (error) { console.error('Error:', error); throw error; }
+  },
+  getAllCentralNewReCaseBySearchClaims: async (sbigClaimNo: string): Promise<ClaimsResponse> => {
+    try {
+      const response = await apiService.get(`${apiUrls.getAllCentralNewReCaseBySearchClaims}?sbigClaimNo=${sbigClaimNo}`);
       return response;
     } catch (error) { console.error('Error:', error); throw error; }
   },

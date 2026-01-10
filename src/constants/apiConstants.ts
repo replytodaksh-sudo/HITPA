@@ -272,10 +272,19 @@ export const apiUrls = {
     getAllCentralInvestigationCompletedBySearch: "/claims/getAllCentralInvestigationCompletedBySearch",
 
     getAllCentralInvestigationTotalCompletedReClaims: "/reclaims/getAllCentralInvestigationTotalCompleted",
+    
+    getAllNewCasesCentral: "/claims/getAllCentralNewCasesTotalCompleted",
+    getAllNewReCasesCentral: "/reclaims/getAllCentralNewCasesTotalCompleted",
 
     getAllCentralInvestigationCompletedByPageReClaims: "/reclaims/getAllCentralInvestigationCompletedByPage",
+    
+    getAllCentralNewCasesByPage: "/claims/getAllCentralNewCasesByPage",
+    getAllCentralNewReCasesByPage: "/reclaims/getAllCentralNewCasesByPage",
 
     getAllCentralInvestigationCompletedBySearchReClaims: "/reclaims/getAllCentralInvestigationCompletedBySearch",
+   
+    getAllCentralNewCaseBySearchClaims: "/claims/getAllCentralNewCasesBySearch",
+    getAllCentralNewReCaseBySearchClaims: "/reclaims/getAllCentralNewCasesBySearch",
 
     employerVerification: `/reactivecase/addReCaseUpdateEmployeer?investigationId=`,
     hospitalVerification: `/reactivecase/addReCaseUpdate?investigationId=`,
