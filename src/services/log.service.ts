@@ -23,7 +23,7 @@
 //    */
 //   allLogs: (invClaimId: string) =>
 //     apiService.get<any>(`/claims/getLogDetails/${invClaimId.split('-')[0]}`),
-  
+
 //   /**
 //    * Get all logs for reimbursement investigation
 //    */
@@ -36,7 +36,7 @@
 //    */
 //   addLog: (investigationId: string, data: Partial<LogItem>) =>
 //     apiService.post<any>(`/logs/${investigationId}`, data),
-  
+
 // // getSbigLogDetails(sbigClaimNo:any, claimType:any):Observable<any>{
 // //     return this.http.get(apiurls.getLogDetailsBySbigClaimNo+"?sbigClaimNo="+sbigClaimNo+"&claimType="+claimType, {responseType:"json"});
 
@@ -129,11 +129,11 @@ export const logService = {
     try {
       // Clean investigation ID (remove suffix after dash)
       const cleanInvClaimId = invClaimId.split('-')[0];
-      
+
       const response = await apiService.get<LogEntry[]>(
         `${apiUrls.logs}${cleanInvClaimId}`
       );
-      
+
       return response;
     } catch (error) {
       console.error('Error in allLogs:', error);
@@ -154,11 +154,11 @@ export const logService = {
     try {
       // Clean investigation ID (remove suffix after dash)
       const cleanInvClaimId = invClaimId.split('-')[0];
-      
+
       const response = await apiService.get<LogEntry[]>(
         `${apiUrls.relogs}${cleanInvClaimId}`
       );
-      
+
       return response;
     } catch (error) {
       console.error('Error in allReLogs:', error);
@@ -182,13 +182,9 @@ export const logService = {
   ): Promise<SbigLogResponse> => {
     try {
       const response = await apiService.get<SbigLogDetail>(
-        apiUrls.getLogDetailsBySbigClaimNo,
-        {
-          sbigClaimNo,
-          claimType,
-        }
+        `${apiUrls.getLogDetailsBySbigClaimNo}?sbigClaimNo=${sbigClaimNo}&claimType=${claimType}`
       );
-      
+
       return response;
     } catch (error) {
       console.error('Error in getSbigLogDetails:', error);

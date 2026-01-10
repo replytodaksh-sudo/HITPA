@@ -139,10 +139,6 @@ const QCObservations: React.FC<QCObservationsProps> = ({
     const [repadiateRemarks, setRepadiateRemarks] = useState('');
     const [suspectedCaseFindings, setSuspectedCaseFindings] = useState('');
 
-    // Ground Rejection State
-    const [groundOfRejection, setGroundOfRejection] = useState<string[]>([]);
-    const [groundOfRejectionFraud, setGroundOfRejectionFraud] = useState<string[]>([]);
-
     // Recommendation State
     const [recommendations, setRecommendations] = useState({
         policyCancellation: '',
@@ -180,11 +176,14 @@ const QCObservations: React.FC<QCObservationsProps> = ({
     // PART 3: GROUND REJECTION STATE & FETCHING
     // ============================================
 
+    const [groundOfRejection, setGroundOfRejection] = useState<string[]>([]); // ✅ Should be array
+    const [groundOfRejectionFraud, setGroundOfRejectionFraud] = useState<string[]>([]);
+    const [groundOfRejectionExclusion, setGroundOfRejectionExclusion] = useState<string[]>([]); // ✅ Add this
+    const [groundOfRejectionMisrepresentation, setGroundOfRejectionMisrepresentation] = useState<string[]>([]);
+
     // Add these states to your main component (after existing states)
     const [groundOfRegection, setGroundOfRegection] = useState<any[]>([]);
     const [groundOfRegectionFraud, setGroundOfRegectionFraud] = useState<any[]>([]);
-    const [groundOfRejectionExclusion, setGroundOfRejectionExclusion] = useState<any[]>([]);
-    const [groundOfRejectionMisrepresentation, setGroundOfRejectionMisrepresentation] = useState<any[]>([]);
     const [documentTitle, setDocumentTitle] = useState('');
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
     const [investigationDocsView, setInvestigationDocsView] = useState<any[]>([]);
@@ -365,9 +364,7 @@ const QCObservations: React.FC<QCObservationsProps> = ({
         }
     }, [roleName, previewValues, claimType]);
 
-    /**
-     * Populate form fields from preview values
-     */
+
     useEffect(() => {
         if (!propPreviewValues) return;
 
@@ -383,52 +380,107 @@ const QCObservations: React.FC<QCObservationsProps> = ({
         setSuspectedCaseFindings(propPreviewValues.suspectedCaseFindings || '');
         setLowMiniRemarks(propPreviewValues.lossMinimizationRemarks || '');
 
-        // Populate ground rejections
+        // ✅ FIX: Populate ground rejections with proper checks
         if (propPreviewValues.groundRejectionQCDTO?.groundRejectionQCViewDTOs) {
             const codes = propPreviewValues.groundRejectionQCDTO.groundRejectionQCViewDTOs.map(
                 (o: any) => o.groundRejectionCode
             );
-            setGroundOfRejection(codes);
+            setGroundOfRejection(codes || []);
+        } else {
+            setGroundOfRejection([]); // ✅ Set empty array if null
         }
 
         if (propPreviewValues.groundRejectionFraudulentQCDTO?.groundRejectionFraudulentQCViewDTOs) {
             const codes = propPreviewValues.groundRejectionFraudulentQCDTO.groundRejectionFraudulentQCViewDTOs.map(
                 (o: any) => o.groundRejectionFraudulentCode
             );
-            setGroundOfRejectionFraud(codes);
+            setGroundOfRejectionFraud(codes || []);
+        } else {
+            setGroundOfRejectionFraud([]);
         }
 
         if (propPreviewValues.groundRejectionExclusionQCDTO?.groundRejectionExclusionDTO) {
             const codes = propPreviewValues.groundRejectionExclusionQCDTO.groundRejectionExclusionDTO.map(
                 (o: any) => o.groundRejectionExclusionCode
             );
-            setGroundOfRejectionExclusion(codes);
+            setGroundOfRejectionExclusion(codes || []);
+        } else {
+            setGroundOfRejectionExclusion([]);
         }
 
         if (propPreviewValues.groundRejectionMisrepresentQCDTO?.groundRejectionMisrepresentationDTO) {
             const codes = propPreviewValues.groundRejectionMisrepresentQCDTO.groundRejectionMisrepresentationDTO.map(
                 (o: any) => o.groundRejectionMisrepresentCode
             );
-            setGroundOfRejectionMisrepresentation(codes);
+            setGroundOfRejectionMisrepresentation(codes || []);
+        } else {
+            setGroundOfRejectionMisrepresentation([]);
         }
 
-        // Populate recommendations
-        setRecommendations({
-            policyCancellation: propPreviewValues.policyCancellation ? 'true' : 'false',
-            hospitalBlacklisted: propPreviewValues.hospitalBlacklisted ? 'true' : 'false',
-            hospitalDepanelled: propPreviewValues.hospitalDepanelled ? 'true' : 'false',
-            hospitalCautionTagged: propPreviewValues.hospitalCautionTagged ? 'true' : 'false',
-            insuredBlacklisted: propPreviewValues.insuredBlacklisted ? 'true' : 'false',
-            insuredCautionTagged: propPreviewValues.insuredCautionTagged ? 'true' : 'false',
-            policyFraud: propPreviewValues.policyFraud ? 'true' : 'false',
-            treatingDoctorFraud: propPreviewValues.treatingDoctorFraud ? 'true' : 'false',
-            pathologistFraud: propPreviewValues.pathologistFraud ? 'true' : 'false',
-            chemistFraud: propPreviewValues.chemistFraud ? 'true' : 'false',
-            pathologyLabFraud: propPreviewValues.pathologyLabFraud ? 'true' : 'false',
-            corporateTaggedFraud: propPreviewValues.corporateTaggedFraud ? 'true' : 'false',
-            legalActionInitiated: propPreviewValues.legalActionInitiated ? 'true' : 'false',
-        });
+        // ... rest of the code
     }, [propPreviewValues]);
+
+    // useEffect(() => {
+    //     if (!propPreviewValues) return;
+
+    //     setPreviewValues(propPreviewValues);
+    //     setQcObservations(propPreviewValues.qcObservations || '');
+    //     setQueryRM(propPreviewValues.queryWithRegionalQC || '');
+    //     setQueryCM(propPreviewValues.queriesQuery || '');
+    //     setFinalDecision(propPreviewValues.finalDecision || '');
+    //     setPayableRemarks(propPreviewValues.queriesRemarks || '');
+    //     setQueryRemark(propPreviewValues.queryRemarks || '');
+    //     setQueryTxt(propPreviewValues.queryTxt || '');
+    //     setRepadiateRemarks(propPreviewValues.repudiateFraudulentRemarks || '');
+    //     setSuspectedCaseFindings(propPreviewValues.suspectedCaseFindings || '');
+    //     setLowMiniRemarks(propPreviewValues.lossMinimizationRemarks || '');
+
+    //     // Populate ground rejections
+    //     if (propPreviewValues.groundRejectionQCDTO?.groundRejectionQCViewDTOs) {
+    //         const codes = propPreviewValues.groundRejectionQCDTO.groundRejectionQCViewDTOs.map(
+    //             (o: any) => o.groundRejectionCode
+    //         );
+    //         setGroundOfRejection(codes);
+    //     }
+
+    //     if (propPreviewValues.groundRejectionFraudulentQCDTO?.groundRejectionFraudulentQCViewDTOs) {
+    //         const codes = propPreviewValues.groundRejectionFraudulentQCDTO.groundRejectionFraudulentQCViewDTOs.map(
+    //             (o: any) => o.groundRejectionFraudulentCode
+    //         );
+    //         setGroundOfRejectionFraud(codes);
+    //     }
+
+    //     if (propPreviewValues.groundRejectionExclusionQCDTO?.groundRejectionExclusionDTO) {
+    //         const codes = propPreviewValues.groundRejectionExclusionQCDTO.groundRejectionExclusionDTO.map(
+    //             (o: any) => o.groundRejectionExclusionCode
+    //         );
+    //         setGroundOfRejectionExclusion(codes);
+    //     }
+
+    //     if (propPreviewValues.groundRejectionMisrepresentQCDTO?.groundRejectionMisrepresentationDTO) {
+    //         const codes = propPreviewValues.groundRejectionMisrepresentQCDTO.groundRejectionMisrepresentationDTO.map(
+    //             (o: any) => o.groundRejectionMisrepresentCode
+    //         );
+    //         setGroundOfRejectionMisrepresentation(codes);
+    //     }
+
+    //     // Populate recommendations
+    //     setRecommendations({
+    //         policyCancellation: propPreviewValues.policyCancellation ? 'true' : 'false',
+    //         hospitalBlacklisted: propPreviewValues.hospitalBlacklisted ? 'true' : 'false',
+    //         hospitalDepanelled: propPreviewValues.hospitalDepanelled ? 'true' : 'false',
+    //         hospitalCautionTagged: propPreviewValues.hospitalCautionTagged ? 'true' : 'false',
+    //         insuredBlacklisted: propPreviewValues.insuredBlacklisted ? 'true' : 'false',
+    //         insuredCautionTagged: propPreviewValues.insuredCautionTagged ? 'true' : 'false',
+    //         policyFraud: propPreviewValues.policyFraud ? 'true' : 'false',
+    //         treatingDoctorFraud: propPreviewValues.treatingDoctorFraud ? 'true' : 'false',
+    //         pathologistFraud: propPreviewValues.pathologistFraud ? 'true' : 'false',
+    //         chemistFraud: propPreviewValues.chemistFraud ? 'true' : 'false',
+    //         pathologyLabFraud: propPreviewValues.pathologyLabFraud ? 'true' : 'false',
+    //         corporateTaggedFraud: propPreviewValues.corporateTaggedFraud ? 'true' : 'false',
+    //         legalActionInitiated: propPreviewValues.legalActionInitiated ? 'true' : 'false',
+    //     });
+    // }, [propPreviewValues]);
 
     /**
      * Fetch central query data
@@ -465,249 +517,17 @@ const QCObservations: React.FC<QCObservationsProps> = ({
  * This shows the corrected payload structure for the backend
  */
 
-// ============================================
-// CORRECTED SUBMIT HANDLER
-// ============================================
+    // ============================================
+    // CORRECTED SUBMIT HANDLER
+    // ============================================
 
-const handleSubmit = async () => {
-    try {
-        // Build QC observation object with CORRECT structure
-        const qcOb: QCObservation = {
-            qcObservations,
-            qcUpdateID: localStorage.getItem('qcUpdateID') || '',
-            finalDecision: finalDecision || '',
-            queriesRemarks: '',
-            queriesQuery: '',
-            queryWithRegionalQC: '',
-            repudiateFraudulentRemarks: '',
-            suspectedCaseFindings: '',
-            lossMinimizationRemarks: '',
-            assignedToUser: '',
-            agencyCodes: agencyCode ? [agencyCode] : [], // FIX: Ensure it's always an array
-            questionCodes: [
-                ...selectedForInsuredQues,
-                ...selectedTreatingDctrQues,
-                ...customForInsuredQuestions,
-                ...customForTreatingDoctorQuestions,
-            ],
-            payableRemarks,
-            acceptInstruction,
-            prevInvestigatorReport,
-            claimType,
-        };
-
-        // ============================================
-        // PART 1: Handle Different QC Observation Types
-        // ============================================
-
-        if (qcObservations === 'Accept Report') {
-            qcOb.finalDecision = finalDecision;
-
-            if (finalDecision === 'Payable') {
-                qcOb.queriesRemarks = payableRemarks;
-            } else if (finalDecision === 'Repudiate') {
-                qcOb.repudiateFraudulentRemarks = repadiateRemarks;
-                
-                // FIX: Send ground rejections in correct structure
-                if (groundOfRejection?.length > 0) {
-                    qcOb.groundRejectionQCDTO = {
-                        groundRejectionQCViewDTOs: groundOfRejection && groundOfRejection.map((code) => ({
-                            groundRejectionCode: code,
-                        })),
-                    };
-                }
-
-                // FIX: Send fraud rejections in correct structure
-                if (groundOfRejectionFraud?.length > 0) {
-                    qcOb.groundRejectionFraudulentQCDTO = {
-                        groundRejectionFraudulentQCViewDTOs: groundOfRejectionFraud && groundOfRejectionFraud.map((code) => ({
-                            groundRejectionFraudulentCode: code,
-                        })),
-                    };
-                }
-
-                // FIX: Send exclusion rejections in correct structure
-                if (groundOfRejectionExclusion?.length > 0) {
-                    qcOb.groundRejectionExclusionQCDTO = {
-                        groundRejectionExclusionDTO: groundOfRejectionExclusion && groundOfRejectionExclusion.map((code) => ({
-                            groundRejectionExclusionCode: code,
-                        })),
-                    };
-                }
-
-                // FIX: Send misrepresentation rejections in correct structure
-                if (groundOfRejectionMisrepresentation?.length > 0) {
-                    qcOb.groundRejectionMisrepresentQCDTO = {
-                        groundRejectionMisrepresentationDTO: groundOfRejectionMisrepresentation && groundOfRejectionMisrepresentation.map((code) => ({
-                            groundRejectionMisrepresentCode: code,
-                        })),
-                    };
-                }
-            } else if (finalDecision === 'Loss Minimization') {
-                qcOb.lossMinimizationRemarks = lowMiniRemarks;
-            } else if (finalDecision === 'Queries to be raised') {
-                qcOb.queriesRemarks = queryRemark;
-                qcOb.queriesQuery = queryTxt;
-            }
-
-            // ============================================
-            // PART 2: Add Recommendations (Convert to Boolean)
-            // ============================================
-
-            qcOb.policyCancellation = recommendations.policyCancellation === 'true';
-            qcOb.hospitalBlacklisted = recommendations.hospitalBlacklisted === 'true';
-            qcOb.hospitalDepanelled = recommendations.hospitalDepanelled === 'true';
-            qcOb.hospitalCautionTagged = recommendations.hospitalCautionTagged === 'true';
-            qcOb.insuredBlacklisted = recommendations.insuredBlacklisted === 'true';
-            qcOb.insuredCautionTagged = recommendations.insuredCautionTagged === 'true';
-            qcOb.policyFraud = recommendations.policyFraud === 'true';
-            qcOb.treatingDoctorFraud = recommendations.treatingDoctorFraud === 'true';
-            qcOb.pathologistFraud = recommendations.pathologistFraud === 'true';
-            qcOb.chemistFraud = recommendations.chemistFraud === 'true';
-            qcOb.pathologyLabFraud = recommendations.pathologyLabFraud === 'true';
-            qcOb.corporateTaggedFraud = recommendations.corporateTaggedFraud === 'true';
-            qcOb.legalActionInitiated = recommendations.legalActionInitiated === 'true';
-        } else if (qcObservations === 'Raise query to Regional QC manager') {
-            qcOb.queryWithRegionalQC = queryRM;
-        } else if (qcObservations === 'Response to Central QC Query') {
-            qcOb.queryWithRegionalQC = centralQuery;
-            qcOb.queriesQuery = queryCM;
-        } else if (qcObservations === 'Rework') {
-            qcOb.queriesRemarks = payableRemarks;
-        } else if (qcObservations === 'Reassign') {
-            // For reassign, agencyCode should already be set
-            // Add any additional remarks if needed
-            qcOb.queriesRemarks = payableRemarks || '';
-        }
-
-        // ============================================
-        // PART 3: Log the Payload for Verification
-        // ============================================
-
-        console.log('=== QC OBSERVATIONS PAYLOAD ===');
-        console.log(JSON.stringify(qcOb, null, 2));
-        console.log('=== DOCUMENT CODES ===');
-        console.log('Document Codes:', documentsCodes);
-        console.log('============================');
-
-        // ============================================
-        // PART 4: Submit to Backend
-        // ============================================
-
-        const response: any = await QCUpdateService.addQCObservations(
-            qcOb,
-            investigationId,
-            documentsCodes // Pass document codes separately
-        );
-
-        if (response.statusCode === 0) {
-            alertService.showAlertSuccess('QC Observations submitted successfully');
-            
-            // Navigate based on observation type
-            if (
-                qcObservations === 'Raise query to Regional QC manager' ||
-                qcObservations === 'Response to Central QC Query' ||
-                qcObservations === 'Rework' ||
-                qcObservations === 'Reassign'
-            ) {
-                if (redirectTo) {
-                    navigate(redirectTo);
-                } else {
-                    navigate('/admin/dashboard');
-                }
-            } else if (onChangeTab) {
-                onChangeTab(true);
-            }
-        } else if (response.statusCode === 4004) {
-            // Partial success
-            alertService.showAlertSuccess(response.message);
-        } else {
-            alertService.showAlertError(response.message || 'Failed to submit QC observations');
-        }
-    } catch (error) {
-        console.error('Error submitting QC observations:', error);
-        
-        // Log the error payload for debugging
-        if (error instanceof Error) {
-            console.error('Error Details:', error.message);
-        }
-        
-        alertService.showAlertError('Failed to submit QC observations. Check console for details.');
-    }
-};
-
-// ============================================
-// REFERENCE: Expected Backend Payload Structure
-// ============================================
-
-/*
-{
-  "qcObservations": "Accept Report",
-  "qcUpdateID": "12345",
-  "finalDecision": "Payable",
-  "queriesRemarks": "Remarks text",
-  "queriesQuery": "Query text",
-  "queryWithRegionalQC": "Regional query text",
-  "repudiateFraudulentRemarks": "Repudiation remarks",
-  "suspectedCaseFindings": "Findings text",
-  "lossMinimizationRemarks": "Loss minimization remarks",
-  "assignedToUser": "",
-  "agencyCodes": ["AGENCY001", "AGENCY002"],
-  "questionCodes": ["Q001", "Q002"],
-  "payableRemarks": "Payable remarks",
-  "acceptInstruction": "Instruction text",
-  "prevInvestigatorReport": "yes/no",
-  "claimType": "cashless/reim",
-  
-  // For Repudiate decision:
-  "groundRejectionQCDTO": {
-    "groundRejectionQCViewDTOs": [
-      { "groundRejectionCode": "GR0001" },
-      { "groundRejectionCode": "GR0002" }
-    ]
-  },
-  
-  "groundRejectionFraudulentQCDTO": {
-    "groundRejectionFraudulentQCViewDTOs": [
-      { "groundRejectionFraudulentCode": "FR0001" }
-    ]
-  },
-  
-  "groundRejectionExclusionQCDTO": {
-    "groundRejectionExclusionDTO": [
-      { "groundRejectionExclusionCode": "EX0001" }
-    ]
-  },
-  
-  "groundRejectionMisrepresentQCDTO": {
-    "groundRejectionMisrepresentationDTO": [
-      { "groundRejectionMisrepresentCode": "MR0001" }
-    ]
-  },
-  
-  // Recommendations (booleans):
-  "policyCancellation": true/false,
-  "hospitalBlacklisted": true/false,
-  "hospitalDepanelled": true/false,
-  "hospitalCautionTagged": true/false,
-  "insuredBlacklisted": true/false,
-  "insuredCautionTagged": true/false,
-  "policyFraud": true/false,
-  "treatingDoctorFraud": true/false,
-  "pathologistFraud": true/false,
-  "chemistFraud": true/false,
-  "pathologyLabFraud": true/false,
-  "corporateTaggedFraud": true/false,
-  "legalActionInitiated": true/false
-}
-*/
     // const handleSubmit = async () => {
     //     try {
-    //         // Build QC observation object
+    //         // Build QC observation object with CORRECT structure
     //         const qcOb: QCObservation = {
     //             qcObservations,
     //             qcUpdateID: localStorage.getItem('qcUpdateID') || '',
-    //             finalDecision: '',
+    //             finalDecision: finalDecision || '',
     //             queriesRemarks: '',
     //             queriesQuery: '',
     //             queryWithRegionalQC: '',
@@ -715,6 +535,7 @@ const handleSubmit = async () => {
     //             suspectedCaseFindings: '',
     //             lossMinimizationRemarks: '',
     //             assignedToUser: '',
+    //             agencyCodes: agencyCode ? [agencyCode] : [], // FIX: Ensure it's always an array
     //             questionCodes: [
     //                 ...selectedForInsuredQues,
     //                 ...selectedTreatingDctrQues,
@@ -727,13 +548,10 @@ const handleSubmit = async () => {
     //             claimType,
     //         };
 
-    //         groundOfRejection && (qcOb.groundRejectionQCDTO = { groundRejectionCode: groundOfRejection });
-    //         groundOfRejectionFraud && (qcOb.groundRejectionFraudulentQCDTO = { groundRejectionFraudulentCode: groundOfRejectionFraud });
-    //         groundOfRejectionMisrepresentation && (qcOb.groundRejectionMisrepresentQCDTO = { groundRejectionMisrepresentCode: groundOfRejectionMisrepresentation });
-    //         groundOfRejectionExclusion && (qcOb.groundRejectionExclusionQCDTO = { groundRejectionExclusionCode: groundOfRejectionExclusion });
-    //         agencyCode && (qcOb.agencyCodes = [...agencyCode]);
+    //         // ============================================
+    //         // PART 1: Handle Different QC Observation Types
+    //         // ============================================
 
-    //         // Handle different QC observation types
     //         if (qcObservations === 'Accept Report') {
     //             qcOb.finalDecision = finalDecision;
 
@@ -741,6 +559,42 @@ const handleSubmit = async () => {
     //                 qcOb.queriesRemarks = payableRemarks;
     //             } else if (finalDecision === 'Repudiate') {
     //                 qcOb.repudiateFraudulentRemarks = repadiateRemarks;
+
+    //                 // FIX: Send ground rejections in correct structure
+    //                 if (Array.isArray(groundOfRejection) && groundOfRejection.length > 0) {
+    //                     qcOb.groundRejectionQCDTO = {
+    //                         groundRejectionQCViewDTOs: groundOfRejection && groundOfRejection.map((code) => ({
+    //                             groundRejectionCode: code,
+    //                         })),
+    //                     };
+    //                 }
+
+    //                 // FIX: Send fraud rejections in correct structure
+    //                 if (Array.isArray(groundOfRejectionFraud) && groundOfRejectionFraud.length > 0) {
+    //                     qcOb.groundRejectionFraudulentQCDTO = {
+    //                         groundRejectionFraudulentQCViewDTOs: groundOfRejectionFraud && groundOfRejectionFraud.map((code) => ({
+    //                             groundRejectionFraudulentCode: code,
+    //                         })),
+    //                     };
+    //                 }
+
+    //                 // FIX: Send exclusion rejections in correct structure
+    //                 if (Array.isArray(groundOfRejectionExclusion) && groundOfRejectionExclusion.length > 0) {
+    //                     qcOb.groundRejectionExclusionQCDTO = {
+    //                         groundRejectionExclusionDTO: groundOfRejectionExclusion && groundOfRejectionExclusion.map((code) => ({
+    //                             groundRejectionExclusionCode: code,
+    //                         })),
+    //                     };
+    //                 }
+
+    //                 // FIX: Send misrepresentation rejections in correct structure
+    //                 if (Array.isArray(groundOfRejectionMisrepresentation) && groundOfRejectionMisrepresentation.length > 0) {
+    //                     qcOb.groundRejectionMisrepresentQCDTO = {
+    //                         groundRejectionMisrepresentationDTO: groundOfRejectionMisrepresentation && groundOfRejectionMisrepresentation.map((code) => ({
+    //                             groundRejectionMisrepresentCode: code,
+    //                         })),
+    //                     };
+    //                 }
     //             } else if (finalDecision === 'Loss Minimization') {
     //                 qcOb.lossMinimizationRemarks = lowMiniRemarks;
     //             } else if (finalDecision === 'Queries to be raised') {
@@ -748,7 +602,10 @@ const handleSubmit = async () => {
     //                 qcOb.queriesQuery = queryTxt;
     //             }
 
-    //             // Add recommendations
+    //             // ============================================
+    //             // PART 2: Add Recommendations (Convert to Boolean)
+    //             // ============================================
+
     //             qcOb.policyCancellation = recommendations.policyCancellation === 'true';
     //             qcOb.hospitalBlacklisted = recommendations.hospitalBlacklisted === 'true';
     //             qcOb.hospitalDepanelled = recommendations.hospitalDepanelled === 'true';
@@ -769,40 +626,226 @@ const handleSubmit = async () => {
     //             qcOb.queriesQuery = queryCM;
     //         } else if (qcObservations === 'Rework') {
     //             qcOb.queriesRemarks = payableRemarks;
+    //         } else if (qcObservations === 'Reassign') {
+    //             // For reassign, agencyCode should already be set
+    //             // Add any additional remarks if needed
+    //             qcOb.queriesRemarks = payableRemarks || '';
     //         }
-    //         console.log("123456789o0", qcOb)
-    //         // Submit QC observations
-    //         // const response: any = await QCUpdateService.addQCObservations(qcOb, investigationId, documentsCodes);
 
-    //         // if (response.statusCode === 0) {
-    //         //     alertService.showAlertSuccess('QC Observations submitted successfully');
-    //         //     // Navigate based on observation type
-    //         //     if (
-    //         //         qcObservations === 'Raise query to Regional QC manager' ||
-    //         //         qcObservations === 'Response to Central QC Query' ||
-    //         //         qcObservations === 'Rework' ||
-    //         //         qcObservations === 'Reassign'
-    //         //     ) {
-    //         //         if (redirectTo) {
-    //         //             navigate(redirectTo);
-    //         //         } else {
-    //         //             navigate('/admin/dashboard');
-    //         //         }
-    //         //     } else if (onChangeTab) {
-    //         //         onChangeTab(true);
-    //         //     }
-    //         // } else if (response.statusCode === 4004) {
-    //         //     alertService.showAlertSuccess(response.message);
-    //         // }
+    //         // ============================================
+    //         // PART 3: Log the Payload for Verification
+    //         // ============================================
+
+    //         console.log('=== QC OBSERVATIONS PAYLOAD ===');
+    //         console.log(JSON.stringify(qcOb, null, 2));
+    //         console.log('=== DOCUMENT CODES ===');
+    //         console.log('Document Codes:', documentsCodes);
+    //         console.log('============================');
+
+    //         // ============================================
+    //         // PART 4: Submit to Backend
+    //         // ============================================
+
+    //         const response: any = await QCUpdateService.addQCObservations(
+    //             qcOb,
+    //             investigationId,
+    //             documentsCodes // Pass document codes separately
+    //         );
+
+    //         if (response.statusCode === 0) {
+    //             alertService.showAlertSuccess('QC Observations submitted successfully');
+
+    //             // Navigate based on observation type
+    //             if (
+    //                 qcObservations === 'Raise query to Regional QC manager' ||
+    //                 qcObservations === 'Response to Central QC Query' ||
+    //                 qcObservations === 'Rework' ||
+    //                 qcObservations === 'Reassign'
+    //             ) {
+    //                 if (redirectTo) {
+    //                     navigate(redirectTo);
+    //                 } else {
+    //                     navigate('/admin/dashboard');
+    //                 }
+    //             } else if (onChangeTab) {
+    //                 onChangeTab(true);
+    //             }
+    //         } else if (response.statusCode === 4004) {
+    //             // Partial success
+    //             alertService.showAlertSuccess(response.message);
+    //         } else {
+    //             alertService.showAlertError(response.message || 'Failed to submit QC observations');
+    //         }
     //     } catch (error) {
     //         console.error('Error submitting QC observations:', error);
-    //         alertService.showAlertError('Failed to submit QC observations');
+
+    //         // Log the error payload for debugging
+    //         if (error instanceof Error) {
+    //             console.error('Error Details:', error.message);
+    //         }
+
+    //         alertService.showAlertError('Failed to submit QC observations. Check console for details.');
     //     }
     // };
 
+
+
+
+    const handleSubmit = async () => {
+        try {
+            // Build QC observation object with CORRECT structure
+            const qcOb: QCObservation = {
+                qcObservations,
+                qcUpdateID: localStorage.getItem('qcUpdateID') || '',
+                finalDecision: finalDecision || '',
+                queriesRemarks: '',
+                queriesQuery: '',
+                queryWithRegionalQC: '',
+                repudiateFraudulentRemarks: '',
+                suspectedCaseFindings: '',
+                lossMinimizationRemarks: '',
+                assignedToUser: '',
+                agencyCodes: agencyCode ? [agencyCode] : [],
+                questionCodes: [
+                    ...selectedForInsuredQues,
+                    ...selectedTreatingDctrQues,
+                    ...customForInsuredQuestions,
+                    ...customForTreatingDoctorQuestions,
+                ],
+                payableRemarks,
+                acceptInstruction,
+                prevInvestigatorReport,
+                claimType,
+            };
+
+            // ============================================
+            // Handle Different QC Observation Types
+            // ============================================
+            if (qcObservations === 'Accept Report') {
+                qcOb.finalDecision = finalDecision;
+
+                if (finalDecision === 'Payable') {
+                    qcOb.queriesRemarks = payableRemarks;
+                } else if (finalDecision === 'Repudiate') {
+                    qcOb.repudiateFraudulentRemarks = repadiateRemarks;
+
+                    // ✅ FIX: Ensure groundOfRejection is array before mapping
+                    if (Array.isArray(groundOfRejection) && groundOfRejection.length > 0) {
+                        qcOb.groundRejectionQCDTO = {
+                            groundRejectionQCViewDTOs: groundOfRejection.map((code) => ({
+                                groundRejectionCode: code,
+                            })),
+                        };
+                    }
+
+                    // ✅ FIX: Check fraud rejections
+                    if (Array.isArray(groundOfRejectionFraud) && groundOfRejectionFraud.length > 0) {
+                        qcOb.groundRejectionFraudulentQCDTO = {
+                            groundRejectionFraudulentQCViewDTOs: groundOfRejectionFraud.map((code) => ({
+                                groundRejectionFraudulentCode: code,
+                            })),
+                        };
+                    }
+
+                    // ✅ FIX: Check exclusion rejections
+                    if (Array.isArray(groundOfRejectionExclusion) && groundOfRejectionExclusion.length > 0) {
+                        qcOb.groundRejectionExclusionQCDTO = {
+                            groundRejectionExclusionDTO: groundOfRejectionExclusion.map((code) => ({
+                                groundRejectionExclusionCode: code,
+                            })),
+                        };
+                    }
+
+                    // ✅ FIX: Check misrepresentation rejections
+                    if (Array.isArray(groundOfRejectionMisrepresentation) && groundOfRejectionMisrepresentation.length > 0) {
+                        qcOb.groundRejectionMisrepresentQCDTO = {
+                            groundRejectionMisrepresentationDTO: groundOfRejectionMisrepresentation.map((code) => ({
+                                groundRejectionMisrepresentCode: code,
+                            })),
+                        };
+                    }
+                } else if (finalDecision === 'Loss Minimization') {
+                    qcOb.lossMinimizationRemarks = lowMiniRemarks;
+                } else if (finalDecision === 'Queries to be raised') {
+                    qcOb.queriesRemarks = queryRemark;
+                    qcOb.queriesQuery = queryTxt;
+                }
+
+                // Add Recommendations (Convert to Boolean)
+                qcOb.policyCancellation = recommendations.policyCancellation === 'true';
+                qcOb.hospitalBlacklisted = recommendations.hospitalBlacklisted === 'true';
+                qcOb.hospitalDepanelled = recommendations.hospitalDepanelled === 'true';
+                qcOb.hospitalCautionTagged = recommendations.hospitalCautionTagged === 'true';
+                qcOb.insuredBlacklisted = recommendations.insuredBlacklisted === 'true';
+                qcOb.insuredCautionTagged = recommendations.insuredCautionTagged === 'true';
+                qcOb.policyFraud = recommendations.policyFraud === 'true';
+                qcOb.treatingDoctorFraud = recommendations.treatingDoctorFraud === 'true';
+                qcOb.pathologistFraud = recommendations.pathologistFraud === 'true';
+                qcOb.chemistFraud = recommendations.chemistFraud === 'true';
+                qcOb.pathologyLabFraud = recommendations.pathologyLabFraud === 'true';
+                qcOb.corporateTaggedFraud = recommendations.corporateTaggedFraud === 'true';
+                qcOb.legalActionInitiated = recommendations.legalActionInitiated === 'true';
+            } else if (qcObservations === 'Raise query to Regional QC manager') {
+                qcOb.queryWithRegionalQC = queryRM;
+            } else if (qcObservations === 'Response to Central QC Query') {
+                qcOb.queryWithRegionalQC = centralQuery;
+                qcOb.queriesQuery = queryCM;
+            } else if (qcObservations === 'Rework') {
+                qcOb.queriesRemarks = payableRemarks;
+            } else if (qcObservations === 'Reassign') {
+                qcOb.queriesRemarks = payableRemarks || '';
+            }
+
+            // ✅ Log for debugging
+            console.log('=== QC OBSERVATIONS PAYLOAD ===');
+            console.log(JSON.stringify(qcOb, null, 2));
+            console.log('=== GROUND REJECTIONS ===');
+            console.log('Main:', groundOfRejection);
+            console.log('Fraud:', groundOfRejectionFraud);
+            console.log('Exclusion:', groundOfRejectionExclusion);
+            console.log('Misrepresentation:', groundOfRejectionMisrepresentation);
+            console.log('============================');
+
+            // Submit to Backend
+            const response: any = await QCUpdateService.addQCObservations(
+                qcOb,
+                investigationId,
+                documentsCodes
+            );
+
+            if (response.statusCode === 0) {
+                alertService.showAlertSuccess('QC Observations submitted successfully');
+
+                if (
+                    qcObservations === 'Raise query to Regional QC manager' ||
+                    qcObservations === 'Response to Central QC Query' ||
+                    qcObservations === 'Rework' ||
+                    qcObservations === 'Reassign'
+                ) {
+                    if (redirectTo) {
+                        navigate(redirectTo);
+                    } else {
+                        navigate('/admin/dashboard');
+                    }
+                } else if (onChangeTab) {
+                    onChangeTab(true);
+                }
+            } else if (response.statusCode === 4004) {
+                alertService.showAlertSuccess(response.message);
+            } else {
+                alertService.showAlertError(response.message || 'Failed to submit QC observations');
+            }
+        } catch (error) {
+            console.error('Error submitting QC observations:', error);
+            if (error instanceof Error) {
+                console.error('Error Details:', error.message);
+                console.error('Error Stack:', error.stack);
+            }
+            alertService.showAlertError('Failed to submit QC observations. Check console for details.');
+        }
+    };
+
     const isDisabled = editAble === 'Non-Editable';
-
-
 
     // Fetch investigation documents
     const fetchInvestigationDocs = async () => {
@@ -1171,21 +1214,7 @@ const handleSubmit = async () => {
                         <FormControl fullWidth sx={{ mb: 3 }}>
                             <FormLabel sx={{ mb: 1, fontWeight: 600 }}>Ground of rejection</FormLabel>
                             <Select
-                                value={groundOfRejection}
-                                onChange={(e) => setGroundOfRejection(e.target.value as string[])}
-                                disabled={isDisabled}
-                            >
-                                {groundOfRegection.map((rejection) => (
-                                    <MenuItem
-                                        key={rejection.groundRejectionCode}
-                                        value={rejection.groundRejectionCode}
-                                    >
-                                        <ListItemText primary={rejection.groundRejection} />
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                            {/* <Select
-                                // multiple
+                                multiple // ✅ ADD THIS
                                 value={groundOfRejection}
                                 onChange={(e) => setGroundOfRejection(e.target.value as string[])}
                                 disabled={isDisabled}
@@ -1215,7 +1244,7 @@ const handleSubmit = async () => {
                                         <ListItemText primary={rejection.groundRejection} />
                                     </MenuItem>
                                 ))}
-                            </Select> */}
+                            </Select>
                         </FormControl>
 
                         {/* Ground of Rejection - Fraud (GR0395) */}
@@ -1253,7 +1282,7 @@ const handleSubmit = async () => {
                                         Ground of rejection Exclusion
                                     </Typography>
                                     <FormGroup>
-                                        {groundOfRejectionExclusion.map((rejection) => (
+                                        {groundOfRejectionExclusion.map((rejection: any) => (
                                             <FormControlLabel
                                                 key={rejection.groundRejectionExclusionCode}
                                                 control={
@@ -1280,7 +1309,7 @@ const handleSubmit = async () => {
                                         Ground of rejection Misrepresentation
                                     </Typography>
                                     <FormGroup>
-                                        {groundOfRejectionMisrepresentation.map((rejection) => (
+                                        {groundOfRejectionMisrepresentation.map((rejection: any) => (
                                             <FormControlLabel
                                                 key={rejection.groundRejectionMisrepresentCode}
                                                 control={
