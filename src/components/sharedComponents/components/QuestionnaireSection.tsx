@@ -27,6 +27,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadIcon from '@mui/icons-material/Download';
 import CloseIcon from '@mui/icons-material/Close';
 import { QuestionService } from '../../../services/question.service';
+import { CompressOutlined } from '@mui/icons-material';
 
 interface Question {
   questionCode: string;
@@ -218,8 +219,9 @@ const QuestionnaireSection: React.FC<QuestionnaireSectionProps> = ({
       };
 
       const response:any = await QuestionService.addQuestion(payload);
-      if (response.data.statusCode === 0) {
-        const newCodes = response.data.payload;
+      console.log("response", response)
+      if (response.statusCode == 0) {
+        const newCodes = response.payload;
         const newNames = validQuestions.map((q) => q.questionName);
         
         setCustomInsuredQuestions([...customInsuredQuestions, ...newCodes]);
