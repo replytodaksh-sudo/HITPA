@@ -739,7 +739,7 @@ const QCUpdates: React.FC<QCUpdatesProps> = ({ editable = true }) => {
                   variant="contained"
                   size="large"
                   startIcon={<SaveIcon />}
-                  onClick={submitQCUpdate}
+                  // onClick={submitQCUpdate}
                   disabled={loading}
                   sx={{
                     background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',

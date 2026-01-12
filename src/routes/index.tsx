@@ -70,6 +70,7 @@ import QCPendingFromCentralForms from "../pages/QCRegPendingFromCentralForm/QCRe
 import RegQCPendingFormsReim from "../pages/RegQCPendingFormsReim/RegQCPendingFormsReim";
 import FoReworkCases from "../pages/FoReworkCases/FoReworkCases";
 import FoReassignedCases from "../pages/FoReassignedCases/FoReassignedCases";
+import TatRuleComponent from "../pages/TatRuleComponent/TatRuleComponent";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -93,6 +94,14 @@ const AppRoutes: React.FC = () => {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="tatRuleSetup"
+          element={
+            <ProtectedRoute>
+              <TatRuleComponent />
             </ProtectedRoute>
           }
         />
@@ -746,14 +755,14 @@ const AppRoutes: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="qc-pending-form/:investigationId"
           element={
             <ProtectedRoute>
               <QCPendingForms />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route
           path="agency-qc-submitted-form/:investigationId"
           element={
@@ -770,14 +779,14 @@ const AppRoutes: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="central-qc-form/:investigationId"
           element={
             <ProtectedRoute>
               <CentralQCForm />
             </ProtectedRoute>
           }
-        />
+        /> */}
       </Route>
       {/* Default redirects */}
       <Route path="/" element={<Navigate to="dashboard" replace />} />
