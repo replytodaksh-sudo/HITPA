@@ -418,7 +418,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
   // const { investigationId } = useParams<{ investigationId: string }>();
   const { investigationId: paramInvestigationId } = useParams<{ investigationId: string }>();
   const [searchParams] = useSearchParams();
-  
+
   const claimsType = searchParams.get('claimsType') || '';
   const redirectTo = searchParams.get('redirectTo') || '/admin/dashboard';
 
@@ -457,20 +457,20 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
     setInvestigationId(invId);
     const role = sessionStorage.getItem('roleName') || '';
     setRoleName(role);
-    
+
     if (role === 'Agency Spoc') {
       fetchFieldOfficers();
     } else {
       fetchAgencies();
       fetchSystemSuggestedAgencies();
     }
-    
+
     fetchDocuments();
   }, []);
 
   const fetchAgencies = async () => {
     try {
-      const response:any = await agencyService.fetchAllAgency();
+      const response: any = await agencyService.fetchAllAgency();
       if (response.statusCode === 0) {
         setAgencyList(response.payload);
       }
@@ -481,7 +481,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
 
   const fetchSystemSuggestedAgencies = async () => {
     try {
-      const response:any = await agencyService.getSystemSuggestedAgency();
+      const response: any = await agencyService.getSystemSuggestedAgency();
       if (response.statusCode === 0) {
         setSystemSuggestedAgencies(response.payload);
       }
@@ -492,7 +492,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
 
   const fetchFieldOfficers = async () => {
     try {
-      const response:any = await agencyService.fetchAllFieldOfficer();
+      const response: any = await agencyService.fetchAllFieldOfficer();
       if (response.statusCode === 0) {
         setFieldOfficerList(response.payload);
       }
@@ -514,11 +514,11 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
         uploadDuring = 'caseAssignmentCentral';
       }
 
-      const response:any = await DocumentsService.viewInvestigationDocsView(
+      const response: any = await DocumentsService.viewInvestigationDocsView(
         uploadDuring,
         investigationId
       );
-      
+
       if (response.statusCode === 0) {
         setInvestigationDocs(response.payload);
       }
@@ -529,7 +529,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
 
   const handlePerformanceIndexFetch = async (selectedAgencyCode: string) => {
     try {
-      const response:any = await agencyService.getPerformanceIndex(selectedAgencyCode);
+      const response: any = await agencyService.getPerformanceIndex(selectedAgencyCode);
       if (response.statusCode === 0) {
         setPerformanceIndex(response.payload);
       }
@@ -565,6 +565,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
     setLoading(true);
     setError(null);
 
+    console.log("payload", agencyCode)
     try {
       const questionCodes = [
         ...selectedInsuredQuestions,
@@ -582,11 +583,10 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
         majorTrigger,
         documentsCodes,
       };
+      let response: any;
 
-      let response:any;
-      
       if (roleName === 'Agency Spoc') {
-        response = await AssignService.assignFO(payload,[]);
+        response = await AssignService.assignFO(payload, []);
       } else if (claimsType === 'reim') {
         payload.investigationCaseDTO = {
           investigationType,
@@ -595,9 +595,9 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
             assignTo: agencyCode,
           }],
         };
-        response = await AssignService.reimAssign(payload,[]);
+        response = await AssignService.reimAssign(payload, []);
       } else {
-        response = await AssignService.assign(payload,[]);
+        response = await AssignService.assign(payload, []);
       }
 
       if (response.statusCode === 0) {
@@ -626,7 +626,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
         <Card sx={{ mb: 3 }}>
           <CardContent>
             <Grid container spacing={2}>
-              <Grid size={{xs:12, md:6}}>
+              <Grid size={{ xs: 12, md: 6 }}>
                 <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 1 }}>
                   Investigation Type:
                 </Typography>
@@ -637,7 +637,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
                   size="small"
                 />
               </Grid>
-              <Grid size={{xs:12, md:6}}>
+              <Grid size={{ xs: 12, md: 6 }}>
                 <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 1 }}>
                   Investigation Sub Type:
                 </Typography>
@@ -731,7 +731,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
         disabled={loading || (roleName === 'Regional Manager' && !majorTrigger)}
         sx={{
           background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
-          color:"#fff !important",
+          color: "#fff !important",
           '&:hover': {
             background: 'linear-gradient(135deg, #764ba2 0%, #667eea 100%)',
           },

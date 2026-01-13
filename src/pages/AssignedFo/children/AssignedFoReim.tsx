@@ -70,15 +70,16 @@ const AssignedFoReim: React.FC = () => {
   };
 
   const handleViewClick = (investigationID: string, claim: Claim) => {
-    navigate(`/admin/assigned-self-form/${investigationID}`, {
-      state: {
-        redirectTo: location.pathname,
-        claimsType: 'reim',
-        claimNo: claim.tpaClaimNo,
-        sbigclaimno: claim.sbigClaimNo,
-        acceptAssignId: claim.acceptAssignId,
-      },
-    });
+    navigate(`/admin/assigned-self-form/${investigationID}?redirectTo=${location.pathname}&claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`)
+    // navigate(`/admin/assigned-self-form/${investigationID}`, {
+    //   state: {
+    //     redirectTo: location.pathname,
+    //     claimsType: 'reim',
+    //     claimNo: claim.tpaClaimNo,
+    //     sbigclaimno: claim.sbigClaimNo,
+    //     acceptAssignId: claim.acceptAssignId,
+    //   },
+    // });
   };
 
   const getTatColor = (tat: number): string => {

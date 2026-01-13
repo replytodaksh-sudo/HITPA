@@ -70,14 +70,15 @@ const AssignedFoCashless: React.FC = () => {
   };
 
   const handleViewClick = (investigationID: string, claim: Claim) => {
-    navigate(`/admin/assigned-self-form/${investigationID}`, {
-      state: {
-        redirectTo: location.pathname,
-        claimsType: 'cashless',
-        claimNo: claim.tpaClaimNo,
-        sbigclaimno: claim.sbigClaimNo,
-      },
-    });
+    navigate(`/admin/assigned-self-form/${investigationID}?redirectTo=${location.pathname}&claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`)
+    // navigate(`/admin/assigned-self-form/${investigationID}`, {
+    //   state: {
+    //     redirectTo: location.pathname,
+    //     claimsType: 'cashless',
+    //     claimNo: claim.tpaClaimNo,
+    //     sbigclaimno: claim.sbigClaimNo,
+    //   },
+    // });
   };
 
   const getTatColor = (tat: number): string => {

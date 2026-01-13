@@ -371,6 +371,126 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
         }
     };
 
+    //     const handleSubmitReimbursement = async () => {
+    //         if (!acceptInstruction) {
+    //             setError('Please fill all mandatory fields');
+    //             return;
+    //         }
+
+    //         if (roleName === 'Regional Manager' && !majorTrigger) {
+    //             setError('Major Trigger is required');
+    //             return;
+    //         }
+
+    //         const allQuestionCodes = [
+    //             ...selectedInsuredQuestions,
+    //             ...customInsuredQuestions,
+    //             ...selectedTreatingDoctorQuestions,
+    //             ...customTreatingDoctorQuestions,
+    //         ];
+
+    //         const acceptRequest: any = {
+    //             acceptAssignId: accid,
+    //             investigationId: cleanInvestigationId,
+    //             acceptInstruction,
+    //             questionCodes: allQuestionCodes,
+    //             centralMandatedCase: centralmandatedCase,
+    //             qcObservation,
+    //             majorTrigger,
+    //             investigationCaseDTO: {
+    //                 investigationType:
+    //                     caseAllocationType === 1
+    //                         ? 'Full case allocation'
+    //                         : caseAllocationType === 2
+    //                             ? 'Split case allocation'
+    //                             : 'Part verification',
+    //                 subTypeDTO: [],
+    //             },
+    //         };
+
+    //         // Build subTypeDTO based on allocation type
+    //         if (caseAllocationType === 1 && chooseAllocation === 1) {
+    //             acceptRequest.assignedToUser = agencyCode;
+    //             acceptRequest.investigationCaseDTO.subTypeDTO.push({
+    //                 investigationSubType: 'Full case allocation',
+    //                 assignTo: agencyCode,
+    //             });
+    //         } else if (caseAllocationType === 1 && chooseAllocation === 2) {
+    //             acceptRequest.assignedToUser = internalTeamMemCode;
+    //             acceptRequest.investigationCaseDTO.subTypeDTO.push({
+    //                 investigationSubType: 'Full case allocation',
+    //                 assignTo: internalTeamMemCode,
+    //             });
+    //         } else if (caseAllocationType === 2) {
+    //             if (ipvAgencyCode === hvAgencyCode && hvAgencyCode === evAgencyCode) {
+    //                 setError('Cannot use same entity for all visits');
+    //                 return;
+    //             }
+    //             acceptRequest.investigationCaseDTO.subTypeDTO.push(
+    //                 {
+    //                     investigationSubType: 'Insured person visit',
+    //                     assignTo: ipvAgencyCode,
+    //                 },
+    //                 {
+    //                     investigationSubType: 'Hospital Visit',
+    //                     assignTo: hvAgencyCode,
+    //                 },
+    //                 {
+    //                     investigationSubType: 'Employer Visit',
+    //                     assignTo: evAgencyCode,
+    //                 }
+    //             );
+    //         } else if (caseAllocationType === 3 && chooseAllocation === 1) {
+    //             acceptRequest.assignedToUser = agencyCode;
+    //             acceptRequest.partVerificationCategory = verificationCategory;
+    //             acceptRequest.investigationCaseDTO.subTypeDTO.push({
+    //                 investigationSubType: 'Part verification',
+    //                 assignTo: agencyCode,
+    //             });
+    //         } else if (caseAllocationType === 3 && chooseAllocation === 2) {
+    //             acceptRequest.assignedToUser = internalTeamMemCode;
+    //             acceptRequest.partVerificationCategory = verificationCategory;
+    //             acceptRequest.investigationCaseDTO.subTypeDTO.push({
+    //                 investigationSubType: 'Part verification',
+    //                 assignTo: internalTeamMemCode,
+    //             });
+    //         } else if (caseAllocationType === 3 && chooseAllocation === 3) {
+    //             acceptRequest.assignedToUser = 'assignToSelf';
+    //             acceptRequest.partVerificationCategory = verificationCategory;
+    //             acceptRequest.investigationCaseDTO.subTypeDTO.push({
+    //                 investigationSubType: 'Part verification',
+    //                 assignTo: 'assignToSelf',
+    //             });
+    //         }
+
+    //         if (roleName === 'Central Manager') {
+    //             acceptRequest.assignedToUser = assignedToUser;
+    //             acceptRequest.investigationCaseDTO.investigationType = 'Full case allocation';
+    //         }
+    // console.log('Accept Request:', acceptRequest, caseAllocationType, agencyCode, chooseAllocation);
+    //         try {
+    //             let res: any;
+    //             if (roleName === 'Regional Manager' || roleName === 'Central Manager') {
+    //                 res = await acceptAssignService.reimAssign(acceptRequest, documentsCodes);
+    //             } else if (roleName === 'Agency Spoc') {
+    //                 res = await acceptAssignService.reimAgencyAssign(acceptRequest, documentsCodes);
+    //             }
+
+    //             if (res.statusCode === 0) {
+    //                 alert('Case assigned successfully');
+    //                 if (redirectTo) {
+    //                     navigate(redirectTo);
+    //                 } else {
+    //                     navigate('/admin/dashboard');
+    //                 }
+    //             } else {
+    //                 setError(res.message || 'Assignment failed');
+    //             }
+    //         } catch (err: any) {
+    //             setError(err.message || 'Assignment failed');
+    //         }
+    //     };
+
     const handleSubmitReimbursement = async () => {
         if (!acceptInstruction) {
             setError('Please fill all mandatory fields');
@@ -408,20 +528,50 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
             },
         };
 
-        // Build subTypeDTO based on allocation type
-        if (caseAllocationType === 1 && chooseAllocation === 1) {
+        // Central Manager always uses Full case allocation with assignedToUser
+        if (roleName === 'Central Manager') {
+            acceptRequest.assignedToUser = assignedToUser;
+            acceptRequest.investigationCaseDTO.investigationType = 'Full case allocation';
+            const subType = {
+                investigationSubType: 'Full case allocation',
+                assignTo: assignedToUser,
+            };
+            acceptRequest.investigationCaseDTO.subTypeDTO.push(subType);
+        }
+        // Regional Manager - Full case allocation to Agency
+        else if (caseAllocationType === 1 && chooseAllocation === 1) {
             acceptRequest.assignedToUser = agencyCode;
             acceptRequest.investigationCaseDTO.subTypeDTO.push({
                 investigationSubType: 'Full case allocation',
                 assignTo: agencyCode,
             });
-        } else if (caseAllocationType === 1 && chooseAllocation === 2) {
+        }
+        // Regional Manager - Full case allocation to Internal Team
+        else if (caseAllocationType === 1 && chooseAllocation === 2) {
             acceptRequest.assignedToUser = internalTeamMemCode;
             acceptRequest.investigationCaseDTO.subTypeDTO.push({
                 investigationSubType: 'Full case allocation',
                 assignTo: internalTeamMemCode,
             });
-        } else if (caseAllocationType === 2) {
+        }
+        // Agency Spoc - Full case allocation to Field Officer
+        else if (caseAllocationType === 1 && chooseAllocation === 4) {
+            acceptRequest.assignedToUser = agencyCode;
+            acceptRequest.investigationCaseDTO.subTypeDTO.push({
+                investigationSubType: 'Full case allocation',
+                assignTo: agencyCode,
+            });
+        }
+        // Agency Spoc - Full case allocation to Self
+        else if (caseAllocationType === 1 && chooseAllocation === 3) {
+            acceptRequest.assignedToUser = 'assignToSelf';
+            acceptRequest.investigationCaseDTO.subTypeDTO.push({
+                investigationSubType: 'Full case allocation',
+                assignTo: 'assignToSelf',
+            });
+        }
+        // Split case allocation
+        else if (caseAllocationType === 2) {
             if (ipvAgencyCode === hvAgencyCode && hvAgencyCode === evAgencyCode) {
                 setError('Cannot use same entity for all visits');
                 return;
@@ -440,21 +590,27 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                     assignTo: evAgencyCode,
                 }
             );
-        } else if (caseAllocationType === 3 && chooseAllocation === 1) {
+        }
+        // Part verification - Assign to Agency (Regional Manager)
+        else if (caseAllocationType === 3 && chooseAllocation === 1) {
             acceptRequest.assignedToUser = agencyCode;
             acceptRequest.partVerificationCategory = verificationCategory;
             acceptRequest.investigationCaseDTO.subTypeDTO.push({
                 investigationSubType: 'Part verification',
                 assignTo: agencyCode,
             });
-        } else if (caseAllocationType === 3 && chooseAllocation === 2) {
+        }
+        // Part verification - Assign to Internal Team
+        else if (caseAllocationType === 3 && chooseAllocation === 2) {
             acceptRequest.assignedToUser = internalTeamMemCode;
             acceptRequest.partVerificationCategory = verificationCategory;
             acceptRequest.investigationCaseDTO.subTypeDTO.push({
                 investigationSubType: 'Part verification',
                 assignTo: internalTeamMemCode,
             });
-        } else if (caseAllocationType === 3 && chooseAllocation === 3) {
+        }
+        // Part verification - Assign to Self
+        else if (caseAllocationType === 3 && chooseAllocation === 3) {
             acceptRequest.assignedToUser = 'assignToSelf';
             acceptRequest.partVerificationCategory = verificationCategory;
             acceptRequest.investigationCaseDTO.subTypeDTO.push({
@@ -462,11 +618,17 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                 assignTo: 'assignToSelf',
             });
         }
-
-        if (roleName === 'Central Manager') {
-            acceptRequest.assignedToUser = assignedToUser;
-            acceptRequest.investigationCaseDTO.investigationType = 'Full case allocation';
+        // Agency Spoc - Part verification to Field Officer
+        else if (caseAllocationType === 3 && chooseAllocation === 4) {
+            acceptRequest.assignedToUser = agencyCode;
+            acceptRequest.partVerificationCategory = verificationCategory;
+            acceptRequest.investigationCaseDTO.subTypeDTO.push({
+                investigationSubType: 'Part verification',
+                assignTo: agencyCode,
+            });
         }
+
+        console.log('Accept Request:', acceptRequest);
 
         try {
             let res: any;
@@ -490,7 +652,6 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
             setError(err.message || 'Assignment failed');
         }
     };
-
     const handleSubmit = () => {
         if (claimType === 'cashless') {
             handleSubmitCashless();
@@ -498,7 +659,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
             handleSubmitReimbursement();
         }
     };
-    
+    console.log("Accept Request:", chooseAllocation);
     return (
         <Box sx={{ p: 3 }}>
             {error && (

@@ -80,8 +80,8 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
                 documentTitle
             );
 
-            if (response.data.statusCode === 0) {
-                const newDocCode = response.data.payload[0].documentID;
+            if (response.statusCode === 0) {
+                const newDocCode = response.payload[0].documentID;
                 setDocumentsCodes([...documentsCodes, newDocCode]);
                 onDocsUpdate();
 
@@ -94,7 +94,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
 
                 alert('Document uploaded successfully');
             } else {
-                setError(response.data.message || 'Upload failed');
+                setError(response.message || 'Upload failed');
             }
         } catch (err: any) {
             setError(err.message || 'Upload failed');
@@ -104,7 +104,7 @@ const DocumentUpload: React.FC<DocumentUploadProps> = ({
     const handleDelete = async (documentId: string, index: number) => {
         try {
             const response: any = await DocumentsService.deleteDocument(documentId);
-            if (response.data.statusCode === 0) {
+            if (response.statusCode === 0) {
                 setDocumentsCodes(documentsCodes.filter((code) => code !== documentId));
                 onDocsUpdate();
                 alert('Document deleted successfully');

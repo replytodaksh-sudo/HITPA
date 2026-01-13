@@ -85,16 +85,16 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
             'caseAssignmentCentral',
             investigationId
           );
-          if (centralResponse.data.statusCode === 0) {
-            allDocs = [...centralResponse.data.payload];
+          if (centralResponse.statusCode === 0) {
+            allDocs = [...centralResponse.payload];
           }
 
           const regionalResponse:any = await DocumentsService.viewInvestigationDocsView(
             'caseAssignmentRegional',
             investigationId
           );
-          if (regionalResponse.data.statusCode === 0) {
-            allDocs = [...allDocs, ...regionalResponse.data.payload];
+          if (regionalResponse.statusCode === 0) {
+            allDocs = [...allDocs, ...regionalResponse.payload];
           }
         }
         // Agency Spoc, Central Manager, Field Officer: Central + Regional + Agency
@@ -103,24 +103,24 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
             'caseAssignmentCentral',
             investigationId
           );
-          if (centralResponse.data.statusCode === 0) {
-            allDocs = [...centralResponse.data.payload];
+          if (centralResponse.statusCode === 0) {
+            allDocs = [...centralResponse.payload];
           }
 
           const regionalResponse:any = await DocumentsService.viewInvestigationDocsView(
             'caseAssignmentRegional',
             investigationId
           );
-          if (regionalResponse.data.statusCode === 0) {
-            allDocs = [...allDocs, ...regionalResponse.data.payload];
+          if (regionalResponse.statusCode === 0) {
+            allDocs = [...allDocs, ...regionalResponse.payload];
           }
 
           const agencyResponse:any = await DocumentsService.viewInvestigationDocsView(
             'caseAssignmentAgency',
             investigationId
           );
-          if (agencyResponse.data.statusCode === 0) {
-            allDocs = [...allDocs, ...agencyResponse.data.payload];
+          if (agencyResponse.statusCode === 0) {
+            allDocs = [...allDocs, ...agencyResponse.payload];
           }
         }
       }
@@ -132,8 +132,8 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
         'investigation',
         investigationId
       );
-      if (invDocsResponse.data.statusCode === 0) {
-        setInvestigationDocsView(invDocsResponse.data.payload);
+      if (invDocsResponse.statusCode === 0) {
+        setInvestigationDocsView(invDocsResponse.payload);
       }
     } catch (err) {
       console.error('Failed to fetch documents:', err);
@@ -243,7 +243,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
         documentTitle
       );
 
-      if (response.data.statusCode === 0) {
+      if (response.statusCode === 0) {
         setSuccess('Document uploaded successfully!');
         
         // Reset form
@@ -256,7 +256,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
         // Refresh documents
         await getInvestigationDocs();
       } else {
-        setError(response.data.message || 'Upload failed');
+        setError(response.message || 'Upload failed');
       }
     } catch (err: any) {
       setError(err.message || 'Failed to upload document');
@@ -273,7 +273,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
 
     try {
       const response:any = await DocumentsService.deleteDocument(documentId);
-      if (response.data.statusCode === 0) {
+      if (response.statusCode === 0) {
         setSuccess('Document deleted successfully');
         await getInvestigationDocs();
       } else {

@@ -16,6 +16,9 @@ import TreatingDoctorDetails from './TreatingDoctorDetails';
 import PathologyDetails from './PathologyDetails';
 import HospitalDetails from './HospitalDetails';
 import ChemistDetailsComponent from './ChemistDetailsComponent';
+import ReimService from '../../../services/reim.service';
+import { caseUpdateService } from '../../../services/reimCaseUpdateService';
+import reimcaseUpdateService from '../../../services/reim-case-update.service';
 
 // ==================== INTERFACES ====================
 interface TabCheck {
@@ -41,37 +44,37 @@ interface HospitalStepTwoProps {
 // In real implementation, this could be Context API, Redux, or Zustand
 const caseUpdateStore: Record<string, any> = {};
 
-const caseUpdateService = {
-    setCaseUpdateVal: (key: string, value: any) => {
-        caseUpdateStore[key] = value;
-    },
-    getCaseUpdateVal: (key: string) => {
-        return caseUpdateStore[key];
-    },
-};
+// const caseUpdateService = {
+//     setCaseUpdateVal: (key: string, value: any) => {
+//         caseUpdateStore[key] = value;
+//     },
+//     getCaseUpdateVal: (key: string) => {
+//         return caseUpdateStore[key];
+//     },
+// };
 
-const reimcaseUpdateService = {
-    addHospitalVerifyTwo: async (payload: any, investigationId: string) => {
-        const response = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/api/reim-case-update/hospital-verify-two/${investigationId}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            }
-        );
-        return response.json();
-    },
-};
+// const reimcaseUpdateService = {
+//     addHospitalVerifyTwo: async (payload: any, investigationId: string) => {
+//         const response = await fetch(
+//             `${import.meta.env.VITE_API_BASE_URL}/api/reim-case-update/hospital-verify-two/${investigationId}`,
+//             {
+//                 method: 'POST',
+//                 headers: { 'Content-Type': 'application/json' },
+//                 body: JSON.stringify(payload),
+//             }
+//         );
+//         return response.json();
+//     },
+// };
 
-const reimService = {
-    getTabDetails: async (investigationId: string, type: string) => {
-        const response = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/api/reim/tab-details/${investigationId}?type=${type}`
-        );
-        return response.json();
-    },
-};
+// const reimService = {
+//     getTabDetails: async (investigationId: string, type: string) => {
+//         const response = await fetch(
+//             `${import.meta.env.VITE_API_BASE_URL}/api/reim/tab-details/${investigationId}?type=${type}`
+//         );
+//         return response.json();
+//     },
+// };
 
 const notificationService = {
     showAlertSuccess: (message: string) => {
@@ -124,7 +127,7 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
     useEffect(() => {
         if (investigationId) {
             const cleanId = investigationId.split(' ')[0];
-            reimService.getTabDetails(cleanId, 'caseUpdate').then((data) => {
+            ReimService.getTabDetails(cleanId, 'caseUpdate').then((data) => {
                 if (data.statusCode === 0) {
                     setTabCheck(data.payload);
                 }
@@ -249,7 +252,7 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
         const payload = buildStepTwoPayload('saveasdraft');
 
         try {
-            const data = await reimcaseUpdateService.addHospitalVerifyTwo(payload, cleanId);
+            const data:any = await reimcaseUpdateService.addHospitalVerifyTwo(payload, cleanId);
             if (data.statusCode === 0) {
                 notificationService.showAlertSuccess(messages.hospVerifySaved);
             } else {
@@ -269,7 +272,7 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
         const payload = buildStepTwoPayload('submittoqc');
 
         try {
-            const data = await reimcaseUpdateService.addHospitalVerifyTwo(payload, cleanId);
+            const data:any = await reimcaseUpdateService.addHospitalVerifyTwo(payload, cleanId);
             if (data.statusCode === 0) {
                 notificationService.showAlertSuccess(messages.hospVerifySubmit);
                 navigate('/admin/dashboard');
@@ -294,13 +297,13 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
                 />
                 );
             case 'chemistVerification':
-                return <ChemistDetailsComponent buttonEnable={buttonEnable} previousData={previousData} 
-                onDataChange={(key, value) => {
-                    // setCaseUpdateData(prev => ({
-                    //     ...prev,
-                    //     [key]: value
-                    // }));
-                }} 
+                return <ChemistDetailsComponent buttonEnable={buttonEnable} previousData={previousData}
+                    onDataChange={(key, value) => {
+                        // setCaseUpdateData(prev => ({
+                        //     ...prev,
+                        //     [key]: value
+                        // }));
+                    }}
                 />;
             case 'pathologyVerification':
                 return <PathologyDetails buttonEnable={buttonEnable} previousData={previousData} />;
@@ -316,14 +319,14 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
                 return null;
         }
     };
-
+console.log('Render HospitalStepTwo', buttonEnable, tabCheck);
     return (
-        <Box sx={{ p: 3 }}>
+        <Box>
             <Card>
                 <CardContent>
                     <Grid container spacing={3}>
                         {/* Left Menu */}
-                        <Grid size={{ xs: 12, md: 2 }}>
+                        <Grid size={{ xs: 12, md: 3 }}>
                             <List
                                 sx={{
                                     p: 0,
@@ -339,7 +342,7 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
                                         },
                                         '&.active': {
                                             backgroundColor: '#6770d2',
-                                            color: 'white',
+                                            color: 'white !important',
                                         },
                                     },
                                 }}
@@ -363,7 +366,7 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
                         </Grid>
 
                         {/* Right Content */}
-                        <Grid size={{ xs: 12, md: 10 }}>
+                        <Grid size={{ xs: 12, md: 9 }}>
                             <Box>{renderContent()}</Box>
                         </Grid>
                     </Grid>

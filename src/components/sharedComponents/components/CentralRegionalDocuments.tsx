@@ -86,8 +86,8 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                     'caseAssignmentCentral',
                     investigationId
                 );
-                if (centralResponse.data.statusCode === 0) {
-                    allDocs = [...centralResponse.data.payload];
+                if (centralResponse.statusCode === 0) {
+                    allDocs = [...centralResponse.payload];
                 }
 
                 // Fetch Regional documents
@@ -95,8 +95,8 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                     'caseAssignmentRegional',
                     investigationId
                 );
-                if (regionalResponse.data.statusCode === 0) {
-                    allDocs = [...allDocs, ...regionalResponse.data.payload];
+                if (regionalResponse.statusCode === 0) {
+                    allDocs = [...allDocs, ...regionalResponse.payload];
                 }
 
                 // Fetch Agency documents
@@ -104,8 +104,8 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                     'caseAssignmentAgency',
                     investigationId
                 );
-                if (agencyResponse.data.statusCode === 0) {
-                    allDocs = [...allDocs, ...agencyResponse.data.payload];
+                if (agencyResponse.statusCode === 0) {
+                    allDocs = [...allDocs, ...agencyResponse.payload];
                 }
             }
 
@@ -116,8 +116,8 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                 'investigation',
                 investigationId
             );
-            if (invDocsResponse.data.statusCode === 0) {
-                setInvestigationDocsView(invDocsResponse.data.payload);
+            if (invDocsResponse.statusCode === 0) {
+                setInvestigationDocsView(invDocsResponse.payload);
             }
         } catch (err) {
             console.error('Failed to fetch documents:', err);
@@ -228,7 +228,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                 documentTitle
             );
 
-            if (response.data.statusCode === 0) {
+            if (response.statusCode === 0) {
                 setSuccess('Document uploaded successfully!');
 
                 // Reset form
@@ -241,7 +241,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                 // Refresh documents
                 await getInvestigationDocs();
             } else {
-                setError(response.data.message || 'Upload failed');
+                setError(response.message || 'Upload failed');
             }
         } catch (err: any) {
             setError(err.message || 'Failed to upload document');
@@ -258,7 +258,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
 
         try {
             const response:any = await DocumentsService.deleteDocument(documentId);
-            if (response.data.statusCode === 0) {
+            if (response.statusCode === 0) {
                 setSuccess('Document deleted successfully');
                 await getInvestigationDocs();
             } else {

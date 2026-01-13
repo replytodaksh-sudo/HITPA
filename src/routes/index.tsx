@@ -707,14 +707,6 @@ const AppRoutes: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        {/* <Route
-          path="agency-self-denied-form/:investigationId"
-          element={
-            <ProtectedRoute>
-              <AgencySelfDeniedTabs />
-            </ProtectedRoute>
-          }
-        /> */}
         <Route
           path="fresh-central-mandate/:investigationId"
           element={
@@ -755,14 +747,14 @@ const AppRoutes: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        {/* <Route
+        <Route
           path="qc-pending-form/:investigationId"
           element={
             <ProtectedRoute>
               <QCPendingForms />
             </ProtectedRoute>
           }
-        /> */}
+        />
         <Route
           path="agency-qc-submitted-form/:investigationId"
           element={
@@ -779,14 +771,14 @@ const AppRoutes: React.FC = () => {
             </ProtectedRoute>
           }
         />
-        {/* <Route
+        <Route
           path="central-qc-form/:investigationId"
           element={
             <ProtectedRoute>
               <CentralQCForm />
             </ProtectedRoute>
           }
-        /> */}
+        />
       </Route>
       {/* Default redirects */}
       <Route path="/" element={<Navigate to="dashboard" replace />} />

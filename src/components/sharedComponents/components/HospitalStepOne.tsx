@@ -1934,7 +1934,7 @@ const HospitalStepOne: React.FC<HospitalStepOneProps> = ({
             </Grid>
 
             {/* Save Button */}
-            {buttonEnable && (
+            {/* {buttonEnable && (
                 <Box sx={{ mt: 3 }}>
                     <Button
                         variant="contained"
@@ -1943,7 +1943,7 @@ const HospitalStepOne: React.FC<HospitalStepOneProps> = ({
                         Save as Draft
                     </Button>
                 </Box>
-            )}
+            )} */}
         </Paper>
     );
 

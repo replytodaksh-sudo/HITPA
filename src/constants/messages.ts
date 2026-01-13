@@ -247,6 +247,8 @@ export const message = {
   // Timeout
   requestTimeout: 'Request timed out. Please try again.',
   sessionTimeout: 'Session timed out. Please login again.',
+
+  treatingDocSaved:"Treating doctors list saved",
 };
 
 // Export individual message categories if needed
