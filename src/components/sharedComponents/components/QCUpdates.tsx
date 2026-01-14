@@ -107,7 +107,7 @@ const QCUpdates: React.FC<QCUpdatesProps> = ({ editable = true }) => {
 
   // URL params
   const claimsType = searchParams.get('claimsType') || '';
-  const acceptAssignId = searchParams.get('acceptAssignId') || null;
+  const acceptAssignId = searchParams.get('acceptAssignId') || searchParams.get('acceptAssId') || null;
 
   // State
   const [investigationId, setInvestigationId] = useState('');

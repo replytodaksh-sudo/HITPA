@@ -151,14 +151,18 @@ const QcVendorFeedback: React.FC<QcVendorFeedbackProps> = ({
     }
   };
 
-  const handleVendorChange = (index: number, field: string, value: any) => {
+  const handleVendorChange = (index: number, field: string, value: any, approvalName?: string, decision?: string) => {
+    console.log(';;;;;;index:', index, 'field:', field, 'value:', value);
     const updatedVendors = [...vendorFeedbackArr];
     updatedVendors[index] = {
       ...updatedVendors[index],
       [field]: value,
+      ...(approvalName && { [approvalName]: decision }),
     };
+    console.log(';;;;;;:::::', updatedVendors);
     setVendorFeedbackArr(updatedVendors);
   };
+  console.log(';;;;;;', vendorFeedbackArr);
 
   // Validation for reimbursement split case allocation
   const validateReimbursementSubmission = (): boolean => {
@@ -270,13 +274,13 @@ const QcVendorFeedback: React.FC<QcVendorFeedbackProps> = ({
   const showCashlessCentral =
     roleName === 'Central Manager' && claimsType === 'cashless';
 
-//   if (!previewValues) {
-//     return (
-//       <Box sx={{ p: 3, display: 'flex', justifyContent: 'center' }}>
-//         <Alert severity="info">No vendor feedback data available</Alert>
-//       </Box>
-//     );
-//   }
+  //   if (!previewValues) {
+  //     return (
+  //       <Box sx={{ p: 3, display: 'flex', justifyContent: 'center' }}>
+  //         <Alert severity="info">No vendor feedback data available</Alert>
+  //       </Box>
+  //     );
+  //   }
 
   return (
     <Box sx={{ mt: 1, mb: 3 }}>

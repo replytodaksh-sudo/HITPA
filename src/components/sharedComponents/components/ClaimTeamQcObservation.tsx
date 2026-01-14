@@ -690,7 +690,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
     const handleSubmitCustomInsuredQuestions = async () => {
         try {
-            let questionModel:any = {};
+            let questionModel: any = {};
             questionModel.questionTypeCode = "CO0115";
             questionModel.questions = customQuestionsTDctr;
             const response: any = await QuestionService.addQuestion(questionModel);
@@ -713,7 +713,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
     const handleSubmitCustomTDctrQuestions = async () => {
         try {
-            let questionModel:any = {};
+            let questionModel: any = {};
             questionModel.questionTypeCode = "CO0116";
             questionModel.questions = customQuestionsTDctr;
             const response: any = await QuestionService.addQuestion(questionModel);

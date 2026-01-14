@@ -40,7 +40,7 @@ interface ReimbursementVendorSectionProps {
     vendors: VendorFeedback[];
     roleNameValue: string;
     isDisabled: boolean;
-    onVendorChange: (index: number, field: string, value: any) => void;
+    onVendorChange: (index: number, field: string, value: any, approvalName?: string, decision?: string) => void;
 }
 
 const ReimbursementVendorSection: React.FC<ReimbursementVendorSectionProps> = ({
@@ -68,9 +68,9 @@ const ReimbursementVendorSection: React.FC<ReimbursementVendorSectionProps> = ({
         fieldName: string
     ) => {
         if (approval === 'yes') {
-            onVendorChange(index, `${fieldName}AppAmount`, expenseAmount);
+            onVendorChange(index, `${fieldName}AppAmount`, expenseAmount, `${fieldName}Approval`, approval);
         } else if (approval === 'no') {
-            onVendorChange(index, `${fieldName}AppAmount`, 0);
+            onVendorChange(index, `${fieldName}AppAmount`, 0, `${fieldName}Approval`, approval);
         }
     };
 
@@ -136,7 +136,7 @@ const ReimbursementVendorSection: React.FC<ReimbursementVendorSectionProps> = ({
                                                                 value="yes"
                                                                 checked={vendor.travellingExpensesApproval === 'yes'}
                                                                 onChange={(e) => {
-                                                                    onVendorChange(idx, 'travellingExpensesApproval', e.target.value);
+                                                                    onVendorChange(idx, 'travellingExpensesApproval', e.target.value, `travellingExpensesApproval`, e.target.value);
                                                                     handleExpenseChange(idx, e.target.value, vendor.travellingExpenses, 'travellingExpenses');
                                                                 }}
                                                                 disabled={isDisabled}
@@ -151,7 +151,7 @@ const ReimbursementVendorSection: React.FC<ReimbursementVendorSectionProps> = ({
                                                                 value="no"
                                                                 checked={vendor.travellingExpensesApproval === 'no'}
                                                                 onChange={(e) => {
-                                                                    onVendorChange(idx, 'travellingExpensesApproval', e.target.value);
+                                                                    onVendorChange(idx, 'travellingExpensesApproval', e.target.value, `travellingExpensesApproval`, e.target.value);
                                                                     handleExpenseChange(idx, e.target.value, vendor.travellingExpenses, 'travellingExpenses');
                                                                 }}
                                                                 disabled={isDisabled}
@@ -212,7 +212,7 @@ const ReimbursementVendorSection: React.FC<ReimbursementVendorSectionProps> = ({
                                                                 value="yes"
                                                                 checked={vendor.extraVisitApproval === 'yes'}
                                                                 onChange={(e) => {
-                                                                    onVendorChange(idx, 'extraVisitApproval', e.target.value);
+                                                                    onVendorChange(idx, 'extraVisitApproval', e.target.value, `extraVisitApproval`, e.target.value);
                                                                     handleExpenseChange(idx, e.target.value, vendor.extraVisit, 'extraVisit');
                                                                 }}
                                                                 disabled={isDisabled}
@@ -227,7 +227,7 @@ const ReimbursementVendorSection: React.FC<ReimbursementVendorSectionProps> = ({
                                                                 value="no"
                                                                 checked={vendor.extraVisitApproval === 'no'}
                                                                 onChange={(e) => {
-                                                                    onVendorChange(idx, 'extraVisitApproval', e.target.value);
+                                                                    onVendorChange(idx, 'extraVisitApproval', e.target.value, `extraVisitApproval`, e.target.value);
                                                                     handleExpenseChange(idx, e.target.value, vendor.extraVisit, 'extraVisit');
                                                                 }}
                                                                 disabled={isDisabled}
@@ -284,7 +284,7 @@ const ReimbursementVendorSection: React.FC<ReimbursementVendorSectionProps> = ({
                                                                 value="yes"
                                                                 checked={vendor.ipdMiscellaneousApproval === 'yes'}
                                                                 onChange={(e) => {
-                                                                    onVendorChange(idx, 'ipdMiscellaneousApproval', e.target.value);
+                                                                    onVendorChange(idx, 'ipdMiscellaneousApproval', e.target.value, `ipdMiscellaneousApproval`, e.target.value);
                                                                     handleExpenseChange(idx, e.target.value, vendor.ipdMiscellaneous, 'ipdMiscellaneous');
                                                                 }}
                                                                 disabled={isDisabled}
@@ -299,7 +299,7 @@ const ReimbursementVendorSection: React.FC<ReimbursementVendorSectionProps> = ({
                                                                 value="no"
                                                                 checked={vendor.ipdMiscellaneousApproval === 'no'}
                                                                 onChange={(e) => {
-                                                                    onVendorChange(idx, 'ipdMiscellaneousApproval', e.target.value);
+                                                                    onVendorChange(idx, 'ipdMiscellaneousApproval', e.target.value, `ipdMiscellaneousApproval`, e.target.value);
                                                                     handleExpenseChange(idx, e.target.value, vendor.ipdMiscellaneous, 'ipdMiscellaneous');
                                                                 }}
                                                                 disabled={isDisabled}

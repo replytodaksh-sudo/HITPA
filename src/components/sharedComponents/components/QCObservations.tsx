@@ -77,7 +77,7 @@ interface QCObservation {
     queriesQuery: string;
     queryWithRegionalQC: string;
     repudiateFraudulentRemarks: string;
-    repudiateFraudulent:string;
+    repudiateFraudulent: string;
     suspectedCaseFindings: string;
     lossMinimizationRemarks: string;
     assignedToUser: string;
@@ -376,6 +376,7 @@ const QCObservations: React.FC<QCObservationsProps> = ({
      * Populate form fields from preview values
      */
     useEffect(() => {
+        console.log('Prop Preview Values:', propPreviewValues);
         if (!propPreviewValues) return;
 
         setPreviewValues(propPreviewValues);
@@ -420,21 +421,91 @@ const QCObservations: React.FC<QCObservationsProps> = ({
         }
 
         // Populate recommendations
+        console.log('Prop Preview Values:', propPreviewValues.policyCancellation);
+        // setRecommendations({
+        //     policyCancellation: propPreviewValues.policyCancellation === null
+        //         ? ''
+        //         : String(Boolean(propPreviewValues.policyCancellation)),
+        //     hospitalBlacklisted: propPreviewValues.hospitalBlacklisted === null ? '' : String(Boolean(propPreviewValues.hospitalBlacklisted) ? 'true' : 'false'),
+        //     hospitalDepanelled: propPreviewValues.hospitalDepanelled ? 'true' : 'false',
+        //     hospitalCautionTagged: propPreviewValues.hospitalCautionTagged ? 'true' : 'false',
+        //     insuredBlacklisted: propPreviewValues.insuredBlacklisted ? 'true' : 'false',
+        //     insuredCautionTagged: propPreviewValues.insuredCautionTagged ? 'true' : 'false',
+        //     policyFraud: propPreviewValues.policyFraud ? 'true' : 'false',
+        //     treatingDoctorFraud: propPreviewValues.treatingDoctorFraud ? 'true' : 'false',
+        //     pathologistFraud: propPreviewValues.pathologistFraud ? 'true' : 'false',
+        //     chemistFraud: propPreviewValues.chemistFraud ? 'true' : 'false',
+        //     pathologyLabFraud: propPreviewValues.pathologyLabFraud ? 'true' : 'false',
+        //     corporateTaggedFraud: propPreviewValues.corporateTaggedFraud ? 'true' : 'false',
+        //     legalActionInitiated: propPreviewValues.legalActionInitiated ? 'true' : 'false',
+        // });
         setRecommendations({
-            policyCancellation: propPreviewValues.policyCancellation ? 'true' : 'false',
-            hospitalBlacklisted: propPreviewValues.hospitalBlacklisted ? 'true' : 'false',
-            hospitalDepanelled: propPreviewValues.hospitalDepanelled ? 'true' : 'false',
-            hospitalCautionTagged: propPreviewValues.hospitalCautionTagged ? 'true' : 'false',
-            insuredBlacklisted: propPreviewValues.insuredBlacklisted ? 'true' : 'false',
-            insuredCautionTagged: propPreviewValues.insuredCautionTagged ? 'true' : 'false',
-            policyFraud: propPreviewValues.policyFraud ? 'true' : 'false',
-            treatingDoctorFraud: propPreviewValues.treatingDoctorFraud ? 'true' : 'false',
-            pathologistFraud: propPreviewValues.pathologistFraud ? 'true' : 'false',
-            chemistFraud: propPreviewValues.chemistFraud ? 'true' : 'false',
-            pathologyLabFraud: propPreviewValues.pathologyLabFraud ? 'true' : 'false',
-            corporateTaggedFraud: propPreviewValues.corporateTaggedFraud ? 'true' : 'false',
-            legalActionInitiated: propPreviewValues.legalActionInitiated ? 'true' : 'false',
+            policyCancellation:
+                propPreviewValues.policyCancellation === null
+                    ? ''
+                    : String(Boolean(propPreviewValues.policyCancellation)),
+
+            hospitalBlacklisted:
+                propPreviewValues.hospitalBlacklisted === null
+                    ? ''
+                    : String(Boolean(propPreviewValues.hospitalBlacklisted)),
+
+            hospitalDepanelled:
+                propPreviewValues.hospitalDepanelled === null
+                    ? ''
+                    : String(Boolean(propPreviewValues.hospitalDepanelled)),
+
+            hospitalCautionTagged:
+                propPreviewValues.hospitalCautionTagged === null
+                    ? ''
+                    : String(Boolean(propPreviewValues.hospitalCautionTagged)),
+
+            insuredBlacklisted:
+                propPreviewValues.insuredBlacklisted === null
+                    ? ''
+                    : String(Boolean(propPreviewValues.insuredBlacklisted)),
+
+            insuredCautionTagged:
+                propPreviewValues.insuredCautionTagged === null
+                    ? ''
+                    : String(Boolean(propPreviewValues.insuredCautionTagged)),
+
+            policyFraud:
+                propPreviewValues.policyFraud === null
+                    ? ''
+                    : String(Boolean(propPreviewValues.policyFraud)),
+
+            treatingDoctorFraud:
+                propPreviewValues.treatingDoctorFraud === null
+                    ? ''
+                    : String(Boolean(propPreviewValues.treatingDoctorFraud)),
+
+            pathologistFraud:
+                propPreviewValues.pathologistFraud === null
+                    ? ''
+                    : String(Boolean(propPreviewValues.pathologistFraud)),
+
+            chemistFraud:
+                propPreviewValues.chemistFraud === null
+                    ? ''
+                    : String(Boolean(propPreviewValues.chemistFraud)),
+
+            pathologyLabFraud:
+                propPreviewValues.pathologyLabFraud === null
+                    ? ''
+                    : String(Boolean(propPreviewValues.pathologyLabFraud)),
+
+            corporateTaggedFraud:
+                propPreviewValues.corporateTaggedFraud === null
+                    ? ''
+                    : String(Boolean(propPreviewValues.corporateTaggedFraud)),
+
+            legalActionInitiated:
+                propPreviewValues.legalActionInitiated === null
+                    ? ''
+                    : String(Boolean(propPreviewValues.legalActionInitiated)),
         });
+
     }, [propPreviewValues]);
 
     /**
@@ -485,7 +556,7 @@ const QCObservations: React.FC<QCObservationsProps> = ({
                 finalDecision: finalDecision || '',
                 queriesRemarks: '',
                 queriesQuery: '',
-                repudiateFraudulent:"",
+                repudiateFraudulent: "",
                 queryWithRegionalQC: '',
                 repudiateFraudulentRemarks: '',
                 suspectedCaseFindings: '',
@@ -526,7 +597,7 @@ const QCObservations: React.FC<QCObservationsProps> = ({
                     // FIX: Send ground rejections in correct structure
                     if (groundOfRejection) {
                         qcOb.groundRejectionQCDTO = {
-                            groundRejectionCode: [groundOfRejection],
+                            groundRejectionCode: groundOfRejection,
                         };
                     }
 
@@ -538,8 +609,11 @@ const QCObservations: React.FC<QCObservationsProps> = ({
                             //     groundRejectionFraudulentCode: code,
                             // })),
                         };
+                    } else {
+                        qcOb.groundRejectionFraudulentQCDTO = {
+                            groundRejectionFraudulentCode: []
+                        }
                     }
-
                     // FIX: Send exclusion rejections in correct structure
                     if (Array.isArray(groundOfRejectionExclusion) && groundOfRejectionExclusion.length > 0) {
                         qcOb.groundRejectionExclusionQCDTO = {
@@ -548,8 +622,11 @@ const QCObservations: React.FC<QCObservationsProps> = ({
                             //     groundRejectionExclusionCode: code,
                             // })),
                         };
+                    } else {
+                        qcOb.groundRejectionExclusionQCDTO = {
+                            groundRejectionExclusionCode: []
+                        }
                     }
-
                     // FIX: Send misrepresentation rejections in correct structure
                     if (Array.isArray(groundOfRejectionMisrepresentation) && groundOfRejectionMisrepresentation.length > 0) {
                         qcOb.groundRejectionMisrepresentQCDTO = {
@@ -558,6 +635,10 @@ const QCObservations: React.FC<QCObservationsProps> = ({
                             //     groundRejectionMisrepresentCode: code,
                             // })),
                         };
+                    } else {
+                        qcOb.groundRejectionMisrepresentQCDTO = {
+                            groundRejectionMisrepresentCode: []
+                        }
                     }
                 } else if (finalDecision === 'Loss Minimization') {
                     qcOb.lossMinimizationRemarks = lowMiniRemarks;

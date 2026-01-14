@@ -141,10 +141,9 @@ const RegQcPendingCashless: React.FC = () => {
 
     const handleViewClick = (investigationID: string, claim: CashlessClaim) => {
         navigate(
-            `/admin/qc-pending-form/${investigationID}?claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`
+            `/admin/qc-pending-form/${investigationID}?claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}&redirectTo=${location.pathname}`
         );
     };
-
     // ============================================================================
     // HELPERS
     // ============================================================================

@@ -53,7 +53,7 @@ const QcPreview: React.FC<QcPreviewProps> = ({
 
   const getQCPreviewDetails = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       let tabName = '';
 
       if (
@@ -63,22 +63,25 @@ const QcPreview: React.FC<QcPreviewProps> = ({
         tabName = 'regionalQC';
       }
 
-      // Fetch cashless preview
-      const cashlessResponse = await QCUpdateService.qcUpdatePreview(
-        investigationId!,
-        tabName
-      );
-      if (cashlessResponse.statusCode === 0) {
-        setPreviewValus(cashlessResponse.payload);
+      if (claimsType === 'cashless') {
+        const cashlessResponse = await QCUpdateService.qcUpdatePreview(
+          investigationId!,
+          tabName
+        );
+        if (cashlessResponse.statusCode === 0) {
+          setPreviewValus(cashlessResponse.payload);
+        }
       }
 
-      // Fetch reimbursement preview
-      const reimResponse = await QCUpdateService.qcUpdatePreviewReim(
-        investigationId!,
-        tabName
-      );
-      if (reimResponse.statusCode === 0) {
-        setPreviewValuesReim(reimResponse.payload);
+      if (claimsType === 'reim') {
+        const reimResponse = await QCUpdateService.qcUpdatePreviewReim(
+          investigationId!,
+          tabName
+        );
+        console.log('Reim QC Preview Response:', reimResponse);
+        if (reimResponse.statusCode === 0) {
+          setPreviewValuesReim(reimResponse.payload);
+        }
       }
     } catch (error) {
       console.error('Error fetching QC preview:', error);
@@ -117,9 +120,9 @@ const QcPreview: React.FC<QcPreviewProps> = ({
               acceptAssignId
             );
             if (response.statusCode === 0) {
+              navigate(redirectTo || '/admin/dashboard');
               alert('Final submission successful');
               localStorage.clear();
-              navigate(redirectTo || '/admin/dashboard');
             }
           } else {
             // Build pending visits message
@@ -139,8 +142,8 @@ const QcPreview: React.FC<QcPreviewProps> = ({
           );
           if (response.statusCode === 0) {
             alert('Final submission successful');
-            localStorage.clear();
             navigate(redirectTo || '/admin/dashboard');
+            localStorage.clear();
           }
         }
       }
@@ -185,7 +188,7 @@ const QcPreview: React.FC<QcPreviewProps> = ({
           QC Observation
         </Typography>
         <RegQcObservations
-          previewValues={propsPreviewValues || previewValus}
+          previewValues={claimsType === 'reim' ? previewValuesReim : previewValus}
           previewRefresh={previewRefresh}
           dataRole={dataRole}
         />
@@ -196,20 +199,20 @@ const QcPreview: React.FC<QcPreviewProps> = ({
         previewValuesReim?.splitVendorFeedbackDTOs?.length !== 0) ||
         (claimsType === 'cashless' &&
           previewValus?.splitVendorFeedbackDTOs?.length !== 0)) && (
-        <Paper sx={{ p: 3, mb: 3 }}>
-          <Typography
-            variant="h6"
-            sx={{ color: '#6F62C2', fontWeight: 'bold', mb: 2 }}
-          >
-            Expense & Vendor Feedback
-          </Typography>
-          <RegQcVendorFeedback
-            previewValues={propsPreviewValues || previewValus}
-            previewValuesReim={previewValuesReim}
-            previewRefresh={previewRefresh}
-          />
-        </Paper>
-      )}
+          <Paper sx={{ p: 3, mb: 3 }}>
+            <Typography
+              variant="h6"
+              sx={{ color: '#6F62C2', fontWeight: 'bold', mb: 2 }}
+            >
+              Expense & Vendor Feedback
+            </Typography>
+            <RegQcVendorFeedback
+              previewValues={propsPreviewValues || previewValus}
+              previewValuesReim={previewValuesReim}
+              previewRefresh={previewRefresh}
+            />
+          </Paper>
+        )}
 
       {/* Submit Button */}
       {buttonEnable && (

@@ -447,7 +447,8 @@ const Preview: React.FC<PreviewProps> = ({
               <Paper sx={{ p: 2, bgcolor: '#f5f5f5' }}>
                 <InfoRow
                   label="Hospital Visit Done"
-                  value={displayBoolean(payloadData.hospitalVisitDone)}
+                  // value={displayBoolean(payloadData.hospitalVisitDone)}
+                  value={payloadData.hospitalVisitDone}
                 />
               </Paper>
             </Grid>
@@ -455,7 +456,8 @@ const Preview: React.FC<PreviewProps> = ({
               <Paper sx={{ p: 2, bgcolor: '#f5f5f5' }}>
                 <InfoRow
                   label="Insured Visit Done"
-                  value={displayBoolean(payloadData.insuredVisitDone)}
+                  // value={displayBoolean(payloadData.insuredVisitDone)}
+                  value={payloadData.insuredVisitDone}
                 />
               </Paper>
             </Grid>

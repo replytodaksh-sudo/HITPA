@@ -139,9 +139,9 @@ const RegQcPendingReim: React.FC = () => {
         getCasesByTatRange(value);
     };
 
-    const handleViewClick = (investigationID: string, claim: CashlessClaim) => {
+    const handleViewClick = (investigationID: string, claim: any) => {
         navigate(
-            `/admin/qc-pending-form/${investigationID}?claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`
+            `/admin/reg-qc-pending-reim/${investigationID}?claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}&redirectTo=${location.pathname}&acceptAssignId=${claim.acceptAssignId}&claimSubmitted=false`
         );
     };
 

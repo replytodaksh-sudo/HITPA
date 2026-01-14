@@ -105,7 +105,7 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
       } else if (type === 'reim') {
         response = await QCUpdateService.qcUpdatePreviewReim(invId, tabName);
       }
-
+      console.log('QC Preview Response:', response);
       if (response && response.statusCode === 0) {
         setPreviewValues(response.payload);
         // Store QC Update ID in localStorage
@@ -118,7 +118,7 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
       setLoading(false);
     }
   };
-console.log('Preview Values at render:', previewValues);
+  console.log('Preview Values at render:', previewValues);
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
 
@@ -228,7 +228,7 @@ console.log('Preview Values at render:', previewValues);
               // <RegQcObservations
               //   investigationId={investigationId}
               previewValues={previewValues}
-            //   buttonEnable={buttonEnable}
+              //   buttonEnable={buttonEnable}
               onChangeTab={handleNextTab}
             />
           )}
