@@ -813,11 +813,13 @@ const CentralQCForm: React.FC = () => {
     const downloadPDF = async () => {
         try {
             const url = `${import.meta.env.VITE_API_BASE_URL}${apiUrls.getPDFDetails}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
-
+            const token = sessionStorage.getItem('token');
             const response = await fetch(url, {
                 method: "GET",
                 headers: {
                     Accept: "application/pdf",
+                    Authorization: `Bearer ${token}`
+
                 },
             });
 
@@ -842,21 +844,15 @@ const CentralQCForm: React.FC = () => {
         }
     };
 
-
-    // Download PDF for cashless (no modal)
-    // const downloadPDFCashless = () => {
-    //     const url = `${import.meta.env.VITE_API_BASE_URL}/${apiUrls.getPDFDetails}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
-    //     window.open(url, '_blank');
-    // };
-
     const downloadPDFCashless = async () => {
         try {
             const url = `${import.meta.env.VITE_API_BASE_URL}${apiUrls.getPDFDetails}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
-
+            const token = sessionStorage.getItem('token');
             const response = await fetch(url, {
                 method: "GET",
                 headers: {
                     Accept: "application/pdf",
+                    Authorization: `Bearer ${token}`
                 },
             });
 

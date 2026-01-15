@@ -672,15 +672,70 @@ const AgencyQCSubmittedForms: React.FC = () => {
         setQuestionaryRadio('');
     };
 
-    const downloadPDF = () => {
-        const url = `${apiUrls.getPDFDetails}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
-        window.open(url, '_blank');
-        closeQuestionaryModal();
+    const downloadPDF = async () => {
+        try {
+            const url = `${import.meta.env.VITE_API_BASE_URL}${apiUrls.getPDFDetails}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
+            const token = sessionStorage.getItem('token');
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    Accept: "application/pdf",
+                    Authorization: `Bearer ${token}`
+
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to download file");
+            }
+
+            const blob = await response.blob();
+
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = downloadUrl;
+            a.download = "Cashless_Report.pdf"; // 👈 filename
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            window.URL.revokeObjectURL(downloadUrl);
+            closeQuestionaryModal();
+        } catch (error) {
+            console.error("Download error:", error);
+        }
     };
 
-    const downloadPDFCashless = () => {
-        const url = `${apiUrls.getPDFDetails}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
-        window.open(url, '_blank');
+    const downloadPDFCashless = async () => {
+        try {
+            const url = `${import.meta.env.VITE_API_BASE_URL}${apiUrls.getPDFDetails}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
+            const token = sessionStorage.getItem('token');
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    Accept: "application/pdf",
+                    Authorization: `Bearer ${token}`
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to download file");
+            }
+
+            const blob = await response.blob();
+
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = downloadUrl;
+            a.download = "Cashless_Report.pdf"; // 👈 filename
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            window.URL.revokeObjectURL(downloadUrl);
+        } catch (error) {
+            console.error("Download error:", error);
+        }
     };
 
     return (
@@ -699,10 +754,10 @@ const AgencyQCSubmittedForms: React.FC = () => {
                         <Grid size={{ xs: 12, md: 4 }}>
                             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
                                 <AssignmentIcon sx={{ fontSize: 20 }} />
-                                <Typography variant="body2" sx={{ fontWeight: 600, color:"white" }}>
+                                <Typography variant="body2" sx={{ fontWeight: 600, color: "white" }}>
                                     Investigation No:
                                 </Typography>
-                                <Typography variant="body2" sx={{ fontWeight: 400, color:"white" }}>
+                                <Typography variant="body2" sx={{ fontWeight: 400, color: "white" }}>
                                     {investigationId}
                                 </Typography>
                                 {claimsTypeLabel && (
@@ -721,20 +776,20 @@ const AgencyQCSubmittedForms: React.FC = () => {
                         </Grid>
                         <Grid size={{ xs: 12, md: 4 }}>
                             <Box sx={{ textAlign: { xs: 'left', md: 'center' } }}>
-                                <Typography variant="body2" sx={{ fontWeight: 600, color:"white" }}>
+                                <Typography variant="body2" sx={{ fontWeight: 600, color: "white" }}>
                                     Claim No:
                                 </Typography>
-                                <Typography variant="body2" sx={{ fontWeight: 400, color:"white" }}>
+                                <Typography variant="body2" sx={{ fontWeight: 400, color: "white" }}>
                                     {sbigClaimNo || '-'}
                                 </Typography>
                             </Box>
                         </Grid>
                         <Grid size={{ xs: 12, md: 4 }}>
                             <Box sx={{ textAlign: { xs: 'left', md: 'right' } }}>
-                                <Typography variant="body2" sx={{ fontWeight: 600, color:"white" }}>
+                                <Typography variant="body2" sx={{ fontWeight: 600, color: "white" }}>
                                     TPA Claim No:
                                 </Typography>
-                                <Typography variant="body2" sx={{ fontWeight: 400, color:"white" }}>
+                                <Typography variant="body2" sx={{ fontWeight: 400, color: "white" }}>
                                     {claimNo || '-'}
                                 </Typography>
                             </Box>

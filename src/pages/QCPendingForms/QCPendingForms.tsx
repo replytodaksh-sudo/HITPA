@@ -46,7 +46,7 @@
 // const QCPendingForms: React.FC<QCPendingFormsProps> = () => {
 //   const { investigationId: paramInvestigationId } = useParams<{ investigationId: string }>();
 //   const [searchParams] = useSearchParams();
-  
+
 //   // State
 //   const [activeTab, setActiveTab] = useState(0);
 //   const [investigationId, setInvestigationId] = useState('');
@@ -57,7 +57,7 @@
 //   const [reworkCaseComments, setReworkCaseComments] = useState('');
 //   const [loading, setLoading] = useState(true);
 //   const [claimDetails, setClaimDetails] = useState(true);
-  
+
 //   // Modal state
 //   const [reportModalOpen, setReportModalOpen] = useState(false);
 //   const [questionaryRadio, setQuestionaryRadio] = useState('');
@@ -72,11 +72,11 @@
 //     const type = searchParams.get('claimsType') || '';
 //     const tpaClaimNo = searchParams.get('claimNo') || '';
 //     const sbigNo = searchParams.get('sbigclaimno') || '';
-    
+
 //     setClaimsType(type);
 //     setClaimNo(tpaClaimNo);
 //     setSbigClaimNo(sbigNo);
-    
+
 //     // Set claims type label
 //     const label = type === 'cashless' ? 'Cashless' : type === 'reim' ? 'Reimbursement' : '';
 //     setClaimsTypeLabel(label);
@@ -111,7 +111,7 @@
 //     try {
 //       setLoading(true);
 //       const response = await caseUpdateService.caseUpdatePreview(invId);
-      
+
 //       if (response.statusCode === 0) {
 //         // setClaimDetails(response.payload);
 //         setReworkCaseComments(response.payload.reworkCaseComments || '');
@@ -129,13 +129,13 @@
 
 //   const openReportModal = () => {
 //     setQuestionaryRadio('');
-    
+
 //     // For cashless, download directly without modal
 //     if (claimsType === 'cashless') {
 //       handleDownloadCashlessPDF();
 //       return;
 //     }
-    
+
 //     // For reimbursement, show modal with options
 //     setReportModalOpen(true);
 //   };
@@ -448,6 +448,7 @@ import Logs from '../../components/sharedComponents/components/Logs';
 import QCUpdateCentral from '../../components/sharedComponents/components/QCUpdateCentral';
 import CentralAssignedAgencyCaseUpdate from '../../components/sharedComponents/components/CentralAssignedAgencyCaseUpdate';
 import QCUpdates from '../../components/sharedComponents/components/QCUpdates';
+import { apiUrls } from '../../constants/apiConstants';
 
 // API URL - Update with your environment config
 const PDF_DOWNLOAD_URL = import.meta.env.REACT_APP_PDF_DOWNLOAD_URL || 'https://api.example.com/pdf/details';
@@ -561,18 +562,84 @@ const QCPendingForms: React.FC = () => {
         setQuestionaryRadio(event.target.value);
     };
 
-    const handleDownloadPDF = () => {
-        if (!questionaryRadio) return;
+    // const handleDownloadPDF = () => {
+    //     if (!questionaryRadio) return;
 
-        const url = `${PDF_DOWNLOAD_URL}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
-        window.open(url, '_blank');
-        closeReportModal();
+    //     const url = `${PDF_DOWNLOAD_URL}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
+    //     window.open(url, '_blank');
+    //     closeReportModal();
+    // };
+
+    const handleDownloadPDF = async () => {
+        try {
+            const url = `${import.meta.env.VITE_API_BASE_URL}${apiUrls.getPDFDetails}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
+            const token = sessionStorage.getItem('token');
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    Accept: "application/pdf",
+                    Authorization: `Bearer ${token}`
+
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to download file");
+            }
+
+            const blob = await response.blob();
+
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = downloadUrl;
+            a.download = "Cashless_Report.pdf"; // 👈 filename
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            window.URL.revokeObjectURL(downloadUrl);
+            closeReportModal();
+        } catch (error) {
+            console.error("Download error:", error);
+        }
     };
 
-    const handleDownloadCashlessPDF = () => {
-        const url = `${PDF_DOWNLOAD_URL}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
-        window.open(url, '_blank');
-    };
+    // const handleDownloadCashlessPDF = () => {
+    //     const url = `${PDF_DOWNLOAD_URL}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
+    //     window.open(url, '_blank');
+    // };
+
+    const handleDownloadCashlessPDF = async () => {
+            try {
+                const url = `${import.meta.env.VITE_API_BASE_URL}${apiUrls.getPDFDetails}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
+                const token = sessionStorage.getItem('token');
+                const response = await fetch(url, {
+                    method: "GET",
+                    headers: {
+                        Accept: "application/pdf",
+                        Authorization: `Bearer ${token}`
+                    },
+                });
+    
+                if (!response.ok) {
+                    throw new Error("Failed to download file");
+                }
+    
+                const blob = await response.blob();
+    
+                const downloadUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = downloadUrl;
+                a.download = "Cashless_Report.pdf"; // 👈 filename
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+    
+                window.URL.revokeObjectURL(downloadUrl);
+            } catch (error) {
+                console.error("Download error:", error);
+            }
+        };
 
     if (loading) {
         return (

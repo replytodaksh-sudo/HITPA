@@ -84,7 +84,7 @@ interface QCObservation {
     agencyCodes?: string[];
     questionCodes: string[];
     payableRemarks: string;
-    acceptInstruction: any;
+    acceptInstruction: string;
     prevInvestigatorReport: string;
     groundRejectionQCDTO?: any;
     groundRejectionFraudulentQCDTO?: any;
@@ -109,7 +109,7 @@ interface QCObservation {
 /**
  * Main QCObservations Component
  */
-const QCObservations: React.FC<QCObservationsProps> = ({
+const QCObservationsReg: React.FC<QCObservationsProps> = ({
     previewValues: propPreviewValues,
     buttonEnable = true,
     onChangeTab,
@@ -547,462 +547,460 @@ const QCObservations: React.FC<QCObservationsProps> = ({
     // CORRECTED SUBMIT HANDLER
     // ============================================
 
-    // const handleSubmit = async () => {
-    //     try {
-    //         // Build QC observation object with CORRECT structure
-    //         const qcOb: QCObservation = {
-    //             qcObservations,
-    //             qcUpdateID: localStorage.getItem('qcUpdateID') || '',
-    //             finalDecision: finalDecision || '',
-    //             queriesRemarks: '',
-    //             queriesQuery: '',
-    //             repudiateFraudulent: "",
-    //             queryWithRegionalQC: '',
-    //             repudiateFraudulentRemarks: '',
-    //             suspectedCaseFindings: '',
-    //             lossMinimizationRemarks: '',
-    //             assignedToUser: '',
-    //             agencyCodes: agencyCode ? [agencyCode] : [], // FIX: Ensure it's always an array
-    //             questionCodes: [
-    //                 ...selectedForInsuredQues,
-    //                 ...selectedTreatingDctrQues,
-    //                 ...customForInsuredQuestions,
-    //                 ...customForTreatingDoctorQuestions,
-    //             ],
-    //             payableRemarks,
-    //             acceptInstruction,
-    //             prevInvestigatorReport,
-    //             claimType,
-    //         };
-
-    //         // ============================================
-    //         // PART 1: Handle Different QC Observation Types
-    //         // ============================================
-
-    //         if (qcObservations === 'Accept Report') {
-    //             qcOb.finalDecision = finalDecision;
-
-    //             if (finalDecision === 'Payable') {
-    //                 qcOb.queriesRemarks = payableRemarks;
-    //             } else if (finalDecision === 'Repudiate') {
-    //                 qcOb.repudiateFraudulentRemarks = repadiateRemarks;
-
-
-    //                 console.log('groundOfRejection', groundOfRejection);
-    //                 console.log('groundOfRejectionFraud', groundOfRejectionFraud);
-    //                 console.log('groundOfRejectionExclusion', groundOfRejectionExclusion);
-    //                 console.log('groundOfRejectionMisrepresentation', groundOfRejectionMisrepresentation);
-
-
-    //                 // FIX: Send ground rejections in correct structure
-    //                 if (groundOfRejection) {
-    //                     qcOb.groundRejectionQCDTO = {
-    //                         groundRejectionCode: groundOfRejection,
-    //                     };
-    //                 }
-
-    //                 // FIX: Send fraud rejections in correct structure
-    //                 if (Array.isArray(groundOfRejectionFraud) && groundOfRejectionFraud.length > 0) {
-    //                     qcOb.groundRejectionFraudulentQCDTO = {
-    //                         groundRejectionFraudulentCode: [...groundOfRejectionFraud]
-    //                         // groundRejectionFraudulentQCViewDTOs: groundOfRejectionFraud && groundOfRejectionFraud.map((code) => ({
-    //                         //     groundRejectionFraudulentCode: code,
-    //                         // })),
-    //                     };
-    //                 } else {
-    //                     qcOb.groundRejectionFraudulentQCDTO = {
-    //                         groundRejectionFraudulentCode: []
-    //                     }
-    //                 }
-    //                 // FIX: Send exclusion rejections in correct structure
-    //                 if (Array.isArray(groundOfRejectionExclusion) && groundOfRejectionExclusion.length > 0) {
-    //                     qcOb.groundRejectionExclusionQCDTO = {
-    //                         groundRejectionExclusionCode: [...groundOfRejectionExclusion]
-    //                         // groundRejectionExclusionDTO: groundOfRejectionExclusion && groundOfRejectionExclusion.map((code) => ({
-    //                         //     groundRejectionExclusionCode: code,
-    //                         // })),
-    //                     };
-    //                 } else {
-    //                     qcOb.groundRejectionExclusionQCDTO = {
-    //                         groundRejectionExclusionCode: []
-    //                     }
-    //                 }
-    //                 // FIX: Send misrepresentation rejections in correct structure
-    //                 if (Array.isArray(groundOfRejectionMisrepresentation) && groundOfRejectionMisrepresentation.length > 0) {
-    //                     qcOb.groundRejectionMisrepresentQCDTO = {
-    //                         groundRejectionMisrepresentCode: [...groundOfRejectionMisrepresentation]
-    //                         // groundRejectionMisrepresentationDTO: groundOfRejectionMisrepresentation && groundOfRejectionMisrepresentation.map((code) => ({
-    //                         //     groundRejectionMisrepresentCode: code,
-    //                         // })),
-    //                     };
-    //                 } else {
-    //                     qcOb.groundRejectionMisrepresentQCDTO = {
-    //                         groundRejectionMisrepresentCode: []
-    //                     }
-    //                 }
-    //             } else if (finalDecision === 'Loss Minimization') {
-    //                 qcOb.lossMinimizationRemarks = lowMiniRemarks;
-    //             } else if (finalDecision === 'Queries to be raised') {
-    //                 qcOb.queriesRemarks = queryRemark;
-    //                 qcOb.queriesQuery = queryTxt;
-    //             }
-
-    //             // ============================================
-    //             // PART 2: Add Recommendations (Convert to Boolean)
-    //             // ============================================
-
-    //             qcOb.policyCancellation = recommendations.policyCancellation === 'true';
-    //             qcOb.hospitalBlacklisted = recommendations.hospitalBlacklisted === 'true';
-    //             qcOb.hospitalDepanelled = recommendations.hospitalDepanelled === 'true';
-    //             qcOb.hospitalCautionTagged = recommendations.hospitalCautionTagged === 'true';
-    //             qcOb.insuredBlacklisted = recommendations.insuredBlacklisted === 'true';
-    //             qcOb.insuredCautionTagged = recommendations.insuredCautionTagged === 'true';
-    //             qcOb.policyFraud = recommendations.policyFraud === 'true';
-    //             qcOb.treatingDoctorFraud = recommendations.treatingDoctorFraud === 'true';
-    //             qcOb.pathologistFraud = recommendations.pathologistFraud === 'true';
-    //             qcOb.chemistFraud = recommendations.chemistFraud === 'true';
-    //             qcOb.pathologyLabFraud = recommendations.pathologyLabFraud === 'true';
-    //             qcOb.corporateTaggedFraud = recommendations.corporateTaggedFraud === 'true';
-    //             qcOb.legalActionInitiated = recommendations.legalActionInitiated === 'true';
-    //         } else if (qcObservations === 'Raise query to Regional QC manager') {
-    //             qcOb.queryWithRegionalQC = queryRM;
-    //         } else if (qcObservations === 'Response to Central QC Query') {
-    //             qcOb.queryWithRegionalQC = centralQuery;
-    //             qcOb.queriesQuery = queryCM;
-    //         } else if (qcObservations === 'Rework') {
-    //             qcOb.queriesRemarks = payableRemarks;
-    //         } else if (qcObservations === 'Reassign') {
-    //             // For reassign, agencyCode should already be set
-    //             // Add any additional remarks if needed
-    //             qcOb.queriesRemarks = payableRemarks || '';
-    //         }
-
-    //         // ============================================
-    //         // PART 3: Log the Payload for Verification
-    //         // ============================================
-
-    //         console.log('=== QC OBSERVATIONS PAYLOAD ===');
-    //         console.log('=== DOCUMENT CODES ===');
-    //         console.log('Document Codes:', documentsCodes);
-    //         console.log('============================');
-
-    //         console.log("qwertyuiop", qcOb);
-    //         // ============================================
-    //         // PART 4: Submit to Backend
-    //         // ============================================
-
-    //         const response: any = await QCUpdateService.addQCObservations(
-    //             qcOb,
-    //             investigationId,
-    //             documentsCodes // Pass document codes separately
-    //         );
-
-    //         if (response.statusCode === 0) {
-    //             alertService.showAlertSuccess('QC Observations submitted successfully');
-
-    //             // Navigate based on observation type
-    //             if (
-    //                 qcObservations === 'Raise query to Regional QC manager' ||
-    //                 qcObservations === 'Response to Central QC Query' ||
-    //                 qcObservations === 'Rework' ||
-    //                 qcObservations === 'Reassign'
-    //             ) {
-    //                 if (redirectTo) {
-    //                     navigate(redirectTo);
-    //                 } else {
-    //                     navigate('/admin/dashboard');
-    //                 }
-    //             } else if (onChangeTab) {
-    //                 onChangeTab(true);
-    //             }
-    //         } else if (response.statusCode === 4004) {
-    //             // Partial success
-    //             alertService.showAlertSuccess(response.message);
-    //         } else {
-    //             alertService.showAlertError(response.message || 'Failed to submit QC observations');
-    //         }
-    //     } catch (error) {
-    //         console.error('Error submitting QC observations:', error);
-
-    //         // Log the error payload for debugging
-    //         if (error instanceof Error) {
-    //             console.error('Error Details:', error.message);
-    //         }
-
-    //         alertService.showAlertError('Failed to submit QC observations. Check console for details.');
-    //     }
-    // };
-
-    // Fixed handleSubmit function based on Angular onqcSubmit2
-    // This includes all the validation and logic from the Angular version
-
     const handleSubmit = async () => {
         try {
-            let value = "";
+            // Build QC observation object with CORRECT structure
+            const qcOb: QCObservation = {
+                qcObservations,
+                qcUpdateID: localStorage.getItem('qcUpdateID') || '',
+                finalDecision: finalDecision || '',
+                queriesRemarks: '',
+                queriesQuery: '',
+                repudiateFraudulent: "",
+                queryWithRegionalQC: '',
+                repudiateFraudulentRemarks: '',
+                suspectedCaseFindings: '',
+                lossMinimizationRemarks: '',
+                assignedToUser: '',
+                agencyCodes: agencyCode ? [agencyCode] : [], // FIX: Ensure it's always an array
+                questionCodes: [
+                    ...selectedForInsuredQues,
+                    ...selectedTreatingDctrQues,
+                    ...customForInsuredQuestions,
+                    ...customForTreatingDoctorQuestions,
+                ],
+                payableRemarks,
+                acceptInstruction,
+                prevInvestigatorReport,
+                claimType,
+            };
 
             // ============================================
-            // PART 1: Handle Split Case Allocation
+            // PART 1: Handle Different QC Observation Types
             // ============================================
-            if (previewValues.investigationType === 'Split case allocation') {
-                const allVisitsDone = (
-                    previewValues.hospitalVisitStatus === 'Done' &&
-                    previewValues.insuredVisitStatus === 'Done' &&
-                    previewValues.employerVisitStatus === 'Done'
-                );
-                const isCentralManager = roleName === 'Central Manager';
 
-                if (allVisitsDone || isCentralManager) {
-                    // Proceed with submission for split case
-                    await submitQCObservations();
-                } else {
-                    // Build pending visits message
-                    if (
-                        previewValues.hospitalVisitStatus === 'Pending' ||
-                        previewValues.hospitalVisitStatus === '' ||
-                        previewValues.hospitalVisitStatus === null
-                    ) {
-                        value = value + "Hospital Visit Pending";
-                    }
-                    if (
-                        previewValues.insuredVisitStatus === 'Pending' ||
-                        previewValues.insuredVisitStatus === '' ||
-                        previewValues.insuredVisitStatus === null
-                    ) {
-                        value = value + " Insured Visit Pending";
-                    }
-                    if (
-                        previewValues.employerVisitStatus === 'Pending' ||
-                        previewValues.employerVisitStatus === '' ||
-                        previewValues.employerVisitStatus === null
-                    ) {
-                        value = value + " Employer Visit Pending";
+            if (qcObservations === 'Accept Report') {
+                qcOb.finalDecision = finalDecision;
+
+                if (finalDecision === 'Payable') {
+                    qcOb.queriesRemarks = payableRemarks;
+                } else if (finalDecision === 'Repudiate') {
+                    qcOb.repudiateFraudulentRemarks = repadiateRemarks;
+
+
+                    console.log('groundOfRejection', groundOfRejection);
+                    console.log('groundOfRejectionFraud', groundOfRejectionFraud);
+                    console.log('groundOfRejectionExclusion', groundOfRejectionExclusion);
+                    console.log('groundOfRejectionMisrepresentation', groundOfRejectionMisrepresentation);
+
+
+                    // FIX: Send ground rejections in correct structure
+                    if (groundOfRejection) {
+                        qcOb.groundRejectionQCDTO = {
+                            groundRejectionCode: [groundOfRejection],
+                        };
                     }
 
-                    alertService.showAlertError(value);
-                    return;
+                    // FIX: Send fraud rejections in correct structure
+                    if (Array.isArray(groundOfRejectionFraud) && groundOfRejectionFraud.length > 0) {
+                        qcOb.groundRejectionFraudulentQCDTO = {
+                            groundRejectionFraudulentCode: [...groundOfRejectionFraud]
+                            // groundRejectionFraudulentQCViewDTOs: groundOfRejectionFraud && groundOfRejectionFraud.map((code) => ({
+                            //     groundRejectionFraudulentCode: code,
+                            // })),
+                        };
+                    } else {
+                        qcOb.groundRejectionFraudulentQCDTO = {
+                            groundRejectionFraudulentCode: []
+                        }
+                    }
+                    // FIX: Send exclusion rejections in correct structure
+                    if (Array.isArray(groundOfRejectionExclusion) && groundOfRejectionExclusion.length > 0) {
+                        qcOb.groundRejectionExclusionQCDTO = {
+                            groundRejectionExclusionCode: [...groundOfRejectionExclusion]
+                            // groundRejectionExclusionDTO: groundOfRejectionExclusion && groundOfRejectionExclusion.map((code) => ({
+                            //     groundRejectionExclusionCode: code,
+                            // })),
+                        };
+                    } else {
+                        qcOb.groundRejectionExclusionQCDTO = {
+                            groundRejectionExclusionCode: []
+                        }
+                    }
+                    // FIX: Send misrepresentation rejections in correct structure
+                    if (Array.isArray(groundOfRejectionMisrepresentation) && groundOfRejectionMisrepresentation.length > 0) {
+                        qcOb.groundRejectionMisrepresentQCDTO = {
+                            groundRejectionMisrepresentCode: [...groundOfRejectionMisrepresentation]
+                            // groundRejectionMisrepresentationDTO: groundOfRejectionMisrepresentation && groundOfRejectionMisrepresentation.map((code) => ({
+                            //     groundRejectionMisrepresentCode: code,
+                            // })),
+                        };
+                    } else {
+                        qcOb.groundRejectionMisrepresentQCDTO = {
+                            groundRejectionMisrepresentCode: []
+                        }
+                    }
+                } else if (finalDecision === 'Loss Minimization') {
+                    qcOb.lossMinimizationRemarks = lowMiniRemarks;
+                } else if (finalDecision === 'Queries to be raised') {
+                    qcOb.queriesRemarks = queryRemark;
+                    qcOb.queriesQuery = queryTxt;
                 }
+
+                // ============================================
+                // PART 2: Add Recommendations (Convert to Boolean)
+                // ============================================
+
+                qcOb.policyCancellation = recommendations.policyCancellation === 'true';
+                qcOb.hospitalBlacklisted = recommendations.hospitalBlacklisted === 'true';
+                qcOb.hospitalDepanelled = recommendations.hospitalDepanelled === 'true';
+                qcOb.hospitalCautionTagged = recommendations.hospitalCautionTagged === 'true';
+                qcOb.insuredBlacklisted = recommendations.insuredBlacklisted === 'true';
+                qcOb.insuredCautionTagged = recommendations.insuredCautionTagged === 'true';
+                qcOb.policyFraud = recommendations.policyFraud === 'true';
+                qcOb.treatingDoctorFraud = recommendations.treatingDoctorFraud === 'true';
+                qcOb.pathologistFraud = recommendations.pathologistFraud === 'true';
+                qcOb.chemistFraud = recommendations.chemistFraud === 'true';
+                qcOb.pathologyLabFraud = recommendations.pathologyLabFraud === 'true';
+                qcOb.corporateTaggedFraud = recommendations.corporateTaggedFraud === 'true';
+                qcOb.legalActionInitiated = recommendations.legalActionInitiated === 'true';
+            } else if (qcObservations === 'Raise query to Regional QC manager') {
+                qcOb.queryWithRegionalQC = queryRM;
+            } else if (qcObservations === 'Response to Central QC Query') {
+                qcOb.queryWithRegionalQC = centralQuery;
+                qcOb.queriesQuery = queryCM;
+            } else if (qcObservations === 'Rework') {
+                qcOb.queriesRemarks = payableRemarks;
+            } else if (qcObservations === 'Reassign') {
+                // For reassign, agencyCode should already be set
+                // Add any additional remarks if needed
+                qcOb.queriesRemarks = payableRemarks || '';
+            }
+
+            // ============================================
+            // PART 3: Log the Payload for Verification
+            // ============================================
+
+            console.log('=== QC OBSERVATIONS PAYLOAD ===');
+            console.log('=== DOCUMENT CODES ===');
+            console.log('Document Codes:', documentsCodes);
+            console.log('============================');
+
+            console.log("qwertyuiop", qcOb);
+            // ============================================
+            // PART 4: Submit to Backend
+            // ============================================
+
+            const response: any = await QCUpdateService.addQCObservations(
+                qcOb,
+                investigationId,
+                documentsCodes // Pass document codes separately
+            );
+
+            if (response.statusCode === 0) {
+                alertService.showAlertSuccess('QC Observations submitted successfully');
+
+                // Navigate based on observation type
+                if (
+                    qcObservations === 'Raise query to Regional QC manager' ||
+                    qcObservations === 'Response to Central QC Query' ||
+                    qcObservations === 'Rework' ||
+                    qcObservations === 'Reassign'
+                ) {
+                    if (redirectTo) {
+                        navigate(redirectTo);
+                    } else {
+                        navigate('/admin/dashboard');
+                    }
+                } else if (onChangeTab) {
+                    onChangeTab(true);
+                }
+            } else if (response.statusCode === 4004) {
+                // Partial success
+                alertService.showAlertSuccess(response.message);
             } else {
-                // ============================================
-                // PART 2: Handle Non-Split Case Allocation
-                // ============================================
-                await submitQCObservations();
+                alertService.showAlertError(response.message || 'Failed to submit QC observations');
             }
         } catch (error) {
             console.error('Error submitting QC observations:', error);
+
+            // Log the error payload for debugging
             if (error instanceof Error) {
                 console.error('Error Details:', error.message);
             }
+
             alertService.showAlertError('Failed to submit QC observations. Check console for details.');
         }
     };
 
+    // Fixed handleSubmit function based on Angular onqcSubmit2
+    // This includes all the validation and logic from the Angular version
+
+    // const handleSubmit = async () => {
+    //     try {
+    //         let value = "";
+
+    //         // ============================================
+    //         // PART 1: Handle Split Case Allocation
+    //         // ============================================
+    //         if (previewValues.investigationType === 'Split case allocation') {
+    //             const allVisitsDone = (
+    //                 previewValues.hospitalVisitStatus === 'Done' &&
+    //                 previewValues.insuredVisitStatus === 'Done' &&
+    //                 previewValues.employerVisitStatus === 'Done'
+    //             );
+    //             const isCentralManager = roleName === 'Central Manager';
+
+    //             if (allVisitsDone || isCentralManager) {
+    //                 // Proceed with submission for split case
+    //                 await submitQCObservations();
+    //             } else {
+    //                 // Build pending visits message
+    //                 if (
+    //                     previewValues.hospitalVisitStatus === 'Pending' ||
+    //                     previewValues.hospitalVisitStatus === '' ||
+    //                     previewValues.hospitalVisitStatus === null
+    //                 ) {
+    //                     value = value + "Hospital Visit Pending";
+    //                 }
+    //                 if (
+    //                     previewValues.insuredVisitStatus === 'Pending' ||
+    //                     previewValues.insuredVisitStatus === '' ||
+    //                     previewValues.insuredVisitStatus === null
+    //                 ) {
+    //                     value = value + " Insured Visit Pending";
+    //                 }
+    //                 if (
+    //                     previewValues.employerVisitStatus === 'Pending' ||
+    //                     previewValues.employerVisitStatus === '' ||
+    //                     previewValues.employerVisitStatus === null
+    //                 ) {
+    //                     value = value + " Employer Visit Pending";
+    //                 }
+
+    //                 alertService.showAlertError(value);
+    //                 return;
+    //             }
+    //         } else {
+    //             // ============================================
+    //             // PART 2: Handle Non-Split Case Allocation
+    //             // ============================================
+    //             await submitQCObservations();
+    //         }
+    //     } catch (error) {
+    //         console.error('Error submitting QC observations:', error);
+    //         if (error instanceof Error) {
+    //             console.error('Error Details:', error.message);
+    //         }
+    //         alertService.showAlertError('Failed to submit QC observations. Check console for details.');
+    //     }
+    // };
+
     // ============================================
     // Main Submit Function
     // ============================================
-    const submitQCObservations = async () => {
-        // Build QC observation object
-        const qcOb: QCObservation = {
-            qcObservations,
-            qcUpdateID: localStorage.getItem('qcUpdateID') || '',
-            finalDecision: '',
-            queriesRemarks: '',
-            queriesQuery: '',
-            repudiateFraudulent: '',
-            queryWithRegionalQC: '-',
-            repudiateFraudulentRemarks: '',
-            suspectedCaseFindings: '',
-            lossMinimizationRemarks: '',
-            assignedToUser: '',
-            agencyCodes: [],
-            questionCodes: [],
-            payableRemarks: '',
-            acceptInstruction: null,
-            prevInvestigatorReport: '',
-            claimType: '',
-        };
+    // const submitQCObservations = async () => {
+    //     // Build QC observation object
+    //     const qcOb: QCObservation = {
+    //         qcObservations,
+    //         qcUpdateID: localStorage.getItem('qcUpdateID') || '',
+    //         finalDecision: '',
+    //         queriesRemarks: '',
+    //         queriesQuery: '',
+    //         repudiateFraudulent: '',
+    //         queryWithRegionalQC: '',
+    //         repudiateFraudulentRemarks: '',
+    //         suspectedCaseFindings: '',
+    //         lossMinimizationRemarks: '',
+    //         assignedToUser: '',
+    //         agencyCodes: [],
+    //         questionCodes: [],
+    //         payableRemarks: '',
+    //         acceptInstruction: '',
+    //         prevInvestigatorReport: '',
+    //         claimType: '',
+    //     };
 
-        // ============================================
-        // PART 1: Handle Different QC Observation Types
-        // ============================================
-        if (qcObservations === 'Accept Report') {
-            qcOb.finalDecision = finalDecision;
+    //     // ============================================
+    //     // PART 1: Handle Different QC Observation Types
+    //     // ============================================
+    //     if (qcObservations === 'Accept Report') {
+    //         qcOb.finalDecision = finalDecision;
 
-            if (finalDecision === 'Payable') {
-                qcOb.queriesRemarks = payableRemarks;
-            } else if (finalDecision === 'Repudiate') {
-                qcOb.repudiateFraudulentRemarks = repadiateRemarks;
-            } else if (finalDecision === 'Suspected Case') {
-                qcOb.suspectedCaseFindings = suspectedCaseFindings;
-            } else if (finalDecision === 'Loss Minimization') {
-                qcOb.lossMinimizationRemarks = lowMiniRemarks;
-            } else if (finalDecision === 'Queries to be raised') {
-                qcOb.queriesRemarks = queryRemark;
-                qcOb.queriesQuery = queryTxt;
-            }
-        } else if (qcObservations === 'Raise query to Regional QC manager') {
-            qcOb.queryWithRegionalQC = queryRM;
-        } else if (qcObservations === 'Response to Central QC Query') {
-            qcOb.queryWithRegionalQC = centralQuery;
-            qcOb.queriesQuery = queryCM;
-        } else if (qcObservations === 'Rework') {
-            qcOb.queriesRemarks = payableRemarks;
-        } else if (qcObservations === 'Reassign') {
-            qcOb.queriesRemarks = payableRemarks || '';
-        }
+    //         if (finalDecision === 'Payable') {
+    //             qcOb.queriesRemarks = payableRemarks;
+    //         } else if (finalDecision === 'Repudiate') {
+    //             qcOb.repudiateFraudulentRemarks = repadiateRemarks;
+    //         } else if (finalDecision === 'Suspected Case') {
+    //             qcOb.suspectedCaseFindings = suspectedCaseFindings;
+    //         } else if (finalDecision === 'Loss Minimization') {
+    //             qcOb.lossMinimizationRemarks = lowMiniRemarks;
+    //         } else if (finalDecision === 'Queries to be raised') {
+    //             qcOb.queriesRemarks = queryRemark;
+    //             qcOb.queriesQuery = queryTxt;
+    //         }
+    //     } else if (qcObservations === 'Raise query to Regional QC manager') {
+    //         qcOb.queryWithRegionalQC = queryRM;
+    //     } else if (qcObservations === 'Response to Central QC Query') {
+    //         qcOb.queryWithRegionalQC = centralQuery;
+    //         qcOb.queriesQuery = queryCM;
+    //     } else if (qcObservations === 'Rework') {
+    //         qcOb.queriesRemarks = payableRemarks;
+    //     } else if (qcObservations === 'Reassign') {
+    //         qcOb.queriesRemarks = payableRemarks || '';
+    //     }
 
-        // ============================================
-        // PART 2: Validate Mandatory Fields
-        // ============================================
-        // if (
-        //     agencyCode === '' ||
-        //     investigationDocsView.length === 0 ||
-        //     selectedTreatingDctrQues.length === 0 ||
-        //     selectedForInsuredQues.length === 0 ||
-        //     acceptInstruction == null
-        // ) {
-        //     alertService.showAlertError('Please fill all mandatory fields');
-        //     console.log('Missing mandatory fields:', {
-        //         agencyCode,
-        //         investigationDocsView: investigationDocsView.length,
-        //         selectedTreatingDctrQues: selectedTreatingDctrQues.length,
-        //         selectedForInsuredQues: selectedForInsuredQues.length,
-        //         acceptInstruction,
-        //         investigationType: previewValues.investigationType,
-        //     });
-        //     return;
-        // }
+    //     // ============================================
+    //     // PART 2: Validate Mandatory Fields
+    //     // ============================================
+    //     if (
+    //         agencyCode === '' ||
+    //         investigationDocsView.length === 0 ||
+    //         selectedTreatingDctrQues.length === 0 ||
+    //         selectedForInsuredQues.length === 0 ||
+    //         acceptInstruction == null
+    //     ) {
+    //         alertService.showAlertError('Please fill all mandatory fields');
+    //         console.log('Missing mandatory fields:', {
+    //             agencyCode,
+    //             investigationDocsView: investigationDocsView.length,
+    //             selectedTreatingDctrQues: selectedTreatingDctrQues.length,
+    //             selectedForInsuredQues: selectedForInsuredQues.length,
+    //             acceptInstruction,
+    //         });
+    //         return;
+    //     }
 
-        // ============================================
-        // PART 3: Build Question Codes and Agency Codes
-        // ============================================
-        const combinedQuestionCodes = [
-            ...selectedTreatingDctrQues,
-            ...customForInsuredQuestions,
-            ...selectedForInsuredQues,
-            ...customForTreatingDoctorQuestions,
-        ];
+    //     // ============================================
+    //     // PART 3: Build Question Codes and Agency Codes
+    //     // ============================================
+    //     const combinedQuestionCodes = [
+    //         ...selectedTreatingDctrQues,
+    //         ...customForInsuredQuestions,
+    //         ...selectedForInsuredQues,
+    //         ...customForTreatingDoctorQuestions,
+    //     ];
 
-        // ============================================
-        // PART 4: Add Recommendations (Only for non-split OR Accept Report)
-        // ============================================
-        if (previewValues.investigationType !== 'Split case allocation') {
-            // Convert string 'true'/'false' to boolean
-            qcOb.policyCancellation = recommendations.policyCancellation === 'true';
-            qcOb.hospitalBlacklisted = recommendations.hospitalBlacklisted === 'true';
-            qcOb.hospitalDepanelled = recommendations.hospitalDepanelled === 'true';
-            qcOb.hospitalCautionTagged = recommendations.hospitalCautionTagged === 'true';
-            qcOb.insuredBlacklisted = recommendations.insuredBlacklisted === 'true';
-            qcOb.insuredCautionTagged = recommendations.insuredCautionTagged === 'true';
-            qcOb.policyFraud = recommendations.policyFraud === 'true';
-            qcOb.treatingDoctorFraud = recommendations.treatingDoctorFraud === 'true';
-            qcOb.pathologistFraud = recommendations.pathologistFraud === 'true';
-            qcOb.chemistFraud = recommendations.chemistFraud === 'true';
-            qcOb.pathologyLabFraud = recommendations.pathologyLabFraud === 'true';
-            qcOb.corporateTaggedFraud = recommendations.corporateTaggedFraud === 'true';
-            qcOb.legalActionInitiated = recommendations.legalActionInitiated === 'true';
-        }
+    //     // ============================================
+    //     // PART 4: Add Recommendations (Only for non-split OR Accept Report)
+    //     // ============================================
+    //     if (previewValues.investigationType !== 'Split case allocation') {
+    //         // Convert string 'true'/'false' to boolean
+    //         qcOb.policyCancellation = recommendations.policyCancellation === 'true';
+    //         qcOb.hospitalBlacklisted = recommendations.hospitalBlacklisted === 'true';
+    //         qcOb.hospitalDepanelled = recommendations.hospitalDepanelled === 'true';
+    //         qcOb.hospitalCautionTagged = recommendations.hospitalCautionTagged === 'true';
+    //         qcOb.insuredBlacklisted = recommendations.insuredBlacklisted === 'true';
+    //         qcOb.insuredCautionTagged = recommendations.insuredCautionTagged === 'true';
+    //         qcOb.policyFraud = recommendations.policyFraud === 'true';
+    //         qcOb.treatingDoctorFraud = recommendations.treatingDoctorFraud === 'true';
+    //         qcOb.pathologistFraud = recommendations.pathologistFraud === 'true';
+    //         qcOb.chemistFraud = recommendations.chemistFraud === 'true';
+    //         qcOb.pathologyLabFraud = recommendations.pathologyLabFraud === 'true';
+    //         qcOb.corporateTaggedFraud = recommendations.corporateTaggedFraud === 'true';
+    //         qcOb.legalActionInitiated = recommendations.legalActionInitiated === 'true';
+    //     }
 
-        // ============================================
-        // PART 5: Populate Final Object
-        // ============================================
-        // qcOb.assignedToUser = assignedToUser;
-        qcOb.assignedToUser = '';
-        qcOb.agencyCodes = agencyCode ? [agencyCode] : [];
-        qcOb.questionCodes = combinedQuestionCodes;
-        qcOb.payableRemarks = payableRemarks;
-        qcOb.acceptInstruction = acceptInstruction;
-        qcOb.prevInvestigatorReport = prevInvestigatorReport;
-        qcOb.claimType = claimType;
+    //     // ============================================
+    //     // PART 5: Populate Final Object
+    //     // ============================================
+    //     qcOb.assignedToUser = assignedToUser;
+    //     qcOb.agencyCodes = agencyCode ? [agencyCode] : [];
+    //     qcOb.questionCodes = combinedQuestionCodes;
+    //     qcOb.payableRemarks = payableRemarks;
+    //     qcOb.acceptInstruction = acceptInstruction;
+    //     qcOb.prevInvestigatorReport = prevInvestigatorReport;
+    //     qcOb.claimType = claimType;
 
-        // ============================================
-        // PART 6: Add Ground Rejections (Only for Repudiate)
-        // ============================================
-        if (finalDecision === 'Repudiate') {
-            console.log('groundOfRejection', groundOfRejection);
-            console.log('groundOfRejectionFraud', groundOfRejectionFraud);
-            console.log('groundOfRejectionExclusion', groundOfRejectionExclusion);
-            console.log('groundOfRejectionMisrepresentation', groundOfRejectionMisrepresentation);
+    //     // ============================================
+    //     // PART 6: Add Ground Rejections (Only for Repudiate)
+    //     // ============================================
+    //     if (finalDecision === 'Repudiate') {
+    //         console.log('groundOfRejection', groundOfRejection);
+    //         console.log('groundOfRejectionFraud', groundOfRejectionFraud);
+    //         console.log('groundOfRejectionExclusion', groundOfRejectionExclusion);
+    //         console.log('groundOfRejectionMisrepresentation', groundOfRejectionMisrepresentation);
 
-            // Ground rejection
-            if (groundOfRejection) {
-                qcOb.groundRejectionQCDTO = {
-                    groundRejectionCode: [groundOfRejection],
-                };
-            }
+    //         // Ground rejection
+    //         if (groundOfRejection) {
+    //             qcOb.groundRejectionQCDTO = {
+    //                 groundRejectionCode: groundOfRejection,
+    //             };
+    //         }
 
-            // Fraudulent rejections
-            qcOb.groundRejectionFraudulentQCDTO = {
-                groundRejectionFraudulentCode:
-                    Array.isArray(groundOfRejectionFraud) && groundOfRejectionFraud.length > 0
-                        ? [...groundOfRejectionFraud]
-                        : [],
-            };
+    //         // Fraudulent rejections
+    //         qcOb.groundRejectionFraudulentQCDTO = {
+    //             groundRejectionFraudulentCode:
+    //                 Array.isArray(groundOfRejectionFraud) && groundOfRejectionFraud.length > 0
+    //                     ? [...groundOfRejectionFraud]
+    //                     : [],
+    //         };
 
-            // Exclusion rejections
-            qcOb.groundRejectionExclusionQCDTO = {
-                groundRejectionExclusionCode:
-                    Array.isArray(groundOfRejectionExclusion) && groundOfRejectionExclusion.length > 0
-                        ? [...groundOfRejectionExclusion]
-                        : [],
-            };
+    //         // Exclusion rejections
+    //         qcOb.groundRejectionExclusionQCDTO = {
+    //             groundRejectionExclusionCode:
+    //                 Array.isArray(groundOfRejectionExclusion) && groundOfRejectionExclusion.length > 0
+    //                     ? [...groundOfRejectionExclusion]
+    //                     : [],
+    //         };
 
-            // Misrepresentation rejections
-            qcOb.groundRejectionMisrepresentQCDTO = {
-                groundRejectionMisrepresentCode:
-                    Array.isArray(groundOfRejectionMisrepresentation) &&
-                        groundOfRejectionMisrepresentation.length > 0
-                        ? [...groundOfRejectionMisrepresentation]
-                        : [],
-            };
-        }
+    //         // Misrepresentation rejections
+    //         qcOb.groundRejectionMisrepresentQCDTO = {
+    //             groundRejectionMisrepresentCode:
+    //                 Array.isArray(groundOfRejectionMisrepresentation) &&
+    //                     groundOfRejectionMisrepresentation.length > 0
+    //                     ? [...groundOfRejectionMisrepresentation]
+    //                     : [],
+    //         };
+    //     }
 
-        // ============================================
-        // PART 7: Log Payload
-        // ============================================
-        console.log('=== QC OBSERVATIONS PAYLOAD ===');
-        console.log('Document Codes:', documentsCodes);
-        console.log('Full Payload:', JSON.stringify(qcOb));
-        console.log('============================');
+    //     // ============================================
+    //     // PART 7: Log Payload
+    //     // ============================================
+    //     console.log('=== QC OBSERVATIONS PAYLOAD ===');
+    //     console.log('Document Codes:', documentsCodes);
+    //     console.log('Full Payload:', JSON.stringify(qcOb));
+    //     console.log('============================');
 
-        // ============================================
-        // PART 8: Submit to Backend
-        // ============================================
-        const response: any = await QCUpdateService.addQCObservations(
-            qcOb,
-            investigationId,
-            documentsCodes
-        );
+    //     // ============================================
+    //     // PART 8: Submit to Backend
+    //     // ============================================
+    //     const response: any = await QCUpdateService.addQCObservations(
+    //         qcOb,
+    //         investigationId,
+    //         documentsCodes
+    //     );
 
-        if (response.statusCode === 0) {
-            console.log('Payload Data:', JSON.stringify(response.payload));
-            alertService.showAlertSuccess('QC Observations submitted successfully');
+    //     if (response.statusCode === 0) {
+    //         console.log('Payload Data:', JSON.stringify(response.payload));
+    //         alertService.showAlertSuccess('QC Observations submitted successfully');
 
-            // Navigate based on observation type
-            if (
-                qcObservations === 'Raise query to Regional QC manager' ||
-                qcObservations === 'Response to Central QC Query' ||
-                qcObservations === 'Rework' ||
-                qcObservations === 'Reassign'
-            ) {
-                console.log('redirectTo', redirectTo);
-                if (redirectTo) {
-                    navigate(redirectTo);
-                } else {
-                    navigate('/admin/dashboard');
-                }
-            } else {
-                // For other observation types, trigger tab change
-                if (onChangeTab) {
-                    onChangeTab(true);
-                }
-            }
-        } else if (response.statusCode === 4004) {
-            // Partial success
-            alertService.showAlertSuccess(response.message);
-        } else {
-            alertService.showAlertError(response.message || 'Failed to submit QC observations');
-        }
-    };
+    //         // Navigate based on observation type
+    //         if (
+    //             qcObservations === 'Raise query to Regional QC manager' ||
+    //             qcObservations === 'Response to Central QC Query' ||
+    //             qcObservations === 'Rework' ||
+    //             qcObservations === 'Reassign'
+    //         ) {
+    //             console.log('redirectTo', redirectTo);
+    //             if (redirectTo) {
+    //                 navigate(redirectTo);
+    //             } else {
+    //                 navigate('/admin/dashboard');
+    //             }
+    //         } else {
+    //             // For other observation types, trigger tab change
+    //             if (onChangeTab) {
+    //                 onChangeTab(true);
+    //             }
+    //         }
+    //     } else if (response.statusCode === 4004) {
+    //         // Partial success
+    //         alertService.showAlertSuccess(response.message);
+    //     } else {
+    //         alertService.showAlertError(response.message || 'Failed to submit QC observations');
+    //     }
+    // };
 
 
     const isDisabled = editAble === 'Non-Editable';
@@ -1808,198 +1806,6 @@ const QCObservations: React.FC<QCObservationsProps> = ({
                                                                 </Select>
                                                             </TableCell>
                                                         </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>Hospital to be blacklisted</TableCell>
-                                                            <TableCell align="center">{getRealData(previewValues.reghospitalBlacklisted)}</TableCell>
-                                                            <TableCell>
-                                                                <Select
-                                                                    value={recommendations.hospitalBlacklisted}
-                                                                    onChange={(e) => setRecommendations({ ...recommendations, hospitalBlacklisted: e.target.value })}
-                                                                    size="small"
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value="">Select</MenuItem>
-                                                                    <MenuItem value="true">Yes</MenuItem>
-                                                                    <MenuItem value="false">No</MenuItem>
-                                                                </Select>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>Hospital to be Depanelled ( applicable only if network - system validations)</TableCell>
-                                                            <TableCell align="center">{getRealData(previewValues.reghospitalDepanelled)}</TableCell>
-                                                            <TableCell>
-                                                                <Select
-                                                                    value={recommendations.hospitalDepanelled}
-                                                                    onChange={(e) => setRecommendations({ ...recommendations, hospitalDepanelled: e.target.value })}
-                                                                    size="small"
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value="">Select</MenuItem>
-                                                                    <MenuItem value="true">Yes</MenuItem>
-                                                                    <MenuItem value="false">No</MenuItem>
-                                                                </Select>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>Hospital to be caution tagged</TableCell>
-                                                            <TableCell align="center">{getRealData(previewValues.reghospitalCautionTagged)}</TableCell>
-                                                            <TableCell>
-                                                                <Select
-                                                                    value={recommendations.hospitalCautionTagged}
-                                                                    onChange={(e) => setRecommendations({ ...recommendations, hospitalCautionTagged: e.target.value })}
-                                                                    size="small"
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value="">Select</MenuItem>
-                                                                    <MenuItem value="true">Yes</MenuItem>
-                                                                    <MenuItem value="false">No</MenuItem>
-                                                                </Select>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>Insured to be blacklisted</TableCell>
-                                                            <TableCell align="center">{getRealData(previewValues.reginsuredBlacklisted)}</TableCell>
-                                                            <TableCell>
-                                                                <Select
-                                                                    value={recommendations.insuredBlacklisted}
-                                                                    onChange={(e) => setRecommendations({ ...recommendations, insuredBlacklisted: e.target.value })}
-                                                                    size="small"
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value="">Select</MenuItem>
-                                                                    <MenuItem value="true">Yes</MenuItem>
-                                                                    <MenuItem value="false">No</MenuItem>
-                                                                </Select>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>Insured to be caution tagged</TableCell>
-                                                            <TableCell align="center">{getRealData(previewValues.reginsuredCautionTagged)}</TableCell>
-                                                            <TableCell>
-                                                                <Select
-                                                                    value={recommendations.insuredCautionTagged}
-                                                                    onChange={(e) => setRecommendations({ ...recommendations, insuredCautionTagged: e.target.value })}
-                                                                    size="small"
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value="">Select</MenuItem>
-                                                                    <MenuItem value="true">Yes</MenuItem>
-                                                                    <MenuItem value="false">No</MenuItem>
-                                                                </Select>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>Policy to be tagged as fraud</TableCell>
-                                                            <TableCell align="center">{getRealData(previewValues.regpolicyFraud)}</TableCell>
-                                                            <TableCell>
-                                                                <Select
-                                                                    value={recommendations.policyFraud}
-                                                                    onChange={(e) => setRecommendations({ ...recommendations, policyFraud: e.target.value })}
-                                                                    size="small"
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value="">Select</MenuItem>
-                                                                    <MenuItem value="true">Yes</MenuItem>
-                                                                    <MenuItem value="false">No</MenuItem>
-                                                                </Select>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>Treating doctor be tagged as Fraud / caution</TableCell>
-                                                            <TableCell align="center">{getRealData(previewValues.regtreatingDoctorFraud)}</TableCell>
-                                                            <TableCell>
-                                                                <Select
-                                                                    value={recommendations.treatingDoctorFraud}
-                                                                    onChange={(e) => setRecommendations({ ...recommendations, treatingDoctorFraud: e.target.value })}
-                                                                    size="small"
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value="">Select</MenuItem>
-                                                                    <MenuItem value="true">Yes</MenuItem>
-                                                                    <MenuItem value="false">No</MenuItem>
-                                                                </Select>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>Pathologist be tagged as Fraud / caution</TableCell>
-                                                            <TableCell align="center">{getRealData(previewValues.regpathologistFraud)}</TableCell>
-                                                            <TableCell>
-                                                                <Select
-                                                                    value={recommendations.pathologistFraud}
-                                                                    onChange={(e) => setRecommendations({ ...recommendations, pathologistFraud: e.target.value })}
-                                                                    size="small"
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value="">Select</MenuItem>
-                                                                    <MenuItem value="true">Yes</MenuItem>
-                                                                    <MenuItem value="false">No</MenuItem>
-                                                                </Select>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>Chemist to be tagged as Fraud/ caution</TableCell>
-                                                            <TableCell align="center">{getRealData(previewValues.regchemistFraud)}</TableCell>
-                                                            <TableCell>
-                                                                <Select
-                                                                    value={recommendations.chemistFraud}
-                                                                    onChange={(e) => setRecommendations({ ...recommendations, chemistFraud: e.target.value })}
-                                                                    size="small"
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value="">Select</MenuItem>
-                                                                    <MenuItem value="true">Yes</MenuItem>
-                                                                    <MenuItem value="false">No</MenuItem>
-                                                                </Select>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>Pathology lab to be tagged as fraud / caution</TableCell>
-                                                            <TableCell align="center">{getRealData(previewValues.regpathologyLabFraud)}</TableCell>
-                                                            <TableCell>
-                                                                <Select
-                                                                    value={recommendations.pathologyLabFraud}
-                                                                    onChange={(e) => setRecommendations({ ...recommendations, pathologyLabFraud: e.target.value })}
-                                                                    size="small"
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value="">Select</MenuItem>
-                                                                    <MenuItem value="true">Yes</MenuItem>
-                                                                    <MenuItem value="false">No</MenuItem>
-                                                                </Select>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>Corporate (applicable only in group policy) to be tagged as Fraud/ caution</TableCell>
-                                                            <TableCell align="center">{getRealData(previewValues.regcorporateTaggedFraud)}</TableCell>
-                                                            <TableCell>
-                                                                <Select
-                                                                    value={recommendations.corporateTaggedFraud}
-                                                                    onChange={(e) => setRecommendations({ ...recommendations, corporateTaggedFraud: e.target.value })}
-                                                                    size="small"
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value="">Select</MenuItem>
-                                                                    <MenuItem value="true">Yes</MenuItem>
-                                                                    <MenuItem value="false">No</MenuItem>
-                                                                </Select>
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>Legal Action to be initiated</TableCell>
-                                                            <TableCell align="center">{getRealData(previewValues.reglegalActionInitiated)}</TableCell>
-                                                            <TableCell>
-                                                                <Select
-                                                                    value={recommendations.legalActionInitiated}
-                                                                    onChange={(e) => setRecommendations({ ...recommendations, legalActionInitiated: e.target.value })}
-                                                                    size="small"
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value="">Select</MenuItem>
-                                                                    <MenuItem value="true">Yes</MenuItem>
-                                                                    <MenuItem value="false">No</MenuItem>
-                                                                </Select>
-                                                            </TableCell>
-                                                        </TableRow>
                                                         {/* Repeat for all 12 fields... */}
                                                     </TableBody>
                                                 </Table>
@@ -2015,8 +1821,173 @@ const QCObservations: React.FC<QCObservationsProps> = ({
 
                 {qcObservations === 'Reassign' && previewValues?.investigationType !== 'Part verification' && (
                     <AcceptAgencies />
+                    // <Box sx={{ mb: 3 }}>
+                    //     <Paper sx={{ p: 3 }}>
+                    //         <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
+                    //             Investigation Documents for reference
+                    //             <Typography component="span" color="error"> *</Typography>
+                    //         </Typography>
+
+                    //         <Grid container spacing={3}>
+                    //             {/* Previously Uploaded Documents (Central/Regional) */}
+                    //             {(roleName === 'Regional Manager' || roleName === 'Agency Spoc') && documentArray.length > 0 && (
+                    //                 <Grid size={{ xs: 12, md: 6 }}>
+                    //                     <Paper sx={{ p: 2, bgcolor: '#f9fafb' }}>
+                    //                         <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
+                    //                             {roleName === 'Regional Manager' && 'Documents shared during case assignment'}
+                    //                             {roleName === 'Agency Spoc' && 'Documents shared during central & regional case assignment'}
+                    //                         </Typography>
+                    //                         <Grid container spacing={2}>
+                    //                             {documentArray.map((doc, index) => (
+                    //                                 <Grid size={{ xs: 12, sm: 4 }} key={index}>
+                    //                                     <Box
+                    //                                         sx={{
+                    //                                             cursor: 'pointer',
+                    //                                             textAlign: 'center',
+                    //                                             p: 1,
+                    //                                             border: '1px solid #e5e7eb',
+                    //                                             borderRadius: 1,
+                    //                                             '&:hover': { bgcolor: '#f3f4f6' },
+                    //                                         }}
+                    //                                         onClick={() => openDocument(doc.fileLocation, doc.documentID)}
+                    //                                     >
+                    //                                         <Box
+                    //                                             component="img"
+                    //                                             src={getImageSrc(doc.fileLocation)}
+                    //                                             alt={doc.documentTitle}
+                    //                                             sx={{
+                    //                                                 width: '100%',
+                    //                                                 height: 80,
+                    //                                                 objectFit: 'cover',
+                    //                                                 borderRadius: 1,
+                    //                                                 mb: 1,
+                    //                                             }}
+                    //                                         />
+                    //                                         <Typography variant="caption" sx={{ wordBreak: 'break-word' }}>
+                    //                                             {doc.documentTitle}
+                    //                                         </Typography>
+                    //                                     </Box>
+                    //                                 </Grid>
+                    //                             ))}
+                    //                         </Grid>
+                    //                     </Paper>
+                    //                 </Grid>
+                    //             )}
+
+                    //             {/* Upload New Documents */}
+                    //             <Grid size={{ xs: 12, md: roleName === 'Regional Manager' || roleName === 'Agency Spoc' ? 6 : 12 }}>
+                    //                 <Paper sx={{ p: 2, bgcolor: '#f9fafb' }}>
+                    //                     <Typography variant="subtitle2" sx={{ mb: 2, fontWeight: 600 }}>
+                    //                         {roleName === 'Central Manager' && 'Documents uploaded during central case assignment *'}
+                    //                         {roleName === 'Regional Manager' && 'Documents uploaded during regional case assignment *'}
+                    //                         {roleName === 'Agency Spoc' && 'Documents uploaded during agency case assignment *'}
+                    //                     </Typography>
+
+                    //                     {/* Uploaded Documents Grid */}
+                    //                     {investigationDocsView.length > 0 && (
+                    //                         <Grid container spacing={2} sx={{ mb: 2 }}>
+                    //                             {investigationDocsView.map((doc, index) => (
+                    //                                 <Grid size={{ xs: 6, sm: 4 }} key={index}>
+                    //                                     <Box
+                    //                                         sx={{
+                    //                                             position: 'relative',
+                    //                                             textAlign: 'center',
+                    //                                             p: 1,
+                    //                                             border: '1px solid #e5e7eb',
+                    //                                             borderRadius: 1,
+                    //                                         }}
+                    //                                     >
+                    //                                         {/* Delete Button */}
+                    //                                         <IconButton
+                    //                                             size="small"
+                    //                                             sx={{
+                    //                                                 position: 'absolute',
+                    //                                                 top: 4,
+                    //                                                 right: 4,
+                    //                                                 bgcolor: 'white',
+                    //                                                 '&:hover': { bgcolor: '#fee2e2', color: '#dc2626' },
+                    //                                             }}
+                    //                                             onClick={() => handleDocumentDelete(doc.documentID, doc.documentTitle, index)}
+                    //                                         >
+                    //                                             <CloseIcon fontSize="small" />
+                    //                                         </IconButton>
+
+                    //                                         {/* Document Thumbnail */}
+                    //                                         <Box
+                    //                                             component="img"
+                    //                                             src={getImageSrc(doc.fileLocation)}
+                    //                                             alt={doc.documentTitle}
+                    //                                             sx={{
+                    //                                                 width: '100%',
+                    //                                                 height: 80,
+                    //                                                 objectFit: 'cover',
+                    //                                                 borderRadius: 1,
+                    //                                                 mb: 1,
+                    //                                                 cursor: 'pointer',
+                    //                                             }}
+                    //                                             onClick={() => openDocument(doc.fileLocation, doc.documentID)}
+                    //                                         />
+
+                    //                                         {/* Document Info */}
+                    //                                         <Typography variant="caption" sx={{ display: 'block', fontWeight: 600 }}>
+                    //                                             {doc.documentTitle}
+                    //                                         </Typography>
+                    //                                         {doc.createdBy && (
+                    //                                             <Typography variant="caption" sx={{ display: 'block', color: 'text.secondary' }}>
+                    //                                                 Uploaded by {doc.createdBy}
+                    //                                                 {doc.createdOn && <br />}
+                    //                                                 {doc.createdOn && new Date(doc.createdOn).toLocaleDateString()}
+                    //                                             </Typography>
+                    //                                         )}
+                    //                                     </Box>
+                    //                                 </Grid>
+                    //                             ))}
+                    //                         </Grid>
+                    //                     )}
+
+                    //                     {/* Upload Form */}
+                    //                     <Box sx={{ mt: 2 }}>
+                    //                         <TextField
+                    //                             fullWidth
+                    //                             size="small"
+                    //                             label="Document Title"
+                    //                             value={documentTitle}
+                    //                             onChange={(e) => setDocumentTitle(e.target.value)}
+                    //                             sx={{ mb: 2 }}
+                    //                             placeholder="Enter document title..."
+                    //                         />
+                    //                         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                    //                             <TextField
+                    //                                 type="file"
+                    //                                 id="documentFileInput"
+                    //                                 onChange={handleFileSelect}
+                    //                                 sx={{ flex: 1 }}
+                    //                                 inputProps={{
+                    //                                     accept: 'application/pdf,image/jpeg,image/gif,image/tiff',
+                    //                                 }}
+                    //                             />
+                    //                             <Button
+                    //                                 variant="contained"
+                    //                                 onClick={handleDocumentUpload}
+                    //                                 disabled={!documentTitle || !selectedFiles}
+                    //                             >
+                    //                                 Upload
+                    //                             </Button>
+                    //                         </Box>
+                    //                         <Typography variant="caption" sx={{ display: 'block', mt: 1, color: 'text.secondary' }}>
+                    //                             Supported formats: PDF, JPEG, GIF, TIFF
+                    //                         </Typography>
+                    //                     </Box>
+                    //                 </Paper>
+                    //             </Grid>
+                    //         </Grid>
+                    //     </Paper>
+                    // </Box>
                 )}
 
+
+
+                {/* Rework - Remarks */}
                 {qcObservations === 'Rework' && (
                     <FormControl fullWidth sx={{ mb: 3 }}>
                         <FormLabel sx={{ mb: 1, fontWeight: 600 }}>Remarks</FormLabel>
@@ -2030,6 +2001,7 @@ const QCObservations: React.FC<QCObservationsProps> = ({
                     </FormControl>
                 )}
 
+                {/* Submit Button */}
                 {roleName !== 'Super Admin' && !editAble && buttonEnable && qcObservations !== 'Reassign' && (
                     <Button
                         variant="contained"
@@ -2053,4 +2025,4 @@ const QCObservations: React.FC<QCObservationsProps> = ({
     );
 };
 
-export default QCObservations;
+export default QCObservationsReg;

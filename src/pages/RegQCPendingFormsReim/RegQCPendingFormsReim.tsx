@@ -34,6 +34,7 @@ import Logs from '../../components/sharedComponents/components/Logs';
 import Preview from '../../components/sharedComponents/components/Preview';
 import CaseInfoComponent from '../../components/sharedComponents/components/CaseInfoComponent';
 import claimsService from '../../services/claims.service';
+import QCUpdatesRegional from '../../components/sharedComponents/components/QCUpdatesRegional';
 
 const RegQCPendingFormsReim: React.FC = () => {
     const { investigationId } = useParams<{ investigationId: string }>();
@@ -335,7 +336,7 @@ const RegQCPendingFormsReim: React.FC = () => {
                                     </Box>
                                 </AccordionSummary>
                                 <AccordionDetails sx={{ pt: 2, backgroundColor: '#FFFFFF' }}>
-                                    <QCUpdateCentral
+                                    <QCUpdatesRegional
                                         // style={{ display }}
                                         buttonEnable={buttonEnable}
                                     />
