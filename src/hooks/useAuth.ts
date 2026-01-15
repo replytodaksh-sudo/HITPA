@@ -28,7 +28,6 @@ export const useAuth = () => {
           lastName: profile.lastName,
           roles: roles,
         });
-// console.log("poiuytrew")
         // Store user info in sessionStorage (for backward compatibility)
         sessionStorage.setItem('username', profile.username || '');
         // sessionStorage.setItem('roleName', roles.toString() || '');

@@ -35,25 +35,6 @@ const ClaimDetailsReim: React.FC<ClaimDetailsReimProps> = ({ claimDetails, claim
   // const [claimDetails, setClaimDetails] = useState<any>(null);
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   if (investigationId) {
-  //     fetchClaimDetails(investigationId);
-  //   }
-  // }, [investigationId]);
-
-  // const fetchClaimDetails = async (invId: string) => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await claimsService.claimDetails(invId);
-  //     if (response.statusCode === 0) {
-  //       setClaimDetails(response.payload);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error fetching claim details:', error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const decrypt = (value: string | undefined): string => {
     if (!value || value === '-') {

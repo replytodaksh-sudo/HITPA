@@ -129,7 +129,7 @@ const QuestionnaireSection: React.FC<QuestionnaireSectionProps> = ({
   const fetchTreatingDoctorQuestions = async () => {
     try {
       const response:any = await QuestionService.getQuestions('CO0116', investigationId);
-      console.log("000000000", response)
+      
       if (response.statusCode === 0) {
         setTreatingDoctorQuestions(response.payload.questionResponseDTOs || []);
         if (response.payload.customQuestionResponseDTOs) {

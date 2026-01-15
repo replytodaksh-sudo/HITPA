@@ -916,10 +916,6 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
     //     // PART 6: Add Ground Rejections (Only for Repudiate)
     //     // ============================================
     //     if (finalDecision === 'Repudiate') {
-    //         console.log('groundOfRejection', groundOfRejection);
-    //         console.log('groundOfRejectionFraud', groundOfRejectionFraud);
-    //         console.log('groundOfRejectionExclusion', groundOfRejectionExclusion);
-    //         console.log('groundOfRejectionMisrepresentation', groundOfRejectionMisrepresentation);
 
     //         // Ground rejection
     //         if (groundOfRejection) {
@@ -1820,7 +1816,7 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
 
 
                 {qcObservations === 'Reassign' && previewValues?.investigationType !== 'Part verification' && (
-                    <AcceptAgencies />
+                    <AcceptAgencies reassign={true}/>
                     // <Box sx={{ mb: 3 }}>
                     //     <Paper sx={{ p: 3 }}>
                     //         <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>

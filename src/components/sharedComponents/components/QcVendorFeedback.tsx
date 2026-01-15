@@ -152,17 +152,15 @@ const QcVendorFeedback: React.FC<QcVendorFeedbackProps> = ({
   };
 
   const handleVendorChange = (index: number, field: string, value: any, approvalName?: string, decision?: string) => {
-    console.log(';;;;;;index:', index, 'field:', field, 'value:', value);
     const updatedVendors = [...vendorFeedbackArr];
     updatedVendors[index] = {
       ...updatedVendors[index],
       [field]: value,
       ...(approvalName && { [approvalName]: decision }),
     };
-    console.log(';;;;;;:::::', updatedVendors);
     setVendorFeedbackArr(updatedVendors);
   };
-  console.log(';;;;;;', vendorFeedbackArr);
+  
 
   // Validation for reimbursement split case allocation
   const validateReimbursementSubmission = (): boolean => {

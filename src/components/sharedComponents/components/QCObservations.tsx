@@ -918,10 +918,6 @@ const QCObservations: React.FC<QCObservationsProps> = ({
         // PART 6: Add Ground Rejections (Only for Repudiate)
         // ============================================
         if (finalDecision === 'Repudiate') {
-            console.log('groundOfRejection', groundOfRejection);
-            console.log('groundOfRejectionFraud', groundOfRejectionFraud);
-            console.log('groundOfRejectionExclusion', groundOfRejectionExclusion);
-            console.log('groundOfRejectionMisrepresentation', groundOfRejectionMisrepresentation);
 
             // Ground rejection
             if (groundOfRejection) {

@@ -216,7 +216,7 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
 }) => {
     const { investigationId } = useParams<{ investigationId: string }>();
     const [loading, setLoading] = useState(false);
-console.log("1234567890-", investigationId?.split(' ')[0])
+
     // ===========================
     // BASIC FORM FIELDS STATE
     // ===========================

@@ -124,7 +124,6 @@
 //     // 1. Call parent callback: onSave(rowData)
 //     // 2. Or store in context/redux
 //     // 3. Or save to API directly
-//     console.log('Saving treating doctor data:', rowData);
 //   };
 
 //   // Get data for submission (to be called by parent component)

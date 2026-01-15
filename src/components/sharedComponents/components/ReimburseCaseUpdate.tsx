@@ -77,7 +77,7 @@ const ReimburseCaseUpdate: React.FC<ReimburseCaseUpdateProps> = ({
         setLoading(true);
         try {
             const response: any = await ReimService.caseUpdatePreviousDataReim(investigationId);
-            console.log('Tab Details Response:111111', response);
+            
             if (response.statusCode === 0) {
                 const payload = response.payload;
                 setPreviousData(payload);
