@@ -467,7 +467,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
 
     fetchDocuments();
   }, []);
-
+console.log("documentsCodesdocumentsCodes", documentsCodes)
   const fetchAgencies = async () => {
     try {
       const response: any = await agencyService.fetchAllAgency();
@@ -586,7 +586,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
       let response: any;
 
       if (roleName === 'Agency Spoc') {
-        response = await AssignService.assignFO(payload, []);
+        response = await AssignService.assignFO(payload, documentsCodes);
       } else if (claimsType === 'reim') {
         payload.investigationCaseDTO = {
           investigationType,
@@ -595,9 +595,9 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
             assignTo: agencyCode,
           }],
         };
-        response = await AssignService.reimAssign(payload, []);
+        response = await AssignService.reimAssign(payload, documentsCodes);
       } else {
-        response = await AssignService.assign(payload, []);
+        response = await AssignService.assign(payload, documentsCodes);
       }
 
       if (response.statusCode === 0) {

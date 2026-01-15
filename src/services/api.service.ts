@@ -198,7 +198,7 @@ class ApiServiceClass {
 
     try {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('files', file);
 
       if (additionalData) {
         Object.keys(additionalData).forEach((key) => {

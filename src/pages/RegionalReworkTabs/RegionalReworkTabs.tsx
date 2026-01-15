@@ -429,6 +429,8 @@ import CentralRegionalDocuments from '../../components/sharedComponents/componen
 import CentralAssignedAgencyCaseUpdate from '../../components/sharedComponents/components/CentralAssignedAgencyCaseUpdate';
 import RegionalReworkCaseUpdate from '../../components/sharedComponents/components/RegionalReworkCaseUpdate';
 import claimsService from '../../services/claims.service';
+import caseUpdateService from '../../services/caseupdate.service';
+import QuestionService from '../../services/question.service';
 
 // ===========================
 // INTERFACES
@@ -440,25 +442,25 @@ interface RouteParams extends Record<string, string | undefined> {
 // ===========================
 // API SERVICES
 // ===========================
-const caseUpdateService = {
-    caseUpdatePreviousData: async (investigationId: string) => {
-        const response = await fetch(`/api/case-update/previous/${investigationId}`);
-        if (!response.ok) throw new Error('Failed to fetch case data');
-        return response.json();
-    }
-};
+// const caseUpdateService = {
+//     caseUpdatePreviousData: async (investigationId: string) => {
+//         const response = await fetch(`/api/case-update/previous/${investigationId}`);
+//         if (!response.ok) throw new Error('Failed to fetch case data');
+//         return response.json();
+//     }
+// };
 
-const questionaryService = {
-    downloadQuestion: async (investigationId: string, questionType: string) => {
-        const response = await fetch(`/api/questionary/download`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ investigationId, questionType })
-        });
-        if (!response.ok) throw new Error('Failed to prepare download');
-        return response.json();
-    }
-};
+// const questionaryService = {
+//     downloadQuestion: async (investigationId: string, questionType: string) => {
+//         const response = await fetch(`/api/questionary/download`, {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({ investigationId, questionType })
+//         });
+//         if (!response.ok) throw new Error('Failed to prepare download');
+//         return response.json();
+//     }
+// };
 
 const apiUrls = {
     downloadUrl: '/api/questionary/download?investigationId='
@@ -481,6 +483,7 @@ const RegionalReworkTabs: React.FC = () => {
     const [claimNo, setClaimNo] = useState('');
     const [sbiClaimNo, setSbiClaimNo] = useState('');
     const [previuosData, setPreviuosData] = useState<any>('');
+    const [claimDetails, setClaimDetails] = useState<any>('');
     const [buttonEnable] = useState(true);
 
     // Questionnaire Modal
@@ -509,6 +512,7 @@ const RegionalReworkTabs: React.FC = () => {
         // Load case data
         if (investigationId) {
             getSavedFormData();
+            fetchClaimData();
         }
     }, [investigationId]);
 
@@ -517,8 +521,8 @@ const RegionalReworkTabs: React.FC = () => {
     // ===========================
     const getSavedFormData = async () => {
         try {
-            // const data = await caseUpdateService.caseUpdatePreviousData(investigationId!);
-            const data = await claimsService.claimDetails(investigationId!);
+            const data = await caseUpdateService.caseUpdatePreviousData(investigationId!);
+            // const data = await claimsService.claimDetails(investigationId!);
             if (data.statusCode === 0) {
                 setPreviuosData(data.payload);
                 if (data.payload.activeCaseID) {
@@ -531,7 +535,22 @@ const RegionalReworkTabs: React.FC = () => {
             console.error('Error fetching case data:', error);
         }
     };
-
+    const fetchClaimData = async () => {
+        try {
+            const data = await claimsService.claimDetails(investigationId!);
+            if (data.statusCode === 0) {
+                setClaimDetails(data.payload);
+                if (data.payload.activeCaseID) {
+                    localStorage.setItem('activeCaseID', data.payload.activeCaseID);
+                }
+            } else {
+                setClaimDetails(data.payload);
+            }
+        } catch (error) {
+            console.error('Error fetching case data:', error);
+        }
+    };
+    console.log('Previous Data:', previuosData);
     // ===========================
     // ACCORDION CHANGE HANDLER
     // ===========================
@@ -562,7 +581,7 @@ const RegionalReworkTabs: React.FC = () => {
         }
 
         try {
-            await questionaryService.downloadQuestion(investigationId!, questionaryRadio);
+            await QuestionService.downloadQuestion(investigationId!, questionaryRadio);
             const url = `${apiUrls.downloadUrl}${investigationId}&questionType=${questionaryRadio}`;
             window.open(url, '_blank');
             closeQuestionaryModal();
@@ -595,7 +614,7 @@ const RegionalReworkTabs: React.FC = () => {
                         }}
                     >
                         <Grid container spacing={2} alignItems="center">
-                            <Grid size={{ xs: 12, md:4 }}>
+                            <Grid size={{ xs: 12, md: 4 }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
                                     <Assignment sx={{ fontSize: 20 }} />
                                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#f9f9f9' }}>
@@ -616,7 +635,7 @@ const RegionalReworkTabs: React.FC = () => {
                                     />
                                 </Box>
                             </Grid>
-                            <Grid size={{ xs: 12, md:4 }}>
+                            <Grid size={{ xs: 12, md: 4 }}>
                                 <Box sx={{ textAlign: { xs: 'left', md: 'center' } }}>
                                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#f9f9f9' }}>
                                         Claim No:
@@ -626,7 +645,7 @@ const RegionalReworkTabs: React.FC = () => {
                                     </Typography>
                                 </Box>
                             </Grid>
-                            <Grid size={{ xs: 12, md:4 }}>
+                            <Grid size={{ xs: 12, md: 4 }}>
                                 <Box sx={{ textAlign: { xs: 'left', md: 'right' } }}>
                                     <Typography variant="body2" sx={{ fontWeight: 600, color: '#f9f9f9' }}>
                                         TPA Claim No:
@@ -709,9 +728,9 @@ const RegionalReworkTabs: React.FC = () => {
                                 </AccordionSummary>
                                 <AccordionDetails sx={{ bgcolor: 'white', borderRadius: '0 0 8px 8px' }}>
                                     {claimsType === 'cashless' ? (
-                                        <PreAuth claimDetails={previuosData} />
+                                        <PreAuth claimDetails={claimDetails} />
                                     ) : (
-                                        <ClaimDetailsReim claimsType={claimsType} claimDetails={previuosData} />
+                                        <ClaimDetailsReim claimsType={claimsType} claimDetails={claimDetails} />
                                     )}
                                 </AccordionDetails>
                             </Accordion>
@@ -753,7 +772,7 @@ const RegionalReworkTabs: React.FC = () => {
                                     </Box>
                                 </AccordionSummary>
                                 <AccordionDetails sx={{ bgcolor: 'white', borderRadius: '0 0 8px 8px' }}>
-                                    <HospitalInfo claimsType={claimsType} claimDetails={previuosData} />
+                                    <HospitalInfo claimsType={claimsType} claimDetails={claimDetails} />
                                 </AccordionDetails>
                             </Accordion>
 

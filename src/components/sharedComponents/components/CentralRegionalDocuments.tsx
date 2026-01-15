@@ -82,7 +82,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                 roleName === 'Field Officer'
             ) {
                 // Fetch Central documents
-                const centralResponse:any = await DocumentsService.viewInvestigationDocsView(
+                const centralResponse: any = await DocumentsService.viewInvestigationDocsView(
                     'caseAssignmentCentral',
                     investigationId
                 );
@@ -91,7 +91,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                 }
 
                 // Fetch Regional documents
-                const regionalResponse:any = await DocumentsService.viewInvestigationDocsView(
+                const regionalResponse: any = await DocumentsService.viewInvestigationDocsView(
                     'caseAssignmentRegional',
                     investigationId
                 );
@@ -100,7 +100,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                 }
 
                 // Fetch Agency documents
-                const agencyResponse:any = await DocumentsService.viewInvestigationDocsView(
+                const agencyResponse: any = await DocumentsService.viewInvestigationDocsView(
                     'caseAssignmentAgency',
                     investigationId
                 );
@@ -112,7 +112,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
             setDocumentArray(allDocs);
 
             // Fetch investigation documents
-            const invDocsResponse:any = await DocumentsService.viewInvestigationDocsView(
+            const invDocsResponse: any = await DocumentsService.viewInvestigationDocsView(
                 'investigation',
                 investigationId
             );
@@ -173,7 +173,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
     const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
-
+        setDocumentTitle(file.name)
         const validTypes = [
             'application/pdf',
             'image/jpeg',
@@ -220,7 +220,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
         setSuccess('');
 
         try {
-            const response:any = await DocumentsService.uploadInvestigationDocs(
+            const response: any = await DocumentsService.uploadInvestigationDocs(
                 'investigation',
                 investigationId,
                 selectedFile,
@@ -257,7 +257,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
         }
 
         try {
-            const response:any = await DocumentsService.deleteDocument(documentId);
+            const response: any = await DocumentsService.deleteDocument(documentId);
             if (response.statusCode === 0) {
                 setSuccess('Document deleted successfully');
                 await getInvestigationDocs();
@@ -272,7 +272,7 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
     if (loading) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-                <CircularProgress sx={{ color: '#2E5A96' }}/>
+                <CircularProgress sx={{ color: '#2E5A96' }} />
             </Box>
         );
     }
@@ -520,10 +520,10 @@ const CentralRegionalDocuments: React.FC<CentralRegionalDocumentsProps> = ({
                                         sx={{
                                             minWidth: 120,
                                             background: 'linear-gradient(45deg, #6F62C2 30%, #9C89E3 90%)',
-                                            color:"#fff !important",
+                                            color: "#fff !important",
                                         }}
                                     >
-                                        {uploading ? <CircularProgress size={24} sx={{ color: '#2E5A96' }}/> : 'Upload'}
+                                        {uploading ? <CircularProgress size={24} sx={{ color: '#2E5A96' }} /> : 'Upload'}
                                     </Button>
                                 </Box>
 

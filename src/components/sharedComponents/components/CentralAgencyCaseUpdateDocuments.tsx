@@ -81,7 +81,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
       ) {
         // Regional Manager: Central + Regional
         if (roleName === 'Regional Manager') {
-          const centralResponse:any = await DocumentsService.viewInvestigationDocsView(
+          const centralResponse: any = await DocumentsService.viewInvestigationDocsView(
             'caseAssignmentCentral',
             investigationId
           );
@@ -89,7 +89,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
             allDocs = [...centralResponse.payload];
           }
 
-          const regionalResponse:any = await DocumentsService.viewInvestigationDocsView(
+          const regionalResponse: any = await DocumentsService.viewInvestigationDocsView(
             'caseAssignmentRegional',
             investigationId
           );
@@ -99,7 +99,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
         }
         // Agency Spoc, Central Manager, Field Officer: Central + Regional + Agency
         else {
-          const centralResponse:any = await DocumentsService.viewInvestigationDocsView(
+          const centralResponse: any = await DocumentsService.viewInvestigationDocsView(
             'caseAssignmentCentral',
             investigationId
           );
@@ -107,7 +107,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
             allDocs = [...centralResponse.payload];
           }
 
-          const regionalResponse:any = await DocumentsService.viewInvestigationDocsView(
+          const regionalResponse: any = await DocumentsService.viewInvestigationDocsView(
             'caseAssignmentRegional',
             investigationId
           );
@@ -115,7 +115,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
             allDocs = [...allDocs, ...regionalResponse.payload];
           }
 
-          const agencyResponse:any = await DocumentsService.viewInvestigationDocsView(
+          const agencyResponse: any = await DocumentsService.viewInvestigationDocsView(
             'caseAssignmentAgency',
             investigationId
           );
@@ -128,7 +128,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
       setDocumentArray(allDocs);
 
       // Fetch investigation documents
-      const invDocsResponse:any = await DocumentsService.viewInvestigationDocsView(
+      const invDocsResponse: any = await DocumentsService.viewInvestigationDocsView(
         'investigation',
         investigationId
       );
@@ -188,7 +188,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-
+    setDocumentTitle(file.name)
     const validTypes = [
       'application/pdf',
       'image/jpeg',
@@ -235,7 +235,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
     setSuccess('');
 
     try {
-      const response:any = await DocumentsService.uploadInvestigationDocs(
+      const response: any = await DocumentsService.uploadInvestigationDocs(
         'investigation',
         investigationId,
         selectedFile,
@@ -245,7 +245,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
 
       if (response.statusCode === 0) {
         setSuccess('Document uploaded successfully!');
-        
+
         // Reset form
         setDocumentTitle('');
         setSelectedFile(null);
@@ -272,7 +272,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
     }
 
     try {
-      const response:any = await DocumentsService.deleteDocument(documentId);
+      const response: any = await DocumentsService.deleteDocument(documentId);
       if (response.statusCode === 0) {
         setSuccess('Document deleted successfully');
         await getInvestigationDocs();
@@ -287,7 +287,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
   if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', p: 4 }}>
-        <CircularProgress sx={{ color: '#2E5A96' }}/>
+        <CircularProgress sx={{ color: '#2E5A96' }} />
       </Box>
     );
   }
@@ -531,7 +531,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
                   mt: 1,
                 }}
               >
-                {uploading ? <CircularProgress size={24} sx={{ color: '#2E5A96' }}/> : 'Upload'}
+                {uploading ? <CircularProgress size={24} sx={{ color: '#2E5A96' }} /> : 'Upload'}
               </Button>
             </Box>
           </Box>

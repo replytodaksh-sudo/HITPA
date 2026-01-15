@@ -985,8 +985,13 @@ const QCObservations: React.FC<QCObservationsProps> = ({
                 qcObservations === 'Reassign'
             ) {
                 console.log('redirectTo', redirectTo);
+                // if (redirectTo) {
+                //     navigate(redirectTo);
+                // } else {
+                //     navigate('/admin/dashboard');
+                // }
                 if (redirectTo) {
-                    navigate(redirectTo);
+                    navigate(redirectTo.replace('/investigation', ''));
                 } else {
                     navigate('/admin/dashboard');
                 }

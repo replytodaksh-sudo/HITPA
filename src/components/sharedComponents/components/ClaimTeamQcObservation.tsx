@@ -540,7 +540,8 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
     };
 
     const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
+        const file:any = event.target.files?.[0];
+        setDocumentTitle(file.name)
         if (file) {
             const validTypes = ['application/pdf', 'image/jpeg', 'image/gif', 'image/tiff'];
             if (validTypes.includes(file.type)) {
