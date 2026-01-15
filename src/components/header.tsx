@@ -930,7 +930,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({
               {/* Logo */}
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <img
-                  src="/investigation/logo.png"
+                  src="/logo.png"
                   alt="logo"
                   style={{ height: '36px' }}
                 />
@@ -955,7 +955,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({
                   <SearchIcon sx={{ fontSize: 20, color: "#2E5A96" }} />
                 </IconButton>
               </Tooltip>
-              <Tooltip title="Notifications">
+              {/* <Tooltip title="Notifications">
                 <IconButton
                   onClick={(e) => setNotificationAnchor(e.currentTarget)}
                   sx={{
@@ -970,7 +970,7 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({
                 >
                   <NotificationsIcon sx={{ fontSize: 20, color: "#2E5A96" }} />
                 </IconButton>
-              </Tooltip>
+              </Tooltip> */}
 
               {/* User Profile */}
               <Box
@@ -1039,18 +1039,18 @@ const ModernHeader: React.FC<ModernHeaderProps> = ({
             </Typography>
           </Box>
           <Divider />
-          <MenuItem onClick={() => { setProfileAnchor(null); navigate('/profile'); }}>
+          {/* <MenuItem onClick={() => { setProfileAnchor(null); navigate('/profile'); }}>
             <ListItemIcon>
               <PersonIcon fontSize="small" />
             </ListItemIcon>
             Profile
-          </MenuItem>
-          <MenuItem onClick={() => { setProfileAnchor(null); navigate('/change-password'); }}>
+          </MenuItem> */}
+          {/* <MenuItem onClick={() => { setProfileAnchor(null); navigate('/change-password'); }}>
             <ListItemIcon>
               <LockIcon fontSize="small" />
             </ListItemIcon>
             Change Password
-          </MenuItem>
+          </MenuItem> */}
           <Divider />
           <MenuItem onClick={handleLogout}>
             <ListItemIcon>
