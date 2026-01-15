@@ -789,10 +789,10 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                                     >
                                         <MenuItem value={0}>--- Choose Case allocation Type ---</MenuItem>
                                         <MenuItem value={1}>Full case allocation</MenuItem>
-                                        {(roleName === 'Regional Manager' || caseAllocationType === 2) && (
+                                        {/* {(roleName === 'Regional Manager' || caseAllocationType === 2) && (
                                             <MenuItem value={2}>Split case allocation</MenuItem>
-                                        )}
-                                        <MenuItem value={3}>Part verification</MenuItem>
+                                        )} */}
+                                        {/* <MenuItem value={3}>Part verification</MenuItem> */}
                                     </Select>
                                 </FormControl>
                             </Grid>

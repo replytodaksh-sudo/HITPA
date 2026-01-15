@@ -733,6 +733,276 @@ const QCObservations: React.FC<QCObservationsProps> = ({
         }
     };
 
+    // Fixed handleSubmit function based on Angular onqcSubmit2
+    // This includes all the validation and logic from the Angular version
+
+    // const handleSubmit = async () => {
+    //     try {
+    //         let value = "";
+
+    //         // ============================================
+    //         // PART 1: Handle Split Case Allocation
+    //         // ============================================
+    //         if (previewValues.investigationType === 'Split case allocation') {
+    //             const allVisitsDone = (
+    //                 previewValues.hospitalVisitStatus === 'Done' &&
+    //                 previewValues.insuredVisitStatus === 'Done' &&
+    //                 previewValues.employerVisitStatus === 'Done'
+    //             );
+    //             const isCentralManager = roleName === 'Central Manager';
+
+    //             if (allVisitsDone || isCentralManager) {
+    //                 // Proceed with submission for split case
+    //                 await submitQCObservations();
+    //             } else {
+    //                 // Build pending visits message
+    //                 if (
+    //                     previewValues.hospitalVisitStatus === 'Pending' ||
+    //                     previewValues.hospitalVisitStatus === '' ||
+    //                     previewValues.hospitalVisitStatus === null
+    //                 ) {
+    //                     value = value + "Hospital Visit Pending";
+    //                 }
+    //                 if (
+    //                     previewValues.insuredVisitStatus === 'Pending' ||
+    //                     previewValues.insuredVisitStatus === '' ||
+    //                     previewValues.insuredVisitStatus === null
+    //                 ) {
+    //                     value = value + " Insured Visit Pending";
+    //                 }
+    //                 if (
+    //                     previewValues.employerVisitStatus === 'Pending' ||
+    //                     previewValues.employerVisitStatus === '' ||
+    //                     previewValues.employerVisitStatus === null
+    //                 ) {
+    //                     value = value + " Employer Visit Pending";
+    //                 }
+
+    //                 alertService.showAlertError(value);
+    //                 return;
+    //             }
+    //         } else {
+    //             // ============================================
+    //             // PART 2: Handle Non-Split Case Allocation
+    //             // ============================================
+    //             await submitQCObservations();
+    //         }
+    //     } catch (error) {
+    //         console.error('Error submitting QC observations:', error);
+    //         if (error instanceof Error) {
+    //             console.error('Error Details:', error.message);
+    //         }
+    //         alertService.showAlertError('Failed to submit QC observations. Check console for details.');
+    //     }
+    // };
+
+    // ============================================
+    // Main Submit Function
+    // ============================================
+    // const submitQCObservations = async () => {
+    //     // Build QC observation object
+    //     const qcOb: QCObservation = {
+    //         qcObservations,
+    //         qcUpdateID: localStorage.getItem('qcUpdateID') || '',
+    //         finalDecision: '',
+    //         queriesRemarks: '',
+    //         queriesQuery: '',
+    //         repudiateFraudulent: '',
+    //         queryWithRegionalQC: '',
+    //         repudiateFraudulentRemarks: '',
+    //         suspectedCaseFindings: '',
+    //         lossMinimizationRemarks: '',
+    //         assignedToUser: '',
+    //         agencyCodes: [],
+    //         questionCodes: [],
+    //         payableRemarks: '',
+    //         acceptInstruction: '',
+    //         prevInvestigatorReport: '',
+    //         claimType: '',
+    //     };
+
+    //     // ============================================
+    //     // PART 1: Handle Different QC Observation Types
+    //     // ============================================
+    //     if (qcObservations === 'Accept Report') {
+    //         qcOb.finalDecision = finalDecision;
+
+    //         if (finalDecision === 'Payable') {
+    //             qcOb.queriesRemarks = payableRemarks;
+    //         } else if (finalDecision === 'Repudiate') {
+    //             qcOb.repudiateFraudulentRemarks = repadiateRemarks;
+    //         } else if (finalDecision === 'Suspected Case') {
+    //             qcOb.suspectedCaseFindings = suspectedCaseFindings;
+    //         } else if (finalDecision === 'Loss Minimization') {
+    //             qcOb.lossMinimizationRemarks = lowMiniRemarks;
+    //         } else if (finalDecision === 'Queries to be raised') {
+    //             qcOb.queriesRemarks = queryRemark;
+    //             qcOb.queriesQuery = queryTxt;
+    //         }
+    //     } else if (qcObservations === 'Raise query to Regional QC manager') {
+    //         qcOb.queryWithRegionalQC = queryRM;
+    //     } else if (qcObservations === 'Response to Central QC Query') {
+    //         qcOb.queryWithRegionalQC = centralQuery;
+    //         qcOb.queriesQuery = queryCM;
+    //     } else if (qcObservations === 'Rework') {
+    //         qcOb.queriesRemarks = payableRemarks;
+    //     } else if (qcObservations === 'Reassign') {
+    //         qcOb.queriesRemarks = payableRemarks || '';
+    //     }
+
+    //     // ============================================
+    //     // PART 2: Validate Mandatory Fields
+    //     // ============================================
+    //     if (
+    //         agencyCode === '' ||
+    //         investigationDocsView.length === 0 ||
+    //         selectedTreatingDctrQues.length === 0 ||
+    //         selectedForInsuredQues.length === 0 ||
+    //         acceptInstruction == null
+    //     ) {
+    //         alertService.showAlertError('Please fill all mandatory fields');
+    //         console.log('Missing mandatory fields:', {
+    //             agencyCode,
+    //             investigationDocsView: investigationDocsView.length,
+    //             selectedTreatingDctrQues: selectedTreatingDctrQues.length,
+    //             selectedForInsuredQues: selectedForInsuredQues.length,
+    //             acceptInstruction,
+    //         });
+    //         return;
+    //     }
+
+    //     // ============================================
+    //     // PART 3: Build Question Codes and Agency Codes
+    //     // ============================================
+    //     const combinedQuestionCodes = [
+    //         ...selectedTreatingDctrQues,
+    //         ...customForInsuredQuestions,
+    //         ...selectedForInsuredQues,
+    //         ...customForTreatingDoctorQuestions,
+    //     ];
+
+    //     // ============================================
+    //     // PART 4: Add Recommendations (Only for non-split OR Accept Report)
+    //     // ============================================
+    //     if (previewValues.investigationType !== 'Split case allocation') {
+    //         // Convert string 'true'/'false' to boolean
+    //         qcOb.policyCancellation = recommendations.policyCancellation === 'true';
+    //         qcOb.hospitalBlacklisted = recommendations.hospitalBlacklisted === 'true';
+    //         qcOb.hospitalDepanelled = recommendations.hospitalDepanelled === 'true';
+    //         qcOb.hospitalCautionTagged = recommendations.hospitalCautionTagged === 'true';
+    //         qcOb.insuredBlacklisted = recommendations.insuredBlacklisted === 'true';
+    //         qcOb.insuredCautionTagged = recommendations.insuredCautionTagged === 'true';
+    //         qcOb.policyFraud = recommendations.policyFraud === 'true';
+    //         qcOb.treatingDoctorFraud = recommendations.treatingDoctorFraud === 'true';
+    //         qcOb.pathologistFraud = recommendations.pathologistFraud === 'true';
+    //         qcOb.chemistFraud = recommendations.chemistFraud === 'true';
+    //         qcOb.pathologyLabFraud = recommendations.pathologyLabFraud === 'true';
+    //         qcOb.corporateTaggedFraud = recommendations.corporateTaggedFraud === 'true';
+    //         qcOb.legalActionInitiated = recommendations.legalActionInitiated === 'true';
+    //     }
+
+    //     // ============================================
+    //     // PART 5: Populate Final Object
+    //     // ============================================
+    //     qcOb.assignedToUser = assignedToUser;
+    //     qcOb.agencyCodes = agencyCode ? [agencyCode] : [];
+    //     qcOb.questionCodes = combinedQuestionCodes;
+    //     qcOb.payableRemarks = payableRemarks;
+    //     qcOb.acceptInstruction = acceptInstruction;
+    //     qcOb.prevInvestigatorReport = prevInvestigatorReport;
+    //     qcOb.claimType = claimType;
+
+    //     // ============================================
+    //     // PART 6: Add Ground Rejections (Only for Repudiate)
+    //     // ============================================
+    //     if (finalDecision === 'Repudiate') {
+    //         console.log('groundOfRejection', groundOfRejection);
+    //         console.log('groundOfRejectionFraud', groundOfRejectionFraud);
+    //         console.log('groundOfRejectionExclusion', groundOfRejectionExclusion);
+    //         console.log('groundOfRejectionMisrepresentation', groundOfRejectionMisrepresentation);
+
+    //         // Ground rejection
+    //         if (groundOfRejection) {
+    //             qcOb.groundRejectionQCDTO = {
+    //                 groundRejectionCode: groundOfRejection,
+    //             };
+    //         }
+
+    //         // Fraudulent rejections
+    //         qcOb.groundRejectionFraudulentQCDTO = {
+    //             groundRejectionFraudulentCode:
+    //                 Array.isArray(groundOfRejectionFraud) && groundOfRejectionFraud.length > 0
+    //                     ? [...groundOfRejectionFraud]
+    //                     : [],
+    //         };
+
+    //         // Exclusion rejections
+    //         qcOb.groundRejectionExclusionQCDTO = {
+    //             groundRejectionExclusionCode:
+    //                 Array.isArray(groundOfRejectionExclusion) && groundOfRejectionExclusion.length > 0
+    //                     ? [...groundOfRejectionExclusion]
+    //                     : [],
+    //         };
+
+    //         // Misrepresentation rejections
+    //         qcOb.groundRejectionMisrepresentQCDTO = {
+    //             groundRejectionMisrepresentCode:
+    //                 Array.isArray(groundOfRejectionMisrepresentation) &&
+    //                     groundOfRejectionMisrepresentation.length > 0
+    //                     ? [...groundOfRejectionMisrepresentation]
+    //                     : [],
+    //         };
+    //     }
+
+    //     // ============================================
+    //     // PART 7: Log Payload
+    //     // ============================================
+    //     console.log('=== QC OBSERVATIONS PAYLOAD ===');
+    //     console.log('Document Codes:', documentsCodes);
+    //     console.log('Full Payload:', JSON.stringify(qcOb));
+    //     console.log('============================');
+
+    //     // ============================================
+    //     // PART 8: Submit to Backend
+    //     // ============================================
+    //     const response: any = await QCUpdateService.addQCObservations(
+    //         qcOb,
+    //         investigationId,
+    //         documentsCodes
+    //     );
+
+    //     if (response.statusCode === 0) {
+    //         console.log('Payload Data:', JSON.stringify(response.payload));
+    //         alertService.showAlertSuccess('QC Observations submitted successfully');
+
+    //         // Navigate based on observation type
+    //         if (
+    //             qcObservations === 'Raise query to Regional QC manager' ||
+    //             qcObservations === 'Response to Central QC Query' ||
+    //             qcObservations === 'Rework' ||
+    //             qcObservations === 'Reassign'
+    //         ) {
+    //             console.log('redirectTo', redirectTo);
+    //             if (redirectTo) {
+    //                 navigate(redirectTo);
+    //             } else {
+    //                 navigate('/admin/dashboard');
+    //             }
+    //         } else {
+    //             // For other observation types, trigger tab change
+    //             if (onChangeTab) {
+    //                 onChangeTab(true);
+    //             }
+    //         }
+    //     } else if (response.statusCode === 4004) {
+    //         // Partial success
+    //         alertService.showAlertSuccess(response.message);
+    //     } else {
+    //         alertService.showAlertError(response.message || 'Failed to submit QC observations');
+    //     }
+    // };
+
+
     const isDisabled = editAble === 'Non-Editable';
 
     // Fetch investigation documents
