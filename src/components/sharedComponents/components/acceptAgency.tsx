@@ -298,12 +298,12 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
 
       {/* Document Upload Section */}
       <DocumentUpload
-        roleName={roleName}
-        investigationId={investigationId || ''}
-        investigationDocs={investigationDocs}
-        documentsCodes={documentsCodes}
-        setDocumentsCodes={setDocumentsCodes}
-        onDocsUpdate={fetchDocuments}
+        // roleName={roleName}
+        // investigationId={investigationId || ''}
+        // investigationDocs={investigationDocs}
+        // documentsCodes={documentsCodes}
+        // setDocumentsCodes={setDocumentsCodes}
+        // onDocsUpdate={fetchDocuments}
       />
 
       {/* Questionnaire Section */}

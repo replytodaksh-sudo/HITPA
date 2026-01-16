@@ -64,6 +64,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
     const [documentsCodes, setDocumentsCodes] = useState<string[]>([]);
     const [investigationDocs, setInvestigationDocs] = useState<any[]>([]);
     const [documentArray, setDocumentArray] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
 
     // Question states
     const [selectedInsuredQuestions, setSelectedInsuredQuestions] = useState<string[]>([]);
@@ -238,6 +239,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
     };
 
     const fetchInvestigationDocs = async () => {
+        setLoading(true);
         try {
             const uploadDuring =
                 roleName === 'Regional Manager'
@@ -280,6 +282,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
         } catch (err) {
             console.error('Error fetching docs:', err);
         }
+        setLoading(false);
     };
 
     // Split case dropdown handlers
@@ -359,7 +362,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
             if (res.statusCode === 0) {
                 alert('Case assigned successfully');
                 if (redirectTo) {
-                    navigate(redirectTo);
+                    navigate(redirectTo.replace('/investigation', ''));
                 } else {
                     navigate('/admin/dashboard');
                 }
@@ -370,126 +373,6 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
             setError(err.message || 'Assignment failed');
         }
     };
-
-    //     const handleSubmitReimbursement = async () => {
-    //         if (!acceptInstruction) {
-    //             setError('Please fill all mandatory fields');
-    //             return;
-    //         }
-
-    //         if (roleName === 'Regional Manager' && !majorTrigger) {
-    //             setError('Major Trigger is required');
-    //             return;
-    //         }
-
-    //         const allQuestionCodes = [
-    //             ...selectedInsuredQuestions,
-    //             ...customInsuredQuestions,
-    //             ...selectedTreatingDoctorQuestions,
-    //             ...customTreatingDoctorQuestions,
-    //         ];
-
-    //         const acceptRequest: any = {
-    //             acceptAssignId: accid,
-    //             investigationId: cleanInvestigationId,
-    //             acceptInstruction,
-    //             questionCodes: allQuestionCodes,
-    //             centralMandatedCase: centralmandatedCase,
-    //             qcObservation,
-    //             majorTrigger,
-    //             investigationCaseDTO: {
-    //                 investigationType:
-    //                     caseAllocationType === 1
-    //                         ? 'Full case allocation'
-    //                         : caseAllocationType === 2
-    //                             ? 'Split case allocation'
-    //                             : 'Part verification',
-    //                 subTypeDTO: [],
-    //             },
-    //         };
-
-    //         // Build subTypeDTO based on allocation type
-    //         if (caseAllocationType === 1 && chooseAllocation === 1) {
-    //             acceptRequest.assignedToUser = agencyCode;
-    //             acceptRequest.investigationCaseDTO.subTypeDTO.push({
-    //                 investigationSubType: 'Full case allocation',
-    //                 assignTo: agencyCode,
-    //             });
-    //         } else if (caseAllocationType === 1 && chooseAllocation === 2) {
-    //             acceptRequest.assignedToUser = internalTeamMemCode;
-    //             acceptRequest.investigationCaseDTO.subTypeDTO.push({
-    //                 investigationSubType: 'Full case allocation',
-    //                 assignTo: internalTeamMemCode,
-    //             });
-    //         } else if (caseAllocationType === 2) {
-    //             if (ipvAgencyCode === hvAgencyCode && hvAgencyCode === evAgencyCode) {
-    //                 setError('Cannot use same entity for all visits');
-    //                 return;
-    //             }
-    //             acceptRequest.investigationCaseDTO.subTypeDTO.push(
-    //                 {
-    //                     investigationSubType: 'Insured person visit',
-    //                     assignTo: ipvAgencyCode,
-    //                 },
-    //                 {
-    //                     investigationSubType: 'Hospital Visit',
-    //                     assignTo: hvAgencyCode,
-    //                 },
-    //                 {
-    //                     investigationSubType: 'Employer Visit',
-    //                     assignTo: evAgencyCode,
-    //                 }
-    //             );
-    //         } else if (caseAllocationType === 3 && chooseAllocation === 1) {
-    //             acceptRequest.assignedToUser = agencyCode;
-    //             acceptRequest.partVerificationCategory = verificationCategory;
-    //             acceptRequest.investigationCaseDTO.subTypeDTO.push({
-    //                 investigationSubType: 'Part verification',
-    //                 assignTo: agencyCode,
-    //             });
-    //         } else if (caseAllocationType === 3 && chooseAllocation === 2) {
-    //             acceptRequest.assignedToUser = internalTeamMemCode;
-    //             acceptRequest.partVerificationCategory = verificationCategory;
-    //             acceptRequest.investigationCaseDTO.subTypeDTO.push({
-    //                 investigationSubType: 'Part verification',
-    //                 assignTo: internalTeamMemCode,
-    //             });
-    //         } else if (caseAllocationType === 3 && chooseAllocation === 3) {
-    //             acceptRequest.assignedToUser = 'assignToSelf';
-    //             acceptRequest.partVerificationCategory = verificationCategory;
-    //             acceptRequest.investigationCaseDTO.subTypeDTO.push({
-    //                 investigationSubType: 'Part verification',
-    //                 assignTo: 'assignToSelf',
-    //             });
-    //         }
-
-    //         if (roleName === 'Central Manager') {
-    //             acceptRequest.assignedToUser = assignedToUser;
-    //             acceptRequest.investigationCaseDTO.investigationType = 'Full case allocation';
-    //         }
-    // console.log('Accept Request:', acceptRequest, caseAllocationType, agencyCode, chooseAllocation);
-    //         try {
-    //             let res: any;
-    //             if (roleName === 'Regional Manager' || roleName === 'Central Manager') {
-    //                 res = await acceptAssignService.reimAssign(acceptRequest, documentsCodes);
-    //             } else if (roleName === 'Agency Spoc') {
-    //                 res = await acceptAssignService.reimAgencyAssign(acceptRequest, documentsCodes);
-    //             }
-
-    //             if (res.statusCode === 0) {
-    //                 alert('Case assigned successfully');
-    //                 if (redirectTo) {
-    //                     navigate(redirectTo);
-    //                 } else {
-    //                     navigate('/admin/dashboard');
-    //                 }
-    //             } else {
-    //                 setError(res.message || 'Assignment failed');
-    //             }
-    //         } catch (err: any) {
-    //             setError(err.message || 'Assignment failed');
-    //         }
-    //     };
 
     const handleSubmitReimbursement = async () => {
         if (!acceptInstruction) {
@@ -660,6 +543,11 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
         }
     };
     console.log("Accept Request:", chooseAllocation);
+
+    if (loading) {
+        return <Typography>Loading...</Typography>;
+    }
+
     return (
         <Box sx={{ p: 3 }}>
             {error && (
@@ -1255,12 +1143,13 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
 
                 {/* Documents Section */}
                 <DocumentUpload
-                    roleName={roleName}
-                    investigationId={cleanInvestigationId}
-                    investigationDocs={investigationDocs}
-                    documentsCodes={documentsCodes}
-                    setDocumentsCodes={setDocumentsCodes}
-                    onDocsUpdate={fetchInvestigationDocs}
+                    // roleName={roleName}
+                    // investigationId={cleanInvestigationId}
+                    // investigationDocs={investigationDocs}
+                    // documentsCodes={documentsCodes}
+                    // setDocumentsCodes={setDocumentsCodes}
+                    // onDocsUpdate={fetchInvestigationDocs}
+                    // documentArray={documentArray}
                 />
 
                 {/* Questionnaire Section */}

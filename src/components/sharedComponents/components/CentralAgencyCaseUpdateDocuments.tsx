@@ -17,6 +17,7 @@ import {
 import { useParams, useSearchParams } from 'react-router-dom';
 import { DocumentsService } from '../../../services/document.service';
 import { caseUpdateService } from '../../../services/caseupdate.service';
+import { apiUrls } from '../../../constants/apiConstants';
 
 interface Document {
   documentID: string;
@@ -157,12 +158,14 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
   };
 
   // Get icon/image source based on file type
-  const getImageSrc = (fileLocation: string, fileType: string): string => {
+  const getImageSrc = (fileLocation: string, fileType: string, doc:any): string => {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
-    const VIEW_DOCUMENT_URL = `${API_BASE_URL}/view-document?file=`;
+    const VIEW_DOCUMENT_URL = `${API_BASE_URL}${apiUrls.viewDocument}`;
+    
+    console.log('Document in getImageSrc:', fileType);
 
     if (fileType === 'image/jpeg' || fileType === 'image/png') {
-      return VIEW_DOCUMENT_URL + fileLocation;
+      return VIEW_DOCUMENT_URL + fileLocation + "&documentId=" + doc.documentID;
     } else if (fileType === 'application/pdf') {
       return '/assets/images/pdf-icon.png';
     } else if (fileType === 'application/x-zip-compressed') {
@@ -350,7 +353,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
                     }}
                   >
                     <img
-                      src={getImageSrc(doc.fileLocation, doc.fileType)}
+                      src={getImageSrc(doc.fileLocation, doc.fileType, doc)}
                       alt={doc.documentTitle}
                       style={{
                         maxWidth: '80px',
@@ -435,7 +438,7 @@ const CentralAgencyCaseUpdateDocuments: React.FC = () => {
                     onClick={() => openDocument(doc.fileLocation, doc.documentID)}
                   >
                     <img
-                      src={getImageSrc(doc.fileLocation, doc.fileType)}
+                      src={getImageSrc(doc.fileLocation, doc.fileType, doc)}
                       alt={doc.documentTitle}
                       style={{
                         maxWidth: '80px',
