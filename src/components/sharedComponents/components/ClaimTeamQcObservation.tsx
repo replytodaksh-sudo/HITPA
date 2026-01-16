@@ -540,7 +540,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
     };
 
     const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file:any = event.target.files?.[0];
+        const file: any = event.target.files?.[0];
         setDocumentTitle(file.name)
         if (file) {
             const validTypes = ['application/pdf', 'image/jpeg', 'image/gif', 'image/tiff'];
@@ -821,7 +821,11 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
             if (response.statusCode === 0) {
                 alert('Case reassigned successfully!');
-                navigate(redirectTo || '/admin/dashboard');
+                if (redirectTo) {
+                    navigate(redirectTo.replace('/investigation', ''));
+                } else {
+                    navigate('/admin/dashboard');
+                }
             } else {
                 alert(response.message || 'Failed to reassign case');
             }
@@ -861,7 +865,11 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
 
             if (response.statusCode === 0) {
                 alert('Case reassigned to Field Officer successfully!');
-                navigate(redirectTo || '/admin/dashboard');
+                if (redirectTo) {
+                    navigate(redirectTo.replace('/investigation', ''));
+                } else {
+                    navigate('/admin/dashboard');
+                }
             }
         } catch (error) {
             console.error('Error reassigning to FO:', error);

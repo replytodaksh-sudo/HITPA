@@ -122,7 +122,7 @@ const DenyForm: React.FC<AcceptDenyProps> = ({
         
         // Navigate to redirect URL or dashboard
         if (redirectTo) {
-          navigate(redirectTo);
+          navigate(redirectTo.replace('/investigation', ''));
         } else {
           navigate('/admin/dashboard');
         }

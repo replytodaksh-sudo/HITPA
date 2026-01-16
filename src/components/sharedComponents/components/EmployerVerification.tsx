@@ -36,7 +36,7 @@ const EmployerVerification: React.FC<EmployerVerificationProps> = ({
 
   const [investigationId, setInvestigationId] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   const acceptAssignId = searchParams.get('acceptAssignId') || '';
   const redirectTo = searchParams.get('redirectTo');
 
@@ -94,7 +94,7 @@ const EmployerVerification: React.FC<EmployerVerificationProps> = ({
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      
+
       const payload = {
         ...formData,
         acceptAssignId: acceptAssignId,
@@ -142,7 +142,7 @@ const EmployerVerification: React.FC<EmployerVerificationProps> = ({
         notificationService.showAlertSuccess(message.finalSubmitDone);
 
         if (redirectTo) {
-          navigate(redirectTo);
+          navigate(redirectTo.replace('/investigation', ''));
         } else {
           navigate('/admin/dashboard');
         }
@@ -294,26 +294,26 @@ const EmployerVerification: React.FC<EmployerVerificationProps> = ({
             {/* Reason - Show if Verification Done is No OR Attendance Record is No */}
             {(formData.employerVerificationDone === 'no' ||
               formData.employerAttendanceRecordCollected === 'no') && (
-              <Grid size={{ xs: 12, md: 6 }}>
-                <FormControl fullWidth>
-                  <FormLabel
-                    sx={{ fontWeight: 600, color: 'text.primary', mb: 1 }}
-                  >
-                    Reason
-                  </FormLabel>
-                  <TextField
-                    multiline
-                    rows={4}
-                    value={formData.employerReason}
-                    onChange={(e) => handleChange('employerReason', e.target.value)}
-                    disabled={!buttonEnable}
-                    InputProps={{
-                      readOnly: !buttonEnable,
-                    }}
-                  />
-                </FormControl>
-              </Grid>
-            )}
+                <Grid size={{ xs: 12, md: 6 }}>
+                  <FormControl fullWidth>
+                    <FormLabel
+                      sx={{ fontWeight: 600, color: 'text.primary', mb: 1 }}
+                    >
+                      Reason
+                    </FormLabel>
+                    <TextField
+                      multiline
+                      rows={4}
+                      value={formData.employerReason}
+                      onChange={(e) => handleChange('employerReason', e.target.value)}
+                      disabled={!buttonEnable}
+                      InputProps={{
+                        readOnly: !buttonEnable,
+                      }}
+                    />
+                  </FormControl>
+                </Grid>
+              )}
 
             {/* Action Buttons */}
             {buttonEnable && (

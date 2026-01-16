@@ -185,7 +185,7 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
         alert('Case submitted successfully!');
         
         if (redirectTo) {
-          navigate(redirectTo);
+          navigate(redirectTo.replace('/investigation', ''));
         } else {
           navigate('/admin/dashboard');
         }

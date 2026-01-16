@@ -190,7 +190,7 @@ const CentralAssignedAgencyCaseUpdate: React.FC<CentralAssignedAgencyCaseUpdateP
         notificationService.showAlertSuccess(message.finalSubmit);
 
         if (redirectTo) {
-          navigate(redirectTo);
+          navigate(redirectTo.replace('/investigation', ''));
         } else {
           navigate('/admin/dashboard');
         }

@@ -100,7 +100,11 @@ const QcPreviewReg: React.FC<QcPreviewProps> = ({
         if (response.statusCode === 0) {
           alert('Final submission successful');
           localStorage.clear();
-          navigate(redirectTo || '/admin/dashboard');
+          if (redirectTo) {
+            navigate(redirectTo.replace('/investigation', ''));
+          } else {
+            navigate('/admin/dashboard');
+          }
         } else if (response.statusCode === 4004) {
           alert(response.message);
         }
@@ -120,7 +124,11 @@ const QcPreviewReg: React.FC<QcPreviewProps> = ({
               acceptAssignId
             );
             if (response.statusCode === 0) {
-              navigate(redirectTo || '/admin/dashboard');
+              if (redirectTo) {
+                navigate(redirectTo.replace('/investigation', ''));
+              } else {
+                navigate('/admin/dashboard');
+              }
               alert('Final submission successful');
               localStorage.clear();
             }
@@ -142,7 +150,11 @@ const QcPreviewReg: React.FC<QcPreviewProps> = ({
           );
           if (response.statusCode === 0) {
             alert('Final submission successful');
-            navigate(redirectTo || '/admin/dashboard');
+            if (redirectTo) {
+              navigate(redirectTo.replace('/investigation', ''));
+            } else {
+              navigate('/admin/dashboard');
+            }
             localStorage.clear();
           }
         }

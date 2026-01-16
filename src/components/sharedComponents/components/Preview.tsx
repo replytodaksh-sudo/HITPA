@@ -26,7 +26,7 @@ interface PreviewProps {
   isInsuredVisit?: boolean;
   buttonVisible?: boolean;
   previewRefresh?: boolean;
-  previuosData?:any
+  previuosData?: any
 }
 
 interface DoctorData {
@@ -44,14 +44,14 @@ interface PreviewData {
   // ===== STATUS & REASON =====
   boolStatusOfInsured: boolean;
   reason: string; // 'plannedadmission', 'notfoundhosp', or regular
-  
+
   // ===== BASIC DETAILS =====
   roomCategory?: string;
   roomRent?: number;
   doa?: string;
   expectedDateOfDischarge?: string;
   diagnosis?: string;
-  
+
   // ===== PLANNED ADMISSION - HOSPITAL VISIT =====
   hospitalVisitDone?: boolean;
   insuredVisitDone?: boolean;
@@ -67,7 +67,7 @@ interface PreviewData {
   treatingDoctorVisitDiscrepancyPED?: boolean;
   treatingDoctorVisitPEDObservations?: string;
   treatingDoctorVisitReason?: string;
-  
+
   // ===== PLANNED ADMISSION - INSURED VISIT =====
   insuredVisitDoneIsPatientAdmitted?: string;
   insuredVisitDoneTreatmentPlanned?: string;
@@ -79,7 +79,7 @@ interface PreviewData {
   kcyDocumentsReason?: string;
   insuredVisitDoneWithdrawalCollected?: string;
   insuredVisitDoneObservations?: string;
-  
+
   // ===== NOT FOUND AT HOSPITAL =====
   patientReferredAnotherCenter?: boolean;
   anotherHospitalName?: string;
@@ -91,7 +91,7 @@ interface PreviewData {
   iPDNotingsFoundClarificationObservations?: string;
   iPDNotingsFoundClarificationJustification?: string;
   reasonForNotPresent?: string;
-  
+
   // ===== IPD REGISTER & COLLECTION =====
   iPDRegisterEntryFound?: string;
   iPDRegisterObservations?: string;
@@ -104,17 +104,17 @@ interface PreviewData {
   isIPDCollectedDiscrepancyPED?: boolean;
   iPDCollectedDiscrepancyPEDObservations?: string;
   ipdCollectedDiscrepancyPED?: boolean;
-  
+
   // ===== LINE OF TREATMENT =====
   lineOfTreatment?: string; // 'medicalmanagement', 'surgicalmanagement', 'rtaaccidental'
-  
+
   // ===== MEDICAL MANAGEMENT =====
   isActiveMedicalManagementLOTGiven?: string;
   medicalManagementJustification?: string;
   medicalManagementIsHospitalization?: string;
   medicalManagementObsevations?: string;
   medicalManagementFindings?: string;
-  
+
   // ===== SURGICAL MANAGEMENT =====
   surgicalManagementProcedureCarriedOut?: string;
   surgicalManagementOperative?: string;
@@ -128,7 +128,7 @@ interface PreviewData {
   surgicalManagementInvoiceVerifiedStickerNumber?: string;
   surgicalManagementInvoiceVerifiedManufacturer?: string;
   surgicalManagementInvoiceVerifiedFinding?: string;
-  
+
   // ===== RTA ACCIDENTAL - MAIN =====
   rtaFIRCopyReceived?: boolean;
   rtaDateOfFIR?: string;
@@ -147,14 +147,14 @@ interface PreviewData {
   rtaAlcoholIntoxicationNoted?: boolean;
   rtaAlcoholFindings?: string;
   rtaLineOfTreatment?: string; // 'medicalmanagement' or 'surgicalmanagement'
-  
+
   // ===== RTA - MEDICAL MANAGEMENT =====
   rtaMedicalIsActive?: string;
   rtaMedicalJustification?: string;
   rtaMedicalIsHospitalization?: string;
   rtaMedicalFindings?: string;
   rtaMedicalObsevations?: string;
-  
+
   // ===== RTA - SURGICAL MANAGEMENT =====
   rtaSurgicalProcedureCarriedOut?: string;
   rtaSurgicalOperative?: string;
@@ -165,14 +165,14 @@ interface PreviewData {
   rtaSurgicalAnaesthesiaReason?: string;
   rtaSurgicalAnyImplantUsed?: boolean;
   rtaSurgicalInvoiceVerified?: string;
-  
+
   // ===== PAST RECORDS / MRD =====
   pastRecordsCheckedMRD?: string;
   pastRecordsCheckedMRDPastTreatment?: boolean;
   pastRecordsCheckedMRDHospitalizationNoted?: string;
   pastRecordsCheckedMRDNOT?: boolean;
   pastRecordsCheckedMRDReason?: string;
-  
+
   // ===== LAB & CHEMIST =====
   labReportVerified?: boolean;
   labReportReason?: string;
@@ -180,7 +180,7 @@ interface PreviewData {
   chemist?: boolean;
   chemistObservations?: string;
   chemistReason?: string;
-  
+
   // ===== INSURED HABITS & KYC =====
   alcoholHistory?: boolean;
   alcoholHistoryQuantity?: string;
@@ -188,11 +188,11 @@ interface PreviewData {
   smokingHistoryQuantity?: string;
   anyOtherHabits?: string;
   kcyDocumentsAnyDiscrepancies?: string;
-  
+
   // ===== HOSPITAL FEEDBACK =====
   hospitalFeedBack?: string;
   hospitalRemarks?: string;
-  
+
   // ===== STATEMENT COLLECTION =====
   statementCollected?: boolean;
   statementCollectedReason?: string;
@@ -203,11 +203,11 @@ interface PreviewData {
   statementCollectedPEDNotedPastDocumentsCollected?: boolean;
   statementCollectedPEDNotedPastDocumentsCollectedPleaseSpecify?: string;
   statementCollectedPEDNotedPastDocumentsCollectedReason?: string;
-  
+
   // ===== OTHER FINDINGS =====
   anyOtherFindings?: string;
   anyOtherObservationsFindings?: string;
-  
+
   // ===== FRAUD TAGGING - CHEMIST =====
   chemistFraud?: boolean | null;
   chemistDetails?: string;
@@ -218,7 +218,7 @@ interface PreviewData {
   chemistPinCode?: string;
   chemistLicenceNumber?: string;
   chemistGSTNo?: string;
-  
+
   // ===== FRAUD TAGGING - LAB =====
   labFraud?: boolean | null;
   labDetails?: string;
@@ -229,20 +229,20 @@ interface PreviewData {
   labPinCode?: string;
   labLicenceNumber?: string;
   labGSTNo?: string;
-  
+
   // ===== FRAUD TAGGING - PATHOLOGIST =====
   pathologist?: boolean | null;
   pathologistName?: string;
   pathologistRegistrationNumber?: string;
   pathologistFeedback?: string;
   pathologistFinding?: string;
-  
+
   // ===== OTHER =====
   insuredVisit?: boolean;
   insuredVisitReason?: string;
   copyOfDischargeCardCollected?: boolean;
   copyOfFinalBillCollected?: boolean;
-  
+
   // ===== DOCTOR TABLE =====
   caseUpdateDoctor?: DoctorData[];
 }
@@ -257,14 +257,14 @@ const Preview: React.FC<PreviewProps> = ({
   const { investigationId } = useParams<{ investigationId: string }>();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  
+
   // ===== STATE VARIABLES =====
   const [payloadData, setPayloadData] = useState<PreviewData | null>(null);
   const [doctorTable, setDoctorTable] = useState<DoctorData[]>([]);
   const [isPresent, setIsPresent] = useState(false);
   const [reasonVal, setReasonVal] = useState('');
   const [loading, setLoading] = useState(true);
-  
+
   const redirectTo = searchParams.get('redirectTo');
 
   // ===== EFFECTS =====
@@ -286,7 +286,7 @@ const Preview: React.FC<PreviewProps> = ({
       setLoading(true);
       const cleanInvId = investigationId?.split(' ')[0] || '';
       const response = await caseUpdateService.caseUpdatePreview(cleanInvId);
-      
+
       if (response.statusCode === 0) {
         setPayloadData(response.payload);
         setDoctorTable(response.payload.caseUpdateDoctor || []);
@@ -308,27 +308,27 @@ const Preview: React.FC<PreviewProps> = ({
   const saveSubmit = async () => {
     try {
       const caseUpdateID = localStorage.getItem('activeCaseID');
-      
+
       if (!caseUpdateID) {
         alert('Case ID not found. Please save your changes first.');
         return;
       }
-      
+
       const cleanInvId = investigationId?.split(' ')[0] || '';
       const response = await caseUpdateService.addCaseUpdateFinal(
         caseUpdateID,
         cleanInvId
       );
-      
+
       if (response.statusCode === 0) {
         // Clear localStorage
         localStorage.removeItem('activeCaseID');
-        
+
         alert('Case submitted successfully to QC');
-        
+
         // Navigate to redirect URL or dashboard
         if (redirectTo) {
-          navigate(redirectTo);
+          navigate(redirectTo.replace('/investigation', ''));
         } else {
           navigate('/admin/dashboard');
         }
@@ -491,7 +491,7 @@ const Preview: React.FC<PreviewProps> = ({
                 <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                   Hospital Visit Details
                 </Typography>
-                
+
                 <InfoRow label="Treatment Planned" value={payloadData.treatmentPlanned} />
                 <InfoRow label="Estimated Bill" value={payloadData.estimatedBill} />
                 <InfoRow label="Hospital Visit Reason" value={payloadData.hospitalVisitDoneReason} />
@@ -503,9 +503,9 @@ const Preview: React.FC<PreviewProps> = ({
                   label="H/O any previous hospitalization"
                   value={payloadData.hospitalVisitDoneHOAnyPreviousHospitalization}
                 />
-                
+
                 <Divider sx={{ my: 2 }} />
-                
+
                 <InfoRow
                   label="PED Noted"
                   value={displayBoolean(payloadData.treatingDoctorVisitPEDNoted)}
@@ -535,7 +535,7 @@ const Preview: React.FC<PreviewProps> = ({
                 <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                   Insured Visit Details
                 </Typography>
-                
+
                 <InfoRow
                   label="Is Patient willingly admitted"
                   value={payloadData.insuredVisitDoneIsPatientAdmitted}
@@ -553,9 +553,9 @@ const Preview: React.FC<PreviewProps> = ({
                   label="Estimated Bill"
                   value={payloadData.insuredVisitDoneEstimatedBill}
                 />
-                
+
                 <Divider sx={{ my: 2 }} />
-                
+
                 <InfoRow
                   label="H/O any previous hospitalization"
                   value={payloadData.insuredVisitDoneHOAnyPreviousHospitalization}
@@ -615,7 +615,7 @@ const Preview: React.FC<PreviewProps> = ({
                     label="IPDs Notings found"
                     value={displayBoolean(payloadData.ipdnotingsFound)}
                   />
-                  
+
                   {payloadData.ipdnotingsFound ? (
                     <InfoRow label="Observations" value={payloadData.iPDNotingsFoundObservations} />
                   ) : (
@@ -651,17 +651,17 @@ const Preview: React.FC<PreviewProps> = ({
                   <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                     IPD Register & Treatment Details
                   </Typography>
-                  
+
                   <InfoRow label="Reason for not present" value={payloadData.reasonForNotPresent} />
                   <InfoRow
                     label="IPD register entry found"
                     value={payloadData.iPDRegisterEntryFound === 'true' ? 'Yes' : 'No'}
                   />
-                  
+
                   {payloadData.iPDRegisterEntryFound === 'false' && (
                     <InfoRow label="Observations" value={payloadData.iPDRegisterObservations} />
                   )}
-                  
+
                   {payloadData.iPDRegisterEntryFound === 'true' && (
                     <>
                       <InfoRow
@@ -676,18 +676,18 @@ const Preview: React.FC<PreviewProps> = ({
                       )}
                     </>
                   )}
-                  
+
                   <Divider sx={{ my: 2 }} />
-                  
+
                   <InfoRow
                     label="IPDs Collected"
                     value={payloadData.ipdCollected === 'true' ? 'Yes' : 'No'}
                   />
-                  
+
                   {payloadData.ipdCollected === 'false' && (
                     <InfoRow label="Reason" value={payloadData.iPDCollectedReason} />
                   )}
-                  
+
                   {payloadData.ipdCollected === 'true' && (
                     <>
                       <InfoRow
@@ -713,20 +713,20 @@ const Preview: React.FC<PreviewProps> = ({
                       )}
                     </>
                   )}
-                  
+
                   <Divider sx={{ my: 2 }} />
-                  
+
                   <InfoRow
                     label="Treating doctor Visit"
                     value={payloadData.treatingDoctorVisit === 'true'
                       ? 'Statement Collected'
                       : 'Statement not Collected'}
                   />
-                  
+
                   {payloadData.treatingDoctorVisit === 'false' && (
                     <InfoRow label="Reason" value={payloadData.treatingDoctorVisitReason} />
                   )}
-                  
+
                   {payloadData.treatingDoctorVisit === 'true' && (
                     <>
                       <InfoRow
@@ -763,7 +763,7 @@ const Preview: React.FC<PreviewProps> = ({
                     label="Line of Treatment"
                     value={getLineOfTreatmentText(payloadData.lineOfTreatment)}
                   />
-                  
+
                   {/* Medical Management */}
                   {payloadData.lineOfTreatment === 'medicalManagement' && (
                     <Box sx={{ mt: 2 }}>
@@ -793,7 +793,7 @@ const Preview: React.FC<PreviewProps> = ({
                       )}
                     </Box>
                   )}
-                  
+
                   {/* Surgical Management */}
                   {payloadData.lineOfTreatment === 'surgicalManagement' && (
                     <Box sx={{ mt: 2 }}>
@@ -848,22 +848,22 @@ const Preview: React.FC<PreviewProps> = ({
                           )}
                           {(payloadData.surgicalManagementInvoiceVerified === 'discrepency' ||
                             payloadData.surgicalManagementInvoiceVerified === 'notVerified') && (
-                            <>
-                              <InfoRow
-                                label="Invoice / Sticker Number"
-                                value={payloadData.surgicalManagementInvoiceVerifiedStickerNumber}
-                              />
-                              <InfoRow
-                                label="Manufacturer"
-                                value={payloadData.surgicalManagementInvoiceVerifiedFinding}
-                              />
-                            </>
-                          )}
+                              <>
+                                <InfoRow
+                                  label="Invoice / Sticker Number"
+                                  value={payloadData.surgicalManagementInvoiceVerifiedStickerNumber}
+                                />
+                                <InfoRow
+                                  label="Manufacturer"
+                                  value={payloadData.surgicalManagementInvoiceVerifiedFinding}
+                                />
+                              </>
+                            )}
                         </>
                       )}
                     </Box>
                   )}
-                  
+
                   {/* RTA Accidental Case - Preview in Part 4, Full details in Part 6 */}
                   {payloadData.lineOfTreatment === 'rtaAccidentalCase' && (
                     <Box sx={{ mt: 2 }}>
@@ -885,7 +885,7 @@ const Preview: React.FC<PreviewProps> = ({
                   <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                     Past Records & Verification
                   </Typography>
-                  
+
                   <InfoRow
                     label="Past Records checked with MRD"
                     value={payloadData.pastRecordsCheckedMRD === 'true' ? 'Yes' : 'No'}
@@ -903,9 +903,9 @@ const Preview: React.FC<PreviewProps> = ({
                   {payloadData.pastRecordsCheckedMRDNOT === false && (
                     <InfoRow label="Not Allowed" value="Not Allowed" />
                   )}
-                  
+
                   <Divider sx={{ my: 2 }} />
-                  
+
                   <InfoRow label="Chemist Verified" value={displayBoolean(payloadData.chemist)} />
                   {payloadData.chemist && (
                     <InfoRow label="Observations" value={payloadData.chemistObservations} />
@@ -913,11 +913,11 @@ const Preview: React.FC<PreviewProps> = ({
                   {!payloadData.chemist && (
                     <InfoRow label="Reason" value={payloadData.chemistReason} />
                   )}
-                  
+
                   <InfoRow label="Any Other findings" value={payloadData.anyOtherFindings} />
-                  
+
                   <Divider sx={{ my: 2 }} />
-                  
+
                   <InfoRow
                     label="Statement collected"
                     value={displayBoolean(payloadData.statementCollected)}
@@ -972,7 +972,7 @@ const Preview: React.FC<PreviewProps> = ({
                   <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                     Lab & Additional Details
                   </Typography>
-                  
+
                   <InfoRow label="Lab Report" value={displayBoolean(payloadData.labReportVerified)} />
                   {!payloadData.labReportVerified && (
                     <InfoRow label="Reason" value={payloadData.labReportReason} />
@@ -980,9 +980,9 @@ const Preview: React.FC<PreviewProps> = ({
                   {payloadData.labReportVerified && (
                     <InfoRow label="Observations" value={payloadData.labReportObservations} />
                   )}
-                  
+
                   <Divider sx={{ my: 2 }} />
-                  
+
                   <InfoRow
                     label="Copy of Discharge Card Collected"
                     value={displayBoolean(payloadData.copyOfDischargeCardCollected)}
@@ -995,9 +995,9 @@ const Preview: React.FC<PreviewProps> = ({
                   {!payloadData.insuredVisit && (
                     <InfoRow label="Observations" value={payloadData.insuredVisitReason} />
                   )}
-                  
+
                   <Divider sx={{ my: 2 }} />
-                  
+
                   <InfoRow label="Alcohol History" value={displayBoolean(payloadData.alcoholHistory)} />
                   {payloadData.alcoholHistory && (
                     <InfoRow label="Quantity" value={payloadData.alcoholHistoryQuantity} />
@@ -1007,9 +1007,9 @@ const Preview: React.FC<PreviewProps> = ({
                     <InfoRow label="Quantity" value={payloadData.smokingHistoryQuantity} />
                   )}
                   <InfoRow label="Any Other Habits" value={payloadData.anyOtherHabits} />
-                  
+
                   <Divider sx={{ my: 2 }} />
-                  
+
                   <InfoRow
                     label="KYC Documents"
                     value={payloadData.kcyDocument ? 'Collected' : 'Not Collected'}
@@ -1081,7 +1081,7 @@ const Preview: React.FC<PreviewProps> = ({
                 <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                   IPD Register
                 </Typography>
-                
+
                 <InfoRow label="IPD register entry found" value={payloadData.iPDRegisterEntryFound} />
                 <InfoRow
                   label="Discripancy Noted"
@@ -1100,7 +1100,7 @@ const Preview: React.FC<PreviewProps> = ({
                 <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                   IPDs Collected
                 </Typography>
-                
+
                 <InfoRow label="IPDs Collected" value={payloadData.ipdCollected} />
                 <InfoRow
                   label="PED Noted"
@@ -1127,7 +1127,7 @@ const Preview: React.FC<PreviewProps> = ({
                 <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                   Treating Doctor Visit
                 </Typography>
-                
+
                 <InfoRow
                   label="Treating doctor Visit"
                   value={getTreatingDoctorVisitText(payloadData.treatingDoctorVisit)}
@@ -1154,7 +1154,7 @@ const Preview: React.FC<PreviewProps> = ({
                 <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                   Past Records MRD
                 </Typography>
-                
+
                 <InfoRow
                   label="Past Records checked with MRD?"
                   value={payloadData.pastRecordsCheckedMRD}
@@ -1182,7 +1182,7 @@ const Preview: React.FC<PreviewProps> = ({
               <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                 Lab Report
               </Typography>
-              
+
               <InfoRow label="Lab Report" value={displayBoolean(payloadData.labReportVerified)} />
               {!payloadData.labReportVerified && (
                 <InfoRow label="Reason" value={payloadData.labReportReason} />
@@ -1199,7 +1199,7 @@ const Preview: React.FC<PreviewProps> = ({
               <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                 Chemist
               </Typography>
-              
+
               <InfoRow label="Chemist" value={displayBoolean(payloadData.chemist)} />
               {payloadData.chemist && (
                 <InfoRow label="Observations" value={payloadData.chemistObservations} />
@@ -1221,7 +1221,7 @@ const Preview: React.FC<PreviewProps> = ({
               <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                 INSURED VISIT
               </Typography>
-              
+
               <InfoRow
                 label="KYC Documents"
                 value={payloadData.kcyDocument ? 'Collected' : 'Not Collected'}
@@ -1232,9 +1232,9 @@ const Preview: React.FC<PreviewProps> = ({
               {!payloadData.kcyDocument && (
                 <InfoRow label="Reason" value={payloadData.kcyDocumentsReason} />
               )}
-              
+
               <Divider sx={{ my: 2 }} />
-              
+
               <Typography variant="caption" fontWeight={600} display="block" sx={{ mb: 1 }}>
                 Insured Habits
               </Typography>
@@ -1252,7 +1252,7 @@ const Preview: React.FC<PreviewProps> = ({
               <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                 Hospital Rating
               </Typography>
-              
+
               <InfoRow label="Hospital Feedback" value={payloadData.hospitalFeedBack} />
               <InfoRow label="Hospital Remarks" value={payloadData.hospitalRemarks} />
             </Paper>
@@ -1273,7 +1273,7 @@ const Preview: React.FC<PreviewProps> = ({
               <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                 Line of Treatment
               </Typography>
-              
+
               <InfoRow
                 label="Line of Treatment"
                 value={getLineOfTreatmentText(payloadData.lineOfTreatment)}
@@ -1321,9 +1321,9 @@ const Preview: React.FC<PreviewProps> = ({
                     label="Operative Reason"
                     value={payloadData.surgicalManagementOperativeReason}
                   />
-                  
+
                   <Divider sx={{ my: 1 }} />
-                  
+
                   <InfoRow
                     label="Anaesthesia Notes"
                     value={payloadData.surgicalManagementAnaesthesia}
@@ -1336,9 +1336,9 @@ const Preview: React.FC<PreviewProps> = ({
                     label="Anaesthesia Findings"
                     value={payloadData.surgicalManagementAnaesthesiaFindings}
                   />
-                  
+
                   <Divider sx={{ my: 1 }} />
-                  
+
                   <InfoRow
                     label="Any Implant Used"
                     value={displayBoolean(payloadData.surgicalManagementAnyImplantUsed)}
@@ -1368,7 +1368,7 @@ const Preview: React.FC<PreviewProps> = ({
                   <Typography variant="caption" fontWeight={600} display="block" sx={{ mb: 1 }}>
                     RTA - FIR Details
                   </Typography>
-                  
+
                   <InfoRow
                     label="FIR Copy received"
                     value={displayBoolean(payloadData.rtaFIRCopyReceived)}
@@ -1385,13 +1385,13 @@ const Preview: React.FC<PreviewProps> = ({
                     label="FIR Verification Reason"
                     value={payloadData.rtaFIRVerificationReason}
                   />
-                  
+
                   <Divider sx={{ my: 1 }} />
-                  
+
                   <Typography variant="caption" fontWeight={600} display="block" sx={{ mb: 1 }}>
                     RTA - MLC Details
                   </Typography>
-                  
+
                   <InfoRow
                     label="MLC Copy received"
                     value={displayBoolean(payloadData.rtaMLCCopyreceived)}
@@ -1407,9 +1407,9 @@ const Preview: React.FC<PreviewProps> = ({
                     label="MLC Verification Reason"
                     value={payloadData.rtaMLCVerificationReason}
                   />
-                  
+
                   <Divider sx={{ my: 1 }} />
-                  
+
                   <InfoRow
                     label="Alcohol / drug intoxication Noted"
                     value={displayBoolean(payloadData.rtaAlcoholIntoxicationNoted)}
@@ -1426,7 +1426,7 @@ const Preview: React.FC<PreviewProps> = ({
               <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2 }}>
                 Statement Collection
               </Typography>
-              
+
               <InfoRow
                 label="Statement collected"
                 value={displayBoolean(payloadData.statementCollected)}
@@ -1463,7 +1463,7 @@ const Preview: React.FC<PreviewProps> = ({
                   <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 1 }}>
                     RTA Line of Treatment
                   </Typography>
-                  
+
                   <InfoRow
                     label="RTA Line of Treatment"
                     value={getLineOfTreatmentText(payloadData.rtaLineOfTreatment)}
@@ -1577,9 +1577,9 @@ const Preview: React.FC<PreviewProps> = ({
             {payloadData.chemistFraud === false && (
               <InfoRow label="Chemist Details" value={payloadData.chemistDetails} />
             )}
-            
+
             <Divider sx={{ my: 1 }} />
-            
+
             <InfoRow
               label="Is Lab to be tagged as Fraud"
               value={
@@ -1609,7 +1609,7 @@ const Preview: React.FC<PreviewProps> = ({
                 <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2, color: 'error.main' }}>
                   Chemist Fraud Details
                 </Typography>
-                
+
                 <InfoRow label="Chemist Name" value={payloadData.chemistName} />
                 <InfoRow label="Address" value={payloadData.chemistAddress} />
                 <InfoRow label="State" value={payloadData.chemistStateName} />
@@ -1628,7 +1628,7 @@ const Preview: React.FC<PreviewProps> = ({
                 <Typography variant="subtitle2" fontWeight={600} sx={{ mb: 2, color: 'error.main' }}>
                   Lab Fraud Details
                 </Typography>
-                
+
                 <InfoRow label="Lab Name" value={payloadData.labName} />
                 <InfoRow label="Address" value={payloadData.labAddress} />
                 <InfoRow label="State" value={payloadData.labStateName} />
@@ -1636,13 +1636,13 @@ const Preview: React.FC<PreviewProps> = ({
                 <InfoRow label="Pin" value={payloadData.labPinCode} />
                 <InfoRow label="License" value={payloadData.labLicenceNumber} />
                 <InfoRow label="GST" value={payloadData.labGSTNo} />
-                
+
                 <Divider sx={{ my: 2 }} />
-                
+
                 <Typography variant="caption" fontWeight={600} display="block" sx={{ mb: 1 }}>
                   Pathologist Details
                 </Typography>
-                
+
                 <InfoRow
                   label="Is Pathologist Attached?"
                   value={
@@ -1673,7 +1673,7 @@ const Preview: React.FC<PreviewProps> = ({
           <Typography variant="h6" gutterBottom sx={{ mb: 2 }}>
             Treating Doctor Details
           </Typography>
-          
+
           <TableContainer component={Paper}>
             <Table>
               <TableHead>

@@ -96,7 +96,7 @@ const CentralDeniedRegionalAcceptDeny: React.FC<CentralDeniedRegionalAcceptDenyP
         
         console.log('redirectTo', redirectTo);
         if (redirectTo) {
-          navigate(redirectTo);
+          navigate(redirectTo.replace('/investigation', ''));
         } else {
           navigate('/admin/dashboard');
         }

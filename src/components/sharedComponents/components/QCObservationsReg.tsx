@@ -573,7 +573,7 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
                 acceptInstruction,
                 prevInvestigatorReport,
                 claimType,
-                
+
             };
 
             // ============================================
@@ -703,7 +703,7 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
                     qcObservations === 'Reassign'
                 ) {
                     if (redirectTo) {
-                        navigate(redirectTo);
+                        navigate(redirectTo.replace('/investigation', ''));
                     } else {
                         navigate('/admin/dashboard');
                     }
@@ -1811,7 +1811,7 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
 
 
                 {qcObservations === 'Reassign' && previewValues?.investigationType !== 'Part verification' && (
-                    <AcceptAgencies reassign={true}/>
+                    <AcceptAgencies reassign={true} />
                     // <Box sx={{ mb: 3 }}>
                     //     <Paper sx={{ p: 3 }}>
                     //         <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
