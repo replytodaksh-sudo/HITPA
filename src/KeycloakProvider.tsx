@@ -13,7 +13,7 @@ const KeycloakProvider: React.FC<KeycloakProviderProps> = ({ children }) => {
   // Keycloak init options
   const initOptions = {
     onLoad: "login-required", // Redirects to login if not authenticated
-    redirectUri: window.location.origin + "/investigation/admin/dashboard",
+    // redirectUri: window.location.origin + "/investigation/admin/dashboard",
     // redirectUri: window.location.href,
     checkLoginIframe: false, // Disable iframe check for better performance
     pkceMethod: "S256", // Use PKCE for security

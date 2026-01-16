@@ -400,6 +400,54 @@ const AppRoutes: React.FC = () => {
 
         {/* Protected Routes - QC */}
         <Route
+          path="qcRegPendingFromCentral"
+          element={
+            <ProtectedRoute>
+              <RegQCPendingCentral />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="qcRegQCPending"
+          element={
+            <ProtectedRoute>
+              <RegQcPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="qcRegCentralQuery"
+          element={
+            <ProtectedRoute>
+              <RegCentralQuery />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="agencyQCPending"
           element={
             <ProtectedRoute>
@@ -423,6 +471,23 @@ const AppRoutes: React.FC = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="centralQCPending"
+          element={
+            <ProtectedRoute>
+              <CentralQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="queriesByClaimsTeam"
+          element={
+            <ProtectedRoute>
+              <QueriesByClaimsTeam />
+            </ProtectedRoute>
+          }
+        />
+
         {/* Protected Routes - QC */}
         <Route
           path="qcRegPendingFromCentral"
@@ -445,6 +510,54 @@ const AppRoutes: React.FC = () => {
           element={
             <ProtectedRoute>
               <RegCentralQuery />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="agencyQCPending"
+          element={
+            <ProtectedRoute>
+              <AgencyQCPending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="CentralQueryResponsePending"
+          element={
+            <ProtectedRoute>
+              <CentralQueryResponsePending />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="centralQueryResponse"
+          element={
+            <ProtectedRoute>
+              <CentralQueryResponse />
             </ProtectedRoute>
           }
         />
