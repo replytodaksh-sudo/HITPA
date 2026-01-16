@@ -348,7 +348,7 @@ const QCObservations: React.FC<QCObservationsProps> = ({
                     { label: 'Select', value: '' },
                     { label: 'Accept Report', value: 'Accept Report' },
                     { label: 'Rework', value: 'Rework' },
-                    { label: 'Reassign', value: 'Reassign' },
+                    // { label: 'Reassign', value: 'Reassign' },
                     { label: 'Response to Central QC Query', value: 'Response to Central QC Query' },
                 ]);
             } else if (
@@ -358,7 +358,7 @@ const QCObservations: React.FC<QCObservationsProps> = ({
                 setQcObservationOptions([
                     { label: 'Select', value: '' },
                     { label: 'Accept Report', value: 'Accept Report' },
-                    { label: 'Reassign', value: 'Reassign' },
+                    // { label: 'Reassign', value: 'Reassign' },
                     { label: 'Response to Central QC Query', value: 'Response to Central QC Query' },
                 ]);
             } else {
@@ -367,7 +367,7 @@ const QCObservations: React.FC<QCObservationsProps> = ({
                     { label: 'Select', value: '' },
                     { label: 'Accept Report', value: 'Accept Report' },
                     { label: 'Rework', value: 'Rework' },
-                    { label: 'Reassign', value: 'Reassign' },
+                    // { label: 'Reassign', value: 'Reassign' },
                     { label: 'Response to Central QC Query', value: 'Response to Central QC Query' },
                 ]);
             }

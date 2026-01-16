@@ -161,7 +161,7 @@ const ClaimTeamQcObservation: React.FC<ClaimTeamQcObservationProps> = ({
         { label: "Select", value: "" },
         { label: "Respond to Claims Team", value: "Respond to Claims Team" },
         { label: "Rework", value: "Rework" },
-        { label: "Reassign", value: "Reassign" },
+        // { label: "Reassign", value: "Reassign" },
         { label: "Response to Central QC Query", value: "Response to Central QC Query" }
     ];
 

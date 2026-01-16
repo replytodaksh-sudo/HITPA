@@ -346,7 +346,7 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
                     { label: 'Select', value: '' },
                     { label: 'Accept Report', value: 'Accept Report' },
                     { label: 'Rework', value: 'Rework' },
-                    { label: 'Reassign', value: 'Reassign' },
+                    // { label: 'Reassign', value: 'Reassign' },
                     { label: 'Response to Central QC Query', value: 'Response to Central QC Query' },
                 ]);
             } else if (
@@ -356,7 +356,7 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
                 setQcObservationOptions([
                     { label: 'Select', value: '' },
                     { label: 'Accept Report', value: 'Accept Report' },
-                    { label: 'Reassign', value: 'Reassign' },
+                    // { label: 'Reassign', value: 'Reassign' },
                     { label: 'Response to Central QC Query', value: 'Response to Central QC Query' },
                 ]);
             } else {
@@ -365,7 +365,7 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
                     { label: 'Select', value: '' },
                     { label: 'Accept Report', value: 'Accept Report' },
                     { label: 'Rework', value: 'Rework' },
-                    { label: 'Reassign', value: 'Reassign' },
+                    // { label: 'Reassign', value: 'Reassign' },
                     { label: 'Response to Central QC Query', value: 'Response to Central QC Query' },
                 ]);
             }
@@ -573,6 +573,7 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
                 acceptInstruction,
                 prevInvestigatorReport,
                 claimType,
+                
             };
 
             // ============================================
@@ -586,12 +587,6 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
                     qcOb.queriesRemarks = payableRemarks;
                 } else if (finalDecision === 'Repudiate') {
                     qcOb.repudiateFraudulentRemarks = repadiateRemarks;
-
-
-                    console.log('groundOfRejection', groundOfRejection);
-                    console.log('groundOfRejectionFraud', groundOfRejectionFraud);
-                    console.log('groundOfRejectionExclusion', groundOfRejectionExclusion);
-                    console.log('groundOfRejectionMisrepresentation', groundOfRejectionMisrepresentation);
 
 
                     // FIX: Send ground rejections in correct structure
