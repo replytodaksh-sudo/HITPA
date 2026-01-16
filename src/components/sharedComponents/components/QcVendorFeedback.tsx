@@ -42,6 +42,7 @@ interface QcVendorFeedbackProps {
   previewValues2?: any;
   buttonEnable?: boolean;
   onChangeTab?: (value: boolean) => void;
+  claimSubmitted?: boolean;
 }
 
 const QcVendorFeedback: React.FC<QcVendorFeedbackProps> = ({
@@ -49,6 +50,7 @@ const QcVendorFeedback: React.FC<QcVendorFeedbackProps> = ({
   previewValues2 = null,
   buttonEnable = false,
   onChangeTab,
+  claimSubmitted
 }) => {
   const { investigationId } = useParams<{ investigationId: string }>();
   const [searchParams] = useSearchParams();
@@ -90,8 +92,15 @@ const QcVendorFeedback: React.FC<QcVendorFeedbackProps> = ({
   const [qinvestFeedbackReg, setQinvestFeedbackReg] = useState('');
   const [fieldFeedbackReg, setFieldFeedbackReg] = useState('');
   const [overallFeedbackReg, setOverallFeedbackReg] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  const isDisabled = editAble !== null && editAble === 'Non-Editable';
+  // const isDisabled = editAble !== null && editAble === 'Non-Editable';
+
+  useEffect(() => {
+    if (editAble) {
+      setIsDisabled(editAble !== null && editAble === 'Non-Editable');
+    }
+  }, [editAble]);
 
   // Initialize
   useEffect(() => {
@@ -106,6 +115,12 @@ const QcVendorFeedback: React.FC<QcVendorFeedbackProps> = ({
       setEditAble(null);
     } else {
       setEditAble(qcNonEdit);
+    }
+
+    if (claimSubmitted) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
     }
 
     if (previewValues) {
@@ -160,7 +175,7 @@ const QcVendorFeedback: React.FC<QcVendorFeedbackProps> = ({
     };
     setVendorFeedbackArr(updatedVendors);
   };
-  
+
 
   // Validation for reimbursement split case allocation
   const validateReimbursementSubmission = (): boolean => {

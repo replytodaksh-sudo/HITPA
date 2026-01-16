@@ -67,6 +67,7 @@ interface QCObservationsProps {
     previewValues?: any;
     buttonEnable?: boolean;
     onChangeTab?: (value: boolean) => void;
+    claimSubmitted?: boolean;
 }
 
 interface QCObservation {
@@ -113,6 +114,7 @@ const QCObservations: React.FC<QCObservationsProps> = ({
     previewValues: propPreviewValues,
     buttonEnable = true,
     onChangeTab,
+    claimSubmitted
 }) => {
     const { investigationId: paramInvestigationId } = useParams<{ investigationId: string }>();
     const [searchParams] = useSearchParams();
@@ -1006,7 +1008,7 @@ const QCObservations: React.FC<QCObservationsProps> = ({
     };
 
 
-    const isDisabled = editAble === 'Non-Editable';
+    const isDisabled = editAble === 'Non-Editable' || claimSubmitted;
 
     // Fetch investigation documents
     const fetchInvestigationDocs = async () => {
@@ -2031,7 +2033,7 @@ const QCObservations: React.FC<QCObservationsProps> = ({
                     </FormControl>
                 )}
 
-                {roleName !== 'Super Admin' && !editAble && buttonEnable && qcObservations !== 'Reassign' && (
+                {!claimSubmitted && roleName !== 'Super Admin' && !editAble && buttonEnable && qcObservations !== 'Reassign' && (
                     <Button
                         variant="contained"
                         onClick={handleSubmit}

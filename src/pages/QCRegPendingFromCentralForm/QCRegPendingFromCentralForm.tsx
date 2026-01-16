@@ -38,6 +38,7 @@ import QCUpdateCentral from '../../components/sharedComponents/components/QCUpda
 const QCPendingFromCentralForms: React.FC = () => {
     const { investigationId } = useParams<{ investigationId: string }>();
     const [searchParams] = useSearchParams();
+    const claimSubmitted = searchParams.get('claimSubmitted') === 'true';
 
     // State
     const [claimsType, setClaimsType] = useState('');
@@ -363,6 +364,7 @@ const QCPendingFromCentralForms: React.FC = () => {
                                 <QCUpdateCentral
                                     dataRole={regDataRole}
                                     buttonEnable={buttonEnable}
+                                    claimSubmitted={claimSubmitted}
                                 />
                             </AccordionDetails>
                         </Accordion>

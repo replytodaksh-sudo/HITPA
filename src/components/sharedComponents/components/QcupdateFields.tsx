@@ -17,12 +17,14 @@ interface QcupdateFieldsProps {
     previewValues?: any;
     buttonEnable?: boolean;
     onChangeTab?: (value: boolean) => void;
+    claimSubmitted?: boolean;
 }
 
 const QcupdateFields: React.FC<QcupdateFieldsProps> = ({
     previewValues = null,
     buttonEnable = false,
     onChangeTab,
+    claimSubmitted
 }) => {
     const { investigationId } = useParams<{ investigationId: string }>();
     const [searchParams] = useSearchParams();
@@ -64,8 +66,17 @@ const QcupdateFields: React.FC<QcupdateFieldsProps> = ({
 
     // Other state
     const [claimsType, setClaimsType] = useState('');
-    const [editAble, setEditAble] = useState<string | null>(null);
+    const [editAble, setEditAble] = useState<string | null | boolean>(null);
     const [roleName, setRoleName] = useState('');
+    const [isDisabled, setIsDisabled] = useState(false);
+
+    useEffect(() => {
+        if (editAble) {
+            setIsDisabled(editAble !== null && editAble === 'Non-Editable');
+        }
+    }, [editAble]);
+
+    // const isDisabled = editAble !== null && editAble === 'Non-Editable';
 
     // Initialize
     useEffect(() => {
@@ -80,6 +91,11 @@ const QcupdateFields: React.FC<QcupdateFieldsProps> = ({
             setEditAble(null);
         } else {
             setEditAble(qcNonEdit);
+        }
+        if (claimSubmitted) {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
         }
 
         if (previewValues) {
@@ -208,8 +224,6 @@ const QcupdateFields: React.FC<QcupdateFieldsProps> = ({
         }
         setAgeCrossCheckDetails(values.ageCrossCheckDetails || '');
     };
-
-    const isDisabled = editAble !== null && editAble === 'Non-Editable';
 
     const onqcSubmit = async () => {
         const cleanInvId = investigationId?.split(' ')[0] || '';

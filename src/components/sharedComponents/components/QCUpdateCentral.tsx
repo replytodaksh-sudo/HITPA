@@ -28,6 +28,7 @@ interface QCUpdateCentralProps {
   investigationId?: string;
   buttonEnable?: boolean;
   dataRole?: string;
+  claimSubmitted?: boolean;
 }
 
 interface PreviewValues {
@@ -43,6 +44,7 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
   investigationId: propInvestigationId,
   buttonEnable = true,
   dataRole: propDataRole,
+  claimSubmitted
 }) => {
   const { investigationId: paramInvestigationId } = useParams<{ investigationId: string }>();
   const [searchParams] = useSearchParams();
@@ -213,7 +215,7 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
         <Box sx={{ pt: 3 }}>
           {/* Tab 0: QC Update Fields */}
           {activeTab === 0 && (
-            <QcupdateFields buttonEnable={buttonEnable} previewValues={previewValues} onChangeTab={handleNextTab} />
+            <QcupdateFields buttonEnable={buttonEnable} previewValues={previewValues} onChangeTab={handleNextTab} claimSubmitted={claimSubmitted} />
             // <CentralQCUpdateFields
             //   investigationId={investigationId}
             //   previewValues={previewValues}
@@ -230,6 +232,7 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
               previewValues={previewValues}
               //   buttonEnable={buttonEnable}
               onChangeTab={handleNextTab}
+              claimSubmitted={claimSubmitted}
             />
           )}
 
@@ -246,6 +249,7 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
               previewValues={previewValues}
               buttonEnable={buttonEnable}
               onChangeTab={handleNextTab}
+              claimSubmitted={claimSubmitted}
             />
           )}
 
