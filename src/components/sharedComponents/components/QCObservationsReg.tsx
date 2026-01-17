@@ -397,8 +397,8 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
                 (o: any) => o.groundRejectionCode
             );
             setGroundOfRejection(codes);
-            console.log("proppppp", propPreviewValues.groundRejectionQCDTO.groundRejectionQCViewDTOs, codes)
         }
+
         if (propPreviewValues.groundRejectionFraudulentQCDTO?.groundRejectionFraudulentQCViewDTOs) {
             const codes = propPreviewValues.groundRejectionFraudulentQCDTO.groundRejectionFraudulentQCViewDTOs.map(
                 (o: any) => o.groundRejectionFraudulentCode
@@ -550,7 +550,7 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
     const handleSubmit = async () => {
         try {
             // Build QC observation object with CORRECT structure
-            const qcOb: QCObservation = {
+            const qcOb: any = {
                 qcObservations,
                 qcUpdateID: localStorage.getItem('qcUpdateID') || '',
                 finalDecision: finalDecision || '',
@@ -573,8 +573,17 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
                 acceptInstruction,
                 prevInvestigatorReport,
                 claimType,
-
+                repudiateGroundOfRejection: '',
+                groundRejectionQCDTO: {},
+                groundRejectionFraudulentQCDTO: { "groundRejectionFraudulentCode": [] },
+                groundRejectionExclusionQCDTO: { "groundRejectionExclusionCode": [] },
+                groundRejectionMisrepresentQCDTO: { "groundRejectionMisrepresentCode": [] },
             };
+
+            // groundRejectionMisrepresentQCDTO
+            // groundRejectionExclusionQCDTO
+            // groundRejectionFraudulentQCDTO
+            // groundRejectionQCDTO
 
             // ============================================
             // PART 1: Handle Different QC Observation Types
@@ -592,6 +601,7 @@ const QCObservationsReg: React.FC<QCObservationsProps> = ({
                 // FIX: Send ground rejections in correct structure
                 if (groundOfRejection) {
                     qcOb.groundRejectionQCDTO = {
+                        // groundRejectionCode: [groundOfRejection],
                         groundRejectionCode: Array.isArray(groundOfRejection) ? groundOfRejection : [groundOfRejection],
                     };
                 }
