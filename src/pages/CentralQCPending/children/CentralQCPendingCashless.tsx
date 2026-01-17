@@ -429,7 +429,6 @@ const CentralQCPendingCashless: React.FC = () => {
                     paginationModel={paginationModel}
                     onPaginationModelChange={setPaginationModel}
                     pageSizeOptions={[25, 50, 100]}
-                    checkboxSelection
                     getRowId={(row) => row?.investigationID}
                     slots={{
                         toolbar: GridToolbar,

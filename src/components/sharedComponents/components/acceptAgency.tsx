@@ -24,6 +24,7 @@ import { AssignService } from '../../../services/assign.service';
 import AgencySelection from './AgencySelection';
 import DocumentUpload from './DocumentUpload';
 import QuestionnaireSection from './QuestionnaireSection';
+import CentralRegionalDocuments from './CentralRegionalDocuments';
 
 interface AcceptAgenciesProps {
   investigationType?: string;
@@ -91,7 +92,7 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
 
     fetchDocuments();
   }, []);
-  
+
   const fetchAgencies = async () => {
     try {
       const response: any = await agencyService.fetchAllAgency();
@@ -297,13 +298,18 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
       />
 
       {/* Document Upload Section */}
-      <DocumentUpload
-        // roleName={roleName}
-        // investigationId={investigationId || ''}
-        // investigationDocs={investigationDocs}
-        // documentsCodes={documentsCodes}
-        // setDocumentsCodes={setDocumentsCodes}
-        // onDocsUpdate={fetchDocuments}
+      {/* <DocumentUpload
+        roleName={roleName}
+        investigationId={investigationId || ''}
+        investigationDocs={investigationDocs}
+        documentsCodes={documentsCodes}
+        setDocumentsCodes={setDocumentsCodes}
+        onDocsUpdate={fetchDocuments}
+      /> */}
+      <CentralRegionalDocuments
+        documentsCodes={documentsCodes}
+        setDocumentsCodes={setDocumentsCodes}
+        onDocsUpdate={fetchDocuments}
       />
 
       {/* Questionnaire Section */}

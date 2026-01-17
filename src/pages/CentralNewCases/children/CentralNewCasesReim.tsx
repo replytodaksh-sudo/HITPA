@@ -451,7 +451,7 @@ const CentralNewCasesReim: React.FC = () => {
           columns={columns}
           pagination
           pageSizeOptions={[25, 50, 100]}
-          // checkboxSelection
+          // 
           rowCount={totalCount}
           // disableSelectionOnClick
           getRowId={(row) => row?.investigationID}

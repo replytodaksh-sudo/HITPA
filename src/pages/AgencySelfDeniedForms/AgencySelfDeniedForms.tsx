@@ -157,7 +157,7 @@ const AgencySelfDeniedForms: React.FC = () => {
 
                 <CardContent sx={{ p: 3 }}>
                     {/* Accept/Deny Button at Top */}
-                    <Box sx={{ mb: 3, display: 'flex', justifyContent: 'flex-end' }}>
+                    {/* <Box sx={{ mb: 3, display: 'flex', justifyContent: 'flex-end' }}>
                         <Button
                             variant="contained"
                             startIcon={<CheckCircleIcon />}
@@ -179,7 +179,7 @@ const AgencySelfDeniedForms: React.FC = () => {
                         >
                             Accept / Deny
                         </Button>
-                    </Box>
+                    </Box> */}
 
                     {/* Accordion 1: Pre-Auth Details / Claim Details */}
                     <Accordion
@@ -285,6 +285,36 @@ const AgencySelfDeniedForms: React.FC = () => {
                     <Accordion
                         expanded={expanded === 'panel4'}
                         onChange={handleAccordionChange('panel4')}
+                        sx={{
+                            mb: 2,
+                            borderRadius: 2,
+                            '&:before': { display: 'none' },
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                        }}
+                    >
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            sx={{
+                                bgcolor: '#E0F2FE',
+                                borderRadius: 2,
+                                '&:hover': { bgcolor: '#BAE6FD' },
+                                minHeight: 56,
+                            }}
+                        >
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                                <CloseIcon sx={{ color: '#0284C7' }} />
+                                <Typography sx={{ fontWeight: 600, color: '#0F172A' }}>
+                                    Denial Reason
+                                </Typography>
+                            </Box>
+                        </AccordionSummary>
+                        <AccordionDetails sx={{ p: 3, bgcolor: 'white' }}>
+                            <AgencySelfDenied />
+                        </AccordionDetails>
+                    </Accordion>
+                    <Accordion
+                        expanded={expanded === 'panel5'}
+                        onChange={handleAccordionChange('panel5')}
                         sx={{
                             mb: 2,
                             borderRadius: 2,

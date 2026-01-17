@@ -40,7 +40,7 @@ import PreAuth from '../../components/sharedComponents/components/PreAuth';
 import ClaimDetailsReim from '../../components/sharedComponents/components/ClaimDetailsReim';
 import HospitalInfo from '../../components/sharedComponents/components/HospitalInfo';
 import CaseInfoComponent from '../../components/sharedComponents/components/CaseInfoComponent';
-import CentralAgencyCaseUpdateDocuments from '../../components/sharedComponents/components/CentralAgencyCaseUpdateDocuments';
+import CentralRegionalDocuments from '../../components/sharedComponents/components/CentralRegionalDocuments';
 import ReimRegionalAgencyQC from '../../components/sharedComponents/components/ReimRegionalAgencyQC';
 import QcPreview from '../../components/sharedComponents/components/QcPreview';
 import QCUpdateCentral from '../../components/sharedComponents/components/QCUpdateCentral';
@@ -262,7 +262,7 @@ const CentralQCForm: React.FC = () => {
             const downloadUrl = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = downloadUrl;
-            a.download = "Cashless_Report.pdf"; // 👈 filename
+            a.download = `Reim_Report_${investigationId}.pdf`; // 👈 filename
             document.body.appendChild(a);
             a.click();
             a.remove();
@@ -295,7 +295,7 @@ const CentralQCForm: React.FC = () => {
             const downloadUrl = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = downloadUrl;
-            a.download = "Cashless_Report.pdf"; // 👈 filename
+            a.download = `Cashless_Report_${investigationId}.pdf`; // 👈 filename
             document.body.appendChild(a);
             a.click();
             a.remove();
@@ -519,7 +519,7 @@ const CentralQCForm: React.FC = () => {
                             </Box>
                         </AccordionSummary>
                         <AccordionDetails sx={{ p: 3, bgcolor: 'white' }}>
-                            <CentralAgencyCaseUpdateDocuments />
+                            <CentralRegionalDocuments />
                         </AccordionDetails>
                     </Accordion>
 

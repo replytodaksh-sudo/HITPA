@@ -21,7 +21,7 @@ interface QcPreviewProps {
   previewValues?: any;
 }
 
-const QcPreview: React.FC<QcPreviewProps> = ({
+const QcPreviewSubmitedRegional: React.FC<QcPreviewProps> = ({
   previewRefresh = false,
   buttonEnable = false,
   dataRole = '',
@@ -180,12 +180,12 @@ const QcPreview: React.FC<QcPreviewProps> = ({
     <Box sx={{ p: 2 }}>
       {/* QC Update Fields Section */}
       <Paper sx={{ p: 3, mb: 3 }}>
-        <Typography
+        {/* <Typography
           variant="h6"
           sx={{ color: '#6F62C2', fontWeight: 'bold', mb: 2 }}
         >
           QC Update Fields
-        </Typography>
+        </Typography> */}
         <RegQcUpdateFields
           previewValues={propsPreviewValues || previewValus}
           previewRefresh={previewRefresh}
@@ -277,4 +277,4 @@ const QcPreview: React.FC<QcPreviewProps> = ({
   );
 };
 
-export default QcPreview;
+export default QcPreviewSubmitedRegional;

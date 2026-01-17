@@ -167,7 +167,7 @@ const FreshSelfDeniedCasesCashless: React.FC = () => {
 
   const handleViewClick = (investigationID: string, claim: ReimClaim) => {
     navigate(
-      `/admin/agency-self-denied-form/${investigationID}?claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}&acceptAssignId=${claim.acceptAssignId}`
+      `/admin/agency-self-denied-form/${investigationID}?claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}&acceptAssignId=${claim.acceptAssignId}`
     );
   };
 
@@ -493,7 +493,7 @@ const FreshSelfDeniedCasesCashless: React.FC = () => {
           paginationModel={paginationModel}
           onPaginationModelChange={setPaginationModel}
           pageSizeOptions={[25, 50, 100]}
-          checkboxSelection
+          
           getRowId={(row) => row?.investigationID}
           loading={loading}
           slots={{

@@ -192,7 +192,7 @@ const QCPendingForms: React.FC = () => {
             const downloadUrl = window.URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = downloadUrl;
-            a.download = "Cashless_Report.pdf"; // 👈 filename
+            a.download = `Reim_Report_${investigationId}.pdf`; // 👈 filename
             document.body.appendChild(a);
             a.click();
             a.remove();
@@ -230,7 +230,7 @@ const QCPendingForms: React.FC = () => {
                 const downloadUrl = window.URL.createObjectURL(blob);
                 const a = document.createElement("a");
                 a.href = downloadUrl;
-                a.download = "Cashless_Report.pdf"; // 👈 filename
+                a.download = `Cashless_Report_${investigationId}.pdf`; // 👈 filename
                 document.body.appendChild(a);
                 a.click();
                 a.remove();

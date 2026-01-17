@@ -28,7 +28,7 @@ import PreAuth from '../../components/sharedComponents/components/PreAuth';
 import ClaimDetailsReim from '../../components/sharedComponents/components/ClaimDetailsReim';
 import HospitalInfo from '../../components/sharedComponents/components/HospitalInfo';
 import CaseInfoComponent from '../../components/sharedComponents/components/CaseInfoComponent';
-import CentralAgencyCaseUpdateDocuments from '../../components/sharedComponents/components/CentralAgencyCaseUpdateDocuments';
+import CentralRegionalDocuments from '../../components/sharedComponents/components/CentralRegionalDocuments';
 import ReimburseCaseUpdate from '../../components/sharedComponents/components/ReimburseCaseUpdate';
 import Logs from '../../components/sharedComponents/components/Logs';
 import claimsService from '../../services/claims.service';
@@ -259,7 +259,7 @@ const AgencyReworkTabs: React.FC<AgencyReworkTabsProps> = () => {
 
                     {/* Tab 3: Document */}
                     {activeTab === 3 && (
-                        <CentralAgencyCaseUpdateDocuments
+                        <CentralRegionalDocuments
                         //   investigationId={investigationId}
                         />
                     )}

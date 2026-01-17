@@ -14,11 +14,13 @@ import HospitalStepTwo from './HospitalStepTwo';
 interface HospitalVerificationsProps {
   buttonEnable?: boolean;
   previousData?: any;
+  onChangeTab: any;
 }
 
 const HospitalVerifications: React.FC<HospitalVerificationsProps> = ({
   buttonEnable = true,
   previousData,
+  onChangeTab
 }) => {
   // State
   const [enableStepTwo, setEnableStepTwo] = useState(false);
@@ -128,6 +130,7 @@ const HospitalVerifications: React.FC<HospitalVerificationsProps> = ({
               <HospitalStepTwo
                 buttonEnable={buttonEnable}
                 previousData={previousData}
+                onChangeTab={onChangeTab}
               />
             )}
           </Box>

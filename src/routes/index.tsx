@@ -490,14 +490,6 @@ const AppRoutes: React.FC = () => {
 
         {/* Protected Routes - QC */}
         <Route
-          path="qcRegPendingFromCentral"
-          element={
-            <ProtectedRoute>
-              <RegQCPendingCentral />
-            </ProtectedRoute>
-          }
-        />
-        <Route
           path="qcRegQCPending"
           element={
             <ProtectedRoute>
@@ -558,14 +550,6 @@ const AppRoutes: React.FC = () => {
           element={
             <ProtectedRoute>
               <CentralQueryResponse />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="centralQCPending"
-          element={
-            <ProtectedRoute>
-              <CentralQCPending />
             </ProtectedRoute>
           }
         />

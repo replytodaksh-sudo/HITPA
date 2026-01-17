@@ -334,24 +334,6 @@ const QCPenCashless: React.FC = () => {
                 <Chip label={params?.value} size="small" color="secondary" variant="outlined" />
             ),
         },
-        {
-            field: 'actions',
-            headerName: 'Actions',
-            width: 100,
-            sortable: false,
-            filterable: false,
-            renderCell: (params: any) => (
-                <Tooltip title="View Details">
-                    <IconButton
-                        size="small"
-                        color="secondary"
-                        onClick={() => handleViewClick(params?.row?.investigationID, params?.row)}
-                    >
-                        <ViewIcon />
-                    </IconButton>
-                </Tooltip>
-            ),
-        },
     ];
 
     // ============================================================================
@@ -465,7 +447,7 @@ const QCPenCashless: React.FC = () => {
                     paginationModel={paginationModel}
                     onPaginationModelChange={setPaginationModel}
                     pageSizeOptions={[25, 50, 100]}
-                    checkboxSelection
+                    
                     getRowId={(row) => row?.investigationID}
                     loading={loading}
                     slots={{
@@ -483,8 +465,8 @@ const QCPenCashless: React.FC = () => {
                             borderColor: theme.palette.divider,
                         },
                         '& .MuiDataGrid-columnHeaders': {
-                            background: 'linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)',
-                            color: 'white',
+                            background: 'linear-gradient(180deg, #4A7FC1 0%, #2E5A96 100%)',
+                            color: '#7a7a7a',
                             fontSize: '0.875rem',
                             fontWeight: 700,
                             borderRadius: 0,

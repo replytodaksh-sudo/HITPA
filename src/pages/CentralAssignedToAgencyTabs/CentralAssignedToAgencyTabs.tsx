@@ -32,7 +32,7 @@ import PreAuth from '../../components/sharedComponents/components/PreAuth';
 import ClaimDetailsReim from '../../components/sharedComponents/components/ClaimDetailsReim';
 import HospitalInfo from '../../components/sharedComponents/components/HospitalInfo';
 import CaseInfoComponent from '../../components/sharedComponents/components/CaseInfoComponent';
-import CentralAgencyCaseUpdateDocuments from '../../components/sharedComponents/components/CentralAgencyCaseUpdateDocuments';
+import CentralRegionalDocuments from '../../components/sharedComponents/components/CentralRegionalDocuments';
 import CentralAssignedAgencyCaseUpdate from '../../components/sharedComponents/components/CentralAssignedAgencyCaseUpdate';
 import ReimburseCaseUpdate from '../../components/sharedComponents/components/ReimburseCaseUpdate';
 import ClaimTeamQcUpdate from '../../components/sharedComponents/components/ClaimTeamQcUpdate';
@@ -336,7 +336,7 @@ const CentralAssignedAgencyTabs: React.FC = () => {
                                     </Box>
                                 </AccordionSummary>
                                 <AccordionDetails sx={{ bgcolor: 'white', borderRadius: '0 0 8px 8px' }}>
-                                    <CentralAgencyCaseUpdateDocuments />
+                                    <CentralRegionalDocuments />
                                 </AccordionDetails>
                             </Accordion>
 

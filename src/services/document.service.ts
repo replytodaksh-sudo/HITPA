@@ -146,7 +146,7 @@ export class DocumentsService {
   ): Promise<DocumentUploadResponse> {
     try {
       // Trim investigation ID
-      const cleanInvClaimId = invClaimId.trim();
+      const cleanInvClaimId = invClaimId?.trim();
       
       // Create FormData
       const additionalData = {

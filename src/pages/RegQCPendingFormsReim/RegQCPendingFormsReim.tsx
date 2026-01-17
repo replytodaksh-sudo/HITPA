@@ -31,10 +31,10 @@ import ReimburseCaseUpdate from '../../components/sharedComponents/components/Re
 import ReimRegionalAgencyQC from '../../components/sharedComponents/components/ReimRegionalAgencyQC';
 import QCUpdateCentral from '../../components/sharedComponents/components/QCUpdateCentral';
 import Logs from '../../components/sharedComponents/components/Logs';
-import Preview from '../../components/sharedComponents/components/Preview';
 import CaseInfoComponent from '../../components/sharedComponents/components/CaseInfoComponent';
 import claimsService from '../../services/claims.service';
 import QCUpdatesRegional from '../../components/sharedComponents/components/QCUpdatesRegional';
+import QcPreviewReg from '../../components/sharedComponents/components/QcPreviewReg';
 
 const RegQCPendingFormsReim: React.FC = () => {
     const { investigationId } = useParams<{ investigationId: string }>();
@@ -365,7 +365,7 @@ const RegQCPendingFormsReim: React.FC = () => {
                                     </Box>
                                 </AccordionSummary>
                                 <AccordionDetails sx={{ pt: 2, backgroundColor: '#FFFFFF' }}>
-                                    <Preview
+                                    <QcPreviewReg
                                         // dataRole="regional"
                                         previewRefresh={false}
                                     // buttonEnable={!buttonEnable}

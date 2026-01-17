@@ -373,7 +373,7 @@ const CompletedInvestigationCompletedCashless: React.FC = () => {
           paginationModel={{ page: 0, pageSize }}
           onPaginationModelChange={(model: any) => setPageSize(model.pageSize ?? pageSize)}
           pageSizeOptions={[25, 50, 100]}
-          checkboxSelection
+          
           getRowId={(row) => row?.investigationID}
           sx={{
             border: 'none',

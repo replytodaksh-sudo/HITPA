@@ -69,6 +69,7 @@ const ReimRegionalAgencyQC: React.FC<ReimRegionalAgencyQCProps> = ({ editable })
   const getData = async () => {
     try {
       const response = await agencyQcUpdateService.getReClaimQCData(investigationId!, '');
+      console.log('QC Data Response:', response);
       if (response.statusCode === 0) {
         setQcdataList(response.payload);
       }

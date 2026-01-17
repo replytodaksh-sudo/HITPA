@@ -36,7 +36,7 @@ import QCUpdates from '../../components/sharedComponents/components/QCUpdates';
 import QCUpdateCentral from '../../components/sharedComponents/components/QCUpdateCentral';
 import Logs from '../../components/sharedComponents/components/Logs';
 import CaseInfoComponent from '../../components/sharedComponents/components/CaseInfoComponent';
-import CentralAgencyCaseUpdateDocuments from '../../components/sharedComponents/components/CentralAgencyCaseUpdateDocuments';
+import CentralRegionalDocuments from '../../components/sharedComponents/components/CentralRegionalDocuments';
 
 /**
  * CentralQueryForms Component
@@ -360,7 +360,7 @@ const CentralQueryForms: React.FC = () => {
                                     </Box>
                                 </AccordionSummary>
                                 <AccordionDetails sx={{ bgcolor: 'white', borderRadius: '0 0 8px 8px' }}>
-                                    <CentralAgencyCaseUpdateDocuments />
+                                    <CentralRegionalDocuments />
                                 </AccordionDetails>
                             </Accordion>
 

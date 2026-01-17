@@ -32,7 +32,7 @@ import Logs from '../../components/sharedComponents/components/Logs';
 import { caseUpdateService } from '../../services/caseupdate.service';
 import claimsService from '../../services/claims.service';
 import CaseInfoComponent from '../../components/sharedComponents/components/CaseInfoComponent';
-import CentralAgencyCaseUpdateDocuments from '../../components/sharedComponents/components/CentralAgencyCaseUpdateDocuments';
+import CentralRegionalDocuments from '../../components/sharedComponents/components/CentralRegionalDocuments';
 import QCUpdateCentral from '../../components/sharedComponents/components/QCUpdateCentral';
 
 const QCPendingFromCentralForms: React.FC = () => {
@@ -277,7 +277,7 @@ const QCPendingFromCentralForms: React.FC = () => {
                                 </Box>
                             </AccordionSummary>
                             <AccordionDetails sx={{ pt: 2, backgroundColor: '#FFFFFF' }}>
-                                <CentralAgencyCaseUpdateDocuments />
+                                <CentralRegionalDocuments />
                             </AccordionDetails>
                         </Accordion>
 

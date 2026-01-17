@@ -48,8 +48,8 @@ const DeniedDenyForm: React.FC = () => {
     try {
       const response:any = await DropdownService.getDenyReasons(investigationId);
       
-      if (response.data.statusCode === 0) {
-        const payload = response.data.payload;
+      if (response.statusCode === 0) {
+        const payload = response.payload;
         
         // Set the list of reasons (with checked status)
         setDenyReasonList(payload.denialReasons || []);

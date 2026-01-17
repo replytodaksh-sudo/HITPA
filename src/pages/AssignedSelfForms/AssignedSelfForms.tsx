@@ -52,21 +52,22 @@ import ReimburseCaseUpdate from '../../components/sharedComponents/components/Re
 import Logs from '../../components/sharedComponents/components/Logs';
 import AcceptAgencies from '../../components/sharedComponents/components/acceptAgency';
 import AcceptInternalTeam from '../../components/sharedComponents/components/AcceptInternalTeam';
+import { apiUrls } from '../../constants/apiConstants';
 
 const AssignedSelfForms: React.FC = () => {
     const { investigationId } = useParams<{ investigationId: string }>();
     const location = useLocation();
-    
+
     // State
     const [expanded, setExpanded] = useState<string | false>('panel1');
     const [claimDetails, setClaimDetails] = useState<any>(null);
     const [investigationType, setInvestigationType] = useState('');
-    
+
     // Modal states
     const [questionaryModalOpen, setQuestionaryModalOpen] = useState(false);
     const [reassignModalOpen, setReassignModalOpen] = useState(false);
     const [reminderModalOpen, setReminderModalOpen] = useState(false);
-    
+
     // Form states
     const [questionaryRadio, setQuestionaryRadio] = useState('');
     const [statusInsuredVisit, setStatusInsuredVisit] = useState(0);
@@ -77,20 +78,20 @@ const AssignedSelfForms: React.FC = () => {
     const [emailBody, setEmailBody] = useState('');
     const [showButton, setShowButton] = useState(true);
     const [buttonEnable, setButtonEnable] = useState(true);
-    
+
     // Get role from sessionStorage
     const roleName = sessionStorage.getItem('roleName') || '';
-    
+
     // Get query parameters
     const searchParams = new URLSearchParams(location.search);
     const claimsType = searchParams.get('claimsType') || 'cashless';
     const claimNo = searchParams.get('claimNo') || '';
     const sbiclaimNo = searchParams.get('sbigclaimno') || '';
     const acceptAssignId = searchParams.get('acceptAssignId') || '';
-    
+
     const cleanInvestigationId = investigationId?.split(' ')[0] || '';
     const claimsTypeLabel = claimsType === 'cashless' ? 'Cashless' : claimsType === 'reim' ? 'Reimbursement' : '';
-    
+
     // Effects
     useEffect(() => {
         if (acceptAssignId) {
@@ -100,7 +101,7 @@ const AssignedSelfForms: React.FC = () => {
             fetchClaimDetails(investigationId);
         }
     }, [acceptAssignId, investigationId]);
-    
+
     // Fetch claim details
     const fetchClaimDetails = async (invId: string) => {
         try {
@@ -115,38 +116,68 @@ const AssignedSelfForms: React.FC = () => {
             console.error('Error fetching claim details:', error);
         }
     };
-    
+
     // Accordion handler
     const handleAccordionChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : false);
     };
-    
+
     // Questionnaire handlers
     const handleDownloadQuestionnaire = async () => {
         if (!questionaryRadio) {
             alert('Please select a questionnaire type');
             return;
         }
-        
+
+        // try {
+        //     await QuestionService.downloadQuestion(cleanInvestigationId, questionaryRadio);
+        //     // const url = `/api/questions/download/${cleanInvestigationId}?questionType=${questionaryRadio}`;
+        //     const url = `${import.meta.env.VITE_API_BASE_URL}${apiUrls.getPDFDetails}?invClaimId=${cleanInvestigationId}&pdfType=${questionaryRadio}`;
+        //     window.open(url, '_blank');
+        //     setQuestionaryModalOpen(false);
+        //     setQuestionaryRadio('');
+        // } catch (error) {
+        //     console.error('Error downloading questionnaire:', error);
+        //     alert('Failed to download questionnaire');
+        // }
         try {
-            await QuestionService.downloadQuestion(cleanInvestigationId, questionaryRadio);
-            const url = `/api/questions/download/${cleanInvestigationId}?questionType=${questionaryRadio}`;
-            window.open(url, '_blank');
-            setQuestionaryModalOpen(false);
-            setQuestionaryRadio('');
+            const url = `${import.meta.env.VITE_API_BASE_URL}${apiUrls.downloadUrl}${cleanInvestigationId}&questionType=${questionaryRadio}`;
+            const token = sessionStorage.getItem('token');
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    Accept: "application/pdf",
+                    Authorization: `Bearer ${token}`
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to download file");
+            }
+
+            const blob = await response.blob();
+
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = downloadUrl;
+            a.download = `${questionaryRadio}_${cleanInvestigationId}.pdf`; // 👈 filename
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            window.URL.revokeObjectURL(downloadUrl);
         } catch (error) {
-            console.error('Error downloading questionnaire:', error);
-            alert('Failed to download questionnaire');
+            console.error("Download error:", error);
         }
     };
-    
+
     // Email reminder handler
     const handleSendReminder = async () => {
         if (!emailTo || !emailSubject || !emailBody) {
             alert('Please fill all required fields');
             return;
         }
-        
+
         try {
             const emailModel = {
                 to: emailTo,
@@ -155,7 +186,7 @@ const AssignedSelfForms: React.FC = () => {
                 subject: emailSubject,
                 body: emailBody,
             };
-            
+
             const response: any = await setupService.sendRemindMail(emailModel);
             if (response.statusCode === 0) {
                 alert('Mail successfully sent');
@@ -172,7 +203,7 @@ const AssignedSelfForms: React.FC = () => {
             alert('Failed to send reminder');
         }
     };
-    
+
     // Reassign handler
     const handleOpenReassign = () => {
         setStatusInsuredVisit(0);
@@ -242,7 +273,7 @@ const AssignedSelfForms: React.FC = () => {
                             </Grid>
                         </Grid>
                     </Box>
-                    
+
                     {/* Content Area */}
                     <Box sx={{ p: 3, bgcolor: '#F5F7FA' }}>
                         {/* Action Buttons */}
@@ -293,7 +324,7 @@ const AssignedSelfForms: React.FC = () => {
                                 </Button>
                             </Box>
                         )}
-                        
+
                         {/* Accordion Sections */}
                         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                             {/* Pre-Auth / Claim Details Accordion */}
@@ -338,7 +369,7 @@ const AssignedSelfForms: React.FC = () => {
                                     )}
                                 </AccordionDetails>
                             </Accordion>
-                            
+
                             {/* Hospital Info Accordion */}
                             <Accordion
                                 expanded={expanded === 'panel2'}
@@ -373,7 +404,7 @@ const AssignedSelfForms: React.FC = () => {
                                     <HospitalInfo claimsType={claimsType} claimDetails={claimDetails} />
                                 </AccordionDetails>
                             </Accordion>
-                            
+
                             {/* Case Info Accordion */}
                             <Accordion
                                 expanded={expanded === 'panel3'}
@@ -408,7 +439,7 @@ const AssignedSelfForms: React.FC = () => {
                                     <CaseInfoComponent />
                                 </AccordionDetails>
                             </Accordion>
-                            
+
                             {/* Document Accordion */}
                             <Accordion
                                 expanded={expanded === 'panel4'}
@@ -443,7 +474,7 @@ const AssignedSelfForms: React.FC = () => {
                                     <CentralRegionalDocuments />
                                 </AccordionDetails>
                             </Accordion>
-                            
+
                             {/* Case Update Accordion */}
                             <Accordion
                                 expanded={expanded === 'panel5'}
@@ -482,7 +513,7 @@ const AssignedSelfForms: React.FC = () => {
                                     )}
                                 </AccordionDetails>
                             </Accordion>
-                            
+
                             {/* Logs Accordion */}
                             <Accordion
                                 expanded={expanded === 'panel6'}
@@ -521,7 +552,7 @@ const AssignedSelfForms: React.FC = () => {
                     </Box>
                 </CardContent>
             </Card>
-            
+
             {/* Questionnaire Modal */}
             <Dialog
                 open={questionaryModalOpen}
@@ -559,7 +590,7 @@ const AssignedSelfForms: React.FC = () => {
                     )}
                 </DialogActions>
             </Dialog>
-            
+
             {/* Reassign Modal */}
             <Dialog
                 open={reassignModalOpen}
@@ -617,7 +648,7 @@ const AssignedSelfForms: React.FC = () => {
                             </>
                         )}
                     </RadioGroup>
-                    
+
                     <Box sx={{ mt: 3 }}>
                         {statusInsuredVisit === 1 && (
                             <>
@@ -634,7 +665,7 @@ const AssignedSelfForms: React.FC = () => {
                     </Box>
                 </DialogContent>
             </Dialog>
-            
+
             {/* Reminder/Email Modal */}
             <Dialog
                 open={reminderModalOpen}

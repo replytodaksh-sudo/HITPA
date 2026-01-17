@@ -35,6 +35,7 @@ interface MenuItem {
 interface HospitalStepTwoProps {
     buttonEnable?: boolean;
     previousData?: any;
+    onChangeTab?: any;
 }
 
 
@@ -94,6 +95,7 @@ const messages = {
 const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
     buttonEnable = true,
     previousData = {},
+    onChangeTab
 }) => {
     const { investigationId } = useParams<{ investigationId: string }>();
     const navigate = useNavigate();
@@ -252,9 +254,10 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
         const payload = buildStepTwoPayload('saveasdraft');
 
         try {
-            const data:any = await reimcaseUpdateService.addHospitalVerifyTwo(payload, cleanId);
+            const data: any = await reimcaseUpdateService.addHospitalVerifyTwo(payload, cleanId);
             if (data.statusCode === 0) {
                 notificationService.showAlertSuccess(messages.hospVerifySaved);
+                onChangeTab(true);
             } else {
                 notificationService.showAlertError(data.message);
             }
@@ -272,10 +275,11 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
         const payload = buildStepTwoPayload('submittoqc');
 
         try {
-            const data:any = await reimcaseUpdateService.addHospitalVerifyTwo(payload, cleanId);
+            const data: any = await reimcaseUpdateService.addHospitalVerifyTwo(payload, cleanId);
             if (data.statusCode === 0) {
                 notificationService.showAlertSuccess(messages.hospVerifySubmit);
-                navigate('/admin/dashboard');
+                onChangeTab(true);
+                // navigate('/admin/dashboard');
             } else {
                 notificationService.showAlertError(data.message);
             }
@@ -319,7 +323,7 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
                 return null;
         }
     };
-console.log('Render HospitalStepTwo', buttonEnable, tabCheck);
+    console.log('Render HospitalStepTwo', buttonEnable, tabCheck);
     return (
         <Box>
             <Card>

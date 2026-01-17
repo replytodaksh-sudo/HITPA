@@ -83,17 +83,22 @@ const CentralDeniedRegionalAcceptDeny: React.FC<CentralDeniedRegionalAcceptDenyP
     try {
       setIsSubmitting(true);
 
-      const denyRequest: Deny = {
+      const denyRequest: any = {
         investigationId,
         denialDecision: denialAgencyJustified,
         denialDecisionReason: denialAgencyJustifiedRemarks,
+        acceptAssignId: "",
+        denialReason: "",
+        investigationSubType: "",
+        investigationType: "",
+        reasonsCode: [],
       };
 
       const response = await acceptAssignService.deny(denyRequest);
 
       if (response.statusCode === 0) {
         alertService.showAlertSuccess('Denial submitted successfully');
-        
+
         console.log('redirectTo', redirectTo);
         if (redirectTo) {
           navigate(redirectTo.replace('/investigation', ''));

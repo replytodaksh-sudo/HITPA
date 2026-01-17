@@ -105,13 +105,13 @@ const AgencyDeniedAcceptDeny: React.FC<AgencyDeniedAcceptDenyProps> = ({
 
       const response:any = await acceptAssignService.deny(denyRequest);
 
-      if (response.data.statusCode === 0) {
+      if (response.statusCode === 0) {
         setSuccess('Denial submitted successfully!');
         setTimeout(() => {
           navigate('/admin/dashboard');
         }, 1500);
       } else {
-        setError(response.data.message || 'Failed to submit denial');
+        setError(response.message || 'Failed to submit denial');
       }
     } catch (err: any) {
       setError(err.message || 'Failed to submit denial');

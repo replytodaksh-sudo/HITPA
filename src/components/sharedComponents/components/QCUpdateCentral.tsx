@@ -23,6 +23,7 @@ import QcPreview from './QcPreview';
 import QcupdateFields from './QcupdateFields';
 import QCObservations from './QCObservations';
 import QcVendorFeedback from './QcVendorFeedback';
+import QcPreviewSubmitedRegional from './QcPreviewSubmitedRegional';
 
 interface QCUpdateCentralProps {
   investigationId?: string;
@@ -189,81 +190,94 @@ const QCUpdateCentral: React.FC<QCUpdateCentralProps> = ({
         )}
 
         {/* Tabs */}
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            value={activeTab}
-            onChange={handleTabChange}
-            variant="scrollable"
-            scrollButtons="auto"
-            sx={{
-              '& .MuiTab-root': {
-                minHeight: 64,
-                textTransform: 'none',
-                fontSize: '0.95rem',
-                fontWeight: 500,
-              },
-            }}
-          >
-            <Tab label="QC Update Fields" />
-            <Tab label="QC Observations" />
-            <Tab label="Vendor Feedback" />
-            <Tab label="Preview & Submit" />
-          </Tabs>
-        </Box>
+        {!claimSubmitted ?
+          <>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs
+                value={activeTab}
+                onChange={handleTabChange}
+                variant="scrollable"
+                scrollButtons="auto"
+                sx={{
+                  '& .MuiTab-root': {
+                    minHeight: 64,
+                    textTransform: 'none',
+                    fontSize: '0.95rem',
+                    fontWeight: 500,
+                  },
+                }}
+              >
+                <Tab label="QC Update Fields" />
+                <Tab label="QC Observations" />
+                <Tab label="Vendor Feedback" />
+                <Tab label="Preview & Submit" />
+              </Tabs>
+            </Box>
 
-        {/* Tab Content */}
-        <Box sx={{ pt: 3 }}>
-          {/* Tab 0: QC Update Fields */}
-          {activeTab === 0 && (
-            <QcupdateFields buttonEnable={buttonEnable} previewValues={previewValues} onChangeTab={handleNextTab} claimSubmitted={claimSubmitted} />
-            // <CentralQCUpdateFields
+            {/* Tab Content */}
+            <Box sx={{ pt: 3 }}>
+              {/* Tab 0: QC Update Fields */}
+              {activeTab === 0 && (
+                <QcupdateFields buttonEnable={buttonEnable} previewValues={previewValues} onChangeTab={handleNextTab} claimSubmitted={claimSubmitted} />
+                // <CentralQCUpdateFields
+                //   investigationId={investigationId}
+                //   previewValues={previewValues}
+                //   buttonEnable={buttonEnable}
+                //   onNextTab={handleNextTab}
+                // />
+              )}
+
+              {/* {/* Tab 1: QC Observations *  /} */}
+              {activeTab === 1 && (
+                <QCObservations
+                  // <RegQcObservations
+                  //   investigationId={investigationId}
+                  previewValues={previewValues}
+                  //   buttonEnable={buttonEnable}
+                  onChangeTab={handleNextTab}
+                  claimSubmitted={claimSubmitted}
+                />
+              )}
+
+              {/* Tab 2: Vendor Feedback */}
+              {activeTab === 2 && (
+                // <QCVendorFeedback
+                // <RegQcVendorFeedback
+                // //   investigationId={investigationId}
+                //   previewValues={previewValues}
+                // //   buttonEnable={buttonEnable}
+                // //   onNextTab={handleNextTab}
+                // />
+                <QcVendorFeedback
+                  previewValues={previewValues}
+                  buttonEnable={buttonEnable}
+                  onChangeTab={handleNextTab}
+                  claimSubmitted={claimSubmitted}
+                />
+              )}
+
+              {/* Tab 3: Preview & Submit */}
+              {activeTab === 3 && (
+                <QcPreview
+                  //   investigationId={investigationId}
+                  dataRole={dataRole}
+                  previewRefresh={previewRefresh}
+                  previewValues={previewValues}
+                  buttonEnable={buttonEnable}
+                />
+              )}
+            </Box>
+          </>
+          :
+          <QcPreviewSubmitedRegional
             //   investigationId={investigationId}
-            //   previewValues={previewValues}
-            //   buttonEnable={buttonEnable}
-            //   onNextTab={handleNextTab}
-            // />
-          )}
+            dataRole={dataRole}
+            previewRefresh={previewRefresh}
+            previewValues={previewValues}
+            buttonEnable={buttonEnable}
+          />
+        }
 
-          {/* {/* Tab 1: QC Observations *  /} */}
-          {activeTab === 1 && (
-            <QCObservations
-              // <RegQcObservations
-              //   investigationId={investigationId}
-              previewValues={previewValues}
-              //   buttonEnable={buttonEnable}
-              onChangeTab={handleNextTab}
-              claimSubmitted={claimSubmitted}
-            />
-          )}
-
-          {/* Tab 2: Vendor Feedback */}
-          {activeTab === 2 && (
-            // <QCVendorFeedback
-            // <RegQcVendorFeedback
-            // //   investigationId={investigationId}
-            //   previewValues={previewValues}
-            // //   buttonEnable={buttonEnable}
-            // //   onNextTab={handleNextTab}
-            // />
-            <QcVendorFeedback
-              previewValues={previewValues}
-              buttonEnable={buttonEnable}
-              onChangeTab={handleNextTab}
-              claimSubmitted={claimSubmitted}
-            />
-          )}
-
-          {/* Tab 3: Preview & Submit */}
-          {activeTab === 3 && (
-            <QcPreview
-              //   investigationId={investigationId}
-              dataRole={dataRole}
-              previewRefresh={previewRefresh}
-              previewValues={previewValues}
-              buttonEnable={buttonEnable}
-            />
-          )}
-        </Box>
       </Paper>
     </Container>
   );

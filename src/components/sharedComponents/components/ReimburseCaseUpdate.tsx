@@ -9,10 +9,6 @@ import {
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { ReimService } from '../../../services/reim.service';
-
-// Import child components
-// import HospitalVerifications from './HospitalVerifications';
-// import InsuredVerification from './InsuredVerification';
 import EmployerVerification from './EmployerVerification';
 import HospitalVerifications from './HospitalVerification';
 import InsuredVerification from './InsuredVerification';
@@ -129,6 +125,7 @@ const ReimburseCaseUpdate: React.FC<ReimburseCaseUpdateProps> = ({
                     <HospitalVerifications
                         buttonEnable={buttonEnable}
                         previousData={previousData}
+                        onChangeTab={handleChangeTab}
                     />
                 ),
             });

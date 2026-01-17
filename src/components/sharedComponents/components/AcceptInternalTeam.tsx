@@ -524,7 +524,7 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
             if (res.statusCode === 0) {
                 alert('Case assigned successfully');
                 if (redirectTo) {
-                    navigate(redirectTo);
+                    navigate(redirectTo.replace('/investigation', ''));
                 } else {
                     navigate('/admin/dashboard');
                 }
@@ -543,10 +543,6 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
         }
     };
     console.log("Accept Request:", chooseAllocation);
-
-    if (loading) {
-        return <Typography>Loading...</Typography>;
-    }
 
     return (
         <Box sx={{ p: 3 }}>
@@ -699,11 +695,11 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                                                     control={<Radio />}
                                                     label="Assign to agency"
                                                 />
-                                                <FormControlLabel
+                                                {/* <FormControlLabel
                                                     value={2}
                                                     control={<Radio />}
                                                     label="Assign to internal team"
-                                                />
+                                                /> */}
                                             </>
                                         )}
                                         {roleName === 'Agency Spoc' && (
@@ -713,11 +709,11 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
                                                     control={<Radio />}
                                                     label="Accept & Assign to Field Officer"
                                                 />
-                                                <FormControlLabel
+                                                {/* <FormControlLabel
                                                     value={3}
                                                     control={<Radio />}
                                                     label="Assign to self"
-                                                />
+                                                /> */}
                                             </>
                                         )}
                                         {roleName !== 'Regional Manager' && (caseAllocationType === 1 || caseAllocationType === 3) && (
@@ -1143,13 +1139,13 @@ const AcceptInternalTeam: React.FC<AcceptInternalTeamProps> = ({
 
                 {/* Documents Section */}
                 <DocumentUpload
-                    // roleName={roleName}
-                    // investigationId={cleanInvestigationId}
-                    // investigationDocs={investigationDocs}
-                    // documentsCodes={documentsCodes}
-                    // setDocumentsCodes={setDocumentsCodes}
-                    // onDocsUpdate={fetchInvestigationDocs}
-                    // documentArray={documentArray}
+                    roleName={roleName}
+                    investigationId={cleanInvestigationId}
+                    investigationDocs={investigationDocs}
+                    documentsCodes={documentsCodes}
+                    setDocumentsCodes={setDocumentsCodes}
+                    onDocsUpdate={fetchInvestigationDocs}
+                    documentArray={documentArray}
                 />
 
                 {/* Questionnaire Section */}

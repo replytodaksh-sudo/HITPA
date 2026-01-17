@@ -316,7 +316,7 @@ const FoReassignedCasesCashless: React.FC = () => {
             paginationModel={{ page: 0, pageSize }}
             onPaginationModelChange={(model: any) => setPageSize(model.pageSize ?? pageSize)}
             pageSizeOptions={[25, 50, 100]}
-            checkboxSelection
+            
             // disableSelectionOnClick
             getRowId={(row) => row?.investigationID}
             // components={{

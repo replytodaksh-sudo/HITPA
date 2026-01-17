@@ -535,9 +535,9 @@ const HospitalStepOne: React.FC<HospitalStepOneProps> = ({
 
                 // Show success message
                 alert('Hospital verification Step One saved successfully!');
+                onChangeTab(true);
 
                 // Trigger tab change to Step Two
-                onChangeTab(false);
             } else {
                 alert('Failed to save: ' + (response.message || 'Unknown error'));
             }
