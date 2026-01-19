@@ -34,9 +34,7 @@ import Logs from '../../components/sharedComponents/components/Logs';
 import claimsService from '../../services/claims.service';
 import QuestionService from '../../services/question.service';
 import CentralAssignedAgencyCaseUpdate from '../../components/sharedComponents/components/CentralAssignedAgencyCaseUpdate';
-
-// API URL - Update with your environment config
-const DOWNLOAD_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.example.com/download?investigationId=';
+import { apiUrls } from '../../constants/apiConstants';
 
 interface AgencyReworkTabsProps {
     // No props needed - gets data from URL params
@@ -118,29 +116,36 @@ const AgencyReworkTabs: React.FC<AgencyReworkTabsProps> = () => {
     };
 
     const handleDownloadPDF = async () => {
-        if (!questionaryRadio) return;
-
-        try {
-            setDownloading(true);
-
-            // Trigger questionnaire download
-            await QuestionService.downloadQuestion(investigationId, questionaryRadio);
-
-            // Build download URL
-            const url = `${DOWNLOAD_URL}${investigationId}&questionType=${questionaryRadio}`;
-            console.log('Download URL:', url);
-
-            // Open PDF in new window
-            window.open(url, '_blank');
-
-            // Close modal
-            closeQuestionaryModal();
-        } catch (error) {
-            console.error('Error downloading questionnaire:', error);
-        } finally {
-            setDownloading(false);
-        }
-    };
+            try {
+                const url = `${import.meta.env.VITE_API_BASE_URL}${apiUrls.getPDFDetails}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
+                const token = sessionStorage.getItem('token');
+                const response = await fetch(url, {
+                    method: "GET",
+                    headers: {
+                        Accept: "application/pdf",
+                        Authorization: `Bearer ${token}`
+                    },
+                });
+    
+                if (!response.ok) {
+                    throw new Error("Failed to download file");
+                }
+    
+                const blob = await response.blob();
+    
+                const downloadUrl = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = downloadUrl;
+                a.download = `Cashless_Report_${investigationId}.pdf`; // 👈 filename
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+    
+                window.URL.revokeObjectURL(downloadUrl);
+            } catch (error) {
+                console.error("Download error:", error);
+            }
+        };
 
     return (
         <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>

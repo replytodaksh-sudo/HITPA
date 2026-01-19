@@ -18,6 +18,7 @@ import {
 } from '@mui/material';
 import ReimService from '../../../services/reim.service';
 import reimcaseUpdateService from '../../../services/reim-case-update.service';
+import { notificationService } from '../../../utils/notification.service';
 
 // ========== INTERFACES ==========
 interface InsuredVerificationProps {
@@ -76,35 +77,6 @@ interface TabCheck {
   hospitalVisit: boolean;
   insuredPersonVisit: boolean;
 }
-
-// ========== SERVICES ==========
-// const reimcaseUpdateService = {
-//   addInsuredVerify: async (formData: any, investigationId: string) => {
-//     const response = await fetch(
-//       `${import.meta.env.VITE_API_BASE_URL}/api/reim-case-update/insured-verify/${investigationId}`,
-//       {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify(formData),
-//       }
-//     );
-//     return response.json();
-//   },
-// };
-
-// const reimService = {
-//   getTabDetails: async (investigationId: string, type: string) => {
-//     const response = await fetch(
-//       `${import.meta.env.VITE_API_BASE_URL}/api/reim/tab-details/${investigationId}?type=${type}`
-//     );
-//     return response.json();
-//   },
-// };
-
-const notificationService = {
-  showAlertSuccess: (msg: string) => alert(msg),
-  showAlertError: (msg: string) => alert(msg),
-};
 
 const messages = {
   insuredSavedDraft: 'Insured verification saved as draft successfully',

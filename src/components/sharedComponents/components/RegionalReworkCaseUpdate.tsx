@@ -17,6 +17,7 @@ import NotPresentForm from './NoPresentForm';
 import PresentForm from './PresentForm';
 import AcceptDeny from './AcceptDeny';
 import AcceptAgencies from './acceptAgency';
+import caseUpdateService from '../../../services/caseupdate.service';
 
 
 // ===========================
@@ -26,16 +27,6 @@ interface RouteParams extends Record<string, string | undefined> {
   investigationId: string;
 }
 
-// ===========================
-// API SERVICE
-// ===========================
-const caseUpdateService = {
-  caseUpdatePreviousData: async (investigationId: string) => {
-    const response = await fetch(`/api/case-update/previous/${investigationId}`);
-    if (!response.ok) throw new Error('Failed to fetch case data');
-    return response.json();
-  }
-};
 
 // ===========================
 // MAIN COMPONENT

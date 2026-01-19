@@ -16,6 +16,8 @@ import {
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import alertService from '../../../services/alertService';
+import caseUpdateService from '../../../services/caseupdate.service';
 
 // ===========================
 // INTERFACES
@@ -60,26 +62,6 @@ interface CaseUpdateModel {
     reason: string;
 }
 
-// ===========================
-// API SERVICES
-// ===========================
-const caseUpdateService = {
-    addCaseUpdate: async (model: CaseUpdateModel, investigationId: string) => {
-        const response = await fetch(`/api/case-update/${investigationId}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(model)
-        });
-        if (!response.ok) throw new Error('Failed to save case update');
-        return response.json();
-    }
-};
-
-const alertService = {
-    showAlertSuccess: (message: string) => {
-        alert(message); // Replace with your toast/snackbar component
-    }
-};
 
 // ===========================
 // MAIN COMPONENT

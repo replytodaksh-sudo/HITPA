@@ -34,6 +34,7 @@ import MedicalManagement from './MedicalManagement';
 import SurgicalManagementSec from './SurgicalManagementSec';
 import RtaAccidental from './RtaAccidental';
 import caseUpdateService from '../../../services/caseupdate.service';
+import alertService from '../../../services/alertService';
 
 // ===========================
 // INTERFACES
@@ -188,12 +189,6 @@ export const caseupdatePrimaryService = {
 
     setCaseUpdateVal: (key: string, value: any) => {
         caseupdatePrimaryService.store[key] = value;
-    }
-};
-
-const alertService = {
-    showAlertSuccess: (message: string) => {
-        alert(message); // Replace with your toast/snackbar
     }
 };
 

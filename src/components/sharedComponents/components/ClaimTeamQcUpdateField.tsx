@@ -14,6 +14,8 @@ import {
     TextField,
     Button,
 } from '@mui/material';
+import QCUpdateService from '../../../services/qcupdate.service';
+import { notificationService } from '../../../utils/notification.service';
 
 // ==================== INTERFACES ====================
 
@@ -106,26 +108,6 @@ const getDefaultFormData = (): QcFormData => ({
     ageCrossCheckDetails: '',
 });
 
-// ==================== SERVICES ====================
-
-const qcUpdateService = {
-    addQCUpdate: async (qcData: any, investigationId: string) => {
-        const response = await fetch(
-            `${import.meta.env.VITE_API_BASE_URL}/api/qc-update/${investigationId}`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(qcData),
-            }
-        );
-        return response.json();
-    },
-};
-
-const notificationService = {
-    showAlertSuccess: (msg: string) => alert(msg),
-    showAlertError: (msg: string) => alert(msg),
-};
 
 const messages = {
     QCUpdateFields: 'QC Update fields saved successfully',
@@ -303,7 +285,7 @@ const ClaimTeamQcUpdateField: React.FC<ClaimTeamQcUpdateFieldProps> = ({
         }
 
         try {
-            const data = await qcUpdateService.addQCUpdate(qcUpdateModel, cleanId);
+            const data = await QCUpdateService.addQCUpdate(qcUpdateModel, cleanId);
             if (data.payload && data.payload.qcUpdateID) {
                 localStorage.setItem('qcUpdateID', data.payload.qcUpdateID);
             }

@@ -43,9 +43,8 @@ import claimsService from '../../services/claims.service';
 import QuestionService from '../../services/question.service';
 import CaseUpdateForm from '../../components/sharedComponents/components/CashlessCaseUpdate';
 import AgencyReassignCaseUpdateReim from '../../components/sharedComponents/components/AgencyReassignCaseUpdateReim';
+import { apiUrls } from '../../constants/apiConstants';
 
-// API URL - Update with your environment config
-const DOWNLOAD_URL = import.meta.env.VITE_API_BASE_URL || 'https://api.example.com/download?investigationId=';
 
 const AgencyReassignTabs: React.FC = () => {
     const { investigationId: paramInvestigationId } = useParams<{ investigationId: string }>();
@@ -119,29 +118,61 @@ const AgencyReassignTabs: React.FC = () => {
     };
 
     const handleDownloadPDF = async () => {
-        if (!questionaryRadio) return;
-
         try {
-            setDownloading(true);
+            const url = `${import.meta.env.VITE_API_BASE_URL}${apiUrls.getPDFDetails}?invClaimId=${investigationId}&pdfType=${questionaryRadio}&claimType=${claimsType}`;
+            const token = sessionStorage.getItem('token');
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    Accept: "application/pdf",
+                    Authorization: `Bearer ${token}`
+                },
+            });
 
-            // Trigger questionnaire download
-            await QuestionService.downloadQuestion(investigationId, questionaryRadio);
+            if (!response.ok) {
+                throw new Error("Failed to download file");
+            }
 
-            // Build download URL
-            const url = `${DOWNLOAD_URL}${investigationId}&questionType=${questionaryRadio}`;
-            console.log('Download URL:', url);
+            const blob = await response.blob();
 
-            // Open PDF in new window
-            window.open(url, '_blank');
+            const downloadUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = downloadUrl;
+            a.download = `Cashless_Report_${investigationId}.pdf`; // 👈 filename
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
 
-            // Close modal
-            closeQuestionaryModal();
+            window.URL.revokeObjectURL(downloadUrl);
         } catch (error) {
-            console.error('Error downloading questionnaire:', error);
-        } finally {
-            setDownloading(false);
+            console.error("Download error:", error);
         }
     };
+
+    // const handleDownloadPDF = async () => {
+    //     if (!questionaryRadio) return;
+
+    //     try {
+    //         setDownloading(true);
+
+    //         // Trigger questionnaire download
+    //         await QuestionService.downloadQuestion(investigationId, questionaryRadio);
+
+    //         // Build download URL
+    //         const url = `${DOWNLOAD_URL}${investigationId}&questionType=${questionaryRadio}`;
+    //         console.log('Download URL:', url);
+
+    //         // Open PDF in new window
+    //         window.open(url, '_blank');
+
+    //         // Close modal
+    //         closeQuestionaryModal();
+    //     } catch (error) {
+    //         console.error('Error downloading questionnaire:', error);
+    //     } finally {
+    //         setDownloading(false);
+    //     }
+    // };
 
     return (
         <Box sx={{ p: 3, bgcolor: '#F5F7FA', minHeight: '100vh' }}>

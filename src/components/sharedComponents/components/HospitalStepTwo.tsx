@@ -19,6 +19,7 @@ import ChemistDetailsComponent from './ChemistDetailsComponent';
 import ReimService from '../../../services/reim.service';
 import { caseUpdateService } from '../../../services/reimCaseUpdateService';
 import reimcaseUpdateService from '../../../services/reim-case-update.service';
+import { notificationService } from '../../../utils/notification.service';
 
 // ==================== INTERFACES ====================
 interface TabCheck {
@@ -38,53 +39,6 @@ interface HospitalStepTwoProps {
     onChangeTab?: any;
 }
 
-
-
-// ==================== SERVICES (Inline) ====================
-// This is a simple in-memory store for case update values
-// In real implementation, this could be Context API, Redux, or Zustand
-const caseUpdateStore: Record<string, any> = {};
-
-// const caseUpdateService = {
-//     setCaseUpdateVal: (key: string, value: any) => {
-//         caseUpdateStore[key] = value;
-//     },
-//     getCaseUpdateVal: (key: string) => {
-//         return caseUpdateStore[key];
-//     },
-// };
-
-// const reimcaseUpdateService = {
-//     addHospitalVerifyTwo: async (payload: any, investigationId: string) => {
-//         const response = await fetch(
-//             `${import.meta.env.VITE_API_BASE_URL}/api/reim-case-update/hospital-verify-two/${investigationId}`,
-//             {
-//                 method: 'POST',
-//                 headers: { 'Content-Type': 'application/json' },
-//                 body: JSON.stringify(payload),
-//             }
-//         );
-//         return response.json();
-//     },
-// };
-
-// const reimService = {
-//     getTabDetails: async (investigationId: string, type: string) => {
-//         const response = await fetch(
-//             `${import.meta.env.VITE_API_BASE_URL}/api/reim/tab-details/${investigationId}?type=${type}`
-//         );
-//         return response.json();
-//     },
-// };
-
-const notificationService = {
-    showAlertSuccess: (message: string) => {
-        alert(message);
-    },
-    showAlertError: (message: string) => {
-        alert(message);
-    },
-};
 
 const messages = {
     hospVerifySaved: 'Hospital verification saved successfully',
@@ -436,7 +390,3 @@ const HospitalStepTwo: React.FC<HospitalStepTwoProps> = ({
 };
 
 export default HospitalStepTwo;
-
-// ==================== EXPORT CASE UPDATE SERVICE ====================
-// Export the case update service so child components can use it
-export { caseUpdateService };

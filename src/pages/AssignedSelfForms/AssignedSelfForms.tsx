@@ -128,18 +128,6 @@ const AssignedSelfForms: React.FC = () => {
             alert('Please select a questionnaire type');
             return;
         }
-
-        // try {
-        //     await QuestionService.downloadQuestion(cleanInvestigationId, questionaryRadio);
-        //     // const url = `/api/questions/download/${cleanInvestigationId}?questionType=${questionaryRadio}`;
-        //     const url = `${import.meta.env.VITE_API_BASE_URL}${apiUrls.getPDFDetails}?invClaimId=${cleanInvestigationId}&pdfType=${questionaryRadio}`;
-        //     window.open(url, '_blank');
-        //     setQuestionaryModalOpen(false);
-        //     setQuestionaryRadio('');
-        // } catch (error) {
-        //     console.error('Error downloading questionnaire:', error);
-        //     alert('Failed to download questionnaire');
-        // }
         try {
             const url = `${import.meta.env.VITE_API_BASE_URL}${apiUrls.downloadUrl}${cleanInvestigationId}&questionType=${questionaryRadio}`;
             const token = sessionStorage.getItem('token');

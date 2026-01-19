@@ -50,13 +50,6 @@ import CentralAssignedAgencyCaseUpdate from '../../components/sharedComponents/c
 import QCUpdates from '../../components/sharedComponents/components/QCUpdates';
 import { apiUrls } from '../../constants/apiConstants';
 
-// API URL - Update with your environment config
-const PDF_DOWNLOAD_URL = import.meta.env.REACT_APP_PDF_DOWNLOAD_URL || 'https://api.example.com/pdf/details';
-
-/**
- * QCPendingForms Component
- * Displays accordion sections for QC pending cases with investigation report
- */
 const QCPendingForms: React.FC = () => {
     const { investigationId: paramInvestigationId } = useParams<{ investigationId: string }>();
     const [searchParams] = useSearchParams();
