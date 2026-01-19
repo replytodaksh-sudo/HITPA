@@ -851,7 +851,8 @@ const UnifiedDocumentComponent: React.FC<DocumentsProps> = ({
      */
     const openDocument = (fileLocation: string, documentID: string) => {
         const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
-        const url = `${API_BASE_URL}/view-document?file=${fileLocation}&documentId=${documentID}`;
+        const url = `${API_BASE_URL}${apiUrls.viewDocument}${fileLocation}&documentId=${documentID}`;
+        // const url = `${API_BASE_URL}/view-document?file=${fileLocation}&documentId=${documentID}`;
         window.open(url, '_blank');
     };
 

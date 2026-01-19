@@ -24,7 +24,7 @@ import { AssignService } from '../../../services/assign.service';
 import AgencySelection from './AgencySelection';
 import DocumentUpload from './DocumentUpload';
 import QuestionnaireSection from './QuestionnaireSection';
-import CentralRegionalDocuments from './CentralRegionalDocuments';
+import UnifiedDocumentComponent from './CentralRegionalDocuments';
 
 interface AcceptAgenciesProps {
   investigationType?: string;
@@ -306,7 +306,8 @@ const AcceptAgencies: React.FC<AcceptAgenciesProps> = ({
         setDocumentsCodes={setDocumentsCodes}
         onDocsUpdate={fetchDocuments}
       /> */}
-      <CentralRegionalDocuments
+      {/* <CentralRegionalDocuments */}
+      <UnifiedDocumentComponent
         documentsCodes={documentsCodes}
         setDocumentsCodes={setDocumentsCodes}
         onDocsUpdate={fetchDocuments}
