@@ -56,7 +56,7 @@ const FieldReworkCasesReim: React.FC = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const [claims, setClaims] = useState<ReimClaim[]>([]);
   const [tatRange, setTatRange] = useState('');
   const [tatDropdownArray, setTatDropdownArray] = useState<TatDropdownItem[]>([]);
@@ -135,15 +135,8 @@ const FieldReworkCasesReim: React.FC = () => {
 
   const handleViewClick = (investigationID: string, claim: ReimClaim) => {
     navigate(
-      `/admin/regional-rework-form/${investigationID}?redirectTo=${location.pathname}&claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`,
-      {
-        state: {
-          claimsType: 'reim',
-          claimNo: claim.tpaClaimNo,
-          sbigclaimno: claim.sbigClaimNo,
-          acceptAssignId: claim.acceptAssignId
-        }
-      }
+      // `/admin/regional-rework-form/${investigationID}?redirectTo=${location.pathname}&claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`,
+      `/admin/regional-rework-form/${investigationID}?redirectTo=${location.pathname}&claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}&fieldType=rework&acceptAssignId=${claim.acceptAssignId}`,
     );
   };
 
@@ -445,7 +438,7 @@ const FieldReworkCasesReim: React.FC = () => {
           paginationModel={paginationModel}
           onPaginationModelChange={setPaginationModel}
           pageSizeOptions={[25, 50, 100]}
-          
+
           getRowId={(row) => row?.investigationID}
           slots={{
             toolbar: GridToolbar,
