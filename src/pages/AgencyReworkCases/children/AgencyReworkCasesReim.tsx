@@ -119,14 +119,6 @@ const AgencyReworkCasesReim: React.FC = () => {
     const handleViewClick = (investigationID: string, claim: ReimClaim) => {
         navigate(
             `/admin/assigned-self-form/${investigationID}?redirectTo=${location.pathname}&claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}&acceptAssignId=${claim.acceptAssignId}`,
-            {
-                state: {
-                    claimsType: 'reim',
-                    claimNo: claim.tpaClaimNo,
-                    sbigclaimno: claim.sbigClaimNo,
-                    acceptAssignId: claim.acceptAssignId
-                }
-            }
         );
     };
 
