@@ -71,7 +71,7 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
   // Fetch total count
   const fetchTotalCount = async () => {
     try {
-      const response = await claimsService.getAllCentralInvestigationTotalCompletedReClaims();
+      const response = await claimsService.getAllCentralInvestigationTotalCompletedClaims();
       if (response.statusCode === 0) {
         setTotalCount(response.payload || 0);
       }
@@ -84,7 +84,7 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
   const fetchClaims = async (pageNo: number, pageSize: number) => {
     setLoading(true);
     try {
-      const response = await claimsService.getAllCentralInvestigationCompletedByPageReClaims(
+      const response = await claimsService.getAllCentralInvestigationCompletedByPageClaims(
         pageNo,
         pageSize
       );
@@ -131,7 +131,7 @@ const CentralInvestigationCompletedCashless: React.FC = () => {
   const handleRowClick = (params: GridRowParams) => {
     const claim = params?.row as Claim;
     navigate(
-      `/admin/central-completed-form/${claim.investigationID}?claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`
+      `/admin/central-completed-form/${claim.investigationID}?claimsType=cashless&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`
     );
   };
 

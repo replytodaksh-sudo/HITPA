@@ -1,11 +1,3 @@
-// ===========================
-// src/components/PrimaryData.tsx
-// ===========================
-
-// ================================================================
-// PRIMARY DATA COMPONENT - PART 1: INTERFACES & SETUP
-// ================================================================
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
@@ -26,19 +18,12 @@ import {
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-
-// ===========================
-// CHILD COMPONENT IMPORTS
-// ===========================
 import MedicalManagement from './MedicalManagement';
 import SurgicalManagementSec from './SurgicalManagementSec';
 import RtaAccidental from './RtaAccidental';
 import caseUpdateService from '../../../services/caseupdate.service';
 import alertService from '../../../services/alertService';
 
-// ===========================
-// INTERFACES
-// ===========================
 interface PrimaryDataProps {
     isPresent: boolean;
     reasonVal?: any;
@@ -167,7 +152,6 @@ interface CaseUpdateModel {
     rtaSurgicalInvoiceVerified?: string;
 }
 
-
 export interface MedicalManagementData {
     isActiveMedicalManagementLOTGiven: string;
     medicalManagementIsHospitalization: string;
@@ -175,11 +159,7 @@ export interface MedicalManagementData {
     medicalManagementJustification: string;
     medicalManagementFindings: string;
 }
-// ===========================
-// SERVICES
-// ===========================
 
-// Case Update Service (for child components like Medical/Surgical Management)
 export const caseupdatePrimaryService = {
     store: {} as Record<string, any>,
 
@@ -196,12 +176,6 @@ const message = {
     primaryDataSaved: 'Primary data submitted successfully'
 };
 
-// Component continues in Part 2...
-
-// ================================================================
-// PRIMARY DATA COMPONENT - PART 2: STATE MANAGEMENT
-// ================================================================
-
 const PrimaryData: React.FC<PrimaryDataProps> = ({
     isPresent,
     reasonVal,
@@ -211,27 +185,15 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
 }) => {
     const { investigationId } = useParams<{ investigationId: string }>();
     const [loading, setLoading] = useState(false);
-
-    // ===========================
-    // BASIC FORM FIELDS STATE
-    // ===========================
     const [roomCategory, setRoomCategory] = useState('');
     const [roomRent, setRoomRent] = useState('');
     const [doa, setDoa] = useState<any>(null);
     const [dod, setDod] = useState<any>(null);
     const [diagnosis, setDiagnosis] = useState('');
-
-    // ===========================
-    // IPD REGISTRY ENTRY STATE
-    // ===========================
     const [ipdRegistryEntryValue, setIpdRegistryEntryValue] = useState('');
     const [discrepancyCheckValue, setDiscrepancyCheckValue] = useState(false);
     const [discrepancyCheckValueRadio, setDiscrepancyCheckValueRadio] = useState('');
     const [iPDRegisterDiscrepancyObservations, setIPDRegisterDiscrepancyObservations] = useState('');
-
-    // ===========================
-    // TREATING DOCTOR STATE
-    // ===========================
     const [treatingDoctorValue, setTreatingDoctorValue] = useState('');
     const [treatingDoctorPedNotedCheckValue, setTreatingDoctorPedNotedCheckValue] = useState(false);
     const [treatingDoctorPedNotedCheckValueRadio, setTreatingDoctorPedNotedCheckValueRadio] = useState('');
@@ -240,10 +202,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
     const [treatingDoctorDiscrepancyCheckValueRadio, setTreatingDoctorDiscrepancyCheckValueRadio] = useState('');
     const [treatingDoctorObservation, setTreatingDoctorObservation] = useState('');
     const [treatingDoctorReason, setTreatingDoctorReason] = useState('');
-
-    // ===========================
-    // IPD COLLECTED STATE
-    // ===========================
     const [ipdCollectedValue, setIpdCollectedValue] = useState('');
     const [pedNotedCheckValue, setPedNotedCheckValue] = useState(false);
     const [pedNotedCheckValueRadio, setPedNotedCheckValueRadio] = useState('');
@@ -252,57 +210,29 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
     const [discrepancyNotPedNotedCheckValueRadio, setDiscrepancyNotPedNotedCheckValueRadio] = useState('');
     const [iPDCollectedDiscrepancyPEDObservations, setIPDCollectedDiscrepancyPEDObservations] = useState('');
     const [iPDCollectedReason, setIPDCollectedReason] = useState('');
-
-    // ===========================
-    // LINE OF TREATMENT STATE
-    // ===========================
     const [lineOfTreatmentValue, setLineOfTreatmentValue] = useState('');
-
-    // ===========================
-    // PAST RECORDS MRD STATE
-    // ===========================
     const [pastRecordCheckedValue, setPastRecordCheckedValue] = useState('');
     const [pastTreatmentHosNotedValue, setPastTreatmentHosNotedValue] = useState(false);
     const [pastTreatmentHosNotedValueRadio, setPastTreatmentHosNotedValueRadio] = useState('');
     const [pastRecordsCheckedMRDHospitalizationNoted, setPastRecordsCheckedMRDHospitalizationNoted] = useState('');
     const [pastRecordsCheckedMRDNOT, setPastRecordsCheckedMRDNOT] = useState(false);
     const [pastRecordsCheckedMRDReason, setPastRecordsCheckedMRDReason] = useState('');
-
-    // ===========================
-    // LAB REPORT STATE
-    // ===========================
     const [labReportCheckValue, setLabReportCheckValue] = useState(false);
     const [labReportCheckValueRadio, setLabReportCheckValueRadio] = useState('');
     const [labReportObservations, setLabReportObservations] = useState('');
     const [labReportReason, setLabReportReason] = useState('');
-
-    // ===========================
-    // OTHER DOCUMENTS STATE (for Not Present cases)
-    // ===========================
     const [copyOfDischargeCardCollected, setCopyOfDischargeCardCollected] = useState(false);
     const [copyOfFinalBillCollected, setCopyOfFinalBillCollected] = useState(false);
     const [insuredVisit, setInsuredVisit] = useState(false);
     const [insuredVisitReason, setInsuredVisitReason] = useState('');
-
-    // ===========================
-    // CHEMIST STATE
-    // ===========================
     const [chemistValue, setChemistValue] = useState(false);
     const [chemistValueRadio, setChemistValueRadio] = useState('');
     const [chemistObservations, setChemistObservations] = useState('');
     const [chemistReason, setChemistReason] = useState('');
-
-    // ===========================
-    // OTHER FINDINGS & SECOND VISIT STATE
-    // ===========================
     const [anyOtherFindings, setAnyOtherFindings] = useState('');
     const [secondVisitValue, setSecondVisitValue] = useState('');
     const [secondVisitReason, setSecondVisitReason] = useState('');
     const [secondVisitObservation, setSecondVisitObservation] = useState('');
-
-    // ===========================
-    // STATEMENT COLLECTED STATE
-    // ===========================
     const [statementCollectedValue, setStatementCollectedValue] = useState('');
     const [discrepancyFoundValue, setDiscrepancyFoundValue] = useState(false);
     const [discrepancyFoundValueRadio, setDiscrepancyFoundValueRadio] = useState('');
@@ -314,19 +244,11 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
     const [statementCollectedPEDNotedPastDocumentsCollectedPleaseSpecify, setStatementCollectedPEDNotedPastDocumentsCollectedPleaseSpecify] = useState('');
     const [statementCollectedPEDNotedPastDocumentsCollectedReason, setStatementCollectedPEDNotedPastDocumentsCollectedReason] = useState('');
     const [statementCollectedReason, setStatementCollectedReason] = useState('');
-
-    // ===========================
-    // INSURED HABITS STATE
-    // ===========================
     const [alcoholHistory, setAlcoholHistory] = useState(false);
     const [alcoholHistoryQuantity, setAlcoholHistoryQuantity] = useState('');
     const [smokingHistory, setSmokingHistory] = useState(false);
     const [smokingHistoryQuantity, setSmokingHistoryQuantity] = useState('');
     const [anyOtherHabits, setAnyOtherHabits] = useState('');
-
-    // ===========================
-    // KYC DOCUMENTS STATE
-    // ===========================
     const [kcyDocument, setKcyDocument] = useState(false);
     const [kcyDocumentsAnyDiscrepancies, setKcyDocumentsAnyDiscrepancies] = useState('');
     const [kcyDocumentsReason, setKcyDocumentsReason] = useState('');
@@ -340,7 +262,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
         medicalManagementFindings: '',
     });
 
-    // Load previous data on mount
     useEffect(() => {
         if (previuosData) {
             setFormDataMedicalManagement({
@@ -361,20 +282,11 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
             [field]: value,
         }));
     };
-    
+
     const handleChangeRTAAccidental = (field: string, value: any) => {
-        // Handle RTA Accidental form data changes
         caseupdatePrimaryService.setCaseUpdateVal(field, value);
     };
 
-    // Data loading logic will be in Part 3...
-    // ================================================================
-    // PRIMARY DATA COMPONENT - PART 3: DATA LOADING
-    // ================================================================
-
-    // ===========================
-    // LOAD PREVIOUS DATA
-    // ===========================
     useEffect(() => {
         if (!previuosData) return;
 
@@ -560,15 +472,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
         }
     }, [previuosData]);
 
-    // Event handlers will be in Part 4...
-
-    // ================================================================
-    // PRIMARY DATA COMPONENT - PART 4: EVENT HANDLERS & SUBMIT
-    // ================================================================
-
-    // ===========================
-    // RADIO BUTTON CHANGE HANDLERS
-    // ===========================
     const handleDiscrepancyChange = (value: string) => {
         if (value === '1') {
             setDiscrepancyCheckValue(true);
@@ -649,9 +552,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
         }
     };
 
-    // ===========================
-    // SUBMIT HANDLER (Building the Complex Payload)
-    // ===========================
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -773,10 +673,8 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
             caseUpdateModel.statementCollectedReason = statementCollectedReason;
         }
 
-        // Line of Treatment (Get from child components via service)
         caseUpdateModel.lineOfTreatment = lineOfTreatmentValue;
 
-        // Medical Management data (from child component)
         if (lineOfTreatmentValue === 'medicalmanagement') {
             caseUpdateModel.isActiveMedicalManagementLOTGiven = caseupdatePrimaryService.getCaseUpdateVal('isActiveMedicalManagementLOTGiven');
             if (caseUpdateModel.isActiveMedicalManagementLOTGiven === 'yes') {
@@ -791,16 +689,142 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
             }
         }
 
-        // Surgical Management data (from child component) - abbreviated for space
         if (lineOfTreatmentValue === 'surgicalmanagement') {
-            // Similar structure as Medical Management
-            // Get all surgical fields from caseupdatePrimaryService...
+            caseUpdateModel.surgicalManagementProcedureCarriedOut = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementProcedureCarriedOut')
+            caseUpdateModel.surgicalManagementOperative = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementOperative');
+            if (caseUpdateModel.surgicalManagementOperative === 'Provided') {
+                caseUpdateModel.surgicalManagementOperativeFindings = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementOperativeFindings');
+            }
+            if (caseUpdateModel.surgicalManagementOperative === 'Not Provided') {
+                caseUpdateModel.surgicalManagementOperativeReason = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementOperativeReason');
+            }
+            caseUpdateModel.surgicalManagementAnaesthesia = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementAnaesthesia');
+            if (caseUpdateModel.surgicalManagementAnaesthesia === 'Provided') {
+                caseUpdateModel.surgicalManagementAnaesthesiaFindings = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementAnaesthesiaFindings');
+            }
+            if (caseUpdateModel.surgicalManagementAnaesthesia === 'Not Provided') {
+                caseUpdateModel.surgicalManagementAnaesthesiaReason = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementAnaesthesiaReason');
+            }
+            caseUpdateModel.surgicalManagementAnyImplantUsed = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementAnyImplantUsed');
+            if (caseUpdateModel.surgicalManagementAnyImplantUsed === true) {
+                caseUpdateModel.surgicalManagementInvoiceVerified = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementInvoiceVerified');
+                if (caseUpdateModel.surgicalManagementInvoiceVerified === 'Genuine') {
+                    caseUpdateModel.surgicalManagementInvoiceVerifiedStickerNumber = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementInvoiceVerifiedStickerNumber');
+                    caseUpdateModel.surgicalManagementInvoiceVerifiedManufacturer = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementInvoiceVerifiedManufacturer');
+
+                }
+                if (caseUpdateModel.surgicalManagementInvoiceVerified === 'Discrepancy') {
+                    caseUpdateModel.surgicalManagementInvoiceVerifiedFinding = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementInvoiceVerifiedFinding');
+
+                }
+                if (caseUpdateModel.surgicalManagementInvoiceVerified === 'Not Verified') {
+                    caseUpdateModel.surgicalManagementInvoiceVerifiedFinding = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementInvoiceVerifiedFinding');
+
+                }
+            }
         }
 
-        // RTA Accidental data (from child component) - abbreviated for space
         if (lineOfTreatmentValue === 'rtaaccidental') {
-            // Similar structure
-            // Get all RTA fields from caseupdatePrimaryService...
+            caseUpdateModel.rtaFIRCopyReceived = caseupdatePrimaryService.getCaseUpdateVal('rtaFIRCopyReceived');
+            if (caseUpdateModel.rtaFIRCopyReceived) {
+                caseUpdateModel.rtaDateOfFIR = caseupdatePrimaryService.getCaseUpdateVal('rtaDateOfFIR');
+                caseUpdateModel.rtaFIRObservations = caseupdatePrimaryService.getCaseUpdateVal('rtaFIRObservations');
+                caseUpdateModel.rtaFIRVerification = caseupdatePrimaryService.getCaseUpdateVal('rtaFIRVerification');
+                if (caseUpdateModel.rtaFIRVerification === 'Discripancy') {
+                    caseUpdateModel.rtaFIRVerificationFinding = caseupdatePrimaryService.getCaseUpdateVal('rtaFIRVerificationFinding');
+                }
+                if (caseUpdateModel.rtaFIRVerification === 'Not Verified') {
+                    caseUpdateModel.rtaFIRVerificationReason = caseupdatePrimaryService.getCaseUpdateVal('rtaFIRVerificationReason');
+                }
+            }
+            if (caseUpdateModel.rtaFIRCopyReceived) {
+                caseUpdateModel.rtaFIRReason = caseupdatePrimaryService.getCaseUpdateVal('rtaFIRReason');
+            }
+
+            caseUpdateModel.rtaMLCCopyreceived = caseupdatePrimaryService.getCaseUpdateVal('rtaMLCCopyreceived');
+            if (caseUpdateModel.rtaMLCCopyreceived) {
+                caseUpdateModel.rtaDateOfMLC = caseupdatePrimaryService.getCaseUpdateVal('rtaDateOfMLC');
+                caseUpdateModel.rtaMLCObservations = caseupdatePrimaryService.getCaseUpdateVal('rtaMLCObservations');
+                caseUpdateModel.rtaMLCVerification = caseupdatePrimaryService.getCaseUpdateVal('rtaMLCVerification');
+                if (caseUpdateModel.rtaMLCVerification === 'Discripancy') {
+                    caseUpdateModel.rtaMLCVerificationFinding = caseupdatePrimaryService.getCaseUpdateVal('rtaMLCVerificationFinding');
+                    //rtamlcVerificationFindings
+                }
+                if (caseUpdateModel.rtaMLCVerification === 'Not Verified') {
+                    //rtamlcVerificationReason
+                    caseUpdateModel.rtaMLCVerificationReason = caseupdatePrimaryService.getCaseUpdateVal('rtaMLCVerificationReason');
+
+                }
+            }
+            if (!caseUpdateModel.rtaMLCCopyreceived) {
+                caseUpdateModel.rtaMLCReason = caseupdatePrimaryService.getCaseUpdateVal('rtaMLCReason');
+
+            }
+            caseUpdateModel.rtaAlcoholIntoxicationNoted = caseupdatePrimaryService.getCaseUpdateVal('rtaAlcoholIntoxicationNoted');
+            if (caseUpdateModel.rtaAlcoholIntoxicationNoted) {
+                caseUpdateModel.rtaAlcoholFindings = caseupdatePrimaryService.getCaseUpdateVal('rtaAlcoholFindings');
+            }
+            caseUpdateModel.rtaLineOfTreatment = caseupdatePrimaryService.getCaseUpdateVal('rtaLineOfTreatment');
+
+
+
+            if (caseUpdateModel.rtaLineOfTreatment === 'medicalmanagement') {
+                caseUpdateModel.rtaMedicalIsActive = caseupdatePrimaryService.getCaseUpdateVal('rtaMedicalIsActive')
+                if (caseUpdateModel.rtaMedicalIsActive === 'yes') {
+
+                    caseUpdateModel.rtaMedicalJustification = caseupdatePrimaryService.getCaseUpdateVal('rtaMedicalJustification')
+
+                }
+                if (caseUpdateModel.rtaMedicalIsActive === 'no') {
+
+                    caseUpdateModel.rtaMedicalIsHospitalization = caseupdatePrimaryService.getCaseUpdateVal('rtaMedicalIsHospitalization')
+                    if (caseUpdateModel.rtaMedicalIsHospitalization === 'yes') {
+                        caseUpdateModel.rtaMedicalFindings = caseupdatePrimaryService.getCaseUpdateVal('rtaMedicalFindings')
+
+                    }
+                    if (caseUpdateModel.rtaMedicalIsHospitalization === 'no') {
+                        caseUpdateModel.rtaMedicalObsevations = caseupdatePrimaryService.getCaseUpdateVal('rtaMedicalObsevations')
+
+                    }
+                }
+            }
+            if (caseUpdateModel.rtaLineOfTreatment === 'surgicalmanagement') {
+                caseUpdateModel.rtaSurgicalProcedureCarriedOut = caseupdatePrimaryService.getCaseUpdateVal('rtaSurgicalProcedureCarriedOut')
+                caseUpdateModel.rtaSurgicalOperative = caseupdatePrimaryService.getCaseUpdateVal('rtaSurgicalOperative');
+                if (caseUpdateModel.rtaSurgicalOperative === 'Provided') {
+                    caseUpdateModel.rtaSurgicalOperativeFindings = caseupdatePrimaryService.getCaseUpdateVal('rtaSurgicalOperativeFindings');
+                }
+                if (caseUpdateModel.rtaSurgicalOperative === 'Not Provided') {
+                    caseUpdateModel.rtaSurgicalOperativeReason = caseupdatePrimaryService.getCaseUpdateVal('rtaSurgicalOperativeReason');
+                }
+                caseUpdateModel.rtaSurgicalAnaesthesia = caseupdatePrimaryService.getCaseUpdateVal('rtaSurgicalAnaesthesia');
+                if (caseUpdateModel.rtaSurgicalAnaesthesia === 'Provided') {
+                    caseUpdateModel.rtaSurgicalAnaesthesiaFindings = caseupdatePrimaryService.getCaseUpdateVal('rtaSurgicalAnaesthesiaFindings');
+                }
+                if (caseUpdateModel.rtaSurgicalAnaesthesia === 'Not Provided') {
+                    caseUpdateModel.rtaSurgicalAnaesthesiaReason = caseupdatePrimaryService.getCaseUpdateVal('rtaSurgicalAnaesthesiaReason');
+                }
+                caseUpdateModel.rtaSurgicalAnyImplantUsed = caseupdatePrimaryService.getCaseUpdateVal('rtaSurgicalAnyImplantUsed');
+                if (caseUpdateModel.rtaSurgicalAnyImplantUsed === 'Yes') {
+                    caseUpdateModel.rtaSurgicalInvoiceVerified = caseupdatePrimaryService.getCaseUpdateVal('rtaSurgicalInvoiceVerified');
+                    if (caseUpdateModel.rtaSurgicalInvoiceVerified === 'Genuine') {
+                        caseUpdateModel.surgicalManagementInvoiceVerifiedStickerNumber = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementInvoiceVerifiedStickerNumber');
+                        caseUpdateModel.surgicalManagementInvoiceVerifiedManufacturer = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementInvoiceVerifiedManufacturer');
+
+                    }
+                    if (caseUpdateModel.rtaSurgicalInvoiceVerified === 'Discrepancy') {
+                        caseUpdateModel.surgicalManagementInvoiceVerifiedFinding = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementInvoiceVerifiedFinding');
+
+                    }
+                    if (caseUpdateModel.rtaSurgicalInvoiceVerified === 'Not Verified') {
+                        caseUpdateModel.surgicalManagementInvoiceVerifiedFinding = caseupdatePrimaryService.getCaseUpdateVal('surgicalManagementInvoiceVerifiedFinding');
+
+                    }
+                }
+
+            }
+            caseUpdateModel.statementCollectedReason = statementCollectedReason
+
         }
 
         // Reason (for Not Present cases)
@@ -842,14 +866,9 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
         }
     };
 
-    // JSX rendering will be in Parts 5A and 5B...
-
-    // 5. Now assemble the JSX return statement:
-
     return (
         <LocalizationProvider dateAdapter={AdapterMoment}>
             <form onSubmit={handleSubmit}>
-                {/* ==================== BASIC FIELDS (Full Width) ==================== */}
                 <Grid container spacing={2} sx={{ mb: 2 }}>
                     <Grid size={{ xs: 12, sm: 2 }}>
                         <FormLabel>Room category*</FormLabel>
@@ -924,11 +943,8 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                     </Grid>
                 </Grid>
 
-                {/* ==================== TWO COLUMN LAYOUT STARTS ==================== */}
                 <Grid container spacing={3}>
-                    {/* ==================== LEFT COLUMN ==================== */}
                     <Grid size={{ xs: 12, md: 6 }}>
-                        {/* IPD Register Entry Found */}
                         <Grid container spacing={2} sx={{ mb: 2 }}>
                             <Grid size={{ xs: 12, sm: 4 }}>
                                 <FormLabel>IPD Register Entry Found*</FormLabel>
@@ -947,7 +963,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </Grid>
                         </Grid>
 
-                        {/* Discrepancy noted (if IPD Entry = Yes) */}
                         {ipdRegistryEntryValue === 'yes' && (
                             <Grid container spacing={2} sx={{ mb: 2 }}>
                                 <Grid size={{ xs: 12, sm: 4 }}>
@@ -969,7 +984,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </Grid>
                         )}
 
-                        {/* Observations (if IPD Entry = No OR Discrepancy = Yes) */}
                         {(ipdRegistryEntryValue === 'no' || discrepancyCheckValue) && (
                             <Grid container spacing={2} sx={{ mb: 2 }}>
                                 <Grid size={{ xs: 12, sm: 4 }}>
@@ -988,7 +1002,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </Grid>
                         )}
 
-                        {/* Treating doctor Visit */}
                         <Grid container spacing={2} sx={{ mb: 2 }}>
                             <Grid size={{ xs: 12, sm: 4 }}>
                                 <FormLabel>Treating doctor Visit</FormLabel>
@@ -1007,7 +1020,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </Grid>
                         </Grid>
 
-                        {/* Treating Doctor - Statement Not Collected Reason */}
                         {treatingDoctorValue === 'statementnotcollected' && (
                             <Grid container spacing={2} sx={{ mb: 2 }}>
                                 <Grid size={{ xs: 12, sm: 4 }}>
@@ -1026,7 +1038,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </Grid>
                         )}
 
-                        {/* Treating Doctor - Statement Collected - PED Section */}
                         {treatingDoctorValue === 'statementcollected' && (
                             <>
                                 <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -1108,11 +1119,7 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                         )}
                     </Grid>
 
-                    {/* RIGHT COLUMN CONTINUES IN PART 5B... */}
-
-                    {/* ==================== RIGHT COLUMN ==================== */}
                     <Grid size={{ xs: 12, md: 6 }}>
-                        {/* IPDs Collected */}
                         <Grid container spacing={2} sx={{ mb: 2 }}>
                             <Grid size={{ xs: 12, sm: 4 }}>
                                 <FormLabel>IPDs Collected*</FormLabel>
@@ -1130,7 +1137,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </Grid>
                         </Grid>
 
-                        {/* IPD Collected = Yes */}
                         {ipdCollectedValue === 'yes' && (
                             <>
                                 <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -1211,7 +1217,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </>
                         )}
 
-                        {/* IPD Collected = No */}
                         {ipdCollectedValue === 'no' && (
                             <Grid container spacing={2} sx={{ mb: 2 }}>
                                 <Grid size={{ xs: 12, sm: 4 }}>
@@ -1232,9 +1237,7 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                     </Grid>
                 </Grid>
 
-                {/* ==================== LINE OF TREATMENT + PAST RECORDS (Two Columns) ==================== */}
                 <Grid container spacing={3} sx={{ mt: 2 }}>
-                    {/* LEFT: Line of Treatment */}
                     <Grid size={{ xs: 12, md: 6 }}>
                         <Grid container spacing={2} sx={{ mb: 2 }}>
                             <Grid size={{ xs: 12, sm: 4 }}>
@@ -1245,7 +1248,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                                     fullWidth
                                     value={lineOfTreatmentValue}
                                     onChange={(e) => setLineOfTreatmentValue(e.target.value)}
-                                // disabled={isFormEditable}
                                 >
                                     <MenuItem value="">Select</MenuItem>
                                     <MenuItem value="medicalmanagement">Medical Management</MenuItem>
@@ -1255,38 +1257,27 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </Grid>
                         </Grid>
 
-                        {/* Medical Management Component */}
                         {lineOfTreatmentValue === 'medicalmanagement' && (
                             <Box sx={{ p: 2, border: '1px solid #ddd', borderRadius: 1 }}>
                                 <MedicalManagement formDataMedicalManagement={formDataMedicalManagement} handleChangeMedicalManagement={handleChangeMedicalManagement} />
                             </Box>
                         )}
 
-                        {/* Surgical Management Component */}
                         {lineOfTreatmentValue === 'surgicalmanagement' && (
                             <Box sx={{ p: 2, border: '1px solid #ddd', borderRadius: 1 }}>
                                 <SurgicalManagementSec previuosData={previuosData} />
                             </Box>
                         )}
 
-                        {/* RTA Accidental Component */}
                         {lineOfTreatmentValue === 'rtaaccidental' && (
                             <Box sx={{ p: 2, border: '1px solid #ddd', borderRadius: 1 }}>
-                                <RtaAccidental previousData={previuosData} handleChangeRTAAccidental={handleChangeRTAAccidental}/>
+                                <RtaAccidental previousData={previuosData} handleChangeRTAAccidental={handleChangeRTAAccidental} />
                             </Box>
                         )}
                     </Grid>
-
-                    {/* RIGHT: Past Records, Lab Reports, etc. - CONTINUES IN PART 5C */}
                 </Grid>
 
-                {/* Part 5C will have: Past Records MRD, Lab Report, Chemist, Second Visit */}
-                {/* Part 5D will have: Statement Collected, Habits, KYC, Submit Button */}
-
-
-                {/* RIGHT: Past Records MRD, Lab Reports, Chemist, Second Visit */}
                 <Grid size={{ xs: 12, md: 6 }}>
-                    {/* Past Records checked with MRD? */}
                     <Grid container spacing={2} sx={{ mb: 2 }}>
                         <Grid size={{ xs: 12, sm: 4 }}>
                             <FormLabel>Past Records checked with MRD?</FormLabel>
@@ -1305,7 +1296,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                         </Grid>
                     </Grid>
 
-                    {/* Past Records = Yes */}
                     {pastRecordCheckedValue === 'yes' && (
                         <>
                             <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -1347,7 +1337,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                         </>
                     )}
 
-                    {/* Past Records = No */}
                     {pastRecordCheckedValue === 'no' && (
                         <>
                             <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -1383,7 +1372,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                         </>
                     )}
 
-                    {/* Lab Report Verified */}
                     <Grid container spacing={2} sx={{ mb: 2 }}>
                         <Grid size={{ xs: 12, sm: 4 }}>
                             <FormLabel>Lab Report Verified</FormLabel>
@@ -1437,7 +1425,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                         </Grid>
                     )}
 
-                    {/* Copy of Discharge Card Collected (Not Present only) */}
                     {!isPresent && (
                         <Grid container spacing={2} sx={{ mb: 2 }}>
                             <Grid size={{ xs: 12, sm: 4 }}>
@@ -1456,7 +1443,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                         </Grid>
                     )}
 
-                    {/* Copy of Final Bill Collected (Not Present only) */}
                     {!isPresent && (
                         <Grid container spacing={2} sx={{ mb: 2 }}>
                             <Grid size={{ xs: 12, sm: 4 }}>
@@ -1475,7 +1461,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                         </Grid>
                     )}
 
-                    {/* Insured Visit (Not Present only) */}
                     {!isPresent && (
                         <>
                             <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -1513,7 +1498,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                         </>
                     )}
 
-                    {/* Chemist Verified */}
                     <Grid container spacing={2} sx={{ mb: 2 }}>
                         <Grid size={{ xs: 12, sm: 4 }}>
                             <FormLabel>Chemist Verified</FormLabel>
@@ -1567,7 +1551,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                         </Grid>
                     )}
 
-                    {/* Any other findings */}
                     <Grid container spacing={2} sx={{ mb: 2 }}>
                         <Grid size={{ xs: 12, sm: 4 }}>
                             <FormLabel>Any other findings</FormLabel>
@@ -1583,7 +1566,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                         </Grid>
                     </Grid>
 
-                    {/* Second visit? */}
                     <Grid container spacing={2} sx={{ mb: 2 }}>
                         <Grid size={{ xs: 12, sm: 4 }}>
                             <FormLabel>Second visit?</FormLabel>
@@ -1635,17 +1617,12 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                     )}
                 </Grid>
 
-                {/* Part 5D will have: Statement Collected Section, Habits, KYC, Submit */}
-
-                {/* ==================== STATEMENT COLLECTED + HABITS + KYC (Two Columns) ==================== */}
                 <Grid container spacing={3} sx={{ mt: 2 }}>
-                    {/* LEFT: Insured Visit - Statement Collected */}
                     <Grid size={{ xs: 12, md: 6 }}>
                         <Typography variant="h6" sx={{ color: '#776BC5', fontWeight: 700, mb: 2 }}>
                             Insured Visit
                         </Typography>
 
-                        {/* Statement collected? */}
                         <Grid container spacing={2} sx={{ mb: 2 }}>
                             <Grid size={{ xs: 12, sm: 4 }}>
                                 <FormLabel>Statement collected?</FormLabel>
@@ -1662,7 +1639,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </Grid>
                         </Grid>
 
-                        {/* Statement Collected = Yes */}
                         {statementCollectedValue === '1' && (
                             <>
                                 {/* Discrepancies found */}
@@ -1702,7 +1678,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                                     </Grid>
                                 )}
 
-                                {/* PED Noted */}
                                 <Grid container spacing={2} sx={{ mb: 2 }}>
                                     <Grid size={{ xs: 12, sm: 4 }}>
                                         <FormLabel>PED Noted</FormLabel>
@@ -1724,7 +1699,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
 
                                 {pedNotedValue && (
                                     <>
-                                        {/* PED Findings */}
                                         <Grid container spacing={2} sx={{ mb: 2 }}>
                                             <Grid size={{ xs: 12, sm: 4 }}>
                                                 <FormLabel>PED Findings</FormLabel>
@@ -1740,7 +1714,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                                             </Grid>
                                         </Grid>
 
-                                        {/* Past Document collected? */}
                                         <Grid container spacing={2} sx={{ mb: 2 }}>
                                             <Grid size={{ xs: 12, sm: 4 }}>
                                                 <FormLabel>Past Document collected?</FormLabel>
@@ -1799,7 +1772,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </>
                         )}
 
-                        {/* Statement Collected = No */}
                         {statementCollectedValue === '0' && (
                             <Grid container spacing={2} sx={{ mb: 2 }}>
                                 <Grid size={{ xs: 12, sm: 4 }}>
@@ -1818,14 +1790,11 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                         )}
                     </Grid>
 
-                    {/* RIGHT: Insured Habits + KYC */}
                     <Grid size={{ xs: 12, md: 6 }}>
-                        {/* Insured Habits Section */}
                         <Typography variant="h6" sx={{ color: '#776BC5', fontWeight: 700, mb: 2 }}>
                             Insured Habits
                         </Typography>
 
-                        {/* Alcohol History */}
                         <Grid container spacing={2} sx={{ mb: 1 }}>
                             <Grid size={{ xs: 12, sm: 4 }}>
                                 <FormLabel>Alcohol History</FormLabel>
@@ -1857,7 +1826,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </Grid>
                         )}
 
-                        {/* Smoking History */}
                         <Grid container spacing={2} sx={{ mb: 1 }}>
                             <Grid size={{ xs: 12, sm: 4 }}>
                                 <FormLabel>Smoking History</FormLabel>
@@ -1889,7 +1857,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </Grid>
                         )}
 
-                        {/* Any Other Habits */}
                         <Grid container spacing={2} sx={{ mb: 3 }}>
                             <Grid size={{ xs: 12, sm: 4 }}></Grid>
                             <Grid size={{ xs: 12, sm: 8 }}>
@@ -1904,12 +1871,10 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </Grid>
                         </Grid>
 
-                        {/* Insured KYC Section */}
                         <Typography variant="h6" sx={{ color: '#776BC5', fontWeight: 700, mb: 2 }}>
                             Insured KYC
                         </Typography>
 
-                        {/* KYC Documents */}
                         <Grid container spacing={2} sx={{ mb: 2 }}>
                             <Grid size={{ xs: 12, sm: 4 }}>
                                 <FormLabel>KYC Documents</FormLabel>
@@ -1926,7 +1891,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </Grid>
                         </Grid>
 
-                        {/* KYC Collected - Any Discrepancies */}
                         {kcyDocument === true && (
                             <Grid container spacing={2} sx={{ mb: 2 }}>
                                 <Grid size={{ xs: 12, sm: 4 }}>
@@ -1944,7 +1908,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                             </Grid>
                         )}
 
-                        {/* KYC Not Collected - Reason */}
                         {kcyDocument === false && (
                             <Grid container spacing={2} sx={{ mb: 2 }}>
                                 <Grid size={{ xs: 12, sm: 4 }}>
@@ -1964,7 +1927,6 @@ const PrimaryData: React.FC<PrimaryDataProps> = ({
                     </Grid>
                 </Grid>
 
-                {/* ==================== SUBMIT BUTTON ==================== */}
                 <Grid container sx={{ mt: 3 }}>
                     <Grid size={{ xs: 12, sm: 10 }} offset={{ sm: 2 }}>
                         <Button

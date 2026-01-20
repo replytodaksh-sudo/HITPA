@@ -33,6 +33,8 @@ import CentralRegionalDocuments from '../../components/sharedComponents/componen
 import ReimRegionalAgencyQC from '../../components/sharedComponents/components/ReimRegionalAgencyQC';
 import QcPreview from '../../components/sharedComponents/components/QcPreview';
 import claimsService from '../../services/claims.service';
+import CaseUpdateForm from '../../components/sharedComponents/components/CashlessCaseUpdate';
+import Preview from '../../components/sharedComponents/components/Preview';
 
 const PAYMENT_LINK = 'https://payment.example.com';
 
@@ -71,7 +73,7 @@ const CentralCompletedForm: React.FC = () => {
       const response = await claimsService.claimDetails(invId);
       if (response.statusCode === 0) {
         setClaimDetails(response.payload);
-        
+
         // Set button enable and display based on role and status
         if (roleName === 'Central Manager' && response.payload.noDataStatus === 'NonEditable') {
           setDisplay('block');
@@ -140,10 +142,10 @@ const CentralCompletedForm: React.FC = () => {
             <Grid size={{ xs: 12, md: 4 }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
                 <AssignmentIcon sx={{ fontSize: 20 }} />
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                <Typography variant="body2" sx={{ fontWeight: 600, color: "#fff" }}>
                   Investigation No:
                 </Typography>
-                <Typography variant="body2" sx={{ fontWeight: 400 }}>
+                <Typography variant="body2" sx={{ fontWeight: 400, color: "#fff" }}>
                   {investigationId}
                 </Typography>
                 {claimsTypelabel && (
@@ -162,20 +164,20 @@ const CentralCompletedForm: React.FC = () => {
             </Grid>
             <Grid size={{ xs: 12, md: 4 }}>
               <Box sx={{ textAlign: { xs: 'left', md: 'center' } }}>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                <Typography variant="body2" sx={{ fontWeight: 600, color: "#fff" }}>
                   Claim No:
                 </Typography>
-                <Typography variant="body2" sx={{ fontWeight: 400 }}>
+                <Typography variant="body2" sx={{ fontWeight: 400, color: "#fff" }}>
                   {sbiclaimNo || '-'}
                 </Typography>
               </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 4 }}>
               <Box sx={{ textAlign: { xs: 'left', md: 'right' } }}>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                <Typography variant="body2" sx={{ fontWeight: 600, color: "#fff" }}>
                   TPA Claim No:
                 </Typography>
-                <Typography variant="body2" sx={{ fontWeight: 400 }}>
+                <Typography variant="body2" sx={{ fontWeight: 400, color: "#fff" }}>
                   {claimNo || '-'}
                 </Typography>
               </Box>
@@ -332,7 +334,11 @@ const CentralCompletedForm: React.FC = () => {
               </Box>
             </AccordionSummary>
             <AccordionDetails sx={{ p: 3, bgcolor: 'white' }}>
-              <ReimburseCaseUpdate />
+              {claimsType === 'cashless' ? (
+                <Preview buttonVisible={true} />
+              ) : (
+                <ReimburseCaseUpdate buttonEnable={buttonEnable} />
+              )}
             </AccordionDetails>
           </Accordion>
 

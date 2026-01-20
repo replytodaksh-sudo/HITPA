@@ -271,11 +271,13 @@ export const apiUrls = {
 
     getAllCentralInvestigationCompletedBySearch: "/claims/getAllCentralInvestigationCompletedBySearch",
 
+    getAllCentralInvestigationTotalCompletedClaims: "/claims/getAllCentralInvestigationTotalCompleted",
     getAllCentralInvestigationTotalCompletedReClaims: "/reclaims/getAllCentralInvestigationTotalCompleted",
     
     getAllNewCasesCentral: "/claims/getAllCentralNewCasesTotalCompleted",
     getAllNewReCasesCentral: "/reclaims/getAllCentralNewCasesTotalCompleted",
 
+    getAllCentralInvestigationCompletedByPageClaims: "/claims/getAllCentralInvestigationCompletedByPage",
     getAllCentralInvestigationCompletedByPageReClaims: "/reclaims/getAllCentralInvestigationCompletedByPage",
     
     getAllCentralNewCasesByPage: "/claims/getAllCentralNewCasesByPage",

@@ -1553,6 +1553,12 @@ export const claimsService = {
       return response;
     } catch (error) { console.error('Error:', error); throw error; }
   },
+  getAllCentralInvestigationTotalCompletedClaims: async (): Promise<ClaimsResponse> => {
+    try {
+      const response = await apiService.get(apiUrls.getAllCentralInvestigationTotalCompletedClaims);
+      return response;
+    } catch (error) { console.error('Error:', error); throw error; }
+  },
   getAllCentralInvestigationTotalCompletedReClaims: async (): Promise<ClaimsResponse> => {
     try {
       const response = await apiService.get(apiUrls.getAllCentralInvestigationTotalCompletedReClaims);
@@ -1574,6 +1580,12 @@ export const claimsService = {
   getAllCentralInvestigationCompletedByPageReClaims: async (pageNo: number, pageSize: number): Promise<ClaimsResponse> => {
     try {
       const response = await apiService.get(`${apiUrls.getAllCentralInvestigationCompletedByPageReClaims}?pageNo=${pageNo}&pageSize=${pageSize}`);
+      return response;
+    } catch (error) { console.error('Error:', error); throw error; }
+  },
+  getAllCentralInvestigationCompletedByPageClaims: async (pageNo: number, pageSize: number): Promise<ClaimsResponse> => {
+    try {
+      const response = await apiService.get(`${apiUrls.getAllCentralInvestigationCompletedByPageClaims}?pageNo=${pageNo}&pageSize=${pageSize}`);
       return response;
     } catch (error) { console.error('Error:', error); throw error; }
   },
