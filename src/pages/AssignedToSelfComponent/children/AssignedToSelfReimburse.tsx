@@ -118,14 +118,15 @@ const AssignedToSelfReimburse: React.FC = () => {
     };
 
     const handleRowClick = (investigationID: string, claim: ReimClaim) => {
-        navigate(`/admin/assigned-self-form/${investigationID}`, {
-            state: {
-                redirectTo: location.pathname,
-                claimsType: 'reim',
-                claimNo: claim.tpaClaimNo,
-                sbigclaimno: claim.sbigClaimNo,
-            },
-        });
+        navigate(`/admin/assigned-self-form/${investigationID}?redirectTo=${location.pathname}&claimsType=reim&claimNo=${claim.tpaClaimNo}&sbigclaimno=${claim.sbigClaimNo}`)
+        // navigate(`/admin/assigned-self-form/${investigationID}`, {
+        //     state: {
+        //         redirectTo: location.pathname,
+        //         claimsType: 'reim',
+        //         claimNo: claim.tpaClaimNo,
+        //         sbigclaimno: claim.sbigClaimNo,
+        //     },
+        // });
     };
 
     const columns: GridColDef[] = [
