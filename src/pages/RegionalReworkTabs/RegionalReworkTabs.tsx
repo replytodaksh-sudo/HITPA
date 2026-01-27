@@ -538,7 +538,7 @@ const RegionalReworkTabs: React.FC = () => {
                                             )}
 
                                             {previuosData.noDataStatus === 'NonEditable' && (
-                                                <CentralAssignedAgencyCaseUpdate />
+                                                <CentralAssignedAgencyCaseUpdate buttonVisible={true}/>
                                             )}
 
                                             {previuosData.noDataStatus === 'Editable' && (
