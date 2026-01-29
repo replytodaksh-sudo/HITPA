@@ -39,6 +39,8 @@ import { DashboardService } from '../../services/dashboard.service';
 import { authService } from '../../services/auth.service';
 import { CircularProgress, Backdrop } from '@mui/material';
 import DropdownService from '../../services/dropdown.service';
+import { useNavigate } from 'react-router-dom';
+import { getUrl } from '../../utils/url';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -94,6 +96,7 @@ interface StatCard {
 
 const Dashboard: React.FC = () => {
     const theme = useTheme();
+    const navigate = useNavigate();
 
     // State management
     const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
@@ -1001,6 +1004,7 @@ const Dashboard: React.FC = () => {
                                         {dashboardData.dashBoardInvestigationDTO[0]?.subTypeMenu.map((item, idx) => (
                                             <Box
                                                 key={idx}
+                                                onClick={() => { navigate(getUrl(item.label, 'fresh')) }}
                                                 sx={{
                                                     display: 'flex',
                                                     justifyContent: 'space-between',
@@ -1008,12 +1012,12 @@ const Dashboard: React.FC = () => {
                                                     mb: 2,
                                                     '&:last-child': { mb: 0 },
                                                     '&:hover': {
-                                                        bgcolor: '#eff6ff',
-                                                        borderRadius: 2,
-                                                        px: 1.5,
-                                                        py: 1,
-                                                        ml: -1.5,
-                                                        mr: -1.5,
+                                                        bgcolor: '#9fb5d1',
+                                                        borderRadius: 1,
+                                                        px: 0.1,
+                                                        // py: 1,
+                                                        // ml: -1.5,
+                                                        // mr: -1.5,
                                                         cursor: 'pointer',
                                                     },
                                                     transition: 'all 0.2s ease',
@@ -1050,6 +1054,7 @@ const Dashboard: React.FC = () => {
                                         {dashboardData.dashBoardQCDTO[0]?.subTypeMenu.map((item, idx) => (
                                             <Box
                                                 key={idx}
+                                                onClick={() => { navigate(getUrl(item.label, 'regional')) }}
                                                 sx={{
                                                     display: 'flex',
                                                     justifyContent: 'space-between',
@@ -1057,12 +1062,12 @@ const Dashboard: React.FC = () => {
                                                     mb: 2,
                                                     '&:last-child': { mb: 0 },
                                                     '&:hover': {
-                                                        bgcolor: '#eff6ff',
-                                                        borderRadius: 2,
-                                                        px: 1.5,
-                                                        py: 1,
-                                                        ml: -1.5,
-                                                        mr: -1.5,
+                                                        bgcolor: '#9fb5d1',
+                                                        borderRadius: 1,
+                                                        px: 0.1,
+                                                        // py: 1,
+                                                        // ml: -1.5,
+                                                        // mr: -1.5,
                                                         cursor: 'pointer',
                                                     },
                                                     transition: 'all 0.2s ease',
@@ -1155,6 +1160,7 @@ const Dashboard: React.FC = () => {
                                         {dashboardData.dashBoardInvestigationDTO[1]?.subTypeMenu.map((item, idx) => (
                                             <Box
                                                 key={idx}
+                                                onClick={() => { navigate(getUrl(item.label, 'on field')) }}
                                                 sx={{
                                                     display: 'flex',
                                                     justifyContent: 'space-between',
@@ -1162,12 +1168,12 @@ const Dashboard: React.FC = () => {
                                                     mb: 2,
                                                     '&:last-child': { mb: 0 },
                                                     '&:hover': {
-                                                        bgcolor: '#eff6ff',
-                                                        borderRadius: 2,
-                                                        px: 1.5,
-                                                        py: 1,
-                                                        ml: -1.5,
-                                                        mr: -1.5,
+                                                        bgcolor: '#9fb5d1',
+                                                        borderRadius: 1,
+                                                        px: 0.1,
+                                                        // py: 1,
+                                                        // ml: -1.5,
+                                                        // mr: -1.5,
                                                         cursor: 'pointer',
                                                     },
                                                     transition: 'all 0.2s ease',
@@ -1204,6 +1210,7 @@ const Dashboard: React.FC = () => {
                                         {dashboardData.dashBoardInvestigationDTO[2]?.subTypeMenu.map((item, idx) => (
                                             <Box
                                                 key={idx}
+                                                onClick={() => { navigate(getUrl(item.label, 'completed')) }}
                                                 sx={{
                                                     display: 'flex',
                                                     justifyContent: 'space-between',
@@ -1211,12 +1218,12 @@ const Dashboard: React.FC = () => {
                                                     mb: 2,
                                                     '&:last-child': { mb: 0 },
                                                     '&:hover': {
-                                                        bgcolor: '#eff6ff',
-                                                        borderRadius: 2,
-                                                        px: 1.5,
-                                                        py: 1,
-                                                        ml: -1.5,
-                                                        mr: -1.5,
+                                                        bgcolor: '#9fb5d1',
+                                                        borderRadius: 1,
+                                                        px: 0.1,
+                                                        // py: 1,
+                                                        // ml: -1.5,
+                                                        // mr: -1.5,
                                                         cursor: 'pointer',
                                                     },
                                                     transition: 'all 0.2s ease',
