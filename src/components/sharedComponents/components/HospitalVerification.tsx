@@ -69,7 +69,7 @@ const HospitalVerifications: React.FC<HospitalVerificationsProps> = ({
 
   // Handle tab change from child component (e.g., Step One requesting to show Step Two)
   const handleChangeTab = (showStepTwo: boolean) => {
-    if (showStepTwo && enableStepTwo) {
+    if (showStepTwo) {
       setActiveTab(1); // Switch to Step Two
     } else {
       setActiveTab(0); // Switch to Step One
